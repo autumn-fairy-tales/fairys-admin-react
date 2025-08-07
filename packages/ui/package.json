@@ -1,0 +1,27 @@
+{
+  "name": "@fairys/admin-tools-react",
+  "author": "SunLxy <1011771396@qq.com>",
+  "description": "框架组件库",
+  "homepage": "https://github.com/SunLxy/tool-react",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "module": "esm/index.js",
+  "license": "ISC",
+  "scripts": {
+    "build": "carefrees-rslib build --config=./rslib.config.ts",
+    "watch": "carefrees-rslib build --watch --config=./rslib.config.ts"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "files": [
+    "src",
+    "lib",
+    "esm"
+  ],
+  "devDependencies": {
+    "@types/react": "18.2.21",
+    "react": "^18.2.0"
+  }
+}
