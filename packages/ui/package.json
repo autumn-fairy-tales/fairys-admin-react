@@ -20,6 +20,10 @@
     "lib",
     "esm"
   ],
+  "dependencies": {
+    "clsx": "2.1.1",
+    "valtio": "~2.1.5"
+  },
   "devDependencies": {
     "@types/react": "18.2.21",
     "react": "^18.2.0"
