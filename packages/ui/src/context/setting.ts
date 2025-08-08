@@ -4,21 +4,21 @@ import { proxy, useSnapshot } from 'valtio';
  * 1. main_sub_left:左侧主菜单 + 子菜单 + 无头部信息
  * 2. main_left:左侧主菜单 + 移入子菜单展示 + 无头部信息
  * 3. main_left_sub_all:左侧主菜单 + 移入子菜单展示所有  + 无头部信息
- * 4. main_top:顶部菜单 +  移入子菜单展示 + 有头部信息
- * 5. main_top_sub_all:顶部菜单 +  移入子菜单展示所有 + 有头部信息
- * 6. main_top_sub_left:顶部主菜单 + 侧边子菜单 + 有头部信息
+ * 4. main_top_header:顶部菜单 +  移入子菜单展示 + 有头部信息
+ * 5. main_top_sub_all_header:顶部菜单 +  移入子菜单展示所有 + 有头部信息
+ * 6. main_top_sub_left_header:顶部主菜单 + 侧边子菜单 + 有头部信息
  * 7. left:不区分主子菜单并且左侧显示 + 无头部信息(用户信息一起移入左侧显示)
- * 8. left_top:不区分主子菜单并且左侧显示 + 头部信息
+ * 8. left_top_header:不区分主子菜单并且左侧显示 + 有头部信息
  */
 export type LayoutMode =
   | 'main_sub_left'
   | 'main_left'
   | 'main_left_sub_all'
-  | 'main_top'
-  | 'main_top_sub_all'
-  | 'main_top_sub_left'
+  | 'main_top_header'
+  | 'main_top_sub_all_header'
+  | 'main_top_sub_left_header'
   | 'left'
-  | 'left_top';
+  | 'left_top_header';
 
 export interface SettingInstacneState {
   /**颜色主题风格*/
@@ -67,11 +67,17 @@ export interface SettingInstacneState {
   enableToolBarNotification?: boolean;
   /**全屏*/
   enableToolBarFullScreen?: boolean;
+  /**页面刷新*/
+  enableToolBarRefresh?: boolean;
 
   /**面包屑导航风格*/
   breadcrumbStyle?: '';
   /**是否启用页面水印*/
   enableWatermark?: boolean;
+  /**载入进度条*/
+  enableProgress?: boolean;
+  /**动态标题*/
+  enableDynamicTitle?: boolean;
 
   /**只是默认值，不使用*/
   __defaultValue?: string;
@@ -79,7 +85,7 @@ export interface SettingInstacneState {
 
 class SettingInstacne {
   state = proxy<SettingInstacneState>({
-    layoutMode: 'left_top',
+    layoutMode: 'left_top_header',
   });
 
   constructor() {
@@ -98,8 +104,8 @@ class SettingInstacne {
   }
 
   initState = (state: SettingInstacneState) => {
-    this.state = proxy({ layoutMode: 'left_top', ...state });
-    localStorage.setItem('setting_state', JSON.stringify({ layoutMode: 'left_top', ...state }));
+    this.state = proxy({ layoutMode: 'left_top_header', ...state });
+    localStorage.setItem('setting_state', JSON.stringify({ layoutMode: 'left_top_header', ...state }));
   };
 
   updated = (state: SettingInstacneState) => {

@@ -4,25 +4,33 @@ import clsx from 'clsx';
 
 export const Layout = () => {
   const [state] = useSetting();
-
   /**
    * 1. main_sub_left:左侧主菜单 + 子菜单 + 无头部信息
    * 2. main_left:左侧主菜单 + 移入子菜单展示 + 无头部信息
    * 3. main_left_sub_all:左侧主菜单 + 移入子菜单展示所有  + 无头部信息
-   * 4. main_top:顶部菜单 +  移入子菜单展示 + 有头部信息
-   * 5. main_top_sub_all:顶部菜单 +  移入子菜单展示所有 + 有头部信息
-   * 6. main_top_sub_left:顶部主菜单 + 侧边子菜单 + 有头部信息
+   * 4. main_top_header:顶部菜单 +  移入子菜单展示 + 有头部信息
+   * 5. main_top_sub_all_header:顶部菜单 +  移入子菜单展示所有 + 有头部信息
+   * 6. main_top_sub_left_header:顶部主菜单 + 侧边子菜单 + 有头部信息
    * 7. left:不区分主子菜单并且左侧显示 + 无头部信息(用户信息一起移入左侧显示)
-   * 8. left_top:不区分主子菜单并且左侧显示 + 头部信息
+   * 8. left_top_header:不区分主子菜单并且左侧显示 + 有头部信息
    */
   const layoutMode = state.layoutMode;
 
   const isShowHeader = useMemo(() => {
-    return ['main_top', 'main_top_sub_all', 'main_top_sub_left'].includes(`${layoutMode}`);
+    return ['main_top_header', 'main_top_sub_all_header', 'main_top_sub_left_header', 'left_top_header'].includes(
+      `${layoutMode}`,
+    );
   }, [layoutMode]);
 
   const isShowSider = useMemo(() => {
-    return ['main_sub_left', 'main_left', 'main_left_sub_all', 'left', 'main_top_sub_left'].includes(`${layoutMode}`);
+    return [
+      'main_sub_left',
+      'main_left',
+      'main_left_sub_all',
+      'left',
+      'main_top_sub_left_header',
+      'left_top_header',
+    ].includes(`${layoutMode}`);
   }, [layoutMode]);
 
   const isSiderFull = useMemo(() => {
@@ -30,7 +38,7 @@ export const Layout = () => {
   }, [layoutMode]);
 
   const layoutCls = useMemo(() => {
-    return clsx('fairys_admin_layout w-full h-full flex', {
+    return clsx('fairys_admin_layout w-full h-full flex box-border', {
       [`fairys_admin_layout_${layoutMode}`]: !!layoutMode,
       'flex-col': !isSiderFull,
       'flex-row': isSiderFull,
@@ -53,18 +61,34 @@ export const Layout = () => {
     <div className={layoutCls}>
       {isSiderFull ? (
         <Fragment>
-          {isShowSider ? <div className="fairys_admin_layout_sider">{siderRender}</div> : <Fragment />}
-          <div className="fairys_admin_layout_main flex flex-col flex-1">
-            {isShowHeader ? <div className="fairys_admin_layout_main_header">{headerRender}</div> : <Fragment />}
-            <div className="fairys_admin_layout_main_content flex-1 w-full">{contentRender}</div>
+          {isShowSider ? (
+            <div className="fairys_admin_layout_sider h-full box-border">{siderRender}</div>
+          ) : (
+            <Fragment />
+          )}
+          <div className="fairys_admin_layout_main flex flex-col flex-1 h-full box-border">
+            {isShowHeader ? (
+              <div className="fairys_admin_layout_main_header w-full box-border">{headerRender}</div>
+            ) : (
+              <Fragment />
+            )}
+            <div className="fairys_admin_layout_main_content flex-1 w-full box-border">{contentRender}</div>
           </div>
         </Fragment>
       ) : (
         <Fragment>
-          {isShowHeader ? <div className="fairys_admin_layout_header">{headerRender}</div> : <Fragment />}
-          <div className="fairys_admin_layout_main  flex flex-row flex-1">
-            {isShowSider ? <div className="fairys_admin_layout_main_sider">{siderRender}</div> : <Fragment />}
-            <div className="fairys_admin_layout_main_content flex-1 h-full">{contentRender}</div>
+          {isShowHeader ? (
+            <div className="fairys_admin_layout_header w-full box-border">{headerRender}</div>
+          ) : (
+            <Fragment />
+          )}
+          <div className="fairys_admin_layout_main flex flex-row flex-1 w-full box-border">
+            {isShowSider ? (
+              <div className="fairys_admin_layout_main_sider h-full box-border">{siderRender}</div>
+            ) : (
+              <Fragment />
+            )}
+            <div className="fairys_admin_layout_main_content flex-1 h-full box-border">{contentRender}</div>
           </div>
         </Fragment>
       )}

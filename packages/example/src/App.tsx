@@ -1,14 +1,7 @@
-import './App.css';
-import { Button } from '@fairys/admin-tools-react';
+import { Layout } from '@fairys/admin-tools-react';
 
 const App = () => {
-  return (
-    <div className="content">
-      <Button></Button>
-      <h1>Rsbuild with React</h1>
-      <p>Start building amazing things with Rsbuild.</p>
-    </div>
-  );
+  return <Layout></Layout>;
 };
 
 export default App;
