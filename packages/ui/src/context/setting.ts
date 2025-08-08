@@ -20,7 +20,7 @@ export type LayoutMode =
   | 'left'
   | 'left_top_header';
 
-export interface SettingInstacneState {
+export interface SettingInstanceState {
   /**颜色主题风格*/
   theme?: 'dark' | 'light' | 'auto';
   /**主题颜色*/
@@ -83,8 +83,8 @@ export interface SettingInstacneState {
   __defaultValue?: string;
 }
 
-class SettingInstacne {
-  state = proxy<SettingInstacneState>({
+class SettingInstance {
+  state = proxy<SettingInstanceState>({
     layoutMode: 'left_top_header',
   });
 
@@ -103,12 +103,12 @@ class SettingInstacne {
     }
   }
 
-  initState = (state: SettingInstacneState) => {
+  initState = (state: SettingInstanceState) => {
     this.state = proxy({ layoutMode: 'left_top_header', ...state });
     localStorage.setItem('setting_state', JSON.stringify({ layoutMode: 'left_top_header', ...state }));
   };
 
-  updated = (state: SettingInstacneState) => {
+  updated = (state: SettingInstanceState) => {
     for (const key in state) {
       const element = state[key];
       this.state[key] = element;
@@ -117,9 +117,9 @@ class SettingInstacne {
   };
 }
 
-export const settingInstacne = new SettingInstacne();
+export const settingInstance = new SettingInstance();
 
 export const useSetting = () => {
-  const state = useSnapshot(settingInstacne.state);
-  return [state, settingInstacne, state.__defaultValue] as [SettingInstacneState, SettingInstacne, string | undefined];
+  const state = useSnapshot(settingInstance.state);
+  return [state, settingInstance, state.__defaultValue] as const;
 };

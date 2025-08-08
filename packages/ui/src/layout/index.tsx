@@ -1,6 +1,7 @@
 import { Fragment, useMemo } from 'react';
 import { useSetting } from '../context/setting';
 import clsx from 'clsx';
+import { LayoutContent } from './content';
 
 export const Layout = () => {
   const [state] = useSetting();
@@ -54,7 +55,7 @@ export const Layout = () => {
   }, [isShowSider]);
 
   const contentRender = useMemo(() => {
-    return <div>内容信息</div>;
+    return <LayoutContent />;
   }, []);
 
   return (
