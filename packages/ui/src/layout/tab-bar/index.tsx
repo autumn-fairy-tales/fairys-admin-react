@@ -1,7 +1,7 @@
-import { useTabBar, TabBarItemType } from '../../context/tab-bar';
+import { useTabBar, TabBarItemType, tabBarInstance } from '../../context/tab-bar';
 import clsx from 'clsx';
-import { useMemo } from 'react';
-import { useMatch, useNavigate } from 'react-router';
+import { useEffect, useMemo } from 'react';
+import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 
 interface TabBarItemProps {
@@ -12,11 +12,9 @@ const TabBarItem = (props: TabBarItemProps) => {
   const { item } = props;
   const navigate = useNavigate();
   const match = useMatch(item.path);
-  // transition: background-color 0.3s ease-in-out;
-  //
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item transition-[background-color] duration-150 ease-in-out relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item transition-[background-color]  relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
         'hover:bg-gray-200': !match,
         'bg-white': !!match,
@@ -28,13 +26,16 @@ const TabBarItem = (props: TabBarItemProps) => {
   const onClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    navigate(item.path);
+    if (!match) {
+      navigate(item.path);
+      tabBarInstance.addItem(item);
+    }
   };
 
   const onClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    console.log('close');
+    tabBarInstance.remove(item.path, !!match, navigate);
   };
 
   return (
@@ -51,12 +52,16 @@ const TabBarItem = (props: TabBarItemProps) => {
 
 export const TabBar = () => {
   const [state] = useTabBar();
-
   const tabBarItems = state.tabBarItems;
-
   const tabBarClassName = useMemo(() => {
     return clsx('fairys_admin_tab_bar flex bg-gray-300/25 ');
   }, []);
+
+  const location = useLocation();
+
+  useEffect(() => {
+    tabBarInstance.add(location.pathname);
+  }, [location.pathname]);
 
   const render = useMemo(() => {
     return tabBarItems.map((item) => {
