@@ -2,6 +2,8 @@ import { Fragment, useMemo } from 'react';
 import { useSetting } from '../context/setting';
 import clsx from 'clsx';
 import { LayoutContent } from './content';
+import { LayoutHeader } from './header';
+import { LayoutSider } from './sider';
 
 export const Layout = () => {
   const [state] = useSetting();
@@ -47,11 +49,11 @@ export const Layout = () => {
   }, [layoutMode, isSiderFull]);
 
   const headerRender = useMemo(() => {
-    return isShowHeader ? <div>头部信息</div> : null;
+    return isShowHeader ? <LayoutHeader /> : null;
   }, [isShowHeader]);
 
   const siderRender = useMemo(() => {
-    return isShowSider ? <div>侧边栏信息</div> : null;
+    return isShowSider ? <LayoutSider /> : null;
   }, [isShowSider]);
 
   const contentRender = useMemo(() => {
@@ -63,7 +65,7 @@ export const Layout = () => {
       {isSiderFull ? (
         <Fragment>
           {isShowSider ? (
-            <div className="fairys_admin_layout_sider h-full box-border">{siderRender}</div>
+            <div className="fairys_admin_layout_sider h-full box-border ">{siderRender}</div>
           ) : (
             <Fragment />
           )}
@@ -79,7 +81,7 @@ export const Layout = () => {
       ) : (
         <Fragment>
           {isShowHeader ? (
-            <div className="fairys_admin_layout_header w-full box-border">{headerRender}</div>
+            <div className="fairys_admin_layout_header w-full box-border ">{headerRender}</div>
           ) : (
             <Fragment />
           )}

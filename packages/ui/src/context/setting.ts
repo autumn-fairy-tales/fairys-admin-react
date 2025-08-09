@@ -121,5 +121,5 @@ export const settingInstance = new SettingInstance();
 
 export const useSetting = () => {
   const state = useSnapshot(settingInstance.state);
-  return [state, settingInstance, state.__defaultValue] as const;
+  return [state, settingInstance, state.__defaultValue] as [SettingInstanceState, SettingInstance, string | undefined];
 };

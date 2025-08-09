@@ -10,3 +10,4 @@ body,
 }
 
 @import 'tailwindcss';
+@plugin "@iconify/tailwind4";

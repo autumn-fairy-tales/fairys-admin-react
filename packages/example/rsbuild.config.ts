@@ -1,5 +1,6 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
+import tailwindcss from '@tailwindcss/postcss';
 
 export default defineConfig({
   html: {
@@ -7,4 +8,9 @@ export default defineConfig({
     favicon: './public/logo.png',
   },
   plugins: [pluginReact()],
+  tools: {
+    postcss: (_, { addPlugins }) => {
+      addPlugins([tailwindcss()]);
+    },
+  },
 });

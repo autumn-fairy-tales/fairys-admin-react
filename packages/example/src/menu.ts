@@ -5,11 +5,18 @@ export const menuItems: MenuItem[] = (menuDataInstance._menuItems = [
   {
     title: '首页',
     path: '/',
-    icon: 'icon-home',
+    icon: 'solar:home-bold',
   },
   {
     title: '列表',
     path: '/list',
-    icon: 'icon-list',
+    icon: 'solar:checklist-bold',
+  },
+  {
+    title: '详情',
+    path: '/detail',
+    icon: 'solar:info-circle-outline',
   },
 ]);
+
+menuDataInstance.ctor_menuItems(menuItems);
