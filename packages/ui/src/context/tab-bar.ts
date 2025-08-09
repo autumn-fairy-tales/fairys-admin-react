@@ -1,4 +1,4 @@
-import { proxy, useSnapshot } from 'valtio';
+import { proxy, ref, useSnapshot } from 'valtio';
 import type { MenuItemType } from './menu-data';
 
 export interface TabBarItemType extends MenuItemType {}
@@ -10,32 +10,17 @@ interface TabBarInstanceState {
 
 class TabBarInstance {
   state = proxy<TabBarInstanceState>({
-    tabBarItems: [
-      {
-        title: '首页',
-        path: '/',
-        icon: 'solar:home-bold',
-      },
-      {
-        title: '列表',
-        path: '/list',
-        icon: 'solar:checklist-bold',
-      },
-      {
-        title: '详情',
-        path: '/detail',
-        icon: 'solar:info-circle-outline',
-      },
-    ],
+    tabBarItems: [],
   });
 
   /**初始化渲染菜单数据*/
   ctor_tabBarItems = (tabBarItems: MenuItemType[]) => {
-    this.state.tabBarItems = tabBarItems;
+    this.state.tabBarItems = ref(tabBarItems);
+    console.log(12);
   };
 }
 
-const tabBarInstance = new TabBarInstance();
+export const tabBarInstance = new TabBarInstance();
 
 export const useTabBar = () => {
   const state = useSnapshot(tabBarInstance.state);

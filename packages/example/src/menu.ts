@@ -1,22 +1,22 @@
-import { menuDataInstance } from '@fairys/admin-tools-react';
-import type { MenuItem } from '@fairys/admin-tools-react';
+import { menuDataInstance, tabBarInstance } from '@fairys/admin-tools-react';
+import type { MenuItemType } from '@fairys/admin-tools-react';
 
-export const menuItems: MenuItem[] = (menuDataInstance._menuItems = [
+const menuItems: MenuItemType[] = (menuDataInstance._menuItems = [
   {
     title: '首页',
     path: '/',
-    icon: 'solar:home-bold',
+    icon: 'ant-design:home-outlined',
   },
   {
     title: '列表',
     path: '/list',
-    icon: 'solar:checklist-bold',
+    icon: 'ant-design:unordered-list',
   },
   {
     title: '详情',
     path: '/detail',
-    icon: 'solar:info-circle-outline',
+    icon: 'ant-design:info-circle-outlined',
   },
 ]);
-
-menuDataInstance.ctor_menuItems(menuItems);
+/**临时加载一下tabBarItems*/
+tabBarInstance.ctor_tabBarItems(menuItems);

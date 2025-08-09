@@ -11,3 +11,26 @@ body,
 
 @import 'tailwindcss';
 @plugin "@iconify/tailwind4";
+
+@theme {
+  --fairys-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02),
+    0 2px 4px 0 rgba(0, 0, 0, 0.02);
+}
+
+.fairys_admin_tab_bar .fairys_admin_tab_bar_item:not(:first-child)::before {
+  content: '';
+  width: 1px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  margin: auto;
+  background-color: var(--color-gray-400);
+  height: 30%;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.fairys_admin_tab_bar .fairys_admin_tab_bar_item.active::before,
+.fairys_admin_tab_bar .fairys_admin_tab_bar_item.active + .fairys_admin_tab_bar_item::before {
+  background-color: transparent;
+}

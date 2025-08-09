@@ -12,12 +12,17 @@ const TabBarItem = (props: TabBarItemProps) => {
   const { item } = props;
   const navigate = useNavigate();
   const match = useMatch(item.path);
-
+  // transition: background-color 0.3s ease-in-out;
+  //
   const itemClassName = useMemo(() => {
-    return clsx('fairys_admin_tab_bar_item flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer', {
-      'hover:bg-gray-200': !match,
-      'bg-white': match,
-    });
+    return clsx(
+      'fairys_admin_tab_bar_item transition-[background-color] duration-150 ease-in-out relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      {
+        'hover:bg-gray-200': !match,
+        'bg-white': !!match,
+        active: !!match,
+      },
+    );
   }, [match]);
 
   const onClick = (e: React.MouseEvent) => {
@@ -26,10 +31,20 @@ const TabBarItem = (props: TabBarItemProps) => {
     navigate(item.path);
   };
 
+  const onClose = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    console.log('close');
+  };
+
   return (
     <div className={itemClassName} onClick={onClick}>
       <Icon icon={item.icon} className="size-[16px]" />
       <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
+      <span
+        className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600"
+        onClick={onClose}
+      ></span>
     </div>
   );
 };
