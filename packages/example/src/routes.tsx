@@ -23,6 +23,10 @@ export const routes: RouteObject[] = [
         path: '/detail',
         element: <Detail />,
       },
+      {
+        path: '*',
+        element: <div>404</div>,
+      },
     ],
   },
 ];

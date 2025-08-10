@@ -2,9 +2,11 @@ import { proxy, ref, useSnapshot } from 'valtio';
 import type { MenuItemType } from './menu-data';
 import type { NavigateFunction } from 'react-router';
 import { menuDataInstance } from './menu-data';
+import { createContext, createRef, useContext, useRef } from 'react';
 
 export interface TabBarItemType extends MenuItemType {}
 interface TabBarInstanceState {
+  /**tab项集合*/
   tabBarItems: TabBarItemType[];
   /**默认引用值*/
   __defaultValue?: string;
@@ -66,3 +68,39 @@ export const useTabBar = () => {
   const state = useSnapshot(tabBarInstance.state);
   return [state, tabBarInstance, state.__defaultValue] as [TabBarInstanceState, TabBarInstance, string | undefined];
 };
+
+class TabItemInstance {
+  /**节点*/
+  dom = createRef<HTMLDivElement>();
+  /**tab项数据*/
+  item: TabBarItemType;
+}
+
+export const useTabItemInstance = () => useRef(new TabItemInstance()).current;
+
+class TabInstance {
+  /**节点*/
+  dom = createRef<HTMLDivElement>();
+  tabBarItems: TabItemInstance[] = [];
+  register = (item: TabItemInstance) => {
+    this.tabBarItems.push(item);
+    return () => {
+      this.tabBarItems = this.tabBarItems.filter((it) => it !== item);
+    };
+  };
+
+  /**滚动*/
+  onScroll = (path: string) => {
+    const finx = this.tabBarItems.find((it) => it.item.path === path);
+    if (finx) {
+      finx.dom?.current?.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
+  };
+}
+export const TabInstanceContext = createContext<TabInstance>(new TabInstance());
+export const useTabInstance = () => useRef(new TabInstance()).current;
+export const useTabInstanceContext = () => useContext(TabInstanceContext);

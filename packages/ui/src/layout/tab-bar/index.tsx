@@ -1,4 +1,12 @@
-import { useTabBar, TabBarItemType, tabBarInstance } from '../../context/tab-bar';
+import {
+  useTabBar,
+  TabBarItemType,
+  tabBarInstance,
+  TabInstanceContext,
+  useTabInstance,
+  useTabInstanceContext,
+  useTabItemInstance,
+} from '../../context/tab-bar';
 import clsx from 'clsx';
 import { useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
@@ -10,11 +18,16 @@ interface TabBarItemProps {
 
 const TabBarItem = (props: TabBarItemProps) => {
   const { item } = props;
+  const tabInstance = useTabInstanceContext();
+  const tabItemInstance = useTabItemInstance();
+  tabItemInstance.item = item;
+
   const navigate = useNavigate();
   const match = useMatch(item.path);
+
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item transition-[background-color]  relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item shrink-0 transition-[background-color]  relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
         'hover:bg-gray-200': !match,
         'bg-white': !!match,
@@ -38,14 +51,32 @@ const TabBarItem = (props: TabBarItemProps) => {
     tabBarInstance.remove(item.path, !!match, navigate);
   };
 
+  useEffect(() => {
+    const onMount = tabInstance.register(tabItemInstance);
+    return () => onMount?.();
+  }, []);
+
+  // 跳转后滚动到当前tab
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!!match && tabItemInstance.dom.current) {
+        tabItemInstance.dom.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'nearest',
+        });
+      }
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [match, tabItemInstance.dom]);
+
   return (
-    <div className={itemClassName} onClick={onClick}>
+    <div ref={tabItemInstance.dom} className={itemClassName} onClick={onClick}>
       <Icon icon={item.icon} className="size-[16px]" />
       <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
-      <span
-        className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600"
-        onClick={onClose}
-      ></span>
+      <span className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600" onClick={onClose} />
     </div>
   );
 };
@@ -53,10 +84,10 @@ const TabBarItem = (props: TabBarItemProps) => {
 export const TabBar = () => {
   const [state] = useTabBar();
   const tabBarItems = state.tabBarItems;
+  const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
-    return clsx('fairys_admin_tab_bar flex bg-gray-300/25 ');
+    return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25');
   }, []);
-
   const location = useLocation();
 
   useEffect(() => {
@@ -69,5 +100,13 @@ export const TabBar = () => {
     });
   }, [tabBarItems]);
 
-  return <div className={tabBarClassName}>{render}</div>;
+  return (
+    <TabInstanceContext.Provider value={tabInstance}>
+      <div className={tabBarClassName}>
+        <div className="fairys_admin_tab_bar_left"></div>
+        <div className="fairys_admin_tab_bar_body overflow-auto flex flex-row flex-1 no-scrollbar">{render}</div>
+        <div className="fairys_admin_tab_bar_right"></div>
+      </div>
+    </TabInstanceContext.Provider>
+  );
 };

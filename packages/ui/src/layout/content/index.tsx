@@ -1,13 +1,15 @@
 import { Outlet } from 'react-router';
 import { TabBar } from '../tab-bar';
+import { ToolBar } from '../tool-bar';
 
 export const LayoutContent = () => {
   return (
-    <div className="fairys_admin_main_content flex flex-col w-full h-full">
-      <div className="fairys_admin_main_content_header sticky top-0 shadow-[var(--fairys-box-shadow)]">
+    <div className="fairys_admin_main_content overflow-hidden flex flex-col w-full h-full">
+      <div className="fairys_admin_main_content_header w-full overflow-hidden sticky top-0 shadow-[var(--fairys-box-shadow)]">
+        <ToolBar />
         <TabBar />
       </div>
-      <div className="fairys_admin_main_content_body flex flex-1 w-full">
+      <div className="fairys_admin_main_content_body overflow-hidden flex flex-1 w-full">
         <Outlet />
       </div>
     </div>

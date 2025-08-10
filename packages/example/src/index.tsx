@@ -5,6 +5,7 @@ import './menu';
 import './index.css';
 const rootEl = document.getElementById('root');
 if (rootEl) {
+  console.log(router);
   const root = ReactDOM.createRoot(rootEl);
   root.render(<RouterProvider router={router} />);
 }

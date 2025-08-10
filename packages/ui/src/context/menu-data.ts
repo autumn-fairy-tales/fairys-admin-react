@@ -12,22 +12,55 @@ export interface MenuItemType {
 }
 
 export interface MenuDataInstanceState {
+  /**侧边渲染菜单*/
   menuItems: MenuItemType[];
+  /**展开项*/
+  expandItems: MenuItemType[];
   /**默认引用值*/
   __defaultValue?: string;
 }
 
 /**平铺所有菜单*/
-const flatMenuItems = (items: MenuItemType[]) => {
+const flatMenuItems = (
+  items: MenuItemType[],
+  parentPath: MenuItemType[] = [],
+  parentMenuItemMap: Map<string, MenuItemType[]>,
+) => {
   const _list: MenuItemType[] = [];
   for (let index = 0; index < items.length; index++) {
     const item = items[index];
     _list.push(item);
+    if (item.path) {
+      parentMenuItemMap.set(item.path, [...parentPath].concat(item));
+    }
     if (Array.isArray(item.children)) {
-      _list.push(...flatMenuItems(item.children));
+      _list.push(...flatMenuItems(item.children, [...parentPath].concat(item), parentMenuItemMap));
     }
   }
   return _list;
+};
+
+/**菜单搜索*/
+const filterMenuItems = (items: MenuItemType[], keyword: string) => {
+  return items.filter((item) => {
+    if (Array.isArray(item.children) && item.children.length) {
+      return filterMenuItems(item.children, keyword).length > 0;
+    }
+    return item.title.includes(keyword);
+  });
+};
+
+/**移除重复数据*/
+const removeRepeat = (items: MenuItemType[]) => {
+  const _newList: MenuItemType[] = [];
+  for (let index = 0; index < items.length; index++) {
+    const element = items[index];
+    const _item = _newList.find((i) => i.path === element.path);
+    if (!_item) {
+      _newList.push(element);
+    }
+  }
+  return _newList;
 };
 
 /**整个菜单数据实例*/
@@ -36,23 +69,69 @@ export class MenuDataInstance {
   _menuItems: MenuItemType[] = [];
   /**平铺所有菜单数据*/
   _flatMenuItems: MenuItemType[] = [];
+  /**地址查找父级路径*/
+  _parentMenuItemMap: Map<string, MenuItemType[]> = new Map();
   /**菜单数据状态*/
   state = proxy<MenuDataInstanceState>({
     menuItems: [],
+    expandItems: [],
   });
   /**设置菜单所有数据*/
   ctor = (items: MenuItemType[]) => {
     this._menuItems = items;
-    this._flatMenuItems = flatMenuItems(items);
+    this._flatMenuItems = flatMenuItems(items, [], this._parentMenuItemMap);
     this.state.menuItems = ref(items);
   };
-
   /**
    * 通过path获取菜单对象
    * 暂不支持 /path/:id 这种动态路由
    */
   get_path_menuItem = (path: string) => {
     return this._flatMenuItems.find((item) => item.path === path);
+  };
+
+  // /**判断菜单是否处于展示页面的地址父级里面*/
+  // is_path_parent = (path: string, location_pathname: string) => {
+  //   const finx = this._parentMenuItemMap.get(location_pathname);
+  //   if (finx) {
+  //     return finx.some((item) => item.path === path);
+  //   }
+  //   return false;
+  // };
+
+  /**搜索菜单*/
+  onSearch = (word: string) => {
+    const _key = `${word || ''}`.trim();
+    if (!_key) {
+      this.state.menuItems = ref(this._menuItems);
+      return;
+    }
+    this.state.menuItems = ref(filterMenuItems(this._menuItems, _key));
+  };
+
+  /**展开项*/
+  onExpandItems = (path: string) => {
+    const parentItems = this._parentMenuItemMap.get(path) || [];
+    this.state.expandItems = ref([...parentItems]);
+  };
+  /**折叠*/
+  onCollapseItems = (path: string) => {
+    this.state.expandItems = ref(this.state.expandItems.filter((i) => i.path !== path));
+  };
+
+  /**切换展示隐藏*/
+  onToggleItems = (path: string) => {
+    const finx = this.state.expandItems.find((i) => i.path === path);
+    if (finx) {
+      this.onCollapseItems(path);
+    } else {
+      this.onExpandItems(path);
+    }
+  };
+
+  /**是否展示*/
+  isExpand = (path: string) => {
+    return !!this.state.expandItems.find((i) => i.path === path);
   };
 }
 /**菜单数据使用实例*/

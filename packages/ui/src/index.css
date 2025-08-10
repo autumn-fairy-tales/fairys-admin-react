@@ -17,6 +17,11 @@ body,
     0 2px 4px 0 rgba(0, 0, 0, 0.02);
 }
 
+.no-scrollbar::-webkit-scrollbar {
+  width: 0px;
+  height: 0px;
+}
+
 .fairys_admin_tab_bar .fairys_admin_tab_bar_item:not(:first-child)::before {
   content: '';
   width: 1px;
