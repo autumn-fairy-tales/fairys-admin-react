@@ -1,3 +1,4 @@
+import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
 export interface MenuItemType {
   /**标题*/
@@ -89,16 +90,6 @@ export class MenuDataInstance {
   get_path_menuItem = (path: string) => {
     return this._flatMenuItems.find((item) => item.path === path);
   };
-
-  // /**判断菜单是否处于展示页面的地址父级里面*/
-  // is_path_parent = (path: string, location_pathname: string) => {
-  //   const finx = this._parentMenuItemMap.get(location_pathname);
-  //   if (finx) {
-  //     return finx.some((item) => item.path === path);
-  //   }
-  //   return false;
-  // };
-
   /**搜索菜单*/
   onSearch = (word: string) => {
     const _key = `${word || ''}`.trim();
@@ -108,7 +99,6 @@ export class MenuDataInstance {
     }
     this.state.menuItems = ref(filterMenuItems(this._menuItems, _key));
   };
-
   /**展开项*/
   onExpandItems = (path: string) => {
     const parentItems = this._parentMenuItemMap.get(path) || [];
@@ -118,7 +108,6 @@ export class MenuDataInstance {
   onCollapseItems = (path: string) => {
     this.state.expandItems = ref(this.state.expandItems.filter((i) => i.path !== path));
   };
-
   /**切换展示隐藏*/
   onToggleItems = (path: string) => {
     const finx = this.state.expandItems.find((i) => i.path === path);
@@ -128,7 +117,6 @@ export class MenuDataInstance {
       this.onExpandItems(path);
     }
   };
-
   /**是否展示*/
   isExpand = (path: string) => {
     return !!this.state.expandItems.find((i) => i.path === path);
@@ -145,3 +133,28 @@ export const useMenuData = () => {
     string | undefined,
   ];
 };
+
+// ================================================================================================
+export class MenuItemInstance {
+  dom = createRef<HTMLDivElement>();
+  item: MenuItemType;
+  isSubMenu: boolean;
+}
+
+export const useMenuItemInstance = () => useRef<MenuItemInstance>(new MenuItemInstance()).current;
+
+export class MenuInstance {
+  /**节点*/
+  dom = createRef<HTMLDivElement>();
+  menuItems: MenuItemInstance[] = [];
+  register = (item: MenuItemInstance) => {
+    this.menuItems.push(item);
+    return () => {
+      this.menuItems = this.menuItems.filter((it) => it !== item);
+    };
+  };
+}
+
+export const MenuInstanceContext = createContext<MenuInstance>(new MenuInstance());
+export const useMenuInstance = () => useRef(new MenuInstance()).current;
+export const useMenuInstanceContext = () => useContext(MenuInstanceContext);

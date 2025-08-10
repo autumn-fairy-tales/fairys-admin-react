@@ -1,7 +1,7 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 import type { MenuItemType } from '../context/menu-data';
 import { tabBarInstance } from '../context/tab-bar';
-import { menuDataInstance } from './../context/menu-data';
+import { menuDataInstance, useMenuItemInstance, useMenuInstance } from './../context/menu-data';
 import { useMatch, useNavigate } from 'react-router';
 import clsx from 'clsx';
 
@@ -16,6 +16,16 @@ export const MenuItem = (props: MenuItemProps) => {
   const { item, level = 0, isSubMenu = false, isExpand = false } = props;
   const match = useMatch(item.path);
   const navigate = useNavigate();
+  const menuInstance = useMenuInstance();
+  const menuItemInstance = useMenuItemInstance();
+  menuItemInstance.item = item;
+  menuItemInstance.isSubMenu = isSubMenu;
+
+  useEffect(() => {
+    const onMount = menuInstance.register(menuItemInstance);
+    return () => onMount();
+  }, []);
+
   const menuItemClassName = useMemo(() => {
     return clsx(
       'fairys_admin_menu_item transition rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer',
@@ -61,8 +71,23 @@ export const MenuItem = (props: MenuItemProps) => {
     );
   }, [isExpand]);
 
+  // 跳转后滚动到当前tab
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!!match && menuItemInstance.dom.current) {
+        menuItemInstance.dom.current.scrollIntoView({
+          behavior: 'smooth',
+          block: 'nearest',
+          inline: 'nearest',
+        });
+      }
+    }, 300);
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [match, menuItemInstance.dom]);
   return (
-    <div data-level={level} className={menuItemClassName} onClick={onClick}>
+    <div ref={menuItemInstance.dom} data-level={level} className={menuItemClassName} onClick={onClick}>
       <div className={titleClassName} style={titleStyle} title={item.title}>
         {item.title}
       </div>
