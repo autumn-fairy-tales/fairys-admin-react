@@ -18,7 +18,7 @@ export const MenuItem = (props: MenuItemProps) => {
   const navigate = useNavigate();
   const menuItemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_menu_item rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer',
+      'fairys_admin_menu_item transition rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer',
       {
         [`data-level=${level}`]: true,
         active: !!match,
@@ -55,9 +55,8 @@ export const MenuItem = (props: MenuItemProps) => {
     return clsx(
       'relative ms-1 w-[10px] after:absolute before:absolute after:h-[1.5px] after:w-[6px] before:h-[1.5px] before:w-[6px] after:bg-current before:bg-current after:transition-transform-200 before:transition-transform-200 after:content-empty before:content-empty after:-translate-y-[1px] before:-translate-y-[1px]',
       {
-        [isExpand
-          ? 'before:-rotate-45 before:-translate-x-[2px] after:rotate-45 after:translate-x-[2px]'
-          : 'before:rotate-45 before:-translate-x-[2px] after:-rotate-45 after:translate-x-[2px]']: true,
+        'before:-rotate-45 before:-translate-x-[2px] after:rotate-45 after:translate-x-[2px]': isExpand,
+        'before:rotate-45 before:-translate-x-[2px] after:-rotate-45 after:translate-x-[2px]': !isExpand,
       },
     );
   }, [isExpand]);
