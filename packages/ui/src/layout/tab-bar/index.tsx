@@ -11,6 +11,7 @@ import clsx from 'clsx';
 import { Fragment, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
+import { DropDownTabBarItems } from './drop-down';
 
 interface TabBarItemProps {
   item: TabBarItemType;
@@ -87,7 +88,7 @@ export const TabBar = () => {
   const tabBarItems = state.tabBarItems;
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
-    return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25');
+    return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px]');
   }, []);
   const location = useLocation();
 
@@ -116,7 +117,9 @@ export const TabBar = () => {
         >
           {render}
         </div>
-        <div className="fairys_admin_tab_bar_right"></div>
+        <div className="fairys_admin_tab_bar_right flex items-center justify-center">
+          <DropDownTabBarItems />
+        </div>
       </div>
     </TabInstanceContext.Provider>
   );

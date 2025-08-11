@@ -23,7 +23,8 @@
   "dependencies": {
     "clsx": "2.1.1",
     "valtio": "~2.1.5",
-    "@iconify/react": "~6.0.0"
+    "@iconify/react": "~6.0.0",
+    "@headlessui/react": "~2.2.7"
   },
   "devDependencies": {
     "@types/react": "18.2.21",

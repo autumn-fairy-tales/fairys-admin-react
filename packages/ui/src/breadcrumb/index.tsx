@@ -28,7 +28,7 @@ export const Breadcrumb = () => {
           <div
             key={item.path}
             onClick={() => onClick(item)}
-            className={`fairys_admin_breadcrumb_item rounded-sm py-[6px] transition-[color,background-color] bg-gray-100 px-[14px] hover:bg-gray-200 ${
+            className={`fairys_admin_breadcrumb_item rounded-sm py-[6px] transition bg-gray-100 px-[14px] hover:bg-gray-200 ${
               isLast ? 'text-gray-600' : 'text-gray-400 hover:text-gray-600'
             } relative cursor-pointer`}
           >
