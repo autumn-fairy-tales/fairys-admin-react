@@ -8,6 +8,8 @@ export interface TabBarItemType extends MenuItemType {}
 interface TabBarInstanceState {
   /**tab项集合*/
   tabBarItems: TabBarItemType[];
+  /**右侧选择的tab项集合,不在可视区域的数据*/
+  dropDownTabBarItems: TabBarItemType[];
   /**默认引用值*/
   __defaultValue?: string;
 }
@@ -15,8 +17,8 @@ interface TabBarInstanceState {
 class TabBarInstance {
   state = proxy<TabBarInstanceState>({
     tabBarItems: [],
+    dropDownTabBarItems: [],
   });
-
   /**初始化渲染菜单数据*/
   ctor = (tabBarItems: MenuItemType[]) => {
     this.state.tabBarItems = ref(tabBarItems);
@@ -89,18 +91,53 @@ class TabInstance {
     };
   };
 
-  /**滚动*/
-  onScroll = (path: string) => {
-    const finx = this.tabBarItems.find((it) => it.item.path === path);
-    if (finx) {
-      finx.dom?.current?.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'nearest',
+  private timer: NodeJS.Timeout;
+
+  /**更新右侧选择的tab项集合*/
+  updateDropDownTabBarItems = () => {
+    clearTimeout(this.timer);
+    this.timer = setTimeout(() => {
+      const tabBarItems = this.tabBarItems || [];
+      const containerRect = this.dom.current?.getBoundingClientRect();
+      const dropDownTabBarItems = [];
+      for (let index = 0; index < tabBarItems.length; index++) {
+        const item = tabBarItems[index];
+        if (item.dom.current) {
+          const rect = item.dom.current.getBoundingClientRect();
+          const isVisible = rect.left >= containerRect.left - 10 && rect.right <= containerRect.right + 10;
+          if (!isVisible) {
+            dropDownTabBarItems.push(item.item);
+          }
+        }
+      }
+      console.log('dropDownTabBarItems===>', dropDownTabBarItems);
+      tabBarInstance.state.dropDownTabBarItems = ref(dropDownTabBarItems);
+      clearTimeout(this.timer);
+    }, 300);
+  };
+
+  private onResize: MutationCallback = () => {
+    this.updateDropDownTabBarItems();
+  };
+
+  /**添加滚动事件*/
+  addEventListener = () => {
+    // 监听子节点的添加/删除
+    const observer = new MutationObserver(this.onResize);
+    if (this.dom.current) {
+      this.dom.current.addEventListener('scrollend', this.updateDropDownTabBarItems);
+      observer.observe(this.dom.current, {
+        childList: true, // 监听子节点的添加/删除
+        subtree: false, // 不监听后代节点（仅监听直接子节点）
       });
     }
+    return () => {
+      if (this.dom.current) this.dom.current.removeEventListener('scrollend', this.updateDropDownTabBarItems);
+      observer.disconnect();
+    };
   };
 }
+
 export const TabInstanceContext = createContext<TabInstance>(new TabInstance());
 export const useTabInstance = () => useRef(new TabInstance()).current;
 export const useTabInstanceContext = () => useContext(TabInstanceContext);

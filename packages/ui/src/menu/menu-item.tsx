@@ -4,6 +4,7 @@ import { tabBarInstance } from '../context/tab-bar';
 import { menuDataInstance, useMenuItemInstance, useMenuInstance } from './../context/menu-data';
 import { useMatch, useNavigate } from 'react-router';
 import clsx from 'clsx';
+import { Icon } from '@iconify/react';
 
 export interface MenuItemProps {
   item: MenuItemType;
@@ -28,19 +29,24 @@ export const MenuItem = (props: MenuItemProps) => {
 
   const menuItemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_menu_item transition rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer',
+      'fairys_admin_menu_item transition rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1',
       {
         [`data-level=${level}`]: true,
         active: !!match,
         'bg-blue-500': !!match,
         'text-white': !!match,
+        'hover:bg-blue-100': !match,
         'px-[14px]': true,
       },
     );
   }, [match, level]);
 
   const titleClassName = useMemo(() => {
-    return clsx('fairys_admin_menu_item_title flex-1 text-ellipsis overflow-hidden whitespace-nowrap', {});
+    return clsx('fairys_admin_menu_item_title flex flex-1 items-center overflow-hidden gap-1', {});
+  }, []);
+
+  const titleTextClassName = useMemo(() => {
+    return clsx('fairys_admin_menu_item_title_text flex-1 text-ellipsis overflow-hidden whitespace-nowrap', {});
   }, []);
 
   const titleStyle = useMemo(() => {
@@ -89,9 +95,16 @@ export const MenuItem = (props: MenuItemProps) => {
   return (
     <div ref={menuItemInstance.dom} data-level={level} className={menuItemClassName} onClick={onClick}>
       <div className={titleClassName} style={titleStyle} title={item.title}>
-        {item.title}
+        {item.icon ? (
+          <span className="size-[16px]">
+            <Icon icon={item.icon} className="size-[16px]" />{' '}
+          </span>
+        ) : (
+          <Fragment />
+        )}
+        <span className={titleTextClassName}>{item.title}</span>
       </div>
-      <div className="fairys_admin_menu_item_extra">{isSubMenu ? <i className={expandIcon} /> : <Fragment />}</div>
+      <div className="fairys_admin_menu_item_extra">{isSubMenu ? <div className={expandIcon} /> : <Fragment />}</div>
     </div>
   );
 };

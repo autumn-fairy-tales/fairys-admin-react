@@ -8,7 +8,7 @@ import {
   useTabItemInstance,
 } from '../../context/tab-bar';
 import clsx from 'clsx';
-import { useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 
@@ -27,7 +27,7 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item shrink-0 transition-[background-color]  relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item shrink-0 transition-[background-color] relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
         'hover:bg-gray-200': !match,
         'bg-white': !!match,
@@ -58,23 +58,24 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   // 跳转后滚动到当前tab
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!!match && tabItemInstance.dom.current) {
-        tabItemInstance.dom.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-          inline: 'nearest',
-        });
-      }
-    }, 300);
-    return () => {
-      clearTimeout(timer);
-    };
+    if (!!match && tabItemInstance.dom.current) {
+      tabItemInstance.dom.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest',
+        inline: 'nearest',
+      });
+    }
   }, [match, tabItemInstance.dom]);
 
   return (
     <div ref={tabItemInstance.dom} className={itemClassName} onClick={onClick}>
-      <Icon icon={item.icon} className="size-[16px]" />
+      {item.icon ? (
+        <span className="size-[16px]">
+          <Icon icon={item.icon} className="size-[16px]" />{' '}
+        </span>
+      ) : (
+        <Fragment />
+      )}
       <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
       <span className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600" onClick={onClose} />
     </div>
@@ -100,11 +101,21 @@ export const TabBar = () => {
     });
   }, [tabBarItems]);
 
+  useEffect(() => {
+    const onMount = tabInstance.addEventListener();
+    return () => onMount?.();
+  }, [tabInstance.dom]);
+
   return (
     <TabInstanceContext.Provider value={tabInstance}>
       <div className={tabBarClassName}>
         <div className="fairys_admin_tab_bar_left"></div>
-        <div className="fairys_admin_tab_bar_body overflow-auto flex flex-row flex-1 no-scrollbar">{render}</div>
+        <div
+          className="fairys_admin_tab_bar_body overflow-auto flex flex-row flex-1 no-scrollbar"
+          ref={tabInstance.dom}
+        >
+          {render}
+        </div>
         <div className="fairys_admin_tab_bar_right"></div>
       </div>
     </TabInstanceContext.Provider>
