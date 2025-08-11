@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useMenuData, menuDataInstance, MenuInstanceContext, useMenuInstance } from './../context/menu-data';
 import { useLocation } from 'react-router';
 import { SubMenu } from './sub-menu';
@@ -24,9 +24,16 @@ export const Menu = () => {
     });
   }, [menuItems]);
 
+  useEffect(() => {
+    const unMount = menuInstance.addEventListener();
+    return () => unMount();
+  }, [menuInstance.dom]);
+
   return (
     <MenuInstanceContext.Provider value={menuInstance}>
-      <div className="fairys_admin_menu box-border p-[8px] overflow-auto h-full no-scrollbar">{render}</div>
+      <div ref={menuInstance.dom} className="fairys_admin_menu box-border p-[8px] overflow-auto h-full no-scrollbar">
+        {render}
+      </div>
     </MenuInstanceContext.Provider>
   );
 };

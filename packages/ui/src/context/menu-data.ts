@@ -139,6 +139,16 @@ export class MenuItemInstance {
   dom = createRef<HTMLDivElement>();
   item: MenuItemType;
   isSubMenu: boolean;
+  /**是否当前项选中*/
+  isActive = false;
+  /**滚动到当前项*/
+  scrollIntoView = () => {
+    this.dom.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
+  };
 }
 
 export const useMenuItemInstance = () => useRef<MenuItemInstance>(new MenuItemInstance()).current;
@@ -151,6 +161,35 @@ export class MenuInstance {
     this.menuItems.push(item);
     return () => {
       this.menuItems = this.menuItems.filter((it) => it !== item);
+    };
+  };
+
+  /**监听节点尺寸变化 回调方法*/
+  private resizeObserverCallback = () => {
+    // 需要把当前tab项移入可视区
+    for (let index = 0; index < this.menuItems.length; index++) {
+      const element = this.menuItems[index];
+      if (element.isActive) {
+        element.scrollIntoView();
+      }
+    }
+  };
+
+  /**监听节点尺寸变化*/
+  private resizeObserver = () => {
+    const resizeObserver = new ResizeObserver(this.resizeObserverCallback);
+    if (this.dom.current) resizeObserver.observe(this.dom.current);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  };
+
+  /**添加监听事件*/
+  addEventListener = () => {
+    // 1. 监听子节点的尺寸变化（ResizeObserver）
+    const unMount_resizeObserver = this.resizeObserver();
+    return () => {
+      unMount_resizeObserver();
     };
   };
 }

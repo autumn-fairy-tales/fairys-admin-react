@@ -25,6 +25,8 @@ const TabBarItem = (props: TabBarItemProps) => {
   const navigate = useNavigate();
   const match = useMatch(item.path);
 
+  tabItemInstance.isActive = !!match;
+
   const itemClassName = useMemo(() => {
     return clsx(
       'fairys_admin_tab_bar_item shrink-0 transition-[background-color] relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
@@ -59,11 +61,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   // 跳转后滚动到当前tab
   useEffect(() => {
     if (!!match && tabItemInstance.dom.current) {
-      tabItemInstance.dom.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'nearest',
-        inline: 'nearest',
-      });
+      tabItemInstance.scrollIntoView();
     }
   }, [match, tabItemInstance.dom]);
 
@@ -71,7 +69,7 @@ const TabBarItem = (props: TabBarItemProps) => {
     <div ref={tabItemInstance.dom} className={itemClassName} onClick={onClick}>
       {item.icon ? (
         <span className="size-[16px]">
-          <Icon icon={item.icon} className="size-[16px]" />{' '}
+          <Icon icon={item.icon} className="size-[16px]" />
         </span>
       ) : (
         <Fragment />

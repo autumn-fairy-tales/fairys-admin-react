@@ -76,6 +76,16 @@ class TabItemInstance {
   dom = createRef<HTMLDivElement>();
   /**tab项数据*/
   item: TabBarItemType;
+  /**是否当前项选中*/
+  isActive = false;
+  /**滚动到当前项*/
+  scrollIntoView = () => {
+    this.dom.current?.scrollIntoView({
+      behavior: 'smooth',
+      block: 'nearest',
+      inline: 'nearest',
+    });
+  };
 }
 
 export const useTabItemInstance = () => useRef(new TabItemInstance()).current;
@@ -104,7 +114,8 @@ class TabInstance {
         const item = tabBarItems[index];
         if (item.dom.current) {
           const rect = item.dom.current.getBoundingClientRect();
-          const isVisible = rect.left >= containerRect.left - 10 && rect.right <= containerRect.right + 10;
+          const width = rect.width / 2;
+          const isVisible = rect.left >= containerRect.left - width && rect.right <= containerRect.right + width;
           if (!isVisible) {
             dropDownTabBarItems.push(item.item);
           }
@@ -113,27 +124,62 @@ class TabInstance {
       console.log('dropDownTabBarItems===>', dropDownTabBarItems);
       tabBarInstance.state.dropDownTabBarItems = ref(dropDownTabBarItems);
       clearTimeout(this.timer);
-    }, 300);
+    }, 500);
   };
 
-  private onResize: MutationCallback = () => {
+  /**监听子节点变化 回调方法*/
+  private mutationObserverCallback = () => {
     this.updateDropDownTabBarItems();
   };
 
-  /**添加滚动事件*/
-  addEventListener = () => {
-    // 监听子节点的添加/删除
-    const observer = new MutationObserver(this.onResize);
-    if (this.dom.current) {
-      this.dom.current.addEventListener('scrollend', this.updateDropDownTabBarItems);
+  /**监听节点尺寸变化 回调方法*/
+  private resizeObserverCallback = () => {
+    // 需要把当前tab项移入可视区
+    for (let index = 0; index < this.tabBarItems.length; index++) {
+      const element = this.tabBarItems[index];
+      if (element.isActive) {
+        element.scrollIntoView();
+      }
+    }
+    this.updateDropDownTabBarItems();
+  };
+
+  /**监听子节点变化*/
+  private mutationObserver = () => {
+    const observer = new MutationObserver(this.mutationObserverCallback);
+    if (this.dom.current)
       observer.observe(this.dom.current, {
         childList: true, // 监听子节点的添加/删除
-        subtree: false, // 不监听后代节点（仅监听直接子节点）
+        subtree: true, // 不监听后代节点（仅监听直接子节点）
       });
+    return () => {
+      observer.disconnect();
+    };
+  };
+
+  /**监听节点尺寸变化*/
+  private resizeObserver = () => {
+    const resizeObserver = new ResizeObserver(this.resizeObserverCallback);
+    if (this.dom.current) resizeObserver.observe(this.dom.current);
+    return () => {
+      resizeObserver.disconnect();
+    };
+  };
+
+  /**添加监听事件*/
+  addEventListener = () => {
+    // 监听子节点的添加/删除
+    const unMount_mutationObserver = this.mutationObserver();
+    // 2. 监听子节点的尺寸变化（ResizeObserver）
+    const unMount_resizeObserver = this.resizeObserver();
+    this.updateDropDownTabBarItems();
+    if (this.dom.current) {
+      this.dom.current.addEventListener('scrollend', this.updateDropDownTabBarItems);
     }
     return () => {
       if (this.dom.current) this.dom.current.removeEventListener('scrollend', this.updateDropDownTabBarItems);
-      observer.disconnect();
+      unMount_mutationObserver();
+      unMount_resizeObserver();
     };
   };
 }

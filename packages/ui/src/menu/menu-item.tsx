@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useMemo } from 'react';
 import type { MenuItemType } from '../context/menu-data';
 import { tabBarInstance } from '../context/tab-bar';
-import { menuDataInstance, useMenuItemInstance, useMenuInstance } from './../context/menu-data';
+import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from './../context/menu-data';
 import { useMatch, useNavigate } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
@@ -17,15 +17,16 @@ export const MenuItem = (props: MenuItemProps) => {
   const { item, level = 0, isSubMenu = false, isExpand = false } = props;
   const match = useMatch(item.path);
   const navigate = useNavigate();
-  const menuInstance = useMenuInstance();
+  const menuInstance = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
+  menuItemInstance.isActive = !!match;
 
   useEffect(() => {
     const onMount = menuInstance.register(menuItemInstance);
     return () => onMount();
-  }, []);
+  }, [menuItemInstance]);
 
   const menuItemClassName = useMemo(() => {
     return clsx(
@@ -79,25 +80,17 @@ export const MenuItem = (props: MenuItemProps) => {
 
   // 跳转后滚动到当前tab
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (!!match && menuItemInstance.dom.current) {
-        menuItemInstance.dom.current.scrollIntoView({
-          behavior: 'smooth',
-          block: 'nearest',
-          inline: 'nearest',
-        });
-      }
-    }, 300);
-    return () => {
-      clearTimeout(timer);
-    };
+    if (!!match && menuItemInstance.dom.current) {
+      menuItemInstance.scrollIntoView();
+    }
   }, [match, menuItemInstance.dom]);
+
   return (
     <div ref={menuItemInstance.dom} data-level={level} className={menuItemClassName} onClick={onClick}>
       <div className={titleClassName} style={titleStyle} title={item.title}>
         {item.icon ? (
           <span className="size-[16px]">
-            <Icon icon={item.icon} className="size-[16px]" />{' '}
+            <Icon icon={item.icon} className="size-[16px]" />
           </span>
         ) : (
           <Fragment />
