@@ -29,9 +29,11 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item shrink-0 transition-[background-color] relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item shrink-0 text-gray-400 transition-[background-color] relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
         'hover:bg-gray-200': !match,
+        'hover:text-gray-600': !match,
+        'text-gray-600': !!match,
         'bg-white': !!match,
         active: !!match,
       },

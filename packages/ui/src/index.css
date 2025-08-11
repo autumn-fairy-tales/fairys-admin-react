@@ -30,12 +30,32 @@ body,
   top: 0;
   bottom: 0;
   margin: auto;
-  background-color: var(--color-gray-400);
-  height: 30%;
+  background-color: var(--color-gray-300);
+  height: 45%;
   transition: background-color 0.3s ease-in-out;
 }
 
 .fairys_admin_tab_bar .fairys_admin_tab_bar_item.active::before,
 .fairys_admin_tab_bar .fairys_admin_tab_bar_item.active + .fairys_admin_tab_bar_item::before {
   background-color: transparent;
+}
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item {
+  -webkit-clip-path: polygon(calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%, 8px 50%, 0% 0%);
+  clip-path: polygon(calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%, 8px 50%, 0% 0%);
+}
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item:first-child {
+  -webkit-clip-path: polygon(0% 0%, calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%);
+  clip-path: polygon(0% 0%, calc(100% - 8px) 0%, 100% 50%, calc(100% - 8px) 100%, 0% 100%);
+}
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item:last-child {
+  -webkit-clip-path: polygon(0% 0%, 100% 1%, 100% 100%, 0% 100%, 8px 50%);
+  clip-path: polygon(0% 0%, 100% 1%, 100% 100%, 0% 100%, 8px 50%);
+}
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item:only-child {
+  -webkit-clip-path: none;
+  clip-path: none;
 }
