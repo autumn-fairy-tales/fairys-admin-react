@@ -27,9 +27,13 @@ export const SubMenu = (props: MenuItemProps) => {
   }, [expandItems, item.path]);
 
   return (
-    <div className="fairys_admin_sub_menu">
+    <div className="fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px] ">
       <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />
-      {isExpand ? <div className="fairys_admin_sub_menu_body">{child}</div> : <Fragment />}
+      {isExpand ? (
+        <div className="fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px] ">{child}</div>
+      ) : (
+        <Fragment />
+      )}
     </div>
   );
 };

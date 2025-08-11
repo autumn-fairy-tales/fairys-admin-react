@@ -31,7 +31,10 @@ export const Menu = () => {
 
   return (
     <MenuInstanceContext.Provider value={menuInstance}>
-      <div ref={menuInstance.dom} className="fairys_admin_menu box-border p-[8px] overflow-auto h-full no-scrollbar">
+      <div
+        ref={menuInstance.dom}
+        className="fairys_admin_menu box-border flex flex-col gap-y-[2px] p-[8px] overflow-auto h-full no-scrollbar"
+      >
         {render}
       </div>
     </MenuInstanceContext.Provider>
