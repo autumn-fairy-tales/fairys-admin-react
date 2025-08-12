@@ -41,7 +41,7 @@ export const Layout = () => {
   }, [layoutMode]);
 
   const layoutCls = useMemo(() => {
-    return clsx('fairys_admin_layout overflow-hidden w-full h-full flex box-border ', {
+    return clsx('fairys_admin_layout overflow-hidden w-full h-full flex box-border dark', {
       [`fairys_admin_layout_${layoutMode}`]: !!layoutMode,
       'flex-col': !isSiderFull,
       'flex-row': isSiderFull,
