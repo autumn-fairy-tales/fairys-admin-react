@@ -5,7 +5,7 @@ import { menuDataInstance } from './menu-data';
 import { createContext, createRef, useContext, useRef } from 'react';
 
 export interface TabBarItemType extends MenuItemType {}
-interface TabBarInstanceState {
+export interface TabBarInstanceState {
   /**tab项集合*/
   tabBarItems: TabBarItemType[];
   /**右侧选择的tab项集合,不在可视区域的数据*/

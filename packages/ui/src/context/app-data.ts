@@ -1,9 +1,14 @@
 import { routerDataInstance } from './router-data';
 import { settingInstance } from './setting';
+import { menuDataInstance } from './menu-data';
+import { tabBarInstance } from './tab-bar';
 
 class AppDataInstance {
-  router = routerDataInstance;
-  setting = settingInstance;
+  static router = routerDataInstance;
+  static setting = settingInstance;
+  static menu = menuDataInstance;
+  static tabBar = tabBarInstance;
 }
+
 /**应用数据使用实例*/
 export const appDataInstance = new AppDataInstance();
