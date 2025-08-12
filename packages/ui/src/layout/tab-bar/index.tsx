@@ -30,14 +30,17 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item shrink-0 text-gray-400 transition-[background-color] relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item shrink-0  transition relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
-        'dark:before:bg-gray-600': true,
-        'hover:bg-gray-200 dark:hover:bg-gray-700': !match,
-        'hover:text-gray-600 dark:hover:text-gray-300': !match,
-        'text-gray-600 dark:text-gray-300': !!match,
-        'bg-white dark:bg-gray-600': !!match,
         active: !!match,
+        'text-gray-500 hover:text-gray-500': !!match,
+        'text-gray-400 hover:text-gray-500': !match,
+        'bg-gray-100 hover:bg-gray-200': !match,
+        'bg-white hover:bg-white': !!match,
+        'dark:text-gray-300 dark:hover:text-gray-200': !!match,
+        'dark:text-gray-400 dark:hover:text-gray-300': !match,
+        'dark:bg-gray-800 dark:hover:bg-gray-700': !match,
+        'dark:bg-gray-600 dark:hover:bg-gray-600': !!match,
       },
     );
   }, [match]);

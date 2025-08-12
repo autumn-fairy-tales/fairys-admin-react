@@ -35,8 +35,8 @@ export const MenuItem = (props: MenuItemProps) => {
         [`data-level=${level}`]: true,
         active: !!match,
         'bg-blue-500': !!match,
-        'text-white': !!match,
-        'hover:bg-blue-100 dark:hover:bg-gray-600 ': !match,
+        'text-white dark:text-white': !!match,
+        'hover:bg-blue-100 dark:hover:bg-gray-600': !match,
         'px-[14px]': true,
       },
     );

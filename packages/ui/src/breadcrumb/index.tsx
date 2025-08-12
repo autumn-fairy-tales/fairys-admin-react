@@ -31,10 +31,11 @@ export const Breadcrumb = () => {
           {
             'text-gray-500 hover:text-gray-500': isLast,
             'text-gray-400 hover:text-gray-500': !isLast,
-            'bg-gray-100 hover:bg-gray-100': true,
+            'bg-gray-100 hover:bg-gray-100': isLast,
+            'bg-gray-100 hover:bg-gray-200': !isLast,
             'dark:text-gray-300 dark:hover:text-gray-200': isLast,
             'dark:text-gray-400 dark:hover:text-gray-300': !isLast,
-            'dark:bg-gray-600 dark:hover:bg-gray-500': true,
+            'dark:bg-gray-800 dark:hover:bg-gray-700': true,
           },
         );
         return (
