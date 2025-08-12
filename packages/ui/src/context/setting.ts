@@ -84,12 +84,14 @@ export interface SettingInstanceState {
 }
 
 class SettingInstance {
+  static localStorageKey = 'fairys_setting_state';
+
   state = proxy<SettingInstanceState>({
     layoutMode: 'left_top_header',
   });
 
   constructor() {
-    const state = localStorage.getItem('setting_state');
+    const state = localStorage.getItem(SettingInstance.localStorageKey);
     if (state) {
       try {
         const newState = JSON.parse(state);
@@ -105,7 +107,7 @@ class SettingInstance {
 
   initState = (state: SettingInstanceState) => {
     this.state = proxy({ layoutMode: 'left_top_header', ...state });
-    localStorage.setItem('setting_state', JSON.stringify({ layoutMode: 'left_top_header', ...state }));
+    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ layoutMode: 'left_top_header', ...state }));
   };
 
   updated = (state: SettingInstanceState) => {
@@ -113,7 +115,7 @@ class SettingInstance {
       const element = state[key];
       this.state[key] = element;
     }
-    localStorage.setItem('setting_state', JSON.stringify(this.state));
+    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(this.state));
   };
 }
 
