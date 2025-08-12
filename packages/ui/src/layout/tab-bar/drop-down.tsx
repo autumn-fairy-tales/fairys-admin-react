@@ -31,7 +31,7 @@ const Items = () => {
         <div
           onClick={(e) => onNativeClick(item, e)}
           key={item.path}
-          className="shrink-0 text-gray-400 hover:bg-gray-100 transition-[background-color] flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer"
+          className="shrink-0 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100 transition flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer"
         >
           {item.icon ? (
             <span className="size-[16px]">
@@ -71,7 +71,7 @@ export const DropDownTabBarItems = () => {
           <PopoverPanel
             transition
             anchor={{ to: 'left start', gap: '4px' }}
-            className="rounded-sm bg-white shadow-xl inset-shadow-sm text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
+            className="rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
           >
             <Items />
           </PopoverPanel>

@@ -38,7 +38,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         'text-gray-400 hover:text-gray-500': !match,
         'bg-gray-100 hover:bg-gray-200': !match,
         'bg-white hover:bg-white': !!match,
-        'dark:text-gray-300 dark:hover:text-gray-200': !!match,
+        'dark:text-gray-200 dark:hover:text-gray-200': !!match,
         'dark:text-gray-400 dark:hover:text-gray-300': !match,
         'dark:bg-gray-800 dark:hover:bg-gray-700': !match,
         'dark:bg-gray-600 dark:hover:bg-gray-600': !!match,
@@ -104,7 +104,7 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px]', {
-      'dark:bg-gray-900': true,
+      'dark:bg-gray-800': true,
     });
   }, []);
   const location = useLocation();
