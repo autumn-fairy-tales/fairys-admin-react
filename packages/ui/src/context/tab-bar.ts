@@ -19,6 +19,7 @@ class TabBarInstance {
     tabBarItems: [],
     dropDownTabBarItems: [],
   });
+
   /**初始化渲染菜单数据*/
   ctor = (tabBarItems: MenuItemType[]) => {
     this.state.tabBarItems = ref(tabBarItems);

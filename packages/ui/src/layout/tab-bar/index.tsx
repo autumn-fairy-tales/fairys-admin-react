@@ -22,11 +22,16 @@ const TabBarItem = (props: TabBarItemProps) => {
   const tabInstance = useTabInstanceContext();
   const tabItemInstance = useTabItemInstance();
   tabItemInstance.item = item;
-
   const navigate = useNavigate();
   const match = useMatch(item.path);
-
   tabItemInstance.isActive = !!match;
+
+  const [state] = useTabBar();
+  const tabBarItems = state.tabBarItems;
+
+  const isCloseIconShow = useMemo(() => {
+    return (tabBarItems || []).length > 1;
+  }, [tabBarItems]);
 
   const itemClassName = useMemo(() => {
     return clsx(
@@ -58,7 +63,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const onClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    tabBarInstance.remove(item.path, !!match, navigate);
+    tabBarInstance.remove(item.path, tabItemInstance.isActive, navigate);
   };
 
   useEffect(() => {
@@ -83,17 +88,21 @@ const TabBarItem = (props: TabBarItemProps) => {
     );
   }, [match]);
 
+  const iconRender = useMemo(() => {
+    return item.icon ? (
+      <span className="size-[16px]">
+        <Icon icon={item.icon} className="size-[16px]" />
+      </span>
+    ) : (
+      <Fragment />
+    );
+  }, [item.icon]);
+
   return (
     <div ref={tabItemInstance.dom} className={itemClassName} onClick={onClick}>
-      {item.icon ? (
-        <span className="size-[16px]">
-          <Icon icon={item.icon} className="size-[16px]" />
-        </span>
-      ) : (
-        <Fragment />
-      )}
+      {iconRender}
       <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
-      <span className={iconClassName} onClick={onClose} />
+      {isCloseIconShow ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
     </div>
   );
 };
@@ -103,9 +112,12 @@ export const TabBar = () => {
   const tabBarItems = state.tabBarItems;
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
-    return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px]', {
-      'dark:bg-gray-800': true,
-    });
+    return clsx(
+      'fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px] border-b border-gray-200 dark:border-gray-800',
+      {
+        'dark:bg-gray-800': true,
+      },
+    );
   }, []);
   const location = useLocation();
 

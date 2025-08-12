@@ -2,7 +2,7 @@ import { Breadcrumb } from '../../breadcrumb';
 
 export const ToolBar = () => {
   return (
-    <div className="fairys_admin_tool_bar overflow-hidden w-full flex flex-row px-[4px] ">
+    <div className="fairys_admin_tool_bar overflow-hidden w-full flex flex-row px-[4px] border-b border-gray-200 dark:border-gray-800">
       <div className="fairys_admin_tool_bar_left">
         <Breadcrumb />
       </div>
