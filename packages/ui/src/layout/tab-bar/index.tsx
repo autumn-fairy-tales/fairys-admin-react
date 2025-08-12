@@ -32,10 +32,11 @@ const TabBarItem = (props: TabBarItemProps) => {
     return clsx(
       'fairys_admin_tab_bar_item shrink-0 text-gray-400 transition-[background-color] relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
-        'hover:bg-gray-200': !match,
-        'hover:text-gray-600': !match,
-        'text-gray-600': !!match,
-        'bg-white': !!match,
+        'dark:before:bg-gray-600': true,
+        'hover:bg-gray-200 dark:hover:bg-gray-700': !match,
+        'hover:text-gray-600 dark:hover:text-gray-300': !match,
+        'text-gray-600 dark:text-gray-300': !!match,
+        'bg-white dark:bg-gray-600': !!match,
         active: !!match,
       },
     );
@@ -68,6 +69,13 @@ const TabBarItem = (props: TabBarItemProps) => {
     }
   }, [match, tabItemInstance.dom]);
 
+  const iconClassName = useMemo(() => {
+    return clsx('icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white', {
+      'dark:text-gray-400': !!match,
+      'dark:text-gray-500': !match,
+    });
+  }, [match]);
+
   return (
     <div ref={tabItemInstance.dom} className={itemClassName} onClick={onClick}>
       {item.icon ? (
@@ -78,7 +86,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         <Fragment />
       )}
       <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
-      <span className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600" onClick={onClose} />
+      <span className={iconClassName} onClick={onClose} />
     </div>
   );
 };
@@ -88,7 +96,9 @@ export const TabBar = () => {
   const tabBarItems = state.tabBarItems;
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
-    return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px]');
+    return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px]', {
+      'dark:bg-gray-800': true,
+    });
   }, []);
   const location = useLocation();
 

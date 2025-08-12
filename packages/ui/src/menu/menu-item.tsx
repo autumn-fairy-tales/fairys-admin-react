@@ -30,13 +30,13 @@ export const MenuItem = (props: MenuItemProps) => {
 
   const menuItemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_menu_item shrink-0 transition rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1',
+      'fairys_admin_menu_item shrink-0 transition rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400',
       {
         [`data-level=${level}`]: true,
         active: !!match,
         'bg-blue-500': !!match,
         'text-white': !!match,
-        'hover:bg-blue-100': !match,
+        'hover:bg-blue-100 dark:hover:bg-gray-600 ': !match,
         'px-[14px]': true,
       },
     );
@@ -70,10 +70,10 @@ export const MenuItem = (props: MenuItemProps) => {
 
   const expandIcon = useMemo(() => {
     return clsx(
-      'relative ms-1 w-[10px] after:absolute before:absolute after:h-[1.5px] after:w-[6px] before:h-[1.5px] before:w-[6px] after:bg-current before:bg-current after:transition-transform-200 before:transition-transform-200 after:content-empty before:content-empty after:-translate-y-[1px] before:-translate-y-[1px]',
+      'relative ms-1 w-[10px] after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]',
       {
-        'before:-rotate-45 before:-translate-x-[2px] after:rotate-45 after:translate-x-[2px]': isExpand,
-        'before:rotate-45 before:-translate-x-[2px] after:-rotate-45 after:translate-x-[2px]': !isExpand,
+        expand: isExpand,
+        close: !isExpand,
       },
     );
   }, [isExpand]);

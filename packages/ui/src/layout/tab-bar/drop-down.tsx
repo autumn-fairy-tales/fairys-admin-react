@@ -65,7 +65,7 @@ export const DropDownTabBarItems = () => {
     return (
       <Fragment>
         <Popover className="h-full  flex items-center justify-center w-[50px]">
-          <PopoverButton className="w-[25px] h-[25px] text-sm/6 font-semibold focus:outline-none  bg-white text-gray-400 hover:text-gray-600 cursor-pointer">
+          <PopoverButton className="w-[25px] h-[25px] text-sm/6 font-semibold focus:outline-none bg-white dark:bg-gray-600 text-gray-400 hover:text-gray-600 cursor-pointer dark:text-gray-400 dark:hover:text-white">
             <span className="icon-[ant-design--caret-down-outlined]" />
           </PopoverButton>
           <PopoverPanel
