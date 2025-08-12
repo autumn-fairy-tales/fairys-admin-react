@@ -30,9 +30,10 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item shrink-0  transition relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item shrink-0 transition relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
         active: !!match,
+        'dark:before:bg-gray-600': true,
         'text-gray-500 hover:text-gray-500': !!match,
         'text-gray-400 hover:text-gray-500': !match,
         'bg-gray-100 hover:bg-gray-200': !match,
@@ -73,10 +74,13 @@ const TabBarItem = (props: TabBarItemProps) => {
   }, [match, tabItemInstance.dom]);
 
   const iconClassName = useMemo(() => {
-    return clsx('icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white', {
-      'dark:text-gray-400': !!match,
-      'dark:text-gray-500': !match,
-    });
+    return clsx(
+      'icon-[ant-design--close-outlined] transition ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white',
+      {
+        'dark:text-gray-400': !!match,
+        'dark:text-gray-500': !match,
+      },
+    );
   }, [match]);
 
   return (
@@ -100,7 +104,7 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx('fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px]', {
-      'dark:bg-gray-800': true,
+      'dark:bg-gray-900': true,
     });
   }, []);
   const location = useLocation();
