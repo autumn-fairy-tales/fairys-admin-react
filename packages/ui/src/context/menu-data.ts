@@ -101,13 +101,23 @@ export class MenuDataInstance {
   };
   /**展开项*/
   onExpandItems = (path: string) => {
-    const parentItems = this._parentMenuItemMap.get(path) || [];
-    this.state.expandItems = ref([...parentItems]);
+    if (this.state.expandItems.length === 0) {
+      const parentItems = this._parentMenuItemMap.get(path) || [];
+      this.state.expandItems = ref([...parentItems]);
+      return;
+    }
+    // 如果不存在子菜单，则不进行更新展开项
+    const _item = this.get_path_menuItem(path);
+    if (Array.isArray(_item?.children) && _item.children.length) {
+      const parentItems = this._parentMenuItemMap.get(path) || [];
+      this.state.expandItems = ref([...parentItems]);
+    }
   };
   /**折叠*/
   onCollapseItems = (path: string) => {
     this.state.expandItems = ref(this.state.expandItems.filter((i) => i.path !== path));
   };
+
   /**切换展示隐藏*/
   onToggleItems = (path: string) => {
     const finx = this.state.expandItems.find((i) => i.path === path);
