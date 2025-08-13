@@ -115,9 +115,9 @@ class SettingInstance {
   /**初始配置*/
   initSetting = (state: SettingInstanceState) => {
     this.state = proxy({
+      layoutMode: 'main_sub_left',
       ...this.state,
       ...state,
-      layoutMode: 'main_top_sub_left_header',
     });
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
   };
