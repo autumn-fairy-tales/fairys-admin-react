@@ -37,28 +37,18 @@ export interface SettingInstanceState {
   layoutMode?: LayoutMode;
   /**暗黑导航栏*/
   darkMenu?: boolean;
+  /**侧边栏是否折叠*/
+  sideMenuMode?: 'open' | 'close' | 'main';
   /**页面切换动画*/
   pageTransitionMode?: '';
-
-  /**导航栏*/
-  /**次导航保持展开一个*/
-  keepOneSubMenu?: boolean;
-  /**导航栏选中风格*/
-  mainMenuSelectStyle?: '';
-  /**是否启用主导航快捷键*/
-  enableMainMenuShortcut?: boolean;
 
   /**标签栏*/
   /**是否启用标签栏*/
   enableTabBar?: boolean;
-  /**标签栏风格*/
-  tabBarStyle?: '';
   /**是否显示图标*/
   tabBarShowIcon?: boolean;
   /**标签页双击执行动作*/
   tabBarDoubleClickAction?: '';
-  /**是否启用快捷键*/
-  enableTabBarShortcut?: boolean;
 
   /**工具栏*/
   /**是否启用工具栏*/
@@ -76,14 +66,10 @@ export interface SettingInstanceState {
   /**页面刷新*/
   enableToolBarRefresh?: boolean;
 
-  /**面包屑导航风格*/
-  breadcrumbStyle?: '';
   /**是否启用页面水印*/
   enableWatermark?: boolean;
   /**载入进度条*/
   enableProgress?: boolean;
-  /**动态标题*/
-  enableDynamicTitle?: boolean;
 
   /**只是默认值，不使用*/
   __defaultValue?: string;
@@ -93,8 +79,9 @@ class SettingInstance {
   static localStorageKey = 'fairys_setting_state';
 
   state = proxy<SettingInstanceState>({
-    // layoutMode: "left_top_header",
     layoutMode: 'main_sub_left',
+    // 侧边栏是否折叠
+    sideMenuMode: 'open',
   });
 
   constructor() {

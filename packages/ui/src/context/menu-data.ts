@@ -110,6 +110,20 @@ export class MenuDataInstance {
     this.state.menuItems = ref(filterMenuItems(this._menuItems, _key));
   };
 
+  /**判断是否是父级菜单*/
+  isParentMenuItem = (path: string, location_path: string) => {
+    const parentItems = this._parentMenuItemMap.get(location_path);
+    if (parentItems) {
+      return !!parentItems.find((i) => i.path === path);
+    }
+    return false;
+  };
+
+  /**清空展开项*/
+  clearExpandItems = () => {
+    this.state.expandItems = ref([]);
+  };
+
   /**展开项*/
   onExpandItems = (path: string) => {
     /**只有在未存在展开项时才进行更新(刚进行加载数据)*/
@@ -125,10 +139,12 @@ export class MenuDataInstance {
       this.state.expandItems = ref([...parentItems]);
     }
   };
+
   /**折叠*/
   onCollapseItems = (path: string) => {
     this.state.expandItems = ref(this.state.expandItems.filter((i) => i.path !== path));
   };
+
   /**切换展示隐藏*/
   onToggleItems = (path: string) => {
     const finx = this.state.expandItems.find((i) => i.path === path);
@@ -138,6 +154,7 @@ export class MenuDataInstance {
       this.onExpandItems(path);
     }
   };
+
   /**是否展示*/
   isExpand = (path: string) => {
     return !!this.state.expandItems.find((i) => i.path === path);
@@ -190,6 +207,8 @@ export class MenuItemInstance {
   isSubMenu: boolean;
   /**是否当前项选中*/
   isActive = false;
+  /**关闭弹框事件*/
+  close: () => void;
   /**滚动到当前项*/
   scrollIntoView = () => {
     this.dom.current?.scrollIntoView({
@@ -212,7 +231,6 @@ export class MenuInstance {
       this.menuItems = this.menuItems.filter((it) => it !== item);
     };
   };
-
   /**监听节点尺寸变化 回调方法*/
   private resizeObserverCallback = () => {
     // 需要把当前tab项移入可视区
@@ -240,6 +258,24 @@ export class MenuInstance {
     return () => {
       unMount_resizeObserver();
     };
+  };
+
+  /**关闭弹框*/
+  onClose = (path: string) => {
+    // 树节点
+    const treeNode = menuDataInstance._parentMenuItemMap.get(path);
+    const list = treeNode
+      .filter((its) => Array.isArray(its.children) && its.children.length)
+      .map((its) => its.path)
+      .concat([path])
+      .reverse();
+    for (let index = 0; index < list.length; index++) {
+      const path = list[index];
+      const finx = this.menuItems.find((it) => it.item.path === path);
+      if (finx) {
+        finx.close();
+      }
+    }
   };
 }
 

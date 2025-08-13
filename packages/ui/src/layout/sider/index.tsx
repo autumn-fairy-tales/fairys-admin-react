@@ -3,6 +3,7 @@ import { DarkModeWarp } from './../../dark-mode';
 import { MainMenu } from '../../main-menu';
 import { useSetting } from '../../context/setting';
 import { Fragment, useMemo } from 'react';
+import clsx from 'clsx';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSetting();
@@ -23,15 +24,36 @@ const LayoutSiderMainMenu = () => {
 };
 
 export const LayoutSider = () => {
+  const [state, settingInstance] = useSetting();
+  const sideMenuMode = state.sideMenuMode;
+
+  const bodyClassName = useMemo(() => {
+    return clsx(
+      'flex flex-col h-full  border-r border-gray-200 dark:border-gray-800! transition-all duration-300 dark:text-gray-400 overflow-hidden',
+      {
+        'w-[60px]': sideMenuMode === 'close',
+        'w-[220px]': sideMenuMode !== 'close',
+      },
+    );
+  }, [sideMenuMode]);
+
   return (
     <DarkModeWarp className="fairys_admin_layout_sider flex flex-row h-full  dark:text-gray-400">
       <LayoutSiderMainMenu />
-      <div className="flex flex-col h-full w-[220px] border-r border-gray-200 dark:border-gray-800! transition-all duration-300 dark:text-gray-400 overflow-hidden">
+      <div className={bodyClassName}>
         <div>hhhhh</div>
         <div className="fairys_admin_layout_sider_menu flex-1 overflow-hidden">
           <Menu />
         </div>
-        <div>footer</div>
+        <div>
+          <button
+            onClick={() => {
+              settingInstance.updated({ sideMenuMode: sideMenuMode === 'close' ? 'open' : 'close' });
+            }}
+          >
+            切换
+          </button>
+        </div>
       </div>
     </DarkModeWarp>
   );

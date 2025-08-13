@@ -45,6 +45,30 @@ export const menuItems: MenuItemType[] = [
         title: '列表2列表2列表2列表2列表2列表2列表2列表2列表2',
         path: '/list2',
         icon: 'ant-design:unordered-list',
+        children: [
+          {
+            title: '列表2-1',
+            path: '/list2-1',
+            icon: 'ant-design:unordered-list',
+          },
+          {
+            title: '列表2-1-1',
+            path: '/list2-1-1',
+            icon: 'ant-design:unordered-list',
+            children: [
+              {
+                title: '列表2-1-1-1',
+                path: '/list2-1-1-1',
+                icon: 'ant-design:unordered-list',
+              },
+              {
+                title: '列表2-1-1-1-1',
+                path: '/list2-1-1-1-1',
+                icon: 'ant-design:unordered-list',
+              },
+            ],
+          },
+        ],
       },
       {
         title: '列表3',

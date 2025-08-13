@@ -20,12 +20,17 @@ export const Layout = () => {
    * 8. left_top_header:不区分主子菜单并且左侧显示 + 有头部信息
    */
   const layoutMode = state.layoutMode;
+  const sideMenuMode = state.sideMenuMode;
   const location = useLocation();
 
   useMemo(() => {
-    menuDataInstance.onExpandItems(location.pathname);
     menuDataInstance.updateChildMenus(location.pathname);
-  }, [location.pathname]);
+    if (sideMenuMode === 'open') {
+      menuDataInstance.onExpandItems(location.pathname);
+    } else {
+      menuDataInstance.clearExpandItems();
+    }
+  }, [location.pathname, sideMenuMode]);
 
   const isShowHeader = useMemo(() => {
     return ['main_top_header', 'main_top_sub_all_header', 'main_top_sub_left_header', 'left_top_header'].includes(
