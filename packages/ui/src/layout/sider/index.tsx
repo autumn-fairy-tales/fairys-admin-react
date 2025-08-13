@@ -1,9 +1,20 @@
 import { Menu } from '../../menu';
 import { DarkModeWarp } from './../../dark-mode';
 import { MainMenu } from '../../main-menu';
+import { useSetting } from '../../context/setting';
+import { Fragment, useMemo } from 'react';
 
 const LayoutSiderMainMenu = () => {
+  const [state] = useSetting();
+  const layoutMode = state.layoutMode;
+
+  const isShow = useMemo(() => {
+    return ['main_sub_left', 'main_left_sub_all'].includes(layoutMode);
+  }, [layoutMode]);
   // 判断是否显示
+  if (!isShow) {
+    return <Fragment />;
+  }
   return (
     <div className="border-r border-gray-200 h-full dark:border-gray-800! transition-all duration-300 w-[80px] overflow-hidden">
       <MainMenu layoutMode="vertical" />
