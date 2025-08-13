@@ -1,19 +1,12 @@
 import { useEffect, useMemo } from 'react';
-import { useMenuData, menuDataInstance, MenuInstanceContext, useMenuInstance } from './../context/menu-data';
-import { useLocation } from 'react-router';
+import { useMenuData, MenuInstanceContext, useMenuInstance } from './../context/menu-data';
 import { SubMenu } from './sub-menu';
 import { MenuItem } from './menu-item';
 
 export const Menu = () => {
   const [state] = useMenuData();
   const menuItems = state.menuItems;
-  const location = useLocation();
   const menuInstance = useMenuInstance();
-
-  useMemo(() => {
-    menuDataInstance.onExpandItems(location.pathname);
-  }, [location.pathname]);
-
   const render = useMemo(() => {
     return menuItems.map((item) => {
       // 是否存在子集

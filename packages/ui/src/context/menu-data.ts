@@ -1,5 +1,6 @@
 import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
+import { settingInstance } from '../context/setting';
 export interface MenuItemType {
   /**标题*/
   title: string;
@@ -7,6 +8,8 @@ export interface MenuItemType {
   path: string;
   /**图标*/
   icon?: string;
+  /**判断是否主子菜单字段，仅在第一层生效*/
+  isMain?: boolean;
   /**子项菜单*/
   children?: MenuItemType[];
   [x: string]: any;
@@ -15,6 +18,10 @@ export interface MenuItemType {
 export interface MenuDataInstanceState {
   /**侧边渲染菜单*/
   menuItems: MenuItemType[];
+  /**主菜单*/
+  mainMenuItems: MenuItemType[];
+  /**主菜单选中项*/
+  mainMenuItemSelected?: string;
   /**展开项*/
   expandItems: MenuItemType[];
   /**默认引用值*/
@@ -75,6 +82,8 @@ export class MenuDataInstance {
   /**菜单数据状态*/
   state = proxy<MenuDataInstanceState>({
     menuItems: [],
+    mainMenuItems: [],
+    mainMenuItemSelected: '',
     expandItems: [],
   });
   /**设置菜单所有数据*/
@@ -82,6 +91,7 @@ export class MenuDataInstance {
     this._menuItems = items;
     this._flatMenuItems = flatMenuItems(items, [], this._parentMenuItemMap);
     this.state.menuItems = ref(items);
+    this.state.mainMenuItems = ref(items.filter((item) => item.isMain));
   };
   /**
    * 通过path获取菜单对象
@@ -99,8 +109,10 @@ export class MenuDataInstance {
     }
     this.state.menuItems = ref(filterMenuItems(this._menuItems, _key));
   };
+
   /**展开项*/
   onExpandItems = (path: string) => {
+    /**只有在未存在展开项时才进行更新(刚进行加载数据)*/
     if (this.state.expandItems.length === 0) {
       const parentItems = this._parentMenuItemMap.get(path) || [];
       this.state.expandItems = ref([...parentItems]);
@@ -117,7 +129,6 @@ export class MenuDataInstance {
   onCollapseItems = (path: string) => {
     this.state.expandItems = ref(this.state.expandItems.filter((i) => i.path !== path));
   };
-
   /**切换展示隐藏*/
   onToggleItems = (path: string) => {
     const finx = this.state.expandItems.find((i) => i.path === path);
@@ -130,6 +141,34 @@ export class MenuDataInstance {
   /**是否展示*/
   isExpand = (path: string) => {
     return !!this.state.expandItems.find((i) => i.path === path);
+  };
+
+  /**更新子菜单显示,和主菜单选中项*/
+  updateChildMenus = (path: string) => {
+    const isMainSubMenuMode = settingInstance.isMainSubMenuMode();
+    if (isMainSubMenuMode) {
+      const mainMenuItemSelected = this.state.mainMenuItemSelected;
+      const parentItems = this._parentMenuItemMap.get(path);
+      const currentMainMenuItemPath = parentItems?.[0]?.path;
+      if (currentMainMenuItemPath && currentMainMenuItemPath !== mainMenuItemSelected) {
+        this.state.mainMenuItemSelected = currentMainMenuItemPath;
+        const _item = this.state.mainMenuItems.find((ite) => ite.path === currentMainMenuItemPath);
+        if (_item) {
+          this.state.menuItems = ref(_item.children);
+        }
+      }
+    }
+  };
+
+  /**点击主菜单切换*/
+  onMainMenu = (path: string) => {
+    const _item = this.state.mainMenuItems.find((ite) => ite.path === path);
+    if (_item) {
+      if (Array.isArray(_item.children)) {
+        this.state.menuItems = ref(_item.children);
+        this.state.mainMenuItemSelected = path;
+      }
+    }
   };
 }
 /**菜单数据使用实例*/

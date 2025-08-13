@@ -3,13 +3,64 @@
  */
 
 import clsx from 'clsx';
-import { useMemo } from 'react';
+import { useMemo, Fragment } from 'react';
 import { useSetting } from '../context/setting';
 import { useLocation, useNavigate } from 'react-router';
+import { useMenuData, MenuItemType } from '../context/menu-data';
+import { Icon } from '@iconify/react';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
 }
+
+interface MainMenuItemProps {
+  item: MenuItemType;
+}
+
+const MainMenuItem = (props: MainMenuItemProps) => {
+  const { item } = props;
+  const [state, menuInstance] = useMenuData();
+  const mainMenuItemSelected = state.mainMenuItemSelected;
+  const isActive = mainMenuItemSelected === item.path;
+
+  const className = useMemo(() => {
+    return clsx(
+      'fairys_admin_main_menu_item px-[8px] py-[4px] shrink-0 transition-all duration-300 rounded-sm box-border flex flex-col items-center cursor-pointer gap-1 dark:text-gray-400',
+      {
+        active: isActive,
+        'bg-blue-500': isActive,
+        'text-white dark:text-white': isActive,
+        'hover:bg-blue-100 dark:hover:bg-gray-600': !isActive,
+      },
+    );
+  }, [isActive]);
+
+  const onClickMainMenuItem = () => {
+    if (!isActive) menuInstance.onMainMenu(item.path);
+  };
+
+  return (
+    <div className={className} onClick={onClickMainMenuItem}>
+      {item.icon ? (
+        <span className="size-[26px]">
+          <Icon icon={item.icon} className="size-[26px]" />
+        </span>
+      ) : (
+        <Fragment />
+      )}
+      <div>{item.title}</div>
+    </div>
+  );
+};
+
+const MainMenuItems = () => {
+  const [state] = useMenuData();
+  const mainMenuItems = state.mainMenuItems || [];
+  const menuRender = useMemo(() => {
+    return mainMenuItems.map((item) => <MainMenuItem item={item} key={item.path} />);
+  }, [mainMenuItems]);
+  return menuRender;
+};
 
 export const MainMenu = (props: MainMenuProps) => {
   const { layoutMode } = props;
@@ -44,6 +95,13 @@ export const MainMenu = (props: MainMenuProps) => {
     navigate('/');
   };
 
+  const bodyMenusClassName = useMemo(() => {
+    return clsx('fairys_admin_main_menu_body_menus flex gap-y-2 w-full', {
+      'flex-col': layoutMode === 'vertical',
+      'flex-row': layoutMode === 'horizontal',
+    });
+  }, [layoutMode]);
+
   return (
     <div className={mainMenuClassName}>
       {/* 左侧主菜单 */}
@@ -54,7 +112,9 @@ export const MainMenu = (props: MainMenuProps) => {
         <div className={projectNameClassName} onClick={onClickHome}>
           {state.projectName}
         </div>
-        <div className="fairys_admin_main_menu_body_menus">菜单</div>
+        <div className={bodyMenusClassName}>
+          <MainMenuItems />
+        </div>
       </div>
       <div className="fairys_admin_main_menu_extra">头像部分</div>
       {/* 顶部主菜单 */}

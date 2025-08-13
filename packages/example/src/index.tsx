@@ -3,14 +3,19 @@ import { RouterProvider } from 'react-router';
 import { router } from './routes';
 import { settingInstance } from '@fairys/admin-tools-react';
 import logo from './assets/logo.png';
-
-import './menu';
+import { menuDataInstance } from '@fairys/admin-tools-react';
+import { menuItems } from './menu';
 import './index.css';
 
 settingInstance.initSetting({
   logo: logo,
   projectName: 'Fairys Admin',
 });
+
+/**临时加载菜单数据*/
+menuDataInstance.ctor(menuItems);
+/**临时加载一下tabBarItems*/
+// tabBarInstance.ctor(menuItems?.[0]?.children || []);
 
 const rootEl = document.getElementById('root');
 if (rootEl) {

@@ -9,6 +9,7 @@ import { proxy, useSnapshot } from 'valtio';
  * 6. main_top_sub_left_header:顶部主菜单 + 侧边子菜单 + 有头部信息
  * 7. left:不区分主子菜单并且左侧显示 + 无头部信息(用户信息一起移入左侧显示)
  * 8. left_top_header:不区分主子菜单并且左侧显示 + 有头部信息
+ * 9. mobile:移动端布局,不进行区分主子菜单，使用弹框展示，布局使用 `left` 布局
  */
 export type LayoutMode =
   | 'main_sub_left'
@@ -18,7 +19,8 @@ export type LayoutMode =
   | 'main_top_sub_all_header'
   | 'main_top_sub_left_header'
   | 'left'
-  | 'left_top_header';
+  | 'left_top_header'
+  | 'mobile';
 
 export interface SettingInstanceState {
   /**logo加载地址*/
@@ -91,7 +93,8 @@ class SettingInstance {
   static localStorageKey = 'fairys_setting_state';
 
   state = proxy<SettingInstanceState>({
-    layoutMode: 'left_top_header',
+    // layoutMode: "left_top_header",
+    layoutMode: 'main_sub_left',
   });
 
   constructor() {
@@ -126,6 +129,15 @@ class SettingInstance {
       this.state[key] = element;
     }
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(this.state));
+  };
+
+  /**判断是否主子菜单模板*/
+  isMainSubMenuMode = () => {
+    return (
+      this.state.layoutMode === 'main_sub_left' ||
+      this.state.layoutMode === 'main_left_sub_all' ||
+      this.state.layoutMode === 'main_top_sub_left_header'
+    );
   };
 }
 
