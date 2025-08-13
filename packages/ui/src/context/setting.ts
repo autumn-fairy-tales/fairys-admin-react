@@ -21,6 +21,10 @@ export type LayoutMode =
   | 'left_top_header';
 
 export interface SettingInstanceState {
+  /**logo加载地址*/
+  logo?: string;
+  /**项目名*/
+  projectName?: string;
   /**颜色主题风格*/
   theme?: 'dark' | 'light' | 'auto';
   /**主题颜色*/
@@ -105,11 +109,17 @@ class SettingInstance {
     }
   }
 
-  initState = (state: SettingInstanceState) => {
-    this.state = proxy({ layoutMode: 'left_top_header', ...state });
-    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ layoutMode: 'left_top_header', ...state }));
+  /**初始配置*/
+  initSetting = (state: SettingInstanceState) => {
+    this.state = proxy({
+      layoutMode: 'left_top_header',
+      ...this.state,
+      ...state,
+    });
+    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
   };
 
+  /**更新配置*/
   updated = (state: SettingInstanceState) => {
     for (const key in state) {
       const element = state[key];

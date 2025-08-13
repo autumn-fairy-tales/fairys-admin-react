@@ -35,7 +35,7 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item shrink-0 transition relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item shrink-0 transition-all duration-300 relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
       {
         active: !!match,
         'dark:before:bg-gray-600': true,
@@ -80,7 +80,7 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const iconClassName = useMemo(() => {
     return clsx(
-      'icon-[ant-design--close-outlined] transition ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white',
+      'icon-[ant-design--close-outlined] transition-all duration-300 ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white',
       {
         'dark:text-gray-400': !!match,
         'dark:text-gray-500': !match,

@@ -71,7 +71,7 @@ export const DropDownTabBarItems = () => {
           <PopoverPanel
             transition
             anchor={{ to: 'left start', gap: '4px' }}
-            className="rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm text-sm/6 transition duration-200 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
+            className="rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm text-sm/6  transition-all duration-300 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
           >
             <Items />
           </PopoverPanel>

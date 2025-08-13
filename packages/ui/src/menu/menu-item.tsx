@@ -30,7 +30,7 @@ export const MenuItem = (props: MenuItemProps) => {
 
   const menuItemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_menu_item shrink-0 transition rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400',
+      'fairys_admin_menu_item shrink-0  transition-all duration-300  rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400',
       {
         [`data-level=${level}`]: true,
         active: !!match,

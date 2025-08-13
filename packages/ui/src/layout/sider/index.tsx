@@ -1,14 +1,27 @@
 import { Menu } from '../../menu';
 import { DarkModeWarp } from './../../dark-mode';
+import { MainMenu } from '../../main-menu';
+
+const LayoutSiderMainMenu = () => {
+  // 判断是否显示
+  return (
+    <div className="border-r border-gray-200 h-full dark:border-gray-800! transition-all duration-300 w-[80px] overflow-hidden">
+      <MainMenu layoutMode="vertical" />
+    </div>
+  );
+};
 
 export const LayoutSider = () => {
   return (
-    <DarkModeWarp className="fairys_admin_layout_sider flex flex-col h-full w-[250px] border-r border-gray-200 dark:border-gray-800! dark:text-gray-400 overflow-hidden">
-      <div>hhhhh</div>
-      <div className="fairys_admin_layout_sider_menu flex-1 overflow-hidden">
-        <Menu />
+    <DarkModeWarp className="fairys_admin_layout_sider flex flex-row h-full  dark:text-gray-400">
+      <LayoutSiderMainMenu />
+      <div className="flex flex-col h-full w-[220px] border-r border-gray-200 dark:border-gray-800! transition-all duration-300 dark:text-gray-400 overflow-hidden">
+        <div>hhhhh</div>
+        <div className="fairys_admin_layout_sider_menu flex-1 overflow-hidden">
+          <Menu />
+        </div>
+        <div>footer</div>
       </div>
-      <div>footer</div>
     </DarkModeWarp>
   );
 };

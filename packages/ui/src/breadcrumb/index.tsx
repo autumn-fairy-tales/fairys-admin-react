@@ -27,7 +27,7 @@ export const Breadcrumb = () => {
       {_menuItems.map((item, index) => {
         const isLast = index === _menuItems.length - 1;
         const className = clsx(
-          'fairys_admin_breadcrumb_item transition relative cursor-pointer rounded-sm py-[6px] transition px-[14px] ',
+          'fairys_admin_breadcrumb_item transition-all duration-300 relative cursor-pointer rounded-sm py-[6px]  px-[14px] ',
           {
             'text-gray-500 hover:text-gray-500': isLast,
             'text-gray-400 hover:text-gray-500': !isLast,
