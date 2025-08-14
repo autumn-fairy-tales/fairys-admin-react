@@ -4,7 +4,13 @@ import { createPortal } from 'react-dom';
 import React, { Fragment, cloneElement, createContext, useMemo, useRef, useContext, useState } from 'react';
 import { useAnimationStatus } from '../utils';
 import { useFloating, autoUpdate, useDismiss, useInteractions, useHover } from '@floating-ui/react';
-import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
+import type {
+  Placement,
+  UseDismissProps,
+  UseHoverProps,
+  UseInteractionsReturn,
+  UseFloatingReturn,
+} from '@floating-ui/react';
 import clsx from 'clsx';
 
 interface PopoverProps
@@ -37,6 +43,41 @@ const PopoverInstanceContext = createContext(new PopoverInstance());
 
 export const usePopoverInstanceContext = () => useContext(PopoverInstanceContext);
 
+interface UsePopoverBaseOptions {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  placement?: Placement;
+  className?: string;
+}
+
+const usePopoverBase = (options: UsePopoverBaseOptions) => {
+  const { open, onOpenChange, placement, className } = options;
+  const { show, onAnimationComplete } = useAnimationStatus(open);
+  const popoverInstance = usePopoverInstance();
+  popoverInstance.onOpenChange = onOpenChange;
+
+  const floating = useFloating({
+    open: show,
+    placement: placement,
+    whileElementsMounted: autoUpdate,
+    onOpenChange: (open) => {
+      popoverInstance.onOpenChange?.(open);
+    },
+  });
+
+  const bodyClasName = useMemo(() => {
+    return clsx('fairys_admin_popover', className, ['rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm']);
+  }, [className]);
+
+  return {
+    floating,
+    bodyClasName,
+    show,
+    onAnimationComplete,
+    popoverInstance,
+  };
+};
+
 export const Popover = (props: PopoverProps) => {
   const {
     children,
@@ -53,38 +94,19 @@ export const Popover = (props: PopoverProps) => {
     useHoverProps = {},
     ...rest
   } = props;
-
-  const { show, onAnimationComplete } = useAnimationStatus(open);
-  const popoverInstance = usePopoverInstance();
-  popoverInstance.onOpenChange = onOpenChange;
-
-  const { refs, floatingStyles, context } = useFloating({
-    open: show,
-    placement: placement,
-    whileElementsMounted: autoUpdate,
-    onOpenChange: (open) => {
-      popoverInstance.onOpenChange?.(open);
-    },
+  const { floating, bodyClasName, show, onAnimationComplete, popoverInstance } = usePopoverBase({
+    open,
+    onOpenChange,
+    placement,
+    className: props.className,
   });
-
-  const propsList = [];
-
-  if (isUseDismiss) {
-    const dismiss = useDismiss(context, { outsidePress: true, ...useDismissProps });
-    propsList.push(dismiss);
-  }
-  if (isUseHover) {
-    const hover = useHover(context, { ...useHoverProps });
-    propsList.push(hover);
-  }
-
-  const { getReferenceProps, getFloatingProps } = useInteractions(propsList);
-  const bodyClasName = useMemo(() => {
-    return clsx('fairys_admin_popover', props.className, [
-      'rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm',
-    ]);
-  }, [props.className]);
-  console.log(props);
+  const { refs, floatingStyles, context } = floating;
+  const useDismissOrHover = isUseHover ? useHover : useDismiss;
+  const dismissOrHover = useDismissOrHover(
+    context,
+    isUseHover ? { ...useHoverProps } : { outsidePress: true, ...useDismissProps },
+  );
+  const { getReferenceProps, getFloatingProps } = useInteractions([dismissOrHover]);
   return (
     <Fragment>
       {React.Children.map(children, (child) => {
