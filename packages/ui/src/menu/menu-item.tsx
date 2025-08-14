@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, forwardRef, Ref, useImperativeHandle } from 'react';
 import type { MenuItemType } from '../context/menu-data';
 import { tabBarInstance } from '../context/tab-bar';
 import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from './../context/menu-data';
@@ -14,10 +14,9 @@ export interface MenuItemProps {
   isExpand?: boolean;
 }
 
-export const MenuItem = (props: MenuItemProps) => {
+export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item, level = 0, isSubMenu = false, isExpand = false } = props;
   const match = useMatch(item.path);
-  // const close = useClose();
   const navigate = useNavigate();
   const menuInstance = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
@@ -116,6 +115,8 @@ export const MenuItem = (props: MenuItemProps) => {
     return clsx('size-[16px]', {});
   }, [isCollapse]);
 
+  useImperativeHandle(ref, () => menuItemInstance.dom.current);
+
   return (
     <div ref={menuItemInstance.dom} data-level={level} className={menuItemClassName} onClick={onClick}>
       <div className={titleClassName} style={titleStyle} title={item.title}>
@@ -126,15 +127,13 @@ export const MenuItem = (props: MenuItemProps) => {
         ) : (
           <Fragment />
         )}
-        <span className={titleTextClassName}>{item.title}</span>
-        {/* <Transition show={isCollapse}>
-          <span className={titleTextClassName}>{item.title}</span>
-        </Transition> */}
+        {isCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
       </div>
-      <div className="fairys_admin_menu_item_extra">{isSubMenu ? <div className={expandIcon} /> : <Fragment />}</div>
-      {/* <Transition show={isCollapse}>
+      {isCollapse ? (
         <div className="fairys_admin_menu_item_extra">{isSubMenu ? <div className={expandIcon} /> : <Fragment />}</div>
-      </Transition> */}
+      ) : (
+        <Fragment />
+      )}
     </div>
   );
-};
+});
