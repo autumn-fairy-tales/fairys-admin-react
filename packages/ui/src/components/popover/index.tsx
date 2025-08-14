@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import { createPortal } from 'react-dom';
-import React, { Fragment, cloneElement, useMemo } from 'react';
+import React, { Fragment, cloneElement, createContext, useMemo, useRef, useContext } from 'react';
 import { useAnimationStatus } from '../utils';
 import { useFloating, autoUpdate, useDismiss, useInteractions } from '@floating-ui/react';
 import type { Placement } from '@floating-ui/react';
@@ -13,16 +13,25 @@ interface PopoverProps
   onOutsidePress?: (open: boolean) => void;
   placement?: Placement;
 }
+class PopoverInstance {
+  onOutsidePress?: (open: boolean) => void;
+}
+const usePopoverInstance = () => useRef(new PopoverInstance()).current;
+const PopoverInstanceContext = createContext(new PopoverInstance());
+
+export const usePopoverInstanceContext = () => useContext(PopoverInstanceContext);
 
 export const Popover = (props: PopoverProps) => {
   const { children, open, content, onOutsidePress, placement = 'right-start', style = {}, ...rest } = props;
   const { show, onAnimationComplete } = useAnimationStatus(open);
+  const popoverInstance = usePopoverInstance();
+  popoverInstance.onOutsidePress = onOutsidePress;
   const { refs, floatingStyles, context } = useFloating({
     open: show,
     placement: placement,
     whileElementsMounted: autoUpdate,
     onOpenChange: (open) => {
-      onOutsidePress?.(open);
+      popoverInstance.onOutsidePress?.(open);
     },
   });
   const dismiss = useDismiss(context, { outsidePress: true });
@@ -41,28 +50,30 @@ export const Popover = (props: PopoverProps) => {
       })}
       {show ? (
         createPortal(
-          <AnimatePresence mode="wait">
-            <div
-              {...rest}
-              ref={refs.setFloating}
-              style={{ ...style, ...floatingStyles }}
-              className={bodyClasName}
-              {...getFloatingProps()}
-            >
-              <motion.div
-                initial="collapsed"
-                animate={open ? 'open' : 'collapsed'}
-                variants={{
-                  open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
-                  collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
-                }}
-                transition={{ duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98] }}
-                onAnimationComplete={onAnimationComplete}
+          <PopoverInstanceContext.Provider value={popoverInstance}>
+            <AnimatePresence mode="wait">
+              <div
+                {...rest}
+                ref={refs.setFloating}
+                style={{ ...style, ...floatingStyles }}
+                className={bodyClasName}
+                {...getFloatingProps()}
               >
-                {content}
-              </motion.div>
-            </div>
-          </AnimatePresence>,
+                <motion.div
+                  initial="collapsed"
+                  animate={open ? 'open' : 'collapsed'}
+                  variants={{
+                    open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
+                    collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
+                  }}
+                  transition={{ duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98] }}
+                  onAnimationComplete={onAnimationComplete}
+                >
+                  {content}
+                </motion.div>
+              </div>
+            </AnimatePresence>
+          </PopoverInstanceContext.Provider>,
           document.body,
         )
       ) : (

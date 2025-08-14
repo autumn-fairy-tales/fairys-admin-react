@@ -1,18 +1,21 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import { useTabBar, TabBarItemType, tabBarInstance } from '../../context/tab-bar';
 import { Icon } from '@iconify/react';
 import { useNavigate, matchPath, useLocation } from 'react-router';
+import { Popover, usePopoverInstanceContext } from './../../components/popover';
 
 const Items = () => {
   const [state] = useTabBar();
   const navigate = useNavigate();
   const list = state.dropDownTabBarItems;
   const location = useLocation();
+  const popoverInstance = usePopoverInstanceContext();
 
   const onNativeClick = (item: TabBarItemType, e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     navigate(item.path);
+    popoverInstance.onOutsidePress?.(false);
   };
 
   const onClose = (item: TabBarItemType, e: React.MouseEvent) => {
@@ -20,6 +23,7 @@ const Items = () => {
     e.preventDefault();
     const match = matchPath(item.path, location.pathname);
     tabBarInstance.remove(item.path, !!match, navigate);
+    popoverInstance.onOutsidePress?.(false);
   };
 
   const render = useMemo(() => {
@@ -50,6 +54,20 @@ const Items = () => {
   return <div className="flex flex-col relative">{render}</div>;
 };
 
+const PopoverButton = () => {
+  const [open, setOpen] = useState(false);
+  return (
+    <Popover open={open} placement="left-start" content={<Items />} onOutsidePress={() => setOpen(false)}>
+      <div
+        onClick={() => setOpen(!open)}
+        className="w-[25px] h-[25px] flex justify-center items-center text-sm/6 font-semibold focus:outline-none bg-white dark:bg-gray-600 text-gray-400 hover:text-gray-600 cursor-pointer dark:text-gray-400 dark:hover:text-white"
+      >
+        <span className="icon-[ant-design--caret-down-outlined]" />
+      </div>
+    </Popover>
+  );
+};
+
 export const DropDownTabBarItems = () => {
   const [state] = useTabBar();
   const list = state.dropDownTabBarItems;
@@ -60,20 +78,9 @@ export const DropDownTabBarItems = () => {
       return <Fragment />;
     }
     return (
-      <Fragment>
-        {/* <Popover className="h-full  flex items-center justify-center w-[50px]">
-          <PopoverButton className="w-[25px] h-[25px] text-sm/6 font-semibold focus:outline-none bg-white dark:bg-gray-600 text-gray-400 hover:text-gray-600 cursor-pointer dark:text-gray-400 dark:hover:text-white">
-            <span className="icon-[ant-design--caret-down-outlined]" />
-          </PopoverButton>
-          <PopoverPanel
-            transition
-            anchor={{ to: 'left start', gap: '4px' }}
-            className="rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm text-sm/6  transition duration-300 ease-in-out [--anchor-gap:--spacing(5)] data-closed:-translate-y-1 data-closed:opacity-0"
-          >
-            <Items />
-          </PopoverPanel>
-        </Popover> */}
-      </Fragment>
+      <div className="h-full  flex items-center justify-center w-[50px]">
+        <PopoverButton />
+      </div>
     );
   }, [isEmpty]);
 };
