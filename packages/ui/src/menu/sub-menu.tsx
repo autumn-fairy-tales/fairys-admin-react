@@ -6,7 +6,7 @@ import clsx from 'clsx';
 import { useSetting } from '../context/setting';
 import { DisclosureItem } from '../components/disclosure';
 import { Popover } from '../components/popover';
-
+import { useDarkModeInstanceContext } from '../context/dark-mode';
 export interface MenuItemProps {
   item: MenuItemType;
   level?: number;
@@ -18,7 +18,8 @@ export const SubMenu = (props: MenuItemProps) => {
   const expandItems = state.expandItems;
   const [settingState] = useSetting();
   const sideMenuMode = settingState.sideMenuMode;
-  const sideMenuDark = settingState.darkMenu;
+  const [darkModeState] = useDarkModeInstanceContext();
+  const darkMode = darkModeState.darkMode;
 
   const child = useMemo(() => {
     return item.children?.map((child) => {
@@ -35,37 +36,39 @@ export const SubMenu = (props: MenuItemProps) => {
 
   const childClassName = useMemo(() => {
     return clsx('fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px]');
-  }, [sideMenuDark]);
+  }, [darkMode]);
 
   const popoverClassName = useMemo(() => {
     return clsx('fairys_admin_sub_menu_popover', {
-      dark: !!sideMenuDark,
+      dark: !!darkMode,
     });
-  }, [sideMenuDark]);
+  }, [darkMode]);
 
-  if (sideMenuMode !== 'close') {
+  const render = useMemo(() => {
+    if (sideMenuMode !== 'close') {
+      return (
+        <div className="fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px] ">
+          <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />
+          <DisclosureItem open={isExpand} className={childClassName}>
+            {child}
+          </DisclosureItem>
+        </div>
+      );
+    }
     return (
-      <div className="fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px] ">
-        <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />
-        <DisclosureItem open={isExpand} className={childClassName}>
-          {child}
-        </DisclosureItem>
+      <div className="fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px]">
+        <Popover
+          className={popoverClassName}
+          onOpenChange={(open) => {
+            if (open === false) menuDataInstance.clearExpandItems();
+          }}
+          open={isExpand}
+          content={<div className={childClassName}>{child}</div>}
+        >
+          <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />
+        </Popover>
       </div>
     );
-  }
-
-  return (
-    <div className="fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px]">
-      <Popover
-        className={popoverClassName}
-        onOutsidePress={(open) => {
-          if (open === false) menuDataInstance.clearExpandItems();
-        }}
-        open={isExpand}
-        content={<div className={childClassName}>{child}</div>}
-      >
-        <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />
-      </Popover>
-    </div>
-  );
+  }, [child, childClassName, isExpand, item, level, popoverClassName, sideMenuMode]);
+  return render;
 };

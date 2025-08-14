@@ -6,6 +6,7 @@ import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import { useSetting } from '../context/setting';
+import { useDarkModeInstanceContext } from '../context/dark-mode';
 
 export interface MenuItemProps {
   item: MenuItemType;
@@ -13,6 +14,9 @@ export interface MenuItemProps {
   isSubMenu?: boolean;
   isExpand?: boolean;
 }
+
+const menuItemBaseClassName =
+  'fairys_admin_menu_item shrink-0 transition-all duration-300  rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400 px-[14px]';
 
 export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item, level = 0, isSubMenu = false, isExpand = false } = props;
@@ -25,7 +29,8 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
-  // menuItemInstance.close = close;
+  useImperativeHandle(ref, () => menuItemInstance.dom.current);
+
   const [settingState] = useSetting();
   const sideMenuMode = settingState.sideMenuMode;
 
@@ -37,7 +42,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   }, [location.pathname, sideMenuMode, match]);
 
   /**侧边菜单是否折叠*/
-  const isCollapse = useMemo(() => {
+  const isExpandCollapse = useMemo(() => {
     if (sideMenuMode !== 'close') {
       return true;
     }
@@ -47,23 +52,14 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     return level > 0;
   }, [sideMenuMode, level]);
 
-  useEffect(() => {
-    const onMount = menuInstance.register(menuItemInstance);
-    return () => onMount();
-  }, [menuItemInstance]);
-
   const menuItemClassName = useMemo(() => {
-    return clsx(
-      'fairys_admin_menu_item shrink-0 transition-all duration-300  rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400',
-      {
-        [`data-level=${level}`]: true,
-        active: !!isActive,
-        'bg-blue-500': !!isActive,
-        'text-white dark:text-white': !!isActive,
-        'hover:bg-blue-100 dark:hover:bg-gray-600': !isActive,
-        'px-[14px]': true,
-      },
-    );
+    return clsx(menuItemBaseClassName, {
+      [`data-level=${level}`]: true,
+      active: !!isActive,
+      'bg-blue-500': !!isActive,
+      'text-white dark:text-white': !!isActive,
+      'hover:bg-blue-100 dark:hover:bg-gray-600': !isActive,
+    });
   }, [isActive, level]);
 
   const titleClassName = useMemo(() => {
@@ -104,6 +100,15 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     );
   }, [isExpand]);
 
+  const iconClassName = useMemo(() => {
+    return clsx('size-[16px]', {});
+  }, [isExpandCollapse]);
+
+  useEffect(() => {
+    const onMount = menuInstance.register(menuItemInstance);
+    return () => onMount();
+  }, [menuItemInstance]);
+
   // 跳转后滚动到当前tab
   useEffect(() => {
     if (!!isActive && menuItemInstance.dom.current) {
@@ -111,29 +116,41 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     }
   }, [isActive, menuItemInstance.dom]);
 
-  const iconClassName = useMemo(() => {
-    return clsx('size-[16px]', {});
-  }, [isCollapse]);
+  const iconRender = useMemo(() => {
+    return item.icon ? (
+      <span className={iconClassName}>
+        <Icon icon={item.icon} className={iconClassName} />
+      </span>
+    ) : (
+      <Fragment />
+    );
+  }, [iconClassName, item.icon]);
 
-  useImperativeHandle(ref, () => menuItemInstance.dom.current);
-
-  return (
-    <div ref={menuItemInstance.dom} data-level={level} className={menuItemClassName} onClick={onClick}>
-      <div className={titleClassName} style={titleStyle} title={item.title}>
-        {item.icon ? (
-          <span className={iconClassName}>
-            <Icon icon={item.icon} className={iconClassName} />
-          </span>
+  return useMemo(() => {
+    return (
+      <div ref={menuItemInstance.dom} data-level={level} className={menuItemClassName} onClick={onClick}>
+        <div className={titleClassName} style={titleStyle} title={item.title}>
+          {iconRender}
+          {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
+        </div>
+        {isExpandCollapse ? (
+          <div className="fairys_admin_menu_item_extra">
+            {isSubMenu ? <div className={expandIcon} /> : <Fragment />}
+          </div>
         ) : (
           <Fragment />
         )}
-        {isCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
       </div>
-      {isCollapse ? (
-        <div className="fairys_admin_menu_item_extra">{isSubMenu ? <div className={expandIcon} /> : <Fragment />}</div>
-      ) : (
-        <Fragment />
-      )}
-    </div>
-  );
+    );
+  }, [
+    iconRender,
+    isExpandCollapse,
+    isSubMenu,
+    level,
+    menuItemClassName,
+    titleClassName,
+    titleStyle,
+    expandIcon,
+    titleTextClassName,
+  ]);
 });
