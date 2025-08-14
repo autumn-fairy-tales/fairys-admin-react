@@ -38,7 +38,7 @@ interface PopoverProps
 }
 class PopoverInstance {
   /***点击外部关闭*/
-  onOpenChange?: (open: boolean) => void;
+  onOpenChange?: (open: boolean) => void = () => void 0;
 }
 
 export const usePopoverInstance = (instance?: PopoverInstance) => {

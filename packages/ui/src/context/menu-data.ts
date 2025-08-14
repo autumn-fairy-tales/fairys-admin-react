@@ -125,17 +125,26 @@ export class MenuDataInstance {
   };
 
   /**展开项*/
-  onExpandItems = (path: string, isMain?: boolean) => {
+  onExpandItems = (path: string) => {
     /**只有在未存在展开项时才进行更新(刚进行加载数据)*/
-    if (this.state.expandItems.length === 0 || isMain) {
+    if (this.state.expandItems.length === 0) {
       const parentItems = this._parentMenuItemMap.get(path) || [];
       this.state.expandItems = ref([...parentItems]);
       return;
     }
     // 如果不存在子菜单，则不进行更新展开项
     const _item = this.get_path_menuItem(path);
+    const parentItems = this._parentMenuItemMap.get(path) || [];
+    // 判断是否还在一个父级菜单里面
+    if (Array.isArray(parentItems) && parentItems.length && this.state.expandItems.length) {
+      const [first] = parentItems;
+      const [firstExpand] = this.state.expandItems;
+      if (first.path !== firstExpand.path) {
+        this.state.expandItems = ref([...parentItems]);
+        return;
+      }
+    }
     if (Array.isArray(_item?.children) && _item.children.length) {
-      const parentItems = this._parentMenuItemMap.get(path) || [];
       this.state.expandItems = ref([...parentItems]);
     }
   };
