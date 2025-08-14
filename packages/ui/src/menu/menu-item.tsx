@@ -6,8 +6,7 @@ import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import { useSetting } from '../context/setting';
-import { useDarkModeInstanceContext } from '../context/dark-mode';
-
+import { usePopoverInstanceContext } from '../components/popover';
 export interface MenuItemProps {
   item: MenuItemType;
   level?: number;
@@ -25,6 +24,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   const menuInstance = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
   const location = useLocation();
+  const popoverInstance = usePopoverInstanceContext();
 
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
@@ -85,8 +85,8 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
       menuDataInstance.onToggleItems(item.path);
     } else if (!match) {
       navigate(item.path);
-      menuInstance.onClose(item.path);
       tabBarInstance.addItem(item);
+      popoverInstance.onOpenChange(false);
     }
   };
 

@@ -125,9 +125,9 @@ export class MenuDataInstance {
   };
 
   /**展开项*/
-  onExpandItems = (path: string) => {
+  onExpandItems = (path: string, isMain?: boolean) => {
     /**只有在未存在展开项时才进行更新(刚进行加载数据)*/
-    if (this.state.expandItems.length === 0) {
+    if (this.state.expandItems.length === 0 || isMain) {
       const parentItems = this._parentMenuItemMap.get(path) || [];
       this.state.expandItems = ref([...parentItems]);
       return;

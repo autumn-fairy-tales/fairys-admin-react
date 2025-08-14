@@ -29,7 +29,7 @@ export const LayoutSider = () => {
 
   const bodyClassName = useMemo(() => {
     return clsx(
-      'flex flex-col h-full  border-r border-gray-200 dark:border-gray-800! transition-all duration-300 dark:text-gray-400 overflow-hidden',
+      'flex flex-col h-full border-r border-gray-200 dark:border-gray-800! transition-all duration-300 dark:text-gray-400 overflow-hidden',
       {
         'w-[60px]': sideMenuMode === 'close',
         'w-[220px]': sideMenuMode !== 'close',
@@ -37,9 +37,11 @@ export const LayoutSider = () => {
     );
   }, [sideMenuMode]);
 
-  return (
-    <DarkModeWarp className="fairys_admin_layout_sider flex flex-row h-full  dark:text-gray-400">
-      <LayoutSiderMainMenu />
+  const render = useMemo(() => {
+    if (sideMenuMode === 'main') {
+      return <Fragment />;
+    }
+    return (
       <div className={bodyClassName}>
         <div>hhhhh</div>
         <div className="fairys_admin_layout_sider_menu flex-1 overflow-hidden">
@@ -55,6 +57,13 @@ export const LayoutSider = () => {
           </button>
         </div>
       </div>
+    );
+  }, [bodyClassName, sideMenuMode]);
+
+  return (
+    <DarkModeWarp className="fairys_admin_layout_sider flex flex-row h-full dark:text-gray-400">
+      <LayoutSiderMainMenu />
+      {render}
     </DarkModeWarp>
   );
 };

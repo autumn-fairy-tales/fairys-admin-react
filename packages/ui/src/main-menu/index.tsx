@@ -8,6 +8,8 @@ import { useSetting } from '../context/setting';
 import { useLocation, useNavigate } from 'react-router';
 import { useMenuData, MenuItemType } from '../context/menu-data';
 import { Icon } from '@iconify/react';
+import { PopoverState, usePopoverInstance } from '../components/popover';
+import { Menu } from './../menu';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -22,6 +24,10 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const [state, menuInstance] = useMenuData();
   const mainMenuItemSelected = state.mainMenuItemSelected;
   const isActive = mainMenuItemSelected === item.path;
+  const [settingState] = useSetting();
+  const sideMenuMode = settingState.sideMenuMode;
+  const darkMode = settingState.darkMenu;
+  const popoverInstance = usePopoverInstance();
 
   const className = useMemo(() => {
     return clsx(
@@ -38,6 +44,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   }, [isActive, layoutMode]);
 
   const onClickMainMenuItem = () => {
+    popoverInstance.onOpenChange(true);
     if (!isActive) menuInstance.onMainMenu(item.path);
   };
 
@@ -48,18 +55,29 @@ const MainMenuItem = (props: MainMenuItemProps) => {
     });
   }, [layoutMode]);
 
-  return (
-    <div className={className} onClick={onClickMainMenuItem}>
-      {item.icon ? (
-        <span className={iconClassName}>
-          <Icon icon={item.icon} className={iconClassName} />
-        </span>
-      ) : (
-        <Fragment />
-      )}
-      <div>{item.title}</div>
-    </div>
-  );
+  const render = useMemo(() => {
+    return (
+      <div className={className} onClick={onClickMainMenuItem}>
+        {item.icon ? (
+          <span className={iconClassName}>
+            <Icon icon={item.icon} className={iconClassName} />
+          </span>
+        ) : (
+          <Fragment />
+        )}
+        <div>{item.title}</div>
+      </div>
+    );
+  }, [className, iconClassName, item, onClickMainMenuItem]);
+
+  if (sideMenuMode === 'main') {
+    return (
+      <PopoverState className={darkMode ? 'dark' : ''} content={<Menu />} popoverInstance={popoverInstance}>
+        {render}
+      </PopoverState>
+    );
+  }
+  return render;
 };
 
 const MainMenuItems = (props: MainMenuProps) => {

@@ -37,11 +37,10 @@ export interface SettingInstanceState {
   layoutMode?: LayoutMode;
   /**暗黑导航栏*/
   darkMenu?: boolean;
-  /**侧边栏是否折叠*/
+  /**侧边栏模式*/
   sideMenuMode?: 'open' | 'close' | 'main';
   /**页面切换动画*/
   pageTransitionMode?: '';
-
   /**标签栏*/
   /**是否启用标签栏*/
   enableTabBar?: boolean;

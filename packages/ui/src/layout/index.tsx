@@ -25,8 +25,8 @@ export const Layout = () => {
 
   useMemo(() => {
     menuDataInstance.updateChildMenus(location.pathname);
-    if (sideMenuMode === 'open') {
-      menuDataInstance.onExpandItems(location.pathname);
+    if (sideMenuMode !== 'close') {
+      menuDataInstance.onExpandItems(location.pathname, sideMenuMode === 'main');
     } else {
       menuDataInstance.clearExpandItems();
     }

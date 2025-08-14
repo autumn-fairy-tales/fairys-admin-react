@@ -1,10 +1,11 @@
+import { Fragment } from 'react/jsx-runtime';
 import { Breadcrumb } from '../../breadcrumb';
 import { useSetting } from '../../context/setting';
 
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
-
   const darkMenu = state.darkMenu;
+  const sideMenuMode = state.sideMenuMode;
 
   const onClick = () => {
     settingInstance.updated({
@@ -12,7 +13,17 @@ const MenuDarkLight = () => {
     });
   };
 
-  return <button onClick={onClick}>{darkMenu ? '切换为亮色' : '切换为暗色'}</button>;
+  const onClick2 = () => {
+    settingInstance.updated({ sideMenuMode: sideMenuMode === 'main' ? 'open' : 'main' });
+  };
+
+  return (
+    <Fragment>
+      <button onClick={onClick2}>菜单格式：{sideMenuMode}</button>
+
+      <button onClick={onClick}>{darkMenu ? '切换为亮色' : '切换为暗色'}</button>
+    </Fragment>
+  );
 };
 
 export const ToolBar = () => {
