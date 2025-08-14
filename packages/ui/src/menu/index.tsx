@@ -2,21 +2,11 @@ import { useEffect, useMemo } from 'react';
 import { useMenuData, MenuInstanceContext, useMenuInstance } from './../context/menu-data';
 import { SubMenu } from './sub-menu';
 import { MenuItem } from './menu-item';
-import { DarkModeInstanceContext, useDarkModeInstance } from '../context/dark-mode';
-import { useSetting } from '../context/setting';
-import clsx from 'clsx';
 
 export const Menu = () => {
   const [state] = useMenuData();
   const menuItems = state.menuItems;
-  const [settingState] = useSetting();
   const menuInstance = useMenuInstance();
-  const darkModeInstance = useDarkModeInstance();
-  const darkMode = settingState.darkMenu;
-
-  useMemo(() => {
-    darkModeInstance.setDarkMode(darkMode);
-  }, [darkMode, darkModeInstance]);
 
   const render = useMemo(() => {
     return menuItems.map((item) => {
@@ -33,24 +23,16 @@ export const Menu = () => {
     return () => unMount();
   }, [menuInstance.dom]);
 
-  const className = useMemo(() => {
-    return clsx(
-      'fairys_admin_menu box-border flex flex-col gap-y-2 p-[8px] overflow-auto h-full no-scrollbar max-w-[220px]',
-      {
-        dark: !!darkMode,
-      },
-    );
-  }, [darkMode]);
-
   return useMemo(() => {
     return (
       <MenuInstanceContext.Provider value={menuInstance}>
-        <DarkModeInstanceContext.Provider value={darkModeInstance}>
-          <div ref={menuInstance.dom} className={className}>
-            {render}
-          </div>
-        </DarkModeInstanceContext.Provider>
+        <div
+          ref={menuInstance.dom}
+          className="fairys_admin_menu transition-all duration-300 box-border flex flex-col gap-y-2 p-[8px] overflow-auto h-full no-scrollbar max-w-[220px]"
+        >
+          {render}
+        </div>
       </MenuInstanceContext.Provider>
     );
-  }, [render, menuInstance, darkModeInstance]);
+  }, [render, menuInstance]);
 };

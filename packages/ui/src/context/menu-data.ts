@@ -71,6 +71,33 @@ const removeRepeat = (items: MenuItemType[]) => {
   return _newList;
 };
 
+/**
+ * 对比两个父级路径是否相同
+ */
+export const compareParentPath = (oldParentItems: MenuItemType[], newParentItems: MenuItemType[]) => {
+  // 新的如果长，则直接返回去更新新的
+  // 长度相同，则直接更新最新的
+  const oldLength = oldParentItems.length;
+  const newLength = newParentItems.length;
+  if (oldLength === newLength || newLength > oldLength) {
+    return newParentItems;
+  }
+  // 如果新的短，则进行判断父级是否相同
+  // 新的移除最后一个进行判断是否相同父级
+  const newList = newParentItems
+    .slice(0, newLength - 1)
+    .map((it) => it.path)
+    .join('_');
+  const oldList = oldParentItems
+    .slice(0, newLength - 1)
+    .map((it) => it.path)
+    .join('_');
+  if (newList === oldList) {
+    return oldParentItems;
+  }
+  return newParentItems;
+};
+
 /**整个菜单数据实例*/
 export class MenuDataInstance {
   /**原始整个菜单*/
@@ -93,6 +120,7 @@ export class MenuDataInstance {
     this.state.menuItems = ref(items);
     this.state.mainMenuItems = ref(items.filter((item) => item.isMain));
   };
+
   /**
    * 通过path获取菜单对象
    * 暂不支持 /path/:id 这种动态路由
@@ -135,17 +163,10 @@ export class MenuDataInstance {
     // 如果不存在子菜单，则不进行更新展开项
     const _item = this.get_path_menuItem(path);
     const parentItems = this._parentMenuItemMap.get(path) || [];
-    // 判断是否还在一个父级菜单里面
-    if (Array.isArray(parentItems) && parentItems.length && this.state.expandItems.length) {
-      const [first] = parentItems;
-      const [firstExpand] = this.state.expandItems;
-      if (first.path !== firstExpand.path) {
-        this.state.expandItems = ref([...parentItems]);
-        return;
-      }
-    }
     if (Array.isArray(_item?.children) && _item.children.length) {
       this.state.expandItems = ref([...parentItems]);
+    } else {
+      this.state.expandItems = compareParentPath(this.state.expandItems, parentItems);
     }
   };
 

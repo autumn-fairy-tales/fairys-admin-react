@@ -2,15 +2,16 @@ import { Menu } from '../../menu';
 import { DarkModeWarp } from './../../dark-mode';
 import { MainMenu } from '../../main-menu';
 import { useSetting } from '../../context/setting';
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useEffect } from 'react';
 import clsx from 'clsx';
+import { DarkModeInstanceContext, useDarkModeInstance } from '../../context/dark-mode';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSetting();
   const layoutMode = state.layoutMode;
 
   const isShow = useMemo(() => {
-    return ['main_sub_left', 'main_left_sub_all'].includes(layoutMode);
+    return ['main_sub_left', 'main_left_sub_all', 'main_left'].includes(layoutMode);
   }, [layoutMode]);
   // 判断是否显示
   if (!isShow) {
@@ -26,6 +27,13 @@ const LayoutSiderMainMenu = () => {
 export const LayoutSider = () => {
   const [state, settingInstance] = useSetting();
   const sideMenuMode = state.sideMenuMode;
+  const layoutMode = state.layoutMode;
+  const darkMode = state.darkMenu;
+  const darkModeInstance = useDarkModeInstance();
+
+  const hideSideMenu = useMemo(() => {
+    return ['main_left'].includes(layoutMode);
+  }, [layoutMode]);
 
   const bodyClassName = useMemo(() => {
     return clsx(
@@ -38,7 +46,7 @@ export const LayoutSider = () => {
   }, [sideMenuMode]);
 
   const render = useMemo(() => {
-    if (sideMenuMode === 'main') {
+    if (hideSideMenu) {
       return <Fragment />;
     }
     return (
@@ -58,12 +66,18 @@ export const LayoutSider = () => {
         </div>
       </div>
     );
-  }, [bodyClassName, sideMenuMode]);
+  }, [bodyClassName, sideMenuMode, hideSideMenu]);
+
+  useEffect(() => {
+    darkModeInstance.setDarkMode(darkMode);
+  }, [darkMode, darkModeInstance]);
 
   return (
-    <DarkModeWarp className="fairys_admin_layout_sider flex flex-row h-full dark:text-gray-400">
-      <LayoutSiderMainMenu />
-      {render}
-    </DarkModeWarp>
+    <DarkModeInstanceContext.Provider value={darkModeInstance}>
+      <DarkModeWarp className="fairys_admin_layout_sider flex flex-row h-full dark:text-gray-400">
+        <LayoutSiderMainMenu />
+        {render}
+      </DarkModeWarp>
+    </DarkModeInstanceContext.Provider>
   );
 };

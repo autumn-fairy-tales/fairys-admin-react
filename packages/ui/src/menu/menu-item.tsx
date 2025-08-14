@@ -30,7 +30,6 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
   useImperativeHandle(ref, () => menuItemInstance.dom.current);
-
   const [settingState] = useSetting();
   const sideMenuMode = settingState.sideMenuMode;
 

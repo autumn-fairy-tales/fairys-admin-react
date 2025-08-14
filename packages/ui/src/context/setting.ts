@@ -78,7 +78,8 @@ class SettingInstance {
   static localStorageKey = 'fairys_setting_state';
 
   state = proxy<SettingInstanceState>({
-    layoutMode: 'main_sub_left',
+    layoutMode: 'main_top_sub_left_header',
+    // layoutMode: "main_sub_left",
     // 侧边栏是否折叠
     sideMenuMode: 'open',
   });
@@ -101,7 +102,7 @@ class SettingInstance {
   /**初始配置*/
   initSetting = (state: SettingInstanceState) => {
     this.state = proxy({
-      layoutMode: 'main_sub_left',
+      layoutMode: 'main_top_sub_left_header',
       ...this.state,
       ...state,
     });
@@ -121,6 +122,7 @@ class SettingInstance {
   isMainSubMenuMode = () => {
     return (
       this.state.layoutMode === 'main_sub_left' ||
+      this.state.layoutMode === 'main_left' ||
       this.state.layoutMode === 'main_left_sub_all' ||
       this.state.layoutMode === 'main_top_sub_left_header'
     );

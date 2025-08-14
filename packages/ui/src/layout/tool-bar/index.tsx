@@ -5,7 +5,7 @@ import { useSetting } from '../../context/setting';
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
   const darkMenu = state.darkMenu;
-  const sideMenuMode = state.sideMenuMode;
+  const layoutMode = state.layoutMode;
 
   const onClick = () => {
     settingInstance.updated({
@@ -14,13 +14,12 @@ const MenuDarkLight = () => {
   };
 
   const onClick2 = () => {
-    settingInstance.updated({ sideMenuMode: sideMenuMode === 'main' ? 'open' : 'main' });
+    settingInstance.updated({ layoutMode: layoutMode === 'main_left' ? 'main_sub_left' : 'main_left' });
   };
 
   return (
     <Fragment>
-      <button onClick={onClick2}>菜单格式：{sideMenuMode}</button>
-
+      <button onClick={onClick2}>菜单格式：{state.layoutMode}</button>
       <button onClick={onClick}>{darkMenu ? '切换为亮色' : '切换为暗色'}</button>
     </Fragment>
   );

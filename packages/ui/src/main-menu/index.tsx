@@ -3,13 +3,14 @@
  */
 
 import clsx from 'clsx';
-import { useMemo, Fragment } from 'react';
+import { useMemo, Fragment, useEffect } from 'react';
 import { useSetting } from '../context/setting';
 import { useLocation, useNavigate } from 'react-router';
 import { useMenuData, MenuItemType } from '../context/menu-data';
 import { Icon } from '@iconify/react';
 import { PopoverState, usePopoverInstance } from '../components/popover';
 import { Menu } from './../menu';
+import { useDarkModeInstanceContext } from '../context/dark-mode';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -24,9 +25,11 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const [state, menuInstance] = useMenuData();
   const mainMenuItemSelected = state.mainMenuItemSelected;
   const isActive = mainMenuItemSelected === item.path;
+
   const [settingState] = useSetting();
-  const sideMenuMode = settingState.sideMenuMode;
-  const darkMode = settingState.darkMenu;
+  const layoutModeState = settingState.layoutMode;
+  const [darkModeState] = useDarkModeInstanceContext();
+  const darkMode = darkModeState.darkMode;
   const popoverInstance = usePopoverInstance();
 
   const className = useMemo(() => {
@@ -70,7 +73,14 @@ const MainMenuItem = (props: MainMenuItemProps) => {
     );
   }, [className, iconClassName, item, onClickMainMenuItem]);
 
-  if (sideMenuMode === 'main') {
+  useEffect(() => {
+    // 为了隐藏最顶层的弹框框
+    if (state.expandItems.length === 0 && ['main_left'].includes(layoutModeState)) {
+      popoverInstance.onOpenChange(false);
+    }
+  }, [state.expandItems]);
+
+  if (layoutModeState === 'main_left') {
     return (
       <PopoverState className={darkMode ? 'dark' : ''} content={<Menu />} popoverInstance={popoverInstance}>
         {render}
