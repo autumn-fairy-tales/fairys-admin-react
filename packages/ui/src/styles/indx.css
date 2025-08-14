@@ -12,7 +12,6 @@ body,
 
 @import 'tailwindcss';
 @plugin "@iconify/tailwind4";
-@plugin '@headlessui/tailwindcss';
 
 @theme {
   --fairys-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02),

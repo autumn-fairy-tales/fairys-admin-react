@@ -273,7 +273,7 @@ export class MenuInstance {
       const path = list[index];
       const finx = this.menuItems.find((it) => it.item.path === path);
       if (finx) {
-        finx.close();
+        finx.close?.();
       }
     }
   };

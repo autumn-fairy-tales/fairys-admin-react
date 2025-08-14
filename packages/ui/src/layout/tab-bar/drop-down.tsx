@@ -1,11 +1,9 @@
-import { Popover, PopoverButton, PopoverPanel, useClose } from '@headlessui/react';
 import { Fragment, useMemo } from 'react';
 import { useTabBar, TabBarItemType, tabBarInstance } from '../../context/tab-bar';
 import { Icon } from '@iconify/react';
 import { useNavigate, matchPath, useLocation } from 'react-router';
 
 const Items = () => {
-  const close = useClose();
   const [state] = useTabBar();
   const navigate = useNavigate();
   const list = state.dropDownTabBarItems;
@@ -15,7 +13,6 @@ const Items = () => {
     e.stopPropagation();
     e.preventDefault();
     navigate(item.path);
-    close();
   };
 
   const onClose = (item: TabBarItemType, e: React.MouseEvent) => {
@@ -48,7 +45,7 @@ const Items = () => {
         </div>
       );
     });
-  }, [list, close]);
+  }, [list]);
 
   return <div className="flex flex-col relative">{render}</div>;
 };
@@ -64,7 +61,7 @@ export const DropDownTabBarItems = () => {
     }
     return (
       <Fragment>
-        <Popover className="h-full  flex items-center justify-center w-[50px]">
+        {/* <Popover className="h-full  flex items-center justify-center w-[50px]">
           <PopoverButton className="w-[25px] h-[25px] text-sm/6 font-semibold focus:outline-none bg-white dark:bg-gray-600 text-gray-400 hover:text-gray-600 cursor-pointer dark:text-gray-400 dark:hover:text-white">
             <span className="icon-[ant-design--caret-down-outlined]" />
           </PopoverButton>
@@ -75,7 +72,7 @@ export const DropDownTabBarItems = () => {
           >
             <Items />
           </PopoverPanel>
-        </Popover>
+        </Popover> */}
       </Fragment>
     );
   }, [isEmpty]);

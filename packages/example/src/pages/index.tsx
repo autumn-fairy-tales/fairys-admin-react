@@ -1,6 +1,5 @@
 import { routerDataInstance } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
-
 const MainIndex = () => {
   console.log(routerDataInstance);
   return (

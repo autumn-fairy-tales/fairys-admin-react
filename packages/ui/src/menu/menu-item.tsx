@@ -6,7 +6,6 @@ import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import { useSetting } from '../context/setting';
-import { Transition, useClose } from '@headlessui/react';
 
 export interface MenuItemProps {
   item: MenuItemType;
@@ -18,7 +17,7 @@ export interface MenuItemProps {
 export const MenuItem = (props: MenuItemProps) => {
   const { item, level = 0, isSubMenu = false, isExpand = false } = props;
   const match = useMatch(item.path);
-  const close = useClose();
+  // const close = useClose();
   const navigate = useNavigate();
   const menuInstance = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
@@ -27,7 +26,7 @@ export const MenuItem = (props: MenuItemProps) => {
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
-  menuItemInstance.close = close;
+  // menuItemInstance.close = close;
   const [settingState] = useSetting();
   const sideMenuMode = settingState.sideMenuMode;
 
@@ -56,7 +55,7 @@ export const MenuItem = (props: MenuItemProps) => {
 
   const menuItemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_menu_item shrink-0  transition-all duration-300  rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400',
+      'fairys_admin_menu_item shrink-0 transition-all duration-300  rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400',
       {
         [`data-level=${level}`]: true,
         active: !!isActive,
@@ -127,13 +126,15 @@ export const MenuItem = (props: MenuItemProps) => {
         ) : (
           <Fragment />
         )}
-        <Transition show={isCollapse}>
+        <span className={titleTextClassName}>{item.title}</span>
+        {/* <Transition show={isCollapse}>
           <span className={titleTextClassName}>{item.title}</span>
-        </Transition>
+        </Transition> */}
       </div>
-      <Transition show={isCollapse}>
+      <div className="fairys_admin_menu_item_extra">{isSubMenu ? <div className={expandIcon} /> : <Fragment />}</div>
+      {/* <Transition show={isCollapse}>
         <div className="fairys_admin_menu_item_extra">{isSubMenu ? <div className={expandIcon} /> : <Fragment />}</div>
-      </Transition>
+      </Transition> */}
     </div>
   );
 };

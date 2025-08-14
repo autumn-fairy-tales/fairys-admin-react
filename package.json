@@ -20,8 +20,7 @@
     "@tailwindcss/postcss": "^4.1.11",
     "tailwindcss": "^4.1.11",
     "@iconify/tailwind4": "^1.0.6",
-    "@iconify/json": "^2.2.367",
-    "@headlessui/tailwindcss": "^0.2.1"
+    "@iconify/json": "^2.2.367"
   },
   "overrides": {
     "@types/react": "^18.2.21",
