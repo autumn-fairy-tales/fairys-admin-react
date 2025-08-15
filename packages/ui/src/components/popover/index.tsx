@@ -74,7 +74,7 @@ const usePopoverBase = (options: UsePopoverBaseOptions) => {
     placement: placement,
     whileElementsMounted: autoUpdate,
     onOpenChange: (open) => {
-      popoverInstance.onOpenChange?.(open);
+      if (options.open !== open) popoverInstance.onOpenChange?.(open);
     },
     middleware: [
       sizeMiddleware({

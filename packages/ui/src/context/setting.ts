@@ -106,6 +106,7 @@ class SettingInstance {
       layoutMode: 'main_top_sub_left_header',
       ...this.state,
       ...state,
+      // layoutMode: "main_top_header",
     });
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
   };

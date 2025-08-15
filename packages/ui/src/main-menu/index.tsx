@@ -28,15 +28,15 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const mainExpandItem = state.mainExpandItem;
   const isActive = mainMenuItemSelected === item.path;
 
-  const isExpand = useMemo(() => {
-    return mainExpandItem?.path === item.path;
-  }, [mainExpandItem, item]);
-
   const [settingState] = useSetting();
   const layoutModeState = settingState.layoutMode;
   const [darkModeState] = useDarkModeInstanceContext();
   const darkMode = darkModeState.darkMode;
   const popoverInstance = usePopoverInstance();
+
+  const isExpand = useMemo(() => {
+    return mainExpandItem?.path === item.path;
+  }, [mainExpandItem, item]);
 
   const className = useMemo(() => {
     return clsx(
@@ -85,6 +85,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   if (['main_top_header', 'main_left'].includes(layoutModeState)) {
     return (
       <Popover
+        placement={layoutMode === 'vertical' ? 'right-start' : 'bottom-start'}
         open={isExpand}
         className={darkMode ? 'dark' : ''}
         content={<Menu />}

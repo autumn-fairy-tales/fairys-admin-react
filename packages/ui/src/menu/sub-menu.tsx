@@ -67,6 +67,7 @@ export const SubMenu = (props: MenuItemProps) => {
           className={popoverClassName}
           onOpenChange={(open) => {
             if (open === false) {
+              menuDataInstance.clearExpandItems();
               menuDataInstance.updateMainExpandItem(undefined);
             }
           }}
