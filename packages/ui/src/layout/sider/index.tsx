@@ -1,10 +1,9 @@
 import { Menu } from '../../menu';
-import { DarkModeWarp } from './../../dark-mode';
 import { MainMenu } from '../../main-menu';
 import { useSetting } from '../../context/setting';
-import { Fragment, useMemo, useEffect } from 'react';
+import { Fragment, useMemo } from 'react';
 import clsx from 'clsx';
-import { DarkModeInstanceContext, useDarkModeInstance } from '../../context/dark-mode';
+import { DarkModeInstanceContextProvider } from '../../context/dark-mode';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSetting();
@@ -29,7 +28,6 @@ export const LayoutSider = () => {
   const sideMenuMode = state.sideMenuMode;
   const layoutMode = state.layoutMode;
   const darkMode = state.darkMenu;
-  const darkModeInstance = useDarkModeInstance();
   const theme = state.theme;
   const _darkMode = darkMode || theme === 'dark';
 
@@ -70,16 +68,21 @@ export const LayoutSider = () => {
     );
   }, [bodyClassName, sideMenuMode, hideSideMenu]);
 
-  useEffect(() => {
-    darkModeInstance.setDarkMode(_darkMode);
-  }, [_darkMode, darkModeInstance]);
+  const clssName = useMemo(() => {
+    return clsx(
+      'fairys_admin_layout_sider transition-all duration-300 flex flex-row h-full dark:text-gray-400 dark:bg-gray-900!',
+      {
+        dark: _darkMode,
+      },
+    );
+  }, [_darkMode]);
 
   return (
-    <DarkModeInstanceContext.Provider value={darkModeInstance}>
-      <DarkModeWarp className="fairys_admin_layout_sider flex flex-row h-full dark:text-gray-400">
+    <DarkModeInstanceContextProvider darkMode={_darkMode}>
+      <div className={clssName}>
         <LayoutSiderMainMenu />
         {render}
-      </DarkModeWarp>
-    </DarkModeInstanceContext.Provider>
+      </div>
+    </DarkModeInstanceContextProvider>
   );
 };

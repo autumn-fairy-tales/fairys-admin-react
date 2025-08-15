@@ -6,7 +6,7 @@ import { LayoutHeader } from './header';
 import { LayoutSider } from './sider';
 import { useLocation } from 'react-router';
 import { menuDataInstance } from './../context/menu-data';
-import { DarkModeInstanceContext, useDarkModeInstance } from './../context/dark-mode';
+import { DarkModeInstanceContextProvider } from './../context/dark-mode';
 
 export const Layout = () => {
   const [state] = useSetting();
@@ -24,7 +24,6 @@ export const Layout = () => {
   const sideMenuMode = state.sideMenuMode;
   const theme = state.theme;
   const location = useLocation();
-  const darkModeInstance = useDarkModeInstance();
 
   useMemo(() => {
     menuDataInstance.updateChildMenus(location.pathname);
@@ -75,12 +74,8 @@ export const Layout = () => {
     return <LayoutContent />;
   }, []);
 
-  useEffect(() => {
-    darkModeInstance.setDarkMode(theme === 'dark');
-  }, [theme, darkModeInstance]);
-
   return (
-    <DarkModeInstanceContext.Provider value={darkModeInstance}>
+    <DarkModeInstanceContextProvider darkMode={theme === 'dark'}>
       <div className={layoutCls}>
         {isSiderFull ? (
           <Fragment>
@@ -120,6 +115,6 @@ export const Layout = () => {
           </Fragment>
         )}
       </div>
-    </DarkModeInstanceContext.Provider>
+    </DarkModeInstanceContextProvider>
   );
 };
