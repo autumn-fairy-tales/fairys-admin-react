@@ -18,14 +18,18 @@ export const SubMenu = (props: MenuItemProps) => {
   const { item, level = 0, isMain = false } = props;
   const [state] = useMenuData();
   const expandItems = state.expandItems;
+  const mainExpandItem = state.mainExpandItem;
   const [settingState] = useSetting();
   const sideMenuMode = settingState.sideMenuMode;
   const [darkModeState] = useDarkModeInstanceContext();
   const darkMode = darkModeState.darkMode;
 
   const isExpand = useMemo(() => {
+    if (isMain) {
+      return mainExpandItem?.path === item.path;
+    }
     return !!expandItems.find((i) => i.path === item.path);
-  }, [expandItems, item.path]);
+  }, [expandItems, item.path, isMain, mainExpandItem]);
 
   const child = useMemo(() => {
     return item.children?.map((child) => {
@@ -62,7 +66,9 @@ export const SubMenu = (props: MenuItemProps) => {
         <Popover
           className={popoverClassName}
           onOpenChange={(open) => {
-            if (open === false) menuDataInstance.clearExpandItems();
+            if (open === false) {
+              menuDataInstance.updateMainExpandItem(undefined);
+            }
           }}
           open={isExpand}
           content={<div className={childClassName}>{child}</div>}

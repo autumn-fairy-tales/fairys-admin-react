@@ -24,6 +24,8 @@ export interface MenuDataInstanceState {
   mainMenuItemSelected?: string;
   /**展开项*/
   expandItems: MenuItemType[];
+  /**主菜单展开项*/
+  mainExpandItem?: MenuItemType;
   /**默认引用值*/
   __defaultValue?: string;
 }
@@ -99,6 +101,7 @@ export class MenuDataInstance {
     mainMenuItems: [],
     mainMenuItemSelected: '',
     expandItems: [],
+    mainExpandItem: undefined,
   });
   /**设置菜单所有数据*/
   ctor = (items: MenuItemType[]) => {
@@ -106,6 +109,11 @@ export class MenuDataInstance {
     this._flatMenuItems = flatMenuItems(items, [], this._parentMenuItemMap);
     this.state.menuItems = ref(items);
     this.state.mainMenuItems = ref(items.filter((item) => item.isMain));
+  };
+
+  /**更新主菜单展开项*/
+  updateMainExpandItem = (item?: MenuItemType) => {
+    this.state.mainExpandItem = item;
   };
 
   /**

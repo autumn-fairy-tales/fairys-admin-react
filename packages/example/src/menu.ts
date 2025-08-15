@@ -143,6 +143,35 @@ export const menuItems: MenuItemType[] = [
         path: '/main-menu2/detail',
         icon: 'ant-design:info-circle-outlined',
       },
+      {
+        title: '列表10',
+        path: '/main-menu2/list2',
+        icon: 'ant-design:unordered-list',
+        children: [
+          {
+            title: '列表2-1',
+            path: '/main-menu2/list2-1',
+            icon: 'ant-design:unordered-list',
+          },
+          {
+            title: '列表2-1-1',
+            path: '/main-menu2/list2-1-1',
+            icon: 'ant-design:unordered-list',
+            children: [
+              {
+                title: '列表2-1-1-1',
+                path: '/main-menu2/list2-1-1-1',
+                icon: 'ant-design:unordered-list',
+              },
+              {
+                title: '列表2-1-1-1-1',
+                path: '/main-menu2/list2-1-1-1-1',
+                icon: 'ant-design:unordered-list',
+              },
+            ],
+          },
+        ],
+      },
     ],
   },
 ];

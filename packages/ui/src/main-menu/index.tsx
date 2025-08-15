@@ -6,9 +6,9 @@ import clsx from 'clsx';
 import { useMemo, Fragment, useEffect } from 'react';
 import { useSetting } from '../context/setting';
 import { useLocation, useNavigate } from 'react-router';
-import { useMenuData, MenuItemType } from '../context/menu-data';
+import { useMenuData, MenuItemType, menuDataInstance } from '../context/menu-data';
 import { Icon } from '@iconify/react';
-import { PopoverState, usePopoverInstance } from '../components/popover';
+import { PopoverState, usePopoverInstance, Popover } from '../components/popover';
 import { Menu } from './../menu';
 import { useDarkModeInstanceContext } from '../context/dark-mode';
 
@@ -24,7 +24,12 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const { item, layoutMode } = props;
   const [state, menuInstance] = useMenuData();
   const mainMenuItemSelected = state.mainMenuItemSelected;
+  const mainExpandItem = state.mainExpandItem;
   const isActive = mainMenuItemSelected === item.path;
+
+  const isExpand = useMemo(() => {
+    return mainExpandItem?.path === item.path;
+  }, [mainExpandItem, item]);
 
   const [settingState] = useSetting();
   const layoutModeState = settingState.layoutMode;
@@ -47,8 +52,10 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   }, [isActive, layoutMode]);
 
   const onClickMainMenuItem = () => {
-    popoverInstance.onOpenChange(true);
-    if (!isActive) menuInstance.onMainMenu(item.path);
+    menuInstance.updateMainExpandItem(item);
+    if (!isActive) {
+      menuInstance.onMainMenu(item.path);
+    }
   };
 
   const iconClassName = useMemo(() => {
@@ -73,18 +80,21 @@ const MainMenuItem = (props: MainMenuItemProps) => {
     );
   }, [className, iconClassName, item, onClickMainMenuItem]);
 
-  useEffect(() => {
-    // 为了隐藏最顶层的弹框框
-    if (state.expandItems.length === 0 && ['main_left'].includes(layoutModeState)) {
-      popoverInstance.onOpenChange(false);
-    }
-  }, [state.expandItems]);
-
   if (['main_top_header', 'main_left'].includes(layoutModeState)) {
     return (
-      <PopoverState className={darkMode ? 'dark' : ''} content={<Menu />} popoverInstance={popoverInstance}>
+      <Popover
+        open={isExpand}
+        className={darkMode ? 'dark' : ''}
+        content={<Menu />}
+        popoverInstance={popoverInstance}
+        onOpenChange={(open) => {
+          if (open === false) {
+            menuDataInstance.updateMainExpandItem(undefined);
+          }
+        }}
+      >
         {render}
-      </PopoverState>
+      </Popover>
     );
   }
   return render;
@@ -94,6 +104,7 @@ const MainMenuItems = (props: MainMenuProps) => {
   const { layoutMode } = props;
   const [state] = useMenuData();
   const mainMenuItems = state.mainMenuItems || [];
+
   const menuRender = useMemo(() => {
     return mainMenuItems.map((item) => <MainMenuItem layoutMode={layoutMode} item={item} key={item.path} />);
   }, [mainMenuItems, layoutMode]);

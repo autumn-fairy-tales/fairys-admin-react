@@ -53,6 +53,7 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
     if (sideMenuMode === 'close') {
       //  如果是父级菜单渲染，则展开子菜单
       menuDataInstance.onToggleItems(item.path);
+      menuDataInstance.updateMainExpandItem(item);
     }
   };
 
@@ -124,7 +125,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     } else if (!match) {
       navigate(item.path);
       tabBarInstance.addItem(item);
-      popoverInstance.onOpenChange(false);
+      menuDataInstance.updateMainExpandItem(undefined);
     }
   };
 
