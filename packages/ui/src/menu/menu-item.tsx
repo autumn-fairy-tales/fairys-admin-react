@@ -5,7 +5,6 @@ import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from '.
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
-import { useSetting } from '../context/setting';
 import { usePopoverInstanceContext } from '../components/popover';
 export interface MenuItemProps {
   item: MenuItemType;
@@ -17,21 +16,69 @@ export interface MenuItemProps {
 const menuItemBaseClassName =
   'fairys_admin_menu_item shrink-0 transition-all duration-300  rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400 px-[14px]';
 
+const titleClassName = 'fairys_admin_menu_item_title flex flex-1 items-center justify-center overflow-hidden gap-1';
+const titleTextClassName = 'fairys_admin_menu_item_title_text flex-1 text-ellipsis overflow-hidden whitespace-nowrap';
+
+export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
+  const { item } = props;
+  const [menuState] = useMenuInstanceContext();
+  const sideMenuMode = menuState.menuModeExpandCollapse;
+  const location = useLocation();
+
+  const isActive = useMemo(() => {
+    if (sideMenuMode === 'close') {
+      return menuDataInstance.isParentMenuItem(item.path, location.pathname);
+    }
+    return false;
+  }, [location.pathname, sideMenuMode]);
+
+  const className = useMemo(() => {
+    return clsx(menuItemBaseClassName, ['text-gray-400', 'dark:text-gray-600'], {
+      'bg-blue-500': !!isActive,
+      'text-white dark:text-white': !!isActive,
+    });
+  }, [isActive]);
+
+  const iconRender = useMemo(() => {
+    return item.icon ? (
+      <span className={'size-[16px]'}>
+        <Icon icon={item.icon} className={'size-[16px]'} />
+      </span>
+    ) : (
+      <Fragment />
+    );
+  }, [item.icon]);
+
+  const onClick = (e: React.MouseEvent) => {
+    if (sideMenuMode === 'close') {
+      //  如果是父级菜单渲染，则展开子菜单
+      menuDataInstance.onToggleItems(item.path);
+    }
+  };
+
+  return (
+    <div className={className} ref={ref} onClick={onClick}>
+      <div className={titleClassName} title={item.title}>
+        {iconRender}
+        {sideMenuMode === 'open' ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
+      </div>
+    </div>
+  );
+});
+
 export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item, level = 0, isSubMenu = false, isExpand = false } = props;
   const match = useMatch(item.path);
   const navigate = useNavigate();
-  const menuInstance = useMenuInstanceContext();
+  const [menuState, menuInstance] = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
   const location = useLocation();
   const popoverInstance = usePopoverInstanceContext();
-
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
   useImperativeHandle(ref, () => menuItemInstance.dom.current);
-  const [settingState] = useSetting();
-  const sideMenuMode = settingState.sideMenuMode;
+  const sideMenuMode = menuState.menuModeExpandCollapse;
 
   const isActive = useMemo(() => {
     if (sideMenuMode === 'close' && level === 0) {
@@ -61,14 +108,6 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     });
   }, [isActive, level]);
 
-  const titleClassName = useMemo(() => {
-    return clsx('fairys_admin_menu_item_title flex flex-1 items-center justify-center overflow-hidden gap-1', {});
-  }, []);
-
-  const titleTextClassName = useMemo(() => {
-    return clsx('fairys_admin_menu_item_title_text flex-1 text-ellipsis overflow-hidden whitespace-nowrap', {});
-  }, []);
-
   const titleStyle = useMemo(() => {
     if (sideMenuMode === 'close') {
       return {};
@@ -76,7 +115,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     return {
       paddingLeft: `${level * 20}px`,
     };
-  }, [level]);
+  }, [level, sideMenuMode]);
 
   const onClick = (e: React.MouseEvent) => {
     if (isSubMenu) {

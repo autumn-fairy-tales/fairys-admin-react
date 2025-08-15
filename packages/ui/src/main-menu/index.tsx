@@ -80,7 +80,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
     }
   }, [state.expandItems]);
 
-  if (layoutModeState === 'main_left') {
+  if (['main_top_header', 'main_left'].includes(layoutModeState)) {
     return (
       <PopoverState className={darkMode ? 'dark' : ''} content={<Menu />} popoverInstance={popoverInstance}>
         {render}

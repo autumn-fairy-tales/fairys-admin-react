@@ -58,19 +58,6 @@ const filterMenuItems = (items: MenuItemType[], keyword: string) => {
   });
 };
 
-/**移除重复数据*/
-const removeRepeat = (items: MenuItemType[]) => {
-  const _newList: MenuItemType[] = [];
-  for (let index = 0; index < items.length; index++) {
-    const element = items[index];
-    const _item = _newList.find((i) => i.path === element.path);
-    if (!_item) {
-      _newList.push(element);
-    }
-  }
-  return _newList;
-};
-
 /**
  * 对比两个父级路径是否相同
  */
@@ -251,10 +238,25 @@ export class MenuItemInstance {
 
 export const useMenuItemInstance = () => useRef<MenuItemInstance>(new MenuItemInstance()).current;
 
+export interface MenuInstanceState {
+  /**菜单展开隐藏*/
+  menuModeExpandCollapse?: 'close' | 'open';
+}
+
 export class MenuInstance {
   /**节点*/
   dom = createRef<HTMLDivElement>();
   menuItems: MenuItemInstance[] = [];
+
+  /**菜单数据状态*/
+  state = proxy<MenuInstanceState>({
+    menuModeExpandCollapse: 'open',
+  });
+
+  setMenuModeExpandCollapse = (mode: MenuInstanceState['menuModeExpandCollapse']) => {
+    this.state.menuModeExpandCollapse = mode;
+  };
+
   register = (item: MenuItemInstance) => {
     this.menuItems.push(item);
     return () => {
@@ -311,4 +313,14 @@ export class MenuInstance {
 
 export const MenuInstanceContext = createContext<MenuInstance>(new MenuInstance());
 export const useMenuInstance = () => useRef(new MenuInstance()).current;
-export const useMenuInstanceContext = () => useContext(MenuInstanceContext);
+
+export const useMenuInstanceContext = () => {
+  const menuInstance = useContext(MenuInstanceContext);
+  const state = useSnapshot(menuInstance.state);
+  const menuModeExpandCollapse = state.menuModeExpandCollapse;
+  return [state, menuInstance, menuModeExpandCollapse] as [
+    MenuInstanceState,
+    MenuInstance,
+    MenuInstanceState['menuModeExpandCollapse'],
+  ];
+};

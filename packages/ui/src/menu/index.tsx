@@ -1,27 +1,65 @@
-import { useEffect, useMemo } from 'react';
-import { useMenuData, MenuInstanceContext, useMenuInstance } from './../context/menu-data';
+import { Fragment, useEffect, useMemo } from 'react';
+import { useMenuData, MenuInstanceContext, useMenuInstance, MenuItemType } from './../context/menu-data';
 import { SubMenu } from './sub-menu';
-import { MenuItem } from './menu-item';
+import { MenuItem, MainMenuItem } from './menu-item';
+import { useSetting } from '../context/setting';
+
+const createChildMenu = (item: MenuItemType, level?: number) => {
+  if (Array.isArray(item.children)) {
+    return <SubMenu key={item.path} item={item} level={level} />;
+  }
+  return <MenuItem key={item.path} item={item} level={level} />;
+};
+
+const createChildMenus = (childMenuItems: MenuItemType[], level?: number) => {
+  const child = childMenuItems.map((childItem) => createChildMenu(childItem, level));
+  return child;
+};
 
 export const Menu = () => {
-  const [state] = useMenuData();
+  const [state, menuDataInstance] = useMenuData();
   const menuItems = state.menuItems;
   const menuInstance = useMenuInstance();
+  const [settingState] = useSetting();
+  const sideMenuMode = settingState.sideMenuMode;
+  const layoutMode = settingState.layoutMode;
+
+  const isAllMenuItems = useMemo(() => {
+    return ['left', 'mobile', 'left_top_header'].includes(layoutMode);
+  }, [layoutMode]);
 
   const render = useMemo(() => {
-    return menuItems.map((item) => {
-      // 是否存在子集
-      if (Array.isArray(item.children)) {
-        return <SubMenu key={item.path} item={item} />;
-      }
-      return <MenuItem key={item.path} item={item} />;
-    });
-  }, [menuItems]);
+    if (isAllMenuItems) {
+      const _menuItems = menuDataInstance._menuItems || [];
+      let isRenderMainFirst = false;
+      return _menuItems.map((item) => {
+        const childMenuItems = item.children || [];
+        if (item.isMain) {
+          if (isRenderMainFirst) {
+            return <SubMenu key={item.path} item={item} isMain />;
+          }
+          isRenderMainFirst = true;
+          const child = createChildMenus(childMenuItems);
+          return <Fragment key={item.path}>{child}</Fragment>;
+        }
+        return createChildMenu(item);
+      });
+    }
+    return menuItems.map((item) => createChildMenu(item));
+  }, [menuItems, isAllMenuItems]);
 
   useEffect(() => {
     const unMount = menuInstance.addEventListener();
     return () => unMount();
   }, [menuInstance.dom]);
+
+  useEffect(() => {
+    if (['main_top_header'].includes(layoutMode)) {
+      menuInstance.setMenuModeExpandCollapse('open');
+    } else {
+      menuInstance.setMenuModeExpandCollapse(sideMenuMode);
+    }
+  }, [sideMenuMode, layoutMode]);
 
   return useMemo(() => {
     return (
