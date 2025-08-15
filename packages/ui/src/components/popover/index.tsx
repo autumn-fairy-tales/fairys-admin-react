@@ -1,6 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variant, Transition } from 'framer-motion';
-import { createPortal } from 'react-dom';
 import React, { Fragment, cloneElement, createContext, useMemo, useRef, useContext, useState } from 'react';
 import { useAnimationStatus } from '../utils';
 import {

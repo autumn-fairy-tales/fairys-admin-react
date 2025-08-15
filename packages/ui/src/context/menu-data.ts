@@ -291,24 +291,6 @@ export class MenuInstance {
       unMount_resizeObserver();
     };
   };
-
-  /**关闭弹框*/
-  onClose = (path: string) => {
-    // 树节点
-    const treeNode = menuDataInstance._parentMenuItemMap.get(path);
-    const list = treeNode
-      .filter((its) => Array.isArray(its.children) && its.children.length)
-      .map((its) => its.path)
-      .concat([path])
-      .reverse();
-    for (let index = 0; index < list.length; index++) {
-      const path = list[index];
-      const finx = this.menuItems.find((it) => it.item.path === path);
-      if (finx) {
-        finx.close?.();
-      }
-    }
-  };
 }
 
 export const MenuInstanceContext = createContext<MenuInstance>(new MenuInstance());
