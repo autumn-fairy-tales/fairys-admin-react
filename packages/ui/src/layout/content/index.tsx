@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router';
-import { TabBar } from '../tab-bar';
-import { ToolBar } from '../tool-bar';
+import { TabBar } from 'layout/tab-bar';
+import { ToolBar } from 'layout/tool-bar';
 
 export const LayoutContent = () => {
   return (

@@ -1,9 +1,9 @@
-import { Menu } from '../../menu';
-import { MainMenu } from '../../main-menu';
-import { useSetting } from '../../context/setting';
+import { Menu } from 'menu';
+import { MainMenu } from 'main-menu';
+import { useSetting } from 'context/setting';
 import { Fragment, useMemo } from 'react';
 import clsx from 'clsx';
-import { DarkModeInstanceContextProvider } from '../../context/dark-mode';
+import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSetting();

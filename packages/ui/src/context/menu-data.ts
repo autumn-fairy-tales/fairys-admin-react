@@ -1,6 +1,6 @@
 import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
-import { settingInstance } from '../context/setting';
+import { settingInstance } from './setting';
 export interface MenuItemType {
   /**标题*/
   title: string;

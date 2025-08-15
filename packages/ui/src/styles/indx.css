@@ -19,12 +19,19 @@ body,
   --theme-color: var(--color-blue-500, oklch(62.3% 0.214 259.815));
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
-
-.dark {
-  background-color: black;
-  color: var(--color-gray-400);
+@layer base {
+  .dark {
+    background-color: black;
+    color: var(--color-gray-400);
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--default-transition-duration));
+    --tw-duration: 0.3s;
+    transition-duration: 0.3s;
+  }
 }
+
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
   .no-scrollbar::-webkit-scrollbar {

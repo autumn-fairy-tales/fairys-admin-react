@@ -1,10 +1,10 @@
 import { useMemo } from 'react';
-import type { MenuItemType } from '../context/menu-data';
-import { useMenuData, menuDataInstance } from '../context/menu-data';
+import type { MenuItemType } from 'context/menu-data';
+import { useMenuData, menuDataInstance } from 'context/menu-data';
 import { MenuItem, MainMenuItem } from './menu-item';
-import { useSetting } from '../context/setting';
-import { DisclosureItem } from '../components/disclosure';
-import { Popover } from '../components/popover';
+import { useSetting } from 'context/setting';
+import { DisclosureItem } from 'components/disclosure';
+import { Popover } from 'components/popover';
 
 export interface MenuItemProps {
   item: MenuItemType;

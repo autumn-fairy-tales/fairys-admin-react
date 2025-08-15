@@ -13,7 +13,7 @@ import {
 } from '@floating-ui/react';
 import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import clsx from 'clsx';
-import { DarkModeInstancePopoverContextProvider } from '../../context/dark-mode';
+import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
 
 interface PopoverProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
@@ -139,6 +139,9 @@ export const Popover = (props: PopoverProps) => {
   return (
     <Fragment>
       {React.Children.map(children, (child) => {
+        if (!React.isValidElement(child)) {
+          return child;
+        }
         return cloneElement(child as React.ReactElement, { ref: refs.setReference, ...getReferenceProps() });
       })}
       {show ? (

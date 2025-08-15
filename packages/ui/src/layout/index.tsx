@@ -1,12 +1,12 @@
-import { Fragment, useMemo, useEffect } from 'react';
-import { useSetting } from '../context/setting';
+import { Fragment, useMemo } from 'react';
+import { useSetting } from 'context/setting';
 import clsx from 'clsx';
 import { LayoutContent } from './content';
 import { LayoutHeader } from './header';
 import { LayoutSider } from './sider';
 import { useLocation } from 'react-router';
-import { menuDataInstance } from './../context/menu-data';
-import { DarkModeInstanceContextProvider } from './../context/dark-mode';
+import { menuDataInstance } from 'context/menu-data';
+import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 
 export const Layout = () => {
   const [state] = useSetting();
@@ -54,7 +54,7 @@ export const Layout = () => {
   }, [layoutMode]);
 
   const layoutCls = useMemo(() => {
-    return clsx('fairys_admin_layout overflow-hidden w-full h-full flex box-border ', {
+    return clsx('fairys_admin_layout transition-all duration-300 overflow-hidden w-full h-full flex box-border ', {
       [`fairys_admin_layout_${layoutMode}`]: !!layoutMode,
       'flex-col': !isSiderFull,
       'flex-row': isSiderFull,

@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useMemo } from 'react';
-import { useMenuData, MenuInstanceContext, useMenuInstance, MenuItemType } from './../context/menu-data';
+import { useMenuData, MenuInstanceContext, useMenuInstance, MenuItemType } from 'context/menu-data';
 import { SubMenu } from './sub-menu';
-import { MenuItem, MainMenuItem } from './menu-item';
-import { useSetting } from '../context/setting';
+import { MenuItem } from './menu-item';
+import { useSetting } from 'context/setting';
 
 const createChildMenu = (item: MenuItemType, level?: number) => {
   if (Array.isArray(item.children)) {

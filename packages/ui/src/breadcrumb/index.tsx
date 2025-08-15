@@ -1,5 +1,5 @@
 import { Fragment, useMemo } from 'react';
-import { menuDataInstance } from './../context/menu-data';
+import { menuDataInstance } from 'context/menu-data';
 import { useLocation } from 'react-router';
 import clsx from 'clsx';
 
@@ -14,11 +14,11 @@ export const Breadcrumb = () => {
     return <Fragment />;
   }
   return (
-    <div className="fairys_admin_breadcrumb relative flex items-center min-h-[36px] p-[8px] box-border">
+    <div className="fairys_admin_breadcrumb relative flex items-center min-h-[36px] py-[8px] box-border">
       {menuItems.map((item, index) => {
         const isLast = index === menuItems.length - 1;
         const className = clsx(
-          'fairys_admin_breadcrumb_item transition-all duration-300 relative cursor-pointer rounded-sm py-[6px]  px-[14px] ',
+          'fairys_admin_breadcrumb_item transition-all duration-300 relative cursor-pointer rounded-sm py-[6px]  px-[14px] max-w-[150px] overflow-hidden text-ellipsis whitespace-nowrap',
           {
             'text-gray-500 hover:text-gray-500': isLast,
             'text-gray-400 hover:text-gray-500': !isLast,
@@ -30,7 +30,7 @@ export const Breadcrumb = () => {
           },
         );
         return (
-          <div key={item.path} className={className}>
+          <div key={item.path} title={item.title} className={className}>
             {item.title}
           </div>
         );

@@ -1,33 +1,36 @@
-import { Fragment } from 'react/jsx-runtime';
-import { Breadcrumb } from '../../breadcrumb';
-import { useSetting } from '../../context/setting';
+import { Breadcrumb } from 'breadcrumb';
+import { useSetting } from 'context/setting';
+import { useMemo } from 'react';
+import clsx from 'clsx';
+import { ButtonBase } from 'button';
 
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
-  const darkMenu = state.darkMenu;
-  const layoutMode = state.layoutMode;
+  const theme = state.theme;
 
-  const onClick = () => {
+  const onToggleTheme = () => {
     settingInstance.updated({
-      darkMenu: !darkMenu,
+      theme: theme === 'dark' ? 'light' : 'dark',
     });
   };
 
-  const onClick2 = () => {
-    settingInstance.updated({ layoutMode: layoutMode === 'main_left' ? 'main_sub_left' : 'main_left' });
-  };
+  const className = useMemo(() => {
+    return clsx('', {
+      'icon-[ant-design--moon-outlined]': theme !== 'dark',
+      'icon-[ant-design--sun-outlined]': theme === 'dark',
+    });
+  }, [theme]);
 
   return (
-    <Fragment>
-      <button onClick={onClick2}>菜单格式：{state.layoutMode}</button>
-      <button onClick={onClick}>{darkMenu ? '切换为亮色' : '切换为暗色'}</button>
-    </Fragment>
+    <ButtonBase>
+      <span className={className} onClick={onToggleTheme} />
+    </ButtonBase>
   );
 };
 
 export const ToolBar = () => {
   return (
-    <div className="fairys_admin_tool_bar overflow-hidden w-full flex flex-row items-center px-[4px] border-b border-gray-200 dark:border-gray-800">
+    <div className="fairys_admin_tool_bar transition-all duration-300 overflow-hidden w-full flex flex-row items-center px-[8px] border-b border-gray-200 dark:border-gray-800">
       <div className="fairys_admin_tool_bar_left">
         <Breadcrumb />
       </div>

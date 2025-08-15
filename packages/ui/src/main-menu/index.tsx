@@ -4,12 +4,12 @@
 
 import clsx from 'clsx';
 import { useMemo, Fragment } from 'react';
-import { useSetting } from '../context/setting';
+import { useSetting } from 'context/setting';
 import { useLocation, useNavigate } from 'react-router';
-import { useMenuData, MenuItemType, menuDataInstance } from '../context/menu-data';
+import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon } from '@iconify/react';
-import { usePopoverInstance, Popover } from '../components/popover';
-import { Menu } from './../menu';
+import { usePopoverInstance, Popover } from 'components/popover';
+import { Menu } from 'menu';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -36,7 +36,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
   const className = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu_item px-[8px] py-[4px] shrink-0 transition-all duration-300 rounded-sm box-border flex items-center cursor-pointer gap-1 dark:text-gray-400',
+      'fairys_admin_main_menu_item transition-all duration-300 px-[8px] py-[4px] shrink-0 transition-all duration-300 rounded-sm box-border flex items-center cursor-pointer gap-1 dark:text-gray-400',
       {
         active: isActive,
         'bg-[var(--theme-color)]': !!isActive,

@@ -1,8 +1,8 @@
 import { Fragment, useMemo, useState } from 'react';
-import { useTabBar, TabBarItemType, tabBarInstance } from '../../context/tab-bar';
+import { useTabBar, TabBarItemType, tabBarInstance } from 'context/tab-bar';
 import { Icon } from '@iconify/react';
 import { useNavigate, matchPath, useLocation } from 'react-router';
-import { Popover, usePopoverInstanceContext } from './../../components/popover';
+import { Popover, usePopoverInstanceContext } from 'components/popover';
 
 const Items = () => {
   const [state] = useTabBar();

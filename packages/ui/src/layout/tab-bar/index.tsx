@@ -6,7 +6,7 @@ import {
   useTabInstance,
   useTabInstanceContext,
   useTabItemInstance,
-} from '../../context/tab-bar';
+} from 'context/tab-bar';
 import clsx from 'clsx';
 import { Fragment, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
@@ -113,7 +113,7 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px] border-b border-gray-200 dark:border-gray-800 dark:bg-gray-800',
+      'fairys_admin_tab_bar transition-all duration-300 overflow-hidden w-full flex flex-row bg-gray-300/25 px-[8px] border-b border-gray-200 dark:border-gray-800 dark:bg-gray-800',
     );
   }, []);
   const location = useLocation();

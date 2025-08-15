@@ -1,12 +1,10 @@
 import { Fragment, useEffect, useMemo, forwardRef, Ref, useImperativeHandle } from 'react';
-import type { MenuItemType } from '../context/menu-data';
-import { tabBarInstance } from '../context/tab-bar';
-import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from './../context/menu-data';
+import type { MenuItemType } from 'context/menu-data';
+import { tabBarInstance } from 'context/tab-bar';
+import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from 'context/menu-data';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
-import { usePopoverInstanceContext } from '../components/popover';
-import { useSetting } from '../context/setting';
 
 export interface MenuItemProps {
   item: MenuItemType;
@@ -16,7 +14,7 @@ export interface MenuItemProps {
 }
 
 const menuItemBaseClassName =
-  'fairys_admin_menu_item shrink-0 transition-all duration-300  rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400 px-[14px]';
+  'fairys_admin_menu_item shrink-0 transition-all duration-300 rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400 px-[14px]';
 
 const titleClassName = 'fairys_admin_menu_item_title flex flex-1 items-center justify-center overflow-hidden gap-1';
 const titleTextClassName = 'fairys_admin_menu_item_title_text flex-1 text-ellipsis overflow-hidden whitespace-nowrap';
