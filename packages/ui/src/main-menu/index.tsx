@@ -3,12 +3,12 @@
  */
 
 import clsx from 'clsx';
-import { useMemo, Fragment, useEffect } from 'react';
+import { useMemo, Fragment } from 'react';
 import { useSetting } from '../context/setting';
 import { useLocation, useNavigate } from 'react-router';
 import { useMenuData, MenuItemType, menuDataInstance } from '../context/menu-data';
 import { Icon } from '@iconify/react';
-import { PopoverState, usePopoverInstance, Popover } from '../components/popover';
+import { usePopoverInstance, Popover } from '../components/popover';
 import { Menu } from './../menu';
 import { useDarkModeInstanceContext } from '../context/dark-mode';
 
@@ -22,6 +22,7 @@ interface MainMenuItemProps extends MainMenuProps {
 
 const MainMenuItem = (props: MainMenuItemProps) => {
   const { item, layoutMode } = props;
+  const location = useLocation();
   const [state, menuInstance] = useMenuData();
   const mainMenuItemSelected = state.mainMenuItemSelected;
   const mainExpandItem = state.mainExpandItem;
@@ -54,6 +55,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const onClickMainMenuItem = () => {
     menuInstance.updateMainExpandItem(item);
     if (!isActive) {
+      menuDataInstance.onExpandItems(location.pathname);
       menuInstance.onMainMenu(item.path);
     }
   };
