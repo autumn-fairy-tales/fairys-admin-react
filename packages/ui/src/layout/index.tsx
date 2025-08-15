@@ -21,6 +21,7 @@ export const Layout = () => {
    */
   const layoutMode = state.layoutMode;
   const sideMenuMode = state.sideMenuMode;
+  const theme = state.theme;
   const location = useLocation();
 
   useMemo(() => {
@@ -56,8 +57,9 @@ export const Layout = () => {
       [`fairys_admin_layout_${layoutMode}`]: !!layoutMode,
       'flex-col': !isSiderFull,
       'flex-row': isSiderFull,
+      [theme]: true,
     });
-  }, [layoutMode, isSiderFull]);
+  }, [layoutMode, isSiderFull, theme]);
 
   const headerRender = useMemo(() => {
     return isShowHeader ? <LayoutHeader /> : null;

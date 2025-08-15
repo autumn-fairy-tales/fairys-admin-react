@@ -30,6 +30,8 @@ export const LayoutSider = () => {
   const layoutMode = state.layoutMode;
   const darkMode = state.darkMenu;
   const darkModeInstance = useDarkModeInstance();
+  const theme = state.theme;
+  const _darkMode = darkMode || theme === 'dark';
 
   const hideSideMenu = useMemo(() => {
     return ['main_left'].includes(layoutMode);
@@ -69,8 +71,8 @@ export const LayoutSider = () => {
   }, [bodyClassName, sideMenuMode, hideSideMenu]);
 
   useEffect(() => {
-    darkModeInstance.setDarkMode(darkMode);
-  }, [darkMode, darkModeInstance]);
+    darkModeInstance.setDarkMode(_darkMode);
+  }, [_darkMode, darkModeInstance]);
 
   return (
     <DarkModeInstanceContext.Provider value={darkModeInstance}>

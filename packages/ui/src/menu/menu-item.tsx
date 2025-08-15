@@ -167,8 +167,14 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
 
   return useMemo(() => {
     return (
-      <div ref={menuItemInstance.dom} data-level={level} className={menuItemClassName} onClick={onClick}>
-        <div className={titleClassName} style={titleStyle} title={item.title}>
+      <div
+        ref={menuItemInstance.dom}
+        data-level={level}
+        title={item.title}
+        className={menuItemClassName}
+        onClick={onClick}
+      >
+        <div className={titleClassName} style={titleStyle}>
           {iconRender}
           {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
         </div>

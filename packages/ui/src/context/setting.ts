@@ -28,7 +28,7 @@ export interface SettingInstanceState {
   /**项目名*/
   projectName?: string;
   /**颜色主题风格*/
-  theme?: 'dark' | 'light' | 'auto';
+  theme?: 'dark' | 'light';
   /**主题颜色*/
   themeColor?: string;
   /**圆角系数*/
@@ -79,6 +79,7 @@ class SettingInstance {
 
   state = proxy<SettingInstanceState>({
     layoutMode: 'main_top_sub_left_header',
+    theme: 'dark',
     // layoutMode: "main_sub_left",
     // 侧边栏是否折叠
     sideMenuMode: 'open',

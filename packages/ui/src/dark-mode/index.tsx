@@ -11,11 +11,12 @@ export const useDarkMode = (option: UseDarkModeOption = {}) => {
   const { darkModeField = 'darkMenu', className } = option;
   const [state] = useSetting();
   const darkMenu = state[darkModeField];
+  const theme = state.theme;
   return useMemo(() => {
     return clsx('fairys_admin_use_dark_mode transition-all duration-300', className, {
-      dark: !!darkMenu,
+      dark: !!darkMenu || theme === 'dark',
     });
-  }, [darkMenu, className]);
+  }, [darkMenu, className, theme]);
 };
 
 export interface DarkModeWarpProps

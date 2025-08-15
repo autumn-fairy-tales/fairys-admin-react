@@ -69,7 +69,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
   const render = useMemo(() => {
     return (
-      <div className={className} onClick={onClickMainMenuItem}>
+      <div className={className} onClick={onClickMainMenuItem} title={item.title}>
         {item.icon ? (
           <span className={iconClassName}>
             <Icon icon={item.icon} className={iconClassName} />
