@@ -6,6 +6,8 @@ import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import { usePopoverInstanceContext } from '../components/popover';
+import { useSetting } from '../context/setting';
+
 export interface MenuItemProps {
   item: MenuItemType;
   level?: number;
@@ -24,7 +26,6 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
   const [menuState] = useMenuInstanceContext();
   const sideMenuMode = menuState.menuModeExpandCollapse;
   const location = useLocation();
-
   const isActive = useMemo(() => {
     if (sideMenuMode === 'close') {
       return menuDataInstance.isParentMenuItem(item.path, location.pathname);
@@ -34,7 +35,7 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
 
   const className = useMemo(() => {
     return clsx(menuItemBaseClassName, ['text-gray-400', 'dark:text-gray-600'], {
-      'bg-blue-500': !!isActive,
+      'bg-[var(--theme-color)]': !!isActive,
       'text-white dark:text-white': !!isActive,
     });
   }, [isActive]);
@@ -74,7 +75,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   const [menuState, menuInstance] = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
   const location = useLocation();
-  const popoverInstance = usePopoverInstanceContext();
+  // const popoverInstance = usePopoverInstanceContext();
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
@@ -103,9 +104,9 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     return clsx(menuItemBaseClassName, {
       [`data-level=${level}`]: true,
       active: !!isActive,
-      'bg-blue-500': !!isActive,
+      'bg-[var(--theme-color)]': !!isActive,
       'text-white dark:text-white': !!isActive,
-      'hover:bg-blue-100 dark:hover:bg-gray-600': !isActive,
+      'hover:bg-gray-200/75 dark:hover:bg-gray-600': !isActive,
     });
   }, [isActive, level]);
 

@@ -170,38 +170,6 @@ export const Popover = (props: PopoverProps) => {
       ) : (
         <Fragment />
       )}
-      {/* {show ? (
-        createPortal(
-          <PopoverInstanceContext.Provider value={popoverInstance}>
-            <AnimatePresence mode="wait">
-              <div
-                {...rest}
-                ref={refs.setFloating}
-                style={{ ...(style || {}), ...floatingStyles }}
-                className={bodyClasName}
-                {...getFloatingProps()}
-              >
-                <motion.div
-                  initial="collapsed"
-                  animate={open ? 'open' : 'collapsed'}
-                  variants={{
-                    open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
-                    collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
-                    ...(variants || {}),
-                  }}
-                  transition={{ duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98], ...transition }}
-                  onAnimationComplete={onAnimationComplete}
-                >
-                  {content}
-                </motion.div>
-              </div>
-            </AnimatePresence>
-          </PopoverInstanceContext.Provider>,
-          document.body,
-        )
-      ) : (
-        <Fragment />
-      )} */}
     </Fragment>
   );
 };

@@ -79,7 +79,8 @@ class SettingInstance {
 
   state = proxy<SettingInstanceState>({
     layoutMode: 'main_top_sub_left_header',
-    theme: 'dark',
+    // theme: 'dark',
+    // theme: 'dark',
     // layoutMode: "main_sub_left",
     // 侧边栏是否折叠
     sideMenuMode: 'open',
@@ -106,9 +107,23 @@ class SettingInstance {
       layoutMode: 'main_top_sub_left_header',
       ...this.state,
       ...state,
+      // themeColor: "red",
       // layoutMode: "main_top_header",
     });
+    if (this.state.themeColor) {
+      document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
+    }
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
+  };
+
+  /**更新主题颜色*/
+  updatedThemeColor = (themeColor: string) => {
+    this.updated({ themeColor });
+    if (themeColor) {
+      document.body.setAttribute('style', `--theme-color:${themeColor}`);
+    } else {
+      document.body.removeAttribute('style');
+    }
   };
 
   /**更新配置*/
