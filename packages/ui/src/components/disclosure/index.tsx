@@ -23,7 +23,7 @@ export const DisclosureItem = (props: DisclosureItemProps) => {
             open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
             collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
           }}
-          transition={{ duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98] }}
+          transition={{ duration: 0.35 }}
           onAnimationComplete={onAnimationComplete}
         >
           {children}

@@ -127,6 +127,7 @@ export const Popover = (props: PopoverProps) => {
     className: props.className,
     popoverInstance: instance,
   });
+  const motionRef = useRef<HTMLDivElement>(null);
   const { refs, floatingStyles, context } = floating;
   const useDismissOrHover = isUseHover ? useHover : useDismiss;
   const dismissOrHover = useDismissOrHover(
@@ -151,6 +152,7 @@ export const Popover = (props: PopoverProps) => {
                 {...getFloatingProps()}
               >
                 <motion.div
+                  ref={motionRef}
                   initial="collapsed"
                   animate={open ? 'open' : 'collapsed'}
                   variants={{
@@ -158,7 +160,10 @@ export const Popover = (props: PopoverProps) => {
                     collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
                     ...(variants || {}),
                   }}
-                  transition={{ duration: 0.35, ease: [0.04, 0.62, 0.23, 0.98], ...transition }}
+                  transition={{
+                    duration: 0.35,
+                    ...transition,
+                  }}
                   onAnimationComplete={onAnimationComplete}
                 >
                   {content}
