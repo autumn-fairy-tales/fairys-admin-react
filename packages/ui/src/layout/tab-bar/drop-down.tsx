@@ -57,17 +57,10 @@ const Items = () => {
 const PopoverButton = () => {
   const [open, setOpen] = useState(false);
   return (
-    <Popover
-      open={open}
-      placement="left-start"
-      content={<Items />}
-      onOpenChange={(open) => {
-        setOpen(open);
-      }}
-    >
+    <Popover open={open} placement="left-start" content={<Items />} onOpenChange={setOpen}>
       <div
         onClick={() => setOpen(!open)}
-        className="w-[25px] h-[25px] flex justify-center items-center text-sm/6 font-semibold focus:outline-none bg-white dark:bg-gray-600 text-gray-400 hover:text-gray-600 cursor-pointer dark:text-gray-400 dark:hover:text-white"
+        className="w-[25px] h-[25px] flex justify-center items-center text-sm/6 font-semibold  bg-white dark:bg-gray-600 text-gray-400 hover:text-gray-600 cursor-pointer dark:text-gray-400 dark:hover:text-white"
       >
         <span className="icon-[ant-design--caret-down-outlined]" />
       </div>
