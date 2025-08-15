@@ -17,7 +17,7 @@ const MenuDarkLight = () => {
   const className = useMemo(() => {
     return clsx('', {
       'icon-[ant-design--moon-outlined]': theme !== 'dark',
-      'icon-[ant-design--sun-outlined]': theme === 'dark',
+      'icon-[ant-design--sun-outlined] text-gray-200': theme === 'dark',
     });
   }, [theme]);
 
