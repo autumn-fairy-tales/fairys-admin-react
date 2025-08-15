@@ -1,4 +1,9 @@
 import './styles/indx.css';
 export * from './button';
-export * from './layout';
+export * from './breadcrumb';
+export * from './components/disclosure';
+export * from './components/popover';
 export * from './context';
+export * from './layout';
+export * from './main-menu';
+export * from './menu';

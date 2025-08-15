@@ -1,30 +1,18 @@
 import { Fragment, useMemo } from 'react';
 import { menuDataInstance } from './../context/menu-data';
-// import type { MenuItemType } from '../context/menu-data';
-import {
-  useLocation,
-  //  useNavigate
-} from 'react-router';
+import { useLocation } from 'react-router';
 import clsx from 'clsx';
 
 export const Breadcrumb = () => {
   const location = useLocation();
-  // const navigate = useNavigate();
 
   const menuItems = useMemo(() => {
     return menuDataInstance._parentMenuItemMap.get(location.pathname);
-    // return menuDataInstance._parentMenuItemMap.get(location.pathname).filter((it) => !it.isMain);
   }, [location.pathname]);
 
   if (!menuItems) {
     return <Fragment />;
   }
-  // const _menuItems = location.pathname === '/' ? menuItems : [{ path: '/', title: '主页' }, ...menuItems];
-  // const onClick = (item: MenuItemType) => {
-  //   if (item.path === '/') {
-  //     navigate(item.path);
-  //   }
-  // };
   return (
     <div className="fairys_admin_breadcrumb relative flex items-center min-h-[36px] p-[8px] box-border">
       {menuItems.map((item, index) => {
