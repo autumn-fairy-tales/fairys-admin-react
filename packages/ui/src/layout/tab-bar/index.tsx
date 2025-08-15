@@ -113,10 +113,7 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px] border-b border-gray-200 dark:border-gray-800',
-      {
-        'dark:bg-gray-800': true,
-      },
+      'fairys_admin_tab_bar overflow-hidden w-full flex flex-row bg-gray-300/25 px-[6px] border-b border-gray-200 dark:border-gray-800 dark:bg-gray-800',
     );
   }, []);
   const location = useLocation();

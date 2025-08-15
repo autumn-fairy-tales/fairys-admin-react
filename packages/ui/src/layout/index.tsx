@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useEffect } from 'react';
 import { useSetting } from '../context/setting';
 import clsx from 'clsx';
 import { LayoutContent } from './content';
@@ -6,6 +6,7 @@ import { LayoutHeader } from './header';
 import { LayoutSider } from './sider';
 import { useLocation } from 'react-router';
 import { menuDataInstance } from './../context/menu-data';
+import { DarkModeInstanceContext, useDarkModeInstance } from './../context/dark-mode';
 
 export const Layout = () => {
   const [state] = useSetting();
@@ -23,6 +24,7 @@ export const Layout = () => {
   const sideMenuMode = state.sideMenuMode;
   const theme = state.theme;
   const location = useLocation();
+  const darkModeInstance = useDarkModeInstance();
 
   useMemo(() => {
     menuDataInstance.updateChildMenus(location.pathname);
@@ -73,45 +75,51 @@ export const Layout = () => {
     return <LayoutContent />;
   }, []);
 
+  useEffect(() => {
+    darkModeInstance.setDarkMode(theme === 'dark');
+  }, [theme, darkModeInstance]);
+
   return (
-    <div className={layoutCls}>
-      {isSiderFull ? (
-        <Fragment>
-          {isShowSider ? (
-            <div className="fairys_admin_layout_sider overflow-hidden h-full box-border ">{siderRender}</div>
-          ) : (
-            <Fragment />
-          )}
-          <div className="fairys_admin_layout_main overflow-hidden flex flex-col flex-1 h-full box-border">
-            {isShowHeader ? (
-              <div className="fairys_admin_layout_main_header overflow-hidden w-full box-border">{headerRender}</div>
-            ) : (
-              <Fragment />
-            )}
-            <div className="fairys_admin_layout_main_content overflow-hiddenflex-1 w-full box-border">
-              {contentRender}
-            </div>
-          </div>
-        </Fragment>
-      ) : (
-        <Fragment>
-          {isShowHeader ? (
-            <div className="fairys_admin_layout_header overflow-hidden w-full box-border ">{headerRender}</div>
-          ) : (
-            <Fragment />
-          )}
-          <div className="fairys_admin_layout_main overflow-hidden flex flex-row flex-1 w-full box-border">
+    <DarkModeInstanceContext.Provider value={darkModeInstance}>
+      <div className={layoutCls}>
+        {isSiderFull ? (
+          <Fragment>
             {isShowSider ? (
-              <div className="fairys_admin_layout_main_sider overflow-hidden h-full box-border">{siderRender}</div>
+              <div className="fairys_admin_layout_sider overflow-hidden h-full box-border ">{siderRender}</div>
             ) : (
               <Fragment />
             )}
-            <div className="fairys_admin_layout_main_content overflow-hidden flex-1 h-full box-border">
-              {contentRender}
+            <div className="fairys_admin_layout_main overflow-hidden flex flex-col flex-1 h-full box-border">
+              {isShowHeader ? (
+                <div className="fairys_admin_layout_main_header overflow-hidden w-full box-border">{headerRender}</div>
+              ) : (
+                <Fragment />
+              )}
+              <div className="fairys_admin_layout_main_content overflow-hiddenflex-1 w-full box-border">
+                {contentRender}
+              </div>
             </div>
-          </div>
-        </Fragment>
-      )}
-    </div>
+          </Fragment>
+        ) : (
+          <Fragment>
+            {isShowHeader ? (
+              <div className="fairys_admin_layout_header overflow-hidden w-full box-border ">{headerRender}</div>
+            ) : (
+              <Fragment />
+            )}
+            <div className="fairys_admin_layout_main overflow-hidden flex flex-row flex-1 w-full box-border">
+              {isShowSider ? (
+                <div className="fairys_admin_layout_main_sider overflow-hidden h-full box-border">{siderRender}</div>
+              ) : (
+                <Fragment />
+              )}
+              <div className="fairys_admin_layout_main_content overflow-hidden flex-1 h-full box-border">
+                {contentRender}
+              </div>
+            </div>
+          </Fragment>
+        )}
+      </div>
+    </DarkModeInstanceContext.Provider>
   );
 };

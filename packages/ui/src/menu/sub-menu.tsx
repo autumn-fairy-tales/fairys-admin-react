@@ -42,7 +42,7 @@ export const SubMenu = (props: MenuItemProps) => {
 
   const childClassName = useMemo(() => {
     return clsx('fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px]');
-  }, [darkMode]);
+  }, []);
 
   const popoverClassName = useMemo(() => {
     return clsx('fairys_admin_sub_menu_popover', {

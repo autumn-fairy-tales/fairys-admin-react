@@ -29,6 +29,8 @@ export interface SettingInstanceState {
   projectName?: string;
   /**颜色主题风格*/
   theme?: 'dark' | 'light';
+  /**自动监听系统的明暗色系*/
+  autoListenSystemTheme?: boolean;
   /**主题颜色*/
   themeColor?: string;
   /**圆角系数*/
@@ -78,11 +80,11 @@ class SettingInstance {
   static localStorageKey = 'fairys_setting_state';
 
   state = proxy<SettingInstanceState>({
+    /**布局模式*/
     layoutMode: 'main_top_sub_left_header',
-    // theme: 'dark',
-    // theme: 'dark',
-    // layoutMode: "main_sub_left",
-    // 侧边栏是否折叠
+    /**自动监听系统的明暗色系*/
+    autoListenSystemTheme: true,
+    /**侧边栏模式*/
     sideMenuMode: 'open',
   });
 
@@ -101,18 +103,45 @@ class SettingInstance {
     }
   }
 
+  mediaQueryList: MediaQueryList | null = null;
+
+  onListenChangeSystemTheme = (e: MediaQueryListEvent) => {
+    this.updated({ theme: e.matches ? 'dark' : 'light' });
+  };
+
+  /**自动监听系统的明暗色系*/
+  autoListenSystemTheme = () => {
+    if (this.state.autoListenSystemTheme) {
+      if (!this.mediaQueryList) {
+        this.mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+      } else {
+        this.mediaQueryList.removeEventListener('change', this.onListenChangeSystemTheme);
+      }
+      this.updated({ theme: this.mediaQueryList.matches ? 'dark' : 'light' });
+      this.mediaQueryList.addEventListener('change', this.onListenChangeSystemTheme);
+    } else {
+      this.mediaQueryList?.removeEventListener('change', this.onListenChangeSystemTheme);
+      this.mediaQueryList = null;
+    }
+  };
+
   /**初始配置*/
   initSetting = (state: SettingInstanceState) => {
-    this.state = proxy({
+    const _newState: SettingInstanceState = {
       layoutMode: 'main_top_sub_left_header',
-      ...this.state,
       ...state,
-      // themeColor: "red",
-      // layoutMode: "main_top_header",
+      ...this.state,
+    };
+    this.state = proxy({
+      ..._newState,
+      /**项目名和logo 始终取设置的值*/
+      projectName: state.projectName,
+      logo: state.logo,
     });
     if (this.state.themeColor) {
       document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
     }
+    this.autoListenSystemTheme();
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
   };
 

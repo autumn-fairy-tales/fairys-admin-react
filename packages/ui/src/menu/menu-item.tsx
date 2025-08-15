@@ -75,7 +75,6 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   const [menuState, menuInstance] = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
   const location = useLocation();
-  // const popoverInstance = usePopoverInstanceContext();
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
