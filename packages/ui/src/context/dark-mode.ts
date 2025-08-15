@@ -1,5 +1,6 @@
-import { createContext, useContext, useRef, useEffect, createElement, ReactNode } from 'react';
+import React, { createContext, useContext, useRef, useEffect, createElement, ReactNode, cloneElement } from 'react';
 import { proxy, useSnapshot } from 'valtio';
+import clsx from 'clsx';
 
 interface DarkModeInstanceState {
   darkMode: boolean;
@@ -41,6 +42,21 @@ export interface DarkModeInstanceContextProviderProps {
   /**自定义darkModeInstance*/
   darkModeInstance?: DarkModeInstance;
 }
+
+export const DarkModeInstancePopoverContextProvider = (props: DarkModeInstanceContextProviderProps) => {
+  const { children } = props;
+  const [state, darkModeInstance] = useDarkModeInstanceContext();
+  const darkMode = state.darkMode;
+  return createElement(DarkModeInstanceContext.Provider, {
+    children: React.Children.map(children, (child: any) => {
+      const prop = child?.props;
+      return cloneElement(child as React.ReactElement, {
+        className: clsx(prop?.className, { dark: darkMode }),
+      });
+    }),
+    value: darkModeInstance,
+  });
+};
 
 export const DarkModeInstanceContextProvider = (props: DarkModeInstanceContextProviderProps) => {
   const { children, darkMode, darkModeInstance: instance } = props;

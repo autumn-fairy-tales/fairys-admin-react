@@ -10,7 +10,6 @@ import { useMenuData, MenuItemType, menuDataInstance } from '../context/menu-dat
 import { Icon } from '@iconify/react';
 import { usePopoverInstance, Popover } from '../components/popover';
 import { Menu } from './../menu';
-import { useDarkModeInstanceContext } from '../context/dark-mode';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -27,11 +26,8 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const mainMenuItemSelected = state.mainMenuItemSelected;
   const mainExpandItem = state.mainExpandItem;
   const isActive = mainMenuItemSelected === item.path;
-
   const [settingState] = useSetting();
   const layoutModeState = settingState.layoutMode;
-  const [darkModeState] = useDarkModeInstanceContext();
-  const darkMode = darkModeState.darkMode;
   const popoverInstance = usePopoverInstance();
 
   const isExpand = useMemo(() => {
@@ -85,9 +81,9 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   if (['main_top_header', 'main_left'].includes(layoutModeState)) {
     return (
       <Popover
+        className="fairys_admin_main_menu_popover"
         placement={layoutMode === 'vertical' ? 'right-start' : 'bottom-start'}
         open={isExpand}
-        className={darkMode ? 'dark' : ''}
         content={<Menu />}
         popoverInstance={popoverInstance}
         onOpenChange={(open) => {

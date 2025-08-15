@@ -13,6 +13,7 @@ import {
 } from '@floating-ui/react';
 import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import clsx from 'clsx';
+import { DarkModeInstancePopoverContextProvider } from '../../context/dark-mode';
 
 interface PopoverProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
@@ -144,31 +145,33 @@ export const Popover = (props: PopoverProps) => {
         <FloatingPortal>
           <PopoverInstanceContext.Provider value={popoverInstance}>
             <AnimatePresence mode="wait">
-              <div
-                {...rest}
-                ref={refs.setFloating}
-                style={{ ...(style || {}), ...floatingStyles }}
-                className={bodyClasName}
-                {...getFloatingProps()}
-              >
-                <motion.div
-                  ref={motionRef}
-                  initial="collapsed"
-                  animate={open ? 'open' : 'collapsed'}
-                  variants={{
-                    open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
-                    collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
-                    ...(variants || {}),
-                  }}
-                  transition={{
-                    duration: 0.35,
-                    ...transition,
-                  }}
-                  onAnimationComplete={onAnimationComplete}
+              <DarkModeInstancePopoverContextProvider>
+                <div
+                  {...rest}
+                  ref={refs.setFloating}
+                  style={{ ...(style || {}), ...floatingStyles }}
+                  className={bodyClasName}
+                  {...getFloatingProps()}
                 >
-                  {content}
-                </motion.div>
-              </div>
+                  <motion.div
+                    ref={motionRef}
+                    initial="collapsed"
+                    animate={open ? 'open' : 'collapsed'}
+                    variants={{
+                      open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
+                      collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
+                      ...(variants || {}),
+                    }}
+                    transition={{
+                      duration: 0.35,
+                      ...transition,
+                    }}
+                    onAnimationComplete={onAnimationComplete}
+                  >
+                    {content}
+                  </motion.div>
+                </div>
+              </DarkModeInstancePopoverContextProvider>
             </AnimatePresence>
           </PopoverInstanceContext.Provider>
         </FloatingPortal>
