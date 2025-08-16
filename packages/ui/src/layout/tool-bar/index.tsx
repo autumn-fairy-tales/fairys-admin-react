@@ -15,15 +15,15 @@ const MenuDarkLight = () => {
   };
 
   const className = useMemo(() => {
-    return clsx('', {
+    return clsx('fairys_admin_tool_bar_dark_light', {
       'icon-[ant-design--moon-outlined]': theme !== 'dark',
       'icon-[ant-design--sun-outlined] text-gray-200': theme === 'dark',
     });
   }, [theme]);
 
   return (
-    <ButtonBase>
-      <span className={className} onClick={onToggleTheme} />
+    <ButtonBase onClick={onToggleTheme}>
+      <span className={className} />
     </ButtonBase>
   );
 };
