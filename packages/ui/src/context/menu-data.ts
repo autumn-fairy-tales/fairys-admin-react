@@ -1,6 +1,7 @@
 import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
 import { settingInstance } from './setting';
+
 export interface MenuItemType {
   /**标题*/
   title: string;
@@ -149,6 +150,11 @@ export class MenuDataInstance {
 
   /**展开项*/
   onExpandItems = (path: string) => {
+    const finxItem = this.get_path_menuItem(path);
+    /**如果没找到则不进行更新*/
+    if (!finxItem) {
+      return;
+    }
     /**只有在未存在展开项时才进行更新(刚进行加载数据)*/
     if (this.state.expandItems.length === 0) {
       const parentItems = this._parentMenuItemMap.get(path) || [];

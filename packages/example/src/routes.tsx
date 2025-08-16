@@ -8,20 +8,20 @@ import { Layout, routerDataInstance } from '@fairys/admin-tools-react';
 export const routes: RouteObject[] = [
   {
     path: '/',
-    element: <Layout />,
+    Component: Layout,
     children: [
       {
         index: true,
         path: '/',
-        element: <Home />,
+        Component: Home,
       },
       {
         path: '/list',
-        element: <List />,
+        Component: List,
       },
       {
         path: '/detail',
-        element: <Detail />,
+        Component: Detail,
       },
       {
         path: '*',
