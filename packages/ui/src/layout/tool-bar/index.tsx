@@ -15,7 +15,7 @@ const MenuDarkLight = () => {
   };
 
   const className = useMemo(() => {
-    return clsx('fairys_admin_tool_bar_dark_light', {
+    return clsx('fairys_admin_tool_bar_dark_light size-[16px]', {
       'icon-[ant-design--moon-outlined]': theme !== 'dark',
       'icon-[ant-design--sun-outlined] text-gray-200': theme === 'dark',
     });
