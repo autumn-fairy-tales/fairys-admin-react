@@ -1,7 +1,7 @@
 import ReactDOM from 'react-dom/client';
 import { RouterProvider } from 'react-router';
 import { router } from './routes';
-import { settingInstance } from '@fairys/admin-tools-react';
+import { settingInstance, FairysRoot } from '@fairys/admin-tools-react';
 import logo from './assets/logo.png';
 import { menuDataInstance } from '@fairys/admin-tools-react';
 import { menuItems } from './menu';
@@ -20,7 +20,10 @@ menuDataInstance.ctor(menuItems);
 
 const rootEl = document.getElementById('root');
 if (rootEl) {
-  console.log(router);
   const root = ReactDOM.createRoot(rootEl);
-  root.render(<RouterProvider router={router} />);
+  root.render(
+    <FairysRoot keepAlive={true}>
+      <RouterProvider router={router} />
+    </FairysRoot>,
+  );
 }

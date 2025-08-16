@@ -1,6 +1,7 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import type { MenuItemType } from './menu-data';
 import type { NavigateFunction } from 'react-router';
+import { appDataInstance } from './index';
 import { menuDataInstance } from './menu-data';
 import { createContext, createRef, useContext, useRef } from 'react';
 
@@ -61,6 +62,10 @@ class TabBarInstance {
       }
     } else {
       this.state.tabBarItems = ref(this.state.tabBarItems.filter((item) => item.path !== path));
+    }
+    /**移除缓存页面*/
+    if (appDataInstance.aliveController) {
+      appDataInstance.aliveController.drop(path);
     }
   };
 }

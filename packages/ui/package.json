@@ -21,6 +21,7 @@
     "esm"
   ],
   "dependencies": {
+    "react-activation": "0.13.4",
     "@floating-ui/react": "~0.27.15",
     "framer-motion": "~12.23.12",
     "clsx": "2.1.1",

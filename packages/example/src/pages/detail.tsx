@@ -1,5 +1,10 @@
 const MainIndex = () => {
-  return <div>detail</div>;
+  return (
+    <div>
+      detail
+      <input />
+    </div>
+  );
 };
 
 export default MainIndex;

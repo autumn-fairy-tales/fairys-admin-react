@@ -4,6 +4,7 @@ const MainIndex = () => {
   console.log(routerDataInstance);
   return (
     <div>
+      <input />
       <NavLink to="/">首页</NavLink>
       <NavLink to="/list">列表</NavLink>
       <NavLink to="/detail">详情</NavLink>

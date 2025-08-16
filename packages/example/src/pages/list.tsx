@@ -1,5 +1,10 @@
 const MainIndex = () => {
-  return <div>List</div>;
+  return (
+    <div>
+      List
+      <input />
+    </div>
+  );
 };
 
 export default MainIndex;
