@@ -13,7 +13,7 @@ export interface MenuItemProps {
 }
 
 const subMenuClassName = 'fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px] ';
-const childClassName = 'fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px]';
+const childClassName = 'fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px] dark:border dark:border-gray-700';
 
 export const SubMenu = (props: MenuItemProps) => {
   const { item, level = 0, isMain = false } = props;

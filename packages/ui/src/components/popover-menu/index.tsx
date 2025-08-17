@@ -17,6 +17,7 @@ export interface PopoverMenuProps {
   onClick?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
   onClose?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
   isHideClose?: boolean;
+  className?: string;
 }
 
 class PopoverMenuInstance {
@@ -28,10 +29,10 @@ class PopoverMenuInstance {
 }
 const usePopoverMenuInstance = () => useRef<PopoverMenuInstance>(new PopoverMenuInstance()).current;
 
-const popoverMenuItemBaseCls = `shrink-0 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100 transition flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer`;
+const popoverMenuItemBaseCls = `shrink-0 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100 transition-all duration-300 flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer`;
 
 export const PopoverMenu = (props: PopoverMenuProps) => {
-  const { onClick, onClose, items, layoutMode = 'vertical', isHideClose = false } = props;
+  const { onClick, onClose, items, layoutMode = 'vertical', isHideClose = false, className } = props;
   const popoverMenuInstance = usePopoverMenuInstance();
   popoverMenuInstance.items = items;
   popoverMenuInstance.onClick = onClick;
@@ -57,7 +58,7 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
           <div className="flex-1  whitespace-nowrap">{item.title}</div>
           {!isHideClose ? (
             <span
-              className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600"
+              className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white dark:text-gray-500 transition-all duration-300"
               onClick={(e) => popoverMenuInstance.onClose?.(item, e)}
             />
           ) : (
@@ -69,11 +70,15 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
   }, [items, isHideClose]);
 
   const classNameBase = useMemo(() => {
-    return clsx('flex flex-col relative', {
-      'flex-col': layoutMode === 'vertical',
-      'flex-row': layoutMode === 'horizontal',
-    });
-  }, [layoutMode]);
+    return clsx(
+      'flex flex-col relative',
+      {
+        'flex-col': layoutMode === 'vertical',
+        'flex-row': layoutMode === 'horizontal',
+      },
+      className,
+    );
+  }, [layoutMode, className]);
 
   return <div className={classNameBase}>{render}</div>;
 };

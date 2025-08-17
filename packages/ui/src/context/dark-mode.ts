@@ -43,6 +43,7 @@ export interface DarkModeInstanceContextProviderProps {
   darkModeInstance?: DarkModeInstance;
 }
 
+/**为了在弹窗中使用darkMode，需要在弹窗中包裹这个组件*/
 export const DarkModeInstancePopoverContextProvider = (props: DarkModeInstanceContextProviderProps) => {
   const { children } = props;
   const [state, darkModeInstance] = useDarkModeInstanceContext();

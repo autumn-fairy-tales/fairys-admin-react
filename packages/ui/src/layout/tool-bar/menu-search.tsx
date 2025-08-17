@@ -12,7 +12,7 @@ export const MenuSearch = () => {
       <ButtonBase className="fairys_admin_tool_bar_menu_search" onClick={() => setOpen(true)}>
         <span className="icon-[ant-design--file-search-outlined] size-[16px]" />
       </ButtonBase>
-      <ModalBase open={open} onClose={() => setOpen(false)}>
+      <ModalBase mode="drawer" open={open} onClose={() => setOpen(false)}>
         <div>2112</div>
       </ModalBase>
     </Fragment>
