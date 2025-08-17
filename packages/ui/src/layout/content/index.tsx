@@ -5,8 +5,8 @@ import { KeepAlive } from 'react-activation';
 import { useFairysRootContext } from 'components/root';
 import { Fragment } from 'react/jsx-runtime';
 import { useMemo, useState } from 'react';
-import { FloatingPortal } from '@floating-ui/react';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
+import { FloatingPortal } from '@floating-ui/react';
 
 const KeepAliveContent = () => {
   const location = useLocation();
@@ -32,7 +32,7 @@ const OutletContentContext = () => {
       {open ? (
         <FloatingPortal>
           <DarkModeInstancePopoverContextProvider>
-            <div className="w-full h-full overflow-auto dark:bg-gray-950 bg-white absolute top-0 left-0 right-0 bottom-0">
+            <div className="w-full h-full overflow-auto dark:bg-gray-800 bg-white absolute top-0 left-0 right-0 bottom-0">
               {render}
             </div>
           </DarkModeInstancePopoverContextProvider>

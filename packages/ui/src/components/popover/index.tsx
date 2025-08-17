@@ -10,6 +10,7 @@ import {
   useHover,
   FloatingPortal,
   size as sizeMiddleware,
+  flip as flipMiddleware,
 } from '@floating-ui/react';
 import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import clsx from 'clsx';
@@ -87,6 +88,7 @@ const usePopoverBase = (options: UsePopoverBaseOptions) => {
           });
         },
       }),
+      flipMiddleware(),
     ],
   });
   const bodyClasName = useMemo(() => {

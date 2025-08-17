@@ -3,6 +3,7 @@ import { useTabBar, TabBarItemType, tabBarInstance } from 'context/tab-bar';
 import { Icon } from '@iconify/react';
 import { useNavigate, matchPath, useLocation } from 'react-router';
 import { Popover, usePopoverInstanceContext } from 'components/popover';
+import { PopoverMenu } from 'components/popover-menu';
 
 const Items = () => {
   const [state] = useTabBar();
@@ -25,33 +26,7 @@ const Items = () => {
     tabBarInstance.remove(item.path, !!match, navigate);
     popoverInstance.onOpenChange?.(false);
   };
-
-  const render = useMemo(() => {
-    return (list || []).map((item) => {
-      return (
-        <div
-          onClick={(e) => onNativeClick(item, e)}
-          key={item.path}
-          className="shrink-0 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100 transition flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer"
-        >
-          {item.icon ? (
-            <span className="size-[16px]">
-              <Icon icon={item.icon} className="size-[16px]" />
-            </span>
-          ) : (
-            <Fragment />
-          )}
-          <div className="flex-1  whitespace-nowrap">{item.title}</div>
-          <span
-            className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600"
-            onClick={(e) => onClose(item, e)}
-          />
-        </div>
-      );
-    });
-  }, [list]);
-
-  return <div className="flex flex-col relative">{render}</div>;
+  return <PopoverMenu items={list} onClick={onNativeClick} onClose={onClose} />;
 };
 
 const PopoverButton = () => {
