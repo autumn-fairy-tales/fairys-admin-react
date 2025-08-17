@@ -2,7 +2,8 @@ import { Breadcrumb } from 'breadcrumb';
 import { useSetting } from 'context/setting';
 import { useMemo } from 'react';
 import clsx from 'clsx';
-import { ButtonBase } from 'button';
+import { ButtonBase } from 'components/button';
+import { MenuSearch } from './menu-search';
 
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
@@ -15,14 +16,14 @@ const MenuDarkLight = () => {
   };
 
   const className = useMemo(() => {
-    return clsx('fairys_admin_tool_bar_dark_light size-[16px]', {
+    return clsx('size-[16px]', {
       'icon-[ant-design--moon-outlined]': theme !== 'dark',
       'icon-[ant-design--sun-outlined] text-gray-200': theme === 'dark',
     });
   }, [theme]);
 
   return (
-    <ButtonBase onClick={onToggleTheme}>
+    <ButtonBase className="fairys_admin_tool_bar_dark_light" onClick={onToggleTheme}>
       <span className={className} />
     </ButtonBase>
   );
@@ -35,7 +36,8 @@ export const ToolBar = () => {
         <Breadcrumb />
       </div>
       <div className="fairys_admin_tool_bar_body overflow-auto flex flex-row flex-1"></div>
-      <div className="fairys_admin_tool_bar_right">
+      <div className="fairys_admin_tool_bar_right flex items-center gap-1 dark:text-gray-200">
+        <MenuSearch />
         <MenuDarkLight />
       </div>
     </div>

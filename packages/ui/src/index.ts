@@ -1,5 +1,5 @@
 import './styles/indx.css';
-export * from './button';
+export * from './components/button';
 export * from './breadcrumb';
 export * from './components/disclosure';
 export * from './components/popover';
