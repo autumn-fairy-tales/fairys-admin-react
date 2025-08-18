@@ -6,6 +6,7 @@ import { useFairysRootContext } from 'components/root';
 import { Fragment } from 'react/jsx-runtime';
 import { useMemo, useState } from 'react';
 import { FullScreen } from 'components/full-screen';
+import { useTabBar } from 'context/tab-bar';
 
 const KeepAliveContent = () => {
   const location = useLocation();
@@ -17,8 +18,9 @@ const KeepAliveContent = () => {
 };
 
 const OutletContentContext = () => {
-  const [open, setOpen] = useState(false);
   const fairysRootClass = useFairysRootContext();
+  const [state, tabBarInstance] = useTabBar();
+  const pageFullScreen = state.pageFullScreen;
 
   const render = useMemo(() => {
     if (fairysRootClass.keepAlive) return <KeepAliveContent />;
@@ -27,8 +29,8 @@ const OutletContentContext = () => {
 
   return (
     <Fragment>
-      <button onClick={() => setOpen(!open)}>{open ? '关闭' : '打开'}</button>
-      <FullScreen open={open} onClose={() => setOpen(false)}>
+      <button onClick={() => tabBarInstance.onToggleFullScreen()}>{pageFullScreen ? '关闭' : '打开'}</button>
+      <FullScreen open={pageFullScreen} onClose={tabBarInstance.onToggleFullScreen}>
         {render}
       </FullScreen>
     </Fragment>

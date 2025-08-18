@@ -11,6 +11,8 @@ export interface TabBarInstanceState {
   tabBarItems: TabBarItemType[];
   /**右侧选择的tab项集合,不在可视区域的数据*/
   dropDownTabBarItems: TabBarItemType[];
+  /**页面是否全屏*/
+  pageFullScreen?: boolean;
   /**默认引用值*/
   __defaultValue?: string;
 }
@@ -19,6 +21,7 @@ class TabBarInstance {
   state = proxy<TabBarInstanceState>({
     tabBarItems: [],
     dropDownTabBarItems: [],
+    pageFullScreen: false,
   });
 
   /**初始化渲染菜单数据*/
@@ -67,6 +70,11 @@ class TabBarInstance {
     if (appDataInstance.aliveController) {
       appDataInstance.aliveController.drop(path);
     }
+  };
+
+  /**设置页面是否全屏*/
+  onToggleFullScreen = () => {
+    this.state.pageFullScreen = !this.state.pageFullScreen;
   };
 }
 

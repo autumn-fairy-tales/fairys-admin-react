@@ -33,8 +33,6 @@ export interface SettingInstanceState {
   autoListenSystemTheme?: boolean;
   /**主题颜色*/
   themeColor?: string;
-  /**圆角系数*/
-  borderRadius?: number;
   /**导航栏模式*/
   layoutMode?: LayoutMode;
   /**暗黑导航栏*/
