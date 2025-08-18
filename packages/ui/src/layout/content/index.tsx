@@ -28,7 +28,9 @@ const OutletContentContext = () => {
   return (
     <Fragment>
       <button onClick={() => setOpen(!open)}>{open ? '关闭' : '打开'}</button>
-      <FullScreen open={open}>{render}</FullScreen>
+      <FullScreen open={open} onClose={() => setOpen(false)}>
+        {render}
+      </FullScreen>
     </Fragment>
   );
 };

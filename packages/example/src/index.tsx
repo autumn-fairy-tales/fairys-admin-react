@@ -11,6 +11,7 @@ settingInstance.initSetting({
   logo: logo,
   projectName: 'Fairys Admin',
   themeColor: 'rgba(175, 82, 222, 1)',
+  // autoListenSystemTheme: false,
 });
 
 /**临时加载菜单数据*/

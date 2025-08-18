@@ -81,8 +81,8 @@ class SettingInstance {
   state = proxy<SettingInstanceState>({
     /**布局模式*/
     layoutMode: 'main_top_sub_left_header',
-    /**自动监听系统的明暗色系*/
-    autoListenSystemTheme: true,
+    // /**自动监听系统的明暗色系*/
+    // autoListenSystemTheme: true,
     /**侧边栏模式*/
     sideMenuMode: 'open',
   });
@@ -106,13 +106,16 @@ class SettingInstance {
 
   setDocumentAndBodyTheme = () => {
     const theme = this.state.theme;
-    if (document.documentElement) {
-      document.documentElement.classList.remove(theme === 'dark' ? 'light' : 'dark');
-      document.documentElement.classList.add(theme);
-    }
-    if (document.body) {
-      document.body.classList.remove(theme === 'dark' ? 'light' : 'dark');
-      document.body.classList.add(theme);
+    console.log(theme);
+    if (theme) {
+      if (document.documentElement) {
+        document.documentElement.classList.remove(theme === 'dark' ? 'light' : 'dark');
+        document.documentElement.classList.add(theme);
+      }
+      if (document.body) {
+        document.body.classList.remove(theme === 'dark' ? 'light' : 'dark');
+        document.body.classList.add(theme);
+      }
     }
   };
 
