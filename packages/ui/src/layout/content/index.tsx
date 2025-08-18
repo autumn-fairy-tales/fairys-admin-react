@@ -5,13 +5,12 @@ import { KeepAlive } from 'react-activation';
 import { useFairysRootContext } from 'components/root';
 import { Fragment } from 'react/jsx-runtime';
 import { useMemo, useState } from 'react';
-import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
-import { FloatingPortal } from '@floating-ui/react';
+import { FullScreen } from 'components/full-screen';
 
 const KeepAliveContent = () => {
   const location = useLocation();
   return (
-    <KeepAlive name={location.pathname} id={location.pathname} key={location.pathname}>
+    <KeepAlive when={false} name={location.pathname} id={location.pathname} key={location.pathname}>
       <Outlet />
     </KeepAlive>
   );
@@ -29,17 +28,7 @@ const OutletContentContext = () => {
   return (
     <Fragment>
       <button onClick={() => setOpen(!open)}>{open ? '关闭' : '打开'}</button>
-      {open ? (
-        <FloatingPortal>
-          <DarkModeInstancePopoverContextProvider>
-            <div className="w-full h-full overflow-auto dark:bg-gray-800 bg-white absolute top-0 left-0 right-0 bottom-0">
-              {render}
-            </div>
-          </DarkModeInstancePopoverContextProvider>
-        </FloatingPortal>
-      ) : (
-        render
-      )}
+      <FullScreen open={open}>{render}</FullScreen>
     </Fragment>
   );
 };

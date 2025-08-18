@@ -1,11 +1,4 @@
-import { FloatingPortal } from '@floating-ui/react';
-import { Fragment } from 'react';
-import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
-import { motion, AnimatePresence } from 'framer-motion';
 import type { Transition } from 'framer-motion';
-
-import { useAnimationStatus } from '../utils';
-import clsx from 'clsx';
 
 export interface ModalBaseProps {
   /**显示隐藏*/
@@ -51,13 +44,19 @@ export const base_className = {
     'fairys_admin_drawer_base_drawer p-4 min-w-[300px] min-h-[100vh] rounded-l-sm bg-white dark:bg-gray-800! border border-gray-200 dark:border-gray-700 shadow-xl inset-shadow-sm relative flex flex-col max-h-[100vh] overflow-hidden',
 };
 
+export const fullScreen_base_className = 'min-w-[100vw]! min-h-[100vh]! p-0!';
+
 export const overlay_variants = {
   modal: {
-    open: { backgroundColor: 'var(--bg-modal)' },
+    open: {
+      backgroundColor: 'var(--bg-modal,oklch(27.8% 0.033 256.848 /0.5))',
+    },
     collapsed: { backgroundColor: 'transparent' },
   },
   drawer: {
-    open: { backgroundColor: 'var(--bg-modal)' },
+    open: {
+      backgroundColor: 'var(--bg-modal,oklch(27.8% 0.033 256.848 /0.5))',
+    },
     collapsed: { backgroundColor: 'transparent' },
   },
 };

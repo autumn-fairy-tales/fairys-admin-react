@@ -4,7 +4,14 @@ import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAnimationStatus } from '../utils';
 import clsx from 'clsx';
-import { overlay_variants, base_variants, base_className, overlay_className, transitionBase } from './utils';
+import {
+  overlay_variants,
+  base_variants,
+  base_className,
+  overlay_className,
+  transitionBase,
+  fullScreen_base_className,
+} from './utils';
 
 export interface ModalBaseProps {
   /**显示隐藏*/
@@ -34,6 +41,8 @@ export interface ModalBaseProps {
   footerStyle?: React.CSSProperties;
   children?: React.ReactNode;
   mode?: 'modal' | 'drawer';
+  // 是否全屏
+  isFullScreen?: boolean;
 }
 
 export const ModalBase = (props: ModalBaseProps) => {
@@ -55,6 +64,7 @@ export const ModalBase = (props: ModalBaseProps) => {
     bodyStyle,
     footerStyle,
     mode = 'modal',
+    isFullScreen,
   } = props;
   const { show, onAnimationComplete } = useAnimationStatus(open);
 
@@ -78,7 +88,7 @@ export const ModalBase = (props: ModalBaseProps) => {
             transition={transitionBase}
           >
             <motion.div
-              className={`${baseClassName} ${className}`}
+              className={`${baseClassName} ${isFullScreen ? fullScreen_base_className : ''} ${className}`}
               style={style}
               initial="collapsed"
               animate={open ? 'open' : 'collapsed'}

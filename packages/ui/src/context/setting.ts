@@ -50,7 +50,6 @@ export interface SettingInstanceState {
   tabBarShowIcon?: boolean;
   /**标签页双击执行动作*/
   tabBarDoubleClickAction?: '';
-
   /**工具栏*/
   /**是否启用工具栏*/
   enableToolBar?: boolean;
@@ -105,8 +104,21 @@ class SettingInstance {
 
   mediaQueryList: MediaQueryList | null = null;
 
+  setDocumentAndBodyTheme = () => {
+    const theme = this.state.theme;
+    if (document.documentElement) {
+      document.documentElement.classList.remove(theme === 'dark' ? 'light' : 'dark');
+      document.documentElement.classList.add(theme);
+    }
+    if (document.body) {
+      document.body.classList.remove(theme === 'dark' ? 'light' : 'dark');
+      document.body.classList.add(theme);
+    }
+  };
+
   onListenChangeSystemTheme = (e: MediaQueryListEvent) => {
     this.updated({ theme: e.matches ? 'dark' : 'light' });
+    this.setDocumentAndBodyTheme();
   };
 
   /**自动监听系统的明暗色系*/
@@ -118,6 +130,7 @@ class SettingInstance {
         this.mediaQueryList.removeEventListener('change', this.onListenChangeSystemTheme);
       }
       this.updated({ theme: this.mediaQueryList.matches ? 'dark' : 'light' });
+      this.setDocumentAndBodyTheme();
       this.mediaQueryList.addEventListener('change', this.onListenChangeSystemTheme);
     } else {
       this.mediaQueryList?.removeEventListener('change', this.onListenChangeSystemTheme);
@@ -160,6 +173,9 @@ class SettingInstance {
     for (const key in state) {
       const element = state[key];
       this.state[key] = element;
+      if (key === 'theme') {
+        this.setDocumentAndBodyTheme();
+      }
     }
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(this.state));
   };
