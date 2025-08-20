@@ -108,7 +108,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const items = useMemo(() => {
     return [
       { icon: 'ri:refresh-line', title: '重新加载', visible: !!fairysRootClass.keepAlive },
-      { icon: 'ri:close-line', title: '关闭标签' },
+      { icon: 'ri:close-line', title: '关闭标签', disabled: count === 1 },
       { isDivider: true },
       { icon: 'ant-design:expand-outlined', title: '最大化' },
       { icon: 'ant-design:credit-card-outlined', title: '新窗口打开' },
