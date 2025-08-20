@@ -1,13 +1,12 @@
-import { useRef, Fragment, useMemo, useState } from 'react';
-import { useTabBar, TabBarItemType, tabBarInstance } from 'context/tab-bar';
+import { useRef, Fragment, useMemo } from 'react';
 import { Icon } from '@iconify/react';
-import { useNavigate, matchPath, useLocation } from 'react-router';
-import { Popover, usePopoverInstanceContext } from 'components/popover';
 import clsx from 'clsx';
 
 export interface PopoverMenuItem {
   icon?: string;
   title?: string;
+  disabled?: boolean;
+  isDivider?: boolean;
   [key: string]: any;
 }
 
@@ -29,7 +28,7 @@ class PopoverMenuInstance {
 }
 const usePopoverMenuInstance = () => useRef<PopoverMenuInstance>(new PopoverMenuInstance()).current;
 
-const popoverMenuItemBaseCls = `shrink-0 text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100 transition-all duration-300 flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer`;
+const popoverMenuItemBaseCls = `shrink-0 text-gray-400 transition-all duration-300 flex flex-row items-center gap-1 py-[5px] px-[8px] mx-[5px] rounded-sm`;
 
 export const PopoverMenu = (props: PopoverMenuProps) => {
   const { onClick, onClose, items, layoutMode = 'vertical', isHideClose = false, className } = props;
@@ -40,16 +39,28 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
   popoverMenuInstance.layoutMode = layoutMode;
 
   const render = useMemo(() => {
-    return (items || []).map((item) => {
+    return (items || []).map((item, index) => {
+      if (item.isDivider) {
+        return (
+          <div
+            key={item.path || item.title || item.key || index}
+            className="w-full h-[1px] bg-gray-200 dark:bg-gray-700"
+          />
+        );
+      }
       return (
         <div
           onClick={(e) => popoverMenuInstance.onClick?.(item, e)}
-          key={item.path}
-          className={popoverMenuItemBaseCls}
+          key={item.path || item.title || item.key || index}
+          className={clsx(popoverMenuItemBaseCls, {
+            'cursor-not-allowed opacity-70 select-none': item.disabled,
+            'cursor-pointer hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100':
+              !item.disabled,
+          })}
           title={item.title}
         >
           {item.icon ? (
-            <span className="size-[16px]">
+            <span className="size-[16px] mr-2">
               <Icon icon={item.icon} className="size-[16px]" />
             </span>
           ) : (
@@ -71,7 +82,7 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
 
   const classNameBase = useMemo(() => {
     return clsx(
-      'flex flex-col relative',
+      'flex flex-col relative gap-1 py-[5px]',
       {
         'flex-col': layoutMode === 'vertical',
         'flex-row': layoutMode === 'horizontal',

@@ -12,6 +12,7 @@ import { Fragment, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
+import { ContextMenu } from 'components/context-menu';
 
 interface TabBarItemProps {
   item: TabBarItemType;
@@ -97,13 +98,32 @@ const TabBarItem = (props: TabBarItemProps) => {
       <Fragment />
     );
   }, [item.icon]);
+  // <span className="icon-[ant-design--caret-down-outlined]" />
 
   return (
-    <div ref={tabItemInstance.dom} className={itemClassName} onClick={onClick}>
+    <ContextMenu
+      items={[
+        { icon: 'ri:refresh-line', title: '重新加载' },
+        { icon: 'ri:close-line', title: '关闭标签' },
+        { isDivider: true },
+        { icon: 'ant-design:expand-outlined', title: '最大化' },
+        { icon: 'ant-design:credit-card-outlined', title: '新窗口打开' },
+        { isDivider: true },
+        { icon: 'mdi:close', title: '关闭其他标签' },
+        { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签' },
+        { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签' },
+      ]}
+      onMenuItemClick={(item) => {
+        console.log(item);
+      }}
+      ref={tabItemInstance.dom}
+      className={itemClassName}
+      onClick={onClick}
+    >
       {iconRender}
       <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
       {isCloseIconShow ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
-    </div>
+    </ContextMenu>
   );
 };
 

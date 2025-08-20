@@ -4,14 +4,14 @@ import { ToolBar } from 'layout/tool-bar';
 import { KeepAlive } from 'react-activation';
 import { useFairysRootContext } from 'components/root';
 import { Fragment } from 'react/jsx-runtime';
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 import { FullScreen } from 'components/full-screen';
 import { useTabBar } from 'context/tab-bar';
 
 const KeepAliveContent = () => {
   const location = useLocation();
   return (
-    <KeepAlive when={false} name={location.pathname} id={location.pathname} key={location.pathname}>
+    <KeepAlive name={location.pathname} id={location.pathname} key={location.pathname}>
       <Outlet />
     </KeepAlive>
   );

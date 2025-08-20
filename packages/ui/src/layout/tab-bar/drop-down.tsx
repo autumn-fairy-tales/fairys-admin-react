@@ -32,7 +32,7 @@ const PopoverButton = () => {
   const [open, setOpen] = useState(false);
   return (
     <Popover
-      className="dark:border dark:border-gray-700"
+      className="border border-gray-100 dark:border-gray-700"
       open={open}
       placement="left-start"
       content={<Items />}

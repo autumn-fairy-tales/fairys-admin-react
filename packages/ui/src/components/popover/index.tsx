@@ -1,5 +1,5 @@
 import { motion, AnimatePresence } from 'framer-motion';
-import type { Variant, Transition } from 'framer-motion';
+import type { Variant, Transition, AnimationDefinition } from 'framer-motion';
 import React, { Fragment, cloneElement, createContext, useMemo, useRef, useContext, useState } from 'react';
 import { useAnimationStatus } from '../utils';
 import {
@@ -11,12 +11,13 @@ import {
   FloatingPortal,
   size as sizeMiddleware,
   flip as flipMiddleware,
+  useMergeRefs,
 } from '@floating-ui/react';
 import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import clsx from 'clsx';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
 
-interface PopoverProps
+export interface PopoverProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
   open?: boolean;
   content?: React.ReactNode;
@@ -36,6 +37,8 @@ interface PopoverProps
   isUseHover?: boolean;
   useHoverProps?: UseHoverProps;
   popoverInstance?: PopoverInstance;
+  domRef?: React.Ref<HTMLDivElement>;
+  onAnimationComplete?: (definition: AnimationDefinition) => void;
 }
 class PopoverInstance {
   /***点击外部关闭*/
@@ -121,6 +124,8 @@ export const Popover = (props: PopoverProps) => {
     isUseHover = false,
     useHoverProps = {},
     popoverInstance: instance,
+    domRef,
+    onAnimationComplete: onAnimationCompleteProp,
     ...rest
   } = props;
   const { floating, bodyClasName, show, onAnimationComplete, popoverInstance } = usePopoverBase({
@@ -135,16 +140,23 @@ export const Popover = (props: PopoverProps) => {
   const useDismissOrHover = isUseHover ? useHover : useDismiss;
   const dismissOrHover = useDismissOrHover(
     context,
-    isUseHover ? { ...useHoverProps } : { outsidePress: true, ...useDismissProps },
+    isUseHover ? { ...useHoverProps } : { outsidePress: true, bubbles: { outsidePress: true }, ...useDismissProps },
   );
   const { getReferenceProps, getFloatingProps } = useInteractions([dismissOrHover]);
+  const childRef = useMergeRefs([refs.setReference, domRef]);
+
+  const onAnimationCompleteClick = (definition: AnimationDefinition) => {
+    onAnimationComplete(definition);
+    onAnimationCompleteProp?.(definition);
+  };
+
   return (
     <Fragment>
       {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) {
           return child;
         }
-        return cloneElement(child as React.ReactElement, { ref: refs.setReference, ...getReferenceProps() });
+        return cloneElement(child as React.ReactElement, { ref: childRef, ...getReferenceProps() });
       })}
       {show ? (
         <FloatingPortal>
@@ -171,7 +183,7 @@ export const Popover = (props: PopoverProps) => {
                       duration: 0.35,
                       ...transition,
                     }}
-                    onAnimationComplete={onAnimationComplete}
+                    onAnimationComplete={onAnimationCompleteClick}
                   >
                     {content}
                   </motion.div>
