@@ -13,7 +13,9 @@ export interface MenuItemProps {
 }
 
 const subMenuClassName = 'fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px] ';
-const childClassName = 'fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px] dark:border dark:border-gray-700';
+const childClassName = 'fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px]';
+const popoverChildClassName =
+  'fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px] p-[5px] dark:border dark:border-gray-700';
 
 export const SubMenu = (props: MenuItemProps) => {
   const { item, level = 0, isMain = false } = props;
@@ -61,7 +63,7 @@ export const SubMenu = (props: MenuItemProps) => {
             }
           }}
           open={isExpand}
-          content={<div className={childClassName}>{child}</div>}
+          content={<div className={popoverChildClassName}>{child}</div>}
         >
           {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />}
         </Popover>
