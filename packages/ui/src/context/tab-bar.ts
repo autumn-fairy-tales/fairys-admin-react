@@ -76,6 +76,36 @@ class TabBarInstance {
   onToggleFullScreen = () => {
     this.state.pageFullScreen = !this.state.pageFullScreen;
   };
+
+  /**关闭其他标签*/
+  removeOther = (current: number) => {
+    const paths = this.state.tabBarItems.filter((_, index) => index !== current).map((item) => item.path);
+    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index === current));
+    /**移除缓存页面*/
+    if (appDataInstance.aliveController) {
+      appDataInstance.aliveController.dropScopeByIds(paths);
+    }
+  };
+
+  /**移除左侧*/
+  removeLeft = (current: number) => {
+    const paths = this.state.tabBarItems.filter((_, index) => index < current).map((item) => item.path);
+    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index >= current));
+    /**移除缓存页面*/
+    if (appDataInstance.aliveController) {
+      appDataInstance.aliveController.dropScopeByIds(paths);
+    }
+  };
+
+  /**移除右侧*/
+  removeRight = (current: number) => {
+    const paths = this.state.tabBarItems.filter((_, index) => index > current).map((item) => item.path);
+    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index <= current));
+    /**移除缓存页面*/
+    if (appDataInstance.aliveController) {
+      appDataInstance.aliveController.dropScopeByIds(paths);
+    }
+  };
 }
 
 export const tabBarInstance = new TabBarInstance();

@@ -8,24 +8,30 @@ import {
   useTabItemInstance,
 } from 'context/tab-bar';
 import clsx from 'clsx';
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
-import { ContextMenu } from 'components/context-menu';
+import { ContextMenu, ContextMenuItem } from 'components/context-menu';
+import { useFairysRootContext } from 'components/root';
+import { appDataInstance } from 'context/app-data';
 
 interface TabBarItemProps {
   item: TabBarItemType;
+  currentIndex: number;
+  count: number;
 }
 
 const TabBarItem = (props: TabBarItemProps) => {
-  const { item } = props;
+  const { item, currentIndex, count } = props;
   const tabInstance = useTabInstanceContext();
   const tabItemInstance = useTabItemInstance();
   tabItemInstance.item = item;
   const navigate = useNavigate();
   const match = useMatch(item.path);
+  const currentPath = item.path;
   tabItemInstance.isActive = !!match;
+  const fairysRootClass = useFairysRootContext();
 
   const [state] = useTabBar();
   const tabBarItems = state.tabBarItems;
@@ -98,24 +104,42 @@ const TabBarItem = (props: TabBarItemProps) => {
       <Fragment />
     );
   }, [item.icon]);
-  // <span className="icon-[ant-design--caret-down-outlined]" />
+
+  const items = useMemo(() => {
+    return [
+      { icon: 'ri:refresh-line', title: '重新加载', visible: !!fairysRootClass.keepAlive },
+      { icon: 'ri:close-line', title: '关闭标签' },
+      { isDivider: true },
+      { icon: 'ant-design:expand-outlined', title: '最大化' },
+      { icon: 'ant-design:credit-card-outlined', title: '新窗口打开' },
+      { isDivider: true },
+      { icon: 'mdi:close', title: '关闭其他标签', disabled: count === 1 },
+      { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签', disabled: currentIndex === 0 },
+      { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签', disabled: currentIndex === count - 1 },
+    ];
+  }, [currentIndex, count]);
+
+  const onMenuItemClick = useCallback(
+    (item: ContextMenuItem) => {
+      if (item.title === '重新加载') {
+        appDataInstance.aliveController?.refreshScope?.(currentPath);
+      } else if (item.title === '关闭标签') {
+        tabBarInstance.remove(currentPath, tabItemInstance.isActive, navigate);
+      } else if (item.title === '关闭其他标签') {
+        tabBarInstance.removeOther(currentIndex);
+      } else if (item.title === '关闭左侧标签') {
+        tabBarInstance.removeLeft(currentIndex);
+      } else if (item.title === '关闭右侧标签') {
+        tabBarInstance.removeRight(currentIndex);
+      }
+    },
+    [currentIndex, currentPath],
+  );
 
   return (
     <ContextMenu
-      items={[
-        { icon: 'ri:refresh-line', title: '重新加载' },
-        { icon: 'ri:close-line', title: '关闭标签' },
-        { isDivider: true },
-        { icon: 'ant-design:expand-outlined', title: '最大化' },
-        { icon: 'ant-design:credit-card-outlined', title: '新窗口打开' },
-        { isDivider: true },
-        { icon: 'mdi:close', title: '关闭其他标签' },
-        { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签' },
-        { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签' },
-      ]}
-      onMenuItemClick={(item) => {
-        console.log(item);
-      }}
+      items={items}
+      onMenuItemClick={onMenuItemClick}
       ref={tabItemInstance.dom}
       className={itemClassName}
       onClick={onClick}
@@ -143,8 +167,9 @@ export const TabBar = () => {
   }, [location.pathname]);
 
   const render = useMemo(() => {
-    return tabBarItems.map((item) => {
-      return <TabBarItem key={item.path} item={item} />;
+    const length = tabBarItems.length;
+    return tabBarItems.map((item, index) => {
+      return <TabBarItem count={length} currentIndex={index} key={item.path} item={item} />;
     });
   }, [tabBarItems]);
 

@@ -7,6 +7,7 @@ export interface PopoverMenuItem {
   title?: string;
   disabled?: boolean;
   isDivider?: boolean;
+  visible?: boolean;
   [key: string]: any;
 }
 
@@ -40,11 +41,14 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
 
   const render = useMemo(() => {
     return (items || []).map((item, index) => {
+      if (item.visible === false) {
+        return <Fragment key={item.path || item.title || item.key || index} />;
+      }
       if (item.isDivider) {
         return (
           <div
             key={item.path || item.title || item.key || index}
-            className="w-full h-[1px] bg-gray-200 dark:bg-gray-700"
+            className="w-full h-[1px] bg-gray-100 dark:bg-gray-700"
           />
         );
       }
@@ -54,7 +58,7 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
           key={item.path || item.title || item.key || index}
           className={clsx(popoverMenuItemBaseCls, {
             'cursor-not-allowed opacity-70 select-none': item.disabled,
-            'cursor-pointer hover:text-gray-500 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100':
+            'text-gray-600 cursor-pointer hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100':
               !item.disabled,
           })}
           title={item.title}

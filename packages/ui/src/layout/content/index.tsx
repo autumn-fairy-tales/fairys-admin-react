@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router';
+import { Outlet, useLocation, useOutlet } from 'react-router';
 import { TabBar } from 'layout/tab-bar';
 import { ToolBar } from 'layout/tool-bar';
 import { KeepAlive } from 'react-activation';
@@ -7,11 +7,15 @@ import { Fragment } from 'react/jsx-runtime';
 import { useMemo } from 'react';
 import { FullScreen } from 'components/full-screen';
 import { useTabBar } from 'context/tab-bar';
+import { AliveControllerBase } from 'context/alive-controller';
 
 const KeepAliveContent = () => {
   const location = useLocation();
+  const id = useMemo(() => {
+    return AliveControllerBase.convertIdOrNameOne(location.pathname);
+  }, [location.pathname]);
   return (
-    <KeepAlive name={location.pathname} id={location.pathname} key={location.pathname}>
+    <KeepAlive autoFreeze={false} name={id} id={id} cacheKey={id}>
       <Outlet />
     </KeepAlive>
   );
