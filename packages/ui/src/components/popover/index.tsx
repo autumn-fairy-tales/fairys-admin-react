@@ -12,6 +12,7 @@ import {
   size as sizeMiddleware,
   flip as flipMiddleware,
   shift as shiftMiddleware,
+  autoPlacement as autoPlacementMiddleware,
   useMergeRefs,
 } from '@floating-ui/react';
 import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
