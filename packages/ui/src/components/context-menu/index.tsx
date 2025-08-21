@@ -39,13 +39,12 @@ export const ContextMenu = forwardRef((props: ContextMenuProps, ref: React.Ref<H
   contextMenuInstance.setOpen = setOpen;
   contextMenuInstance.onMenuItemClick = onMenuItemClick;
   contextMenuInstance.items = items;
-
   useImperativeHandle(ref, () => contextMenuInstance.dom.current);
-
   const { show, onAnimationComplete } = useAnimationStatus(open);
 
   return (
     <Popover
+      {...popoverProps}
       className="border border-gray-100 dark:border-gray-700"
       open={open}
       onOpenChange={setOpen}

@@ -12,12 +12,22 @@ import {
   size as sizeMiddleware,
   flip as flipMiddleware,
   shift as shiftMiddleware,
-  autoPlacement as autoPlacementMiddleware,
   useMergeRefs,
 } from '@floating-ui/react';
-import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
+import type { ShiftOptions, FlipOptions, Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
+import type { Derivable } from '@floating-ui/react-dom';
 import clsx from 'clsx';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
+
+export interface UsePopoverBaseOptions {
+  open?: boolean;
+  onOpenChange?: (open: boolean) => void;
+  placement?: Placement;
+  className?: string;
+  popoverInstance?: PopoverInstance;
+  flipOptions?: FlipOptions | Derivable<FlipOptions>;
+  shiftOptions?: ShiftOptions | Derivable<ShiftOptions>;
+}
 
 export interface PopoverProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
@@ -41,6 +51,8 @@ export interface PopoverProps
   popoverInstance?: PopoverInstance;
   domRef?: React.Ref<HTMLDivElement>;
   onAnimationComplete?: (definition: AnimationDefinition) => void;
+  flipOptions?: FlipOptions | Derivable<FlipOptions>;
+  shiftOptions?: ShiftOptions | Derivable<ShiftOptions>;
 }
 class PopoverInstance {
   /***点击外部关闭*/
@@ -63,16 +75,8 @@ const PopoverInstanceContext = createContext(new PopoverInstance());
 
 export const usePopoverInstanceContext = () => useContext(PopoverInstanceContext);
 
-interface UsePopoverBaseOptions {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  placement?: Placement;
-  className?: string;
-  popoverInstance?: PopoverInstance;
-}
-
-const usePopoverBase = (options: UsePopoverBaseOptions) => {
-  const { open, onOpenChange, placement, className, popoverInstance: instance } = options;
+export const usePopoverBase = (options: UsePopoverBaseOptions) => {
+  const { open, onOpenChange, placement, className, popoverInstance: instance, flipOptions, shiftOptions } = options;
   const { show, onAnimationComplete } = useAnimationStatus(open);
   const popoverInstance = usePopoverInstance(instance);
   popoverInstance.onOpenChange = onOpenChange;
@@ -93,8 +97,8 @@ const usePopoverBase = (options: UsePopoverBaseOptions) => {
           });
         },
       }),
-      flipMiddleware(),
-      shiftMiddleware(),
+      flipMiddleware(flipOptions),
+      shiftMiddleware(shiftOptions),
     ],
   });
   const bodyClasName = useMemo(() => {
@@ -129,9 +133,13 @@ export const Popover = (props: PopoverProps) => {
     popoverInstance: instance,
     domRef,
     onAnimationComplete: onAnimationCompleteProp,
+    flipOptions,
+    shiftOptions,
     ...rest
   } = props;
   const { floating, bodyClasName, show, onAnimationComplete, popoverInstance } = usePopoverBase({
+    flipOptions,
+    shiftOptions,
     open,
     onOpenChange,
     placement,

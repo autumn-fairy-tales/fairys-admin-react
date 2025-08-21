@@ -136,6 +136,14 @@ const TabBarItem = (props: TabBarItemProps) => {
     [currentIndex, currentPath],
   );
 
+  const popoverProps = useMemo(() => {
+    return {
+      flipOptions: {
+        boundary: tabInstance.dom.current,
+      },
+    };
+  }, [tabInstance.dom]);
+
   return (
     <ContextMenu
       items={items}
@@ -143,6 +151,7 @@ const TabBarItem = (props: TabBarItemProps) => {
       ref={tabItemInstance.dom}
       className={itemClassName}
       onClick={onClick}
+      popoverProps={popoverProps}
     >
       {iconRender}
       <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
