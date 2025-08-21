@@ -27,6 +27,8 @@ export interface MenuDataInstanceState {
   expandItems: MenuItemType[];
   /**主菜单展开项*/
   mainExpandItem?: MenuItemType;
+  /**搜索菜单*/
+  searchMenuItems?: MenuItemType[];
   /**默认引用值*/
   __defaultValue?: string;
 }
@@ -103,6 +105,7 @@ export class MenuDataInstance {
     mainMenuItemSelected: '',
     expandItems: [],
     mainExpandItem: undefined,
+    searchMenuItems: [],
   });
   /**设置菜单所有数据*/
   ctor = (items: MenuItemType[]) => {
@@ -110,6 +113,7 @@ export class MenuDataInstance {
     this._flatMenuItems = flatMenuItems(items, [], this._parentMenuItemMap);
     this.state.menuItems = ref(items);
     this.state.mainMenuItems = ref(items.filter((item) => item.isMain));
+    this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain));
   };
 
   /**更新主菜单展开项*/
@@ -124,14 +128,17 @@ export class MenuDataInstance {
   get_path_menuItem = (path: string) => {
     return this._flatMenuItems.find((item) => item.path === path);
   };
+
   /**搜索菜单*/
   onSearch = (word: string) => {
     const _key = `${word || ''}`.trim();
     if (!_key) {
-      this.state.menuItems = ref(this._menuItems);
+      this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain));
       return;
     }
-    this.state.menuItems = ref(filterMenuItems(this._menuItems, _key));
+    this.state.searchMenuItems = ref(
+      this._flatMenuItems.filter((it) => !it.isMain).filter((item) => item.title.includes(_key)),
+    );
   };
 
   /**判断是否是父级菜单*/

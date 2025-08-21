@@ -11,6 +11,7 @@ import {
   FloatingPortal,
   size as sizeMiddleware,
   flip as flipMiddleware,
+  shift as shiftMiddleware,
   useMergeRefs,
 } from '@floating-ui/react';
 import type { Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
@@ -91,7 +92,10 @@ const usePopoverBase = (options: UsePopoverBaseOptions) => {
           });
         },
       }),
-      flipMiddleware(),
+      flipMiddleware({
+        altBoundary: true,
+      }),
+      shiftMiddleware(),
     ],
   });
   const bodyClasName = useMemo(() => {

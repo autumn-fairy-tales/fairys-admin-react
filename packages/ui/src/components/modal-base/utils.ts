@@ -39,7 +39,7 @@ export const overlay_className = {
 
 export const base_className = {
   modal:
-    'fairys_admin_modal_base p-4 min-w-[300px] min-h-[200px] rounded-sm bg-white dark:bg-gray-800! border border-gray-200 dark:border-gray-700 shadow-xl inset-shadow-sm relative flex flex-col max-h-[100vh] overflow-hidden',
+    'fairys_admin_modal_base p-4 min-w-[300px] min-h-[200px] max-h-[calc(100vh-100px)] rounded-sm bg-white dark:bg-gray-800! border border-gray-200 dark:border-gray-700 shadow-xl inset-shadow-sm relative flex flex-col max-h-[100vh] overflow-hidden',
   drawer:
     'fairys_admin_drawer_base_drawer p-4 min-w-[300px] min-h-[100vh] rounded-l-sm bg-white dark:bg-gray-800! border border-gray-200 dark:border-gray-700 shadow-xl inset-shadow-sm relative flex flex-col max-h-[100vh] overflow-hidden',
 };

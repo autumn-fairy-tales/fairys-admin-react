@@ -96,10 +96,14 @@ export const ModalBase = (props: ModalBaseProps) => {
               transition={transitionBase}
               onAnimationComplete={onAnimationComplete}
             >
-              <span
-                className="fairys_admin_modal_base_close text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 absolute top-4 right-4 size-[16px] cursor-pointer icon-[ant-design--close-outlined]"
-                onClick={onClose}
-              />
+              {onClose ? (
+                <span
+                  className="fairys_admin_modal_base_close text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 absolute top-4 right-4 size-[16px] cursor-pointer icon-[ant-design--close-outlined]"
+                  onClick={onClose}
+                />
+              ) : (
+                <Fragment />
+              )}
               {title || extra ? (
                 <div
                   style={headerStyle}
@@ -122,7 +126,7 @@ export const ModalBase = (props: ModalBaseProps) => {
               )}
               <div
                 style={bodyStyle}
-                className={`fairys_admin_modal_base_content flex-1 overflow-auto ${bodyClassName}`}
+                className={`fairys_admin_modal_base_content flex-1 overflow-hidden ${bodyClassName}`}
               >
                 {children}
               </div>
