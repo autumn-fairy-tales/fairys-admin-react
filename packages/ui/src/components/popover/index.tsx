@@ -92,9 +92,7 @@ const usePopoverBase = (options: UsePopoverBaseOptions) => {
           });
         },
       }),
-      flipMiddleware({
-        altBoundary: true,
-      }),
+      flipMiddleware(),
       shiftMiddleware(),
     ],
   });
