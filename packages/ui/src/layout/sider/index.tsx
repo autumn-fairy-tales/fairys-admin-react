@@ -4,6 +4,7 @@ import { useSetting } from 'context/setting';
 import { Fragment, useMemo } from 'react';
 import clsx from 'clsx';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
+import { Avatar } from 'avatar';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSetting();
@@ -23,18 +24,9 @@ const LayoutSiderMainMenu = () => {
   );
 };
 
-export const LayoutSider = () => {
+const LayoutSubSider = () => {
   const [state, settingInstance] = useSetting();
   const sideMenuMode = state.sideMenuMode;
-  const layoutMode = state.layoutMode;
-  const darkMode = state.darkMenu;
-  const theme = state.theme;
-  const _darkMode = darkMode || theme === 'dark';
-
-  const hideSideMenu = useMemo(() => {
-    return ['main_left'].includes(layoutMode);
-  }, [layoutMode]);
-
   const bodyClassName = useMemo(() => {
     return clsx(
       'flex flex-col h-full border-r border-gray-200 dark:border-gray-800! transition-all duration-300 dark:text-gray-400 overflow-hidden',
@@ -45,28 +37,41 @@ export const LayoutSider = () => {
     );
   }, [sideMenuMode]);
 
+  return (
+    <div className={bodyClassName}>
+      <div>hhhhh</div>
+      <div className="fairys_admin_layout_sider_menu flex-1 overflow-hidden">
+        <Menu />
+      </div>
+      <div className="flex flex-col">
+        <button
+          onClick={() => {
+            settingInstance.updated({ sideMenuMode: sideMenuMode === 'close' ? 'open' : 'close' });
+          }}
+        >
+          切换
+        </button>
+        <Avatar mode="sider" nameMode={sideMenuMode === 'open' ? 'show' : 'node'} />
+      </div>
+    </div>
+  );
+};
+
+export const LayoutSider = () => {
+  const [state] = useSetting();
+  const layoutMode = state.layoutMode;
+  const darkMode = state.darkMenu;
+  const theme = state.theme;
+  const _darkMode = darkMode || theme === 'dark';
+  const hideSideMenu = useMemo(() => {
+    return ['main_left'].includes(layoutMode);
+  }, [layoutMode]);
   const render = useMemo(() => {
     if (hideSideMenu) {
       return <Fragment />;
     }
-    return (
-      <div className={bodyClassName}>
-        <div>hhhhh</div>
-        <div className="fairys_admin_layout_sider_menu flex-1 overflow-hidden">
-          <Menu />
-        </div>
-        <div>
-          <button
-            onClick={() => {
-              settingInstance.updated({ sideMenuMode: sideMenuMode === 'close' ? 'open' : 'close' });
-            }}
-          >
-            切换
-          </button>
-        </div>
-      </div>
-    );
-  }, [bodyClassName, sideMenuMode, hideSideMenu]);
+    return <LayoutSubSider />;
+  }, [hideSideMenu]);
 
   const clssName = useMemo(() => {
     return clsx(

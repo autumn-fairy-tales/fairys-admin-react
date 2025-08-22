@@ -10,6 +10,7 @@ import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon } from '@iconify/react';
 import { usePopoverInstance, Popover } from 'components/popover';
 import { Menu } from 'menu';
+import { Avatar } from 'avatar';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -164,7 +165,9 @@ export const MainMenu = (props: MainMenuProps) => {
           <MainMenuItems layoutMode={layoutMode} />
         </div>
       </div>
-      <div className="fairys_admin_main_menu_extra">头像部分</div>
+      <div className="fairys_admin_main_menu_extra">
+        <Avatar mode={layoutMode === 'horizontal' ? 'header' : 'sider'} />
+      </div>
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import { createRef, forwardRef, useRef, useImperativeHandle, useState, Fragment } from 'react';
+import { createRef, forwardRef, useRef, useImperativeHandle, useState, Fragment, useMemo } from 'react';
 import { Popover, PopoverProps } from './../popover';
 import { PopoverMenu, PopoverMenuItem } from '../popover-menu';
 import { useAnimationStatus } from '../utils';
@@ -30,10 +30,21 @@ interface ContextMenuProps
   popoverProps?: PopoverProps;
   onMenuItemClick?: (item: ContextMenuItem, e: React.MouseEvent) => void;
   items?: ContextMenuItem[];
+  eventName?: 'onContextMenu' | 'onClick';
+  placement?: PopoverProps['placement'];
 }
 
 export const ContextMenu = forwardRef((props: ContextMenuProps, ref: React.Ref<HTMLDivElement>) => {
-  const { children, content, popoverProps, onMenuItemClick, items, ...rest } = props;
+  const {
+    children,
+    content,
+    popoverProps,
+    onMenuItemClick,
+    items,
+    eventName = 'onContextMenu',
+    placement = 'right-start',
+    ...rest
+  } = props;
   const [open, setOpen] = useState(false);
   const contextMenuInstance = useContextMenuInstance();
   contextMenuInstance.setOpen = setOpen;
@@ -41,25 +52,27 @@ export const ContextMenu = forwardRef((props: ContextMenuProps, ref: React.Ref<H
   contextMenuInstance.items = items;
   useImperativeHandle(ref, () => contextMenuInstance.dom.current);
   const { show, onAnimationComplete } = useAnimationStatus(open);
+  const params = useMemo(() => {
+    return {
+      [eventName]: (event: React.MouseEvent) => {
+        event.preventDefault();
+        contextMenuInstance.setOpen(true);
+      },
+    };
+  }, [eventName, contextMenuInstance]);
 
   return (
     <Popover
       {...popoverProps}
-      className="border border-gray-100 dark:border-gray-700"
+      className={`border border-gray-100 dark:border-gray-700 ${popoverProps.className || ''}`}
       open={open}
       onOpenChange={setOpen}
-      placement="right-start"
+      placement={placement}
       content={show ? <PopoverMenu items={items} onClick={contextMenuInstance.onClick} isHideClose /> : <Fragment />}
       domRef={contextMenuInstance.dom}
       onAnimationComplete={onAnimationComplete}
     >
-      <div
-        {...rest}
-        onContextMenu={(event) => {
-          event.preventDefault();
-          setOpen(true);
-        }}
-      >
+      <div {...rest} {...params}>
         {children}
       </div>
     </Popover>
