@@ -3,12 +3,22 @@ import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 
 export interface PopoverMenuItem {
+  /**图标*/
   icon?: string;
+  /**标题*/
   title?: string;
+  /**是否禁用*/
   disabled?: boolean;
+  /**分割线*/
   isDivider?: boolean;
+  /**是否显示*/
   visible?: boolean;
+  /**自定义内容*/
   children?: React.ReactNode;
+  /**点击当前项*/
+  onClick?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
+  /**删除按钮事件*/
+  onClose?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
   [key: string]: any;
 }
 
@@ -19,26 +29,31 @@ export interface PopoverMenuProps {
   onClose?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
   isHideClose?: boolean;
   className?: string;
+  /**点击外部关闭(在弹框类中使用，用于关闭弹框)*/
+  onOpenChange?: (open: boolean) => void;
 }
 
 class PopoverMenuInstance {
-  onClick?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
-  onClose?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
-  isHideClose?: boolean;
-  items: PopoverMenuItem[];
-  layoutMode?: 'vertical' | 'horizontal';
+  onClick?: PopoverMenuItem['onClick'];
+  onClose?: PopoverMenuItem['onClose'];
+  isHideClose?: PopoverMenuItem['isHideClose'];
+  items: PopoverMenuProps['items'];
+  layoutMode?: PopoverMenuProps['layoutMode'];
+  /**点击外部关闭(在弹框类中使用，用于关闭弹框)*/
+  onOpenChange?: PopoverMenuProps['onOpenChange'];
 }
 const usePopoverMenuInstance = () => useRef<PopoverMenuInstance>(new PopoverMenuInstance()).current;
 
 const popoverMenuItemBaseCls = `shrink-0 text-gray-400 transition-all duration-300 flex flex-row items-center gap-1 py-[5px] px-[8px] mx-[5px] rounded-sm`;
 
 export const PopoverMenu = (props: PopoverMenuProps) => {
-  const { onClick, onClose, items, layoutMode = 'vertical', isHideClose = false, className } = props;
+  const { onClick, onClose, items, layoutMode = 'vertical', isHideClose = false, className, onOpenChange } = props;
   const popoverMenuInstance = usePopoverMenuInstance();
   popoverMenuInstance.items = items;
   popoverMenuInstance.onClick = onClick;
   popoverMenuInstance.onClose = onClose;
   popoverMenuInstance.layoutMode = layoutMode;
+  popoverMenuInstance.onOpenChange = onOpenChange;
 
   const render = useMemo(() => {
     return (items || []).map((item, index) => {
@@ -56,9 +71,28 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
           />
         );
       }
+      const onClickItem = (e: React.MouseEvent) => {
+        if (item.disabled) {
+          return;
+        }
+        e.preventDefault();
+        item.onClick?.(item, e);
+        popoverMenuInstance.onClick?.(item, e);
+        popoverMenuInstance.onOpenChange?.(false);
+      };
+      const onCloseItem = (e: React.MouseEvent) => {
+        if (item.disabled) {
+          return;
+        }
+        e.preventDefault();
+        item.onClose?.(item, e);
+        popoverMenuInstance.onClose?.(item, e);
+        popoverMenuInstance.onOpenChange?.(false);
+      };
+
       return (
         <div
-          onClick={(e) => popoverMenuInstance.onClick?.(item, e)}
+          onClick={onClickItem}
           key={item.path || item.title || item.key || index}
           className={clsx(popoverMenuItemBaseCls, {
             'cursor-not-allowed opacity-70 select-none': item.disabled,
@@ -78,7 +112,7 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
           {!isHideClose ? (
             <span
               className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white dark:text-gray-500 transition-all duration-300"
-              onClick={(e) => popoverMenuInstance.onClose?.(item, e)}
+              onClick={onCloseItem}
             />
           ) : (
             <Fragment />
