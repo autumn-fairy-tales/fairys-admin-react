@@ -1,11 +1,12 @@
 import { ModalBase } from 'components/modal-base';
 import { ButtonBase } from 'components/button';
 import { Fragment } from 'react/jsx-runtime';
-import { useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon } from '@iconify/react';
 import { BreadcrumbBase } from 'components/breadcrumb';
 import { useNavigate } from 'react-router';
+import hotkeys from 'hotkeys-js';
 
 interface SearchItemProps {
   rowItemData: MenuItemType;
@@ -93,6 +94,18 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
 /**菜单搜索*/
 export const MenuSearch = () => {
   const [open, setOpen] = useState(false);
+  useEffect(() => {
+    if (open) {
+      hotkeys('esc', (e) => {
+        e.preventDefault();
+        setOpen(false);
+      });
+    }
+    return () => {
+      hotkeys.unbind('esc');
+    };
+  }, [open]);
+
   return (
     <Fragment>
       <ButtonBase className="fairys_admin_tool_bar_menu_search" onClick={() => setOpen(true)}>
