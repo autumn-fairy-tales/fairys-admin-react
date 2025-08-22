@@ -4,9 +4,8 @@ import { Fragment } from 'react/jsx-runtime';
 import { useMemo, useRef, useState } from 'react';
 import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon } from '@iconify/react';
-import clsx from 'clsx';
 import { BreadcrumbBase } from 'components/breadcrumb';
-import { useNavigate, useLocation, matchPath } from 'react-router';
+import { useNavigate } from 'react-router';
 
 interface SearchItemProps {
   rowItemData: MenuItemType;
@@ -67,11 +66,14 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
 
   return (
     <div className="flex flex-col gap-2 h-full w-[670px] px-5 py-5 overflow-hidden box-border">
-      <div>
+      <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-md ">
+        <div className="pl-4 flex items-center justify-center">
+          <span className="icon-[ant-design--search-outlined] size-[26px]" />
+        </div>
         <input
           placeholder="搜索菜单"
           onInput={onSearch}
-          className="w-full px-4 py-2 h-[48px] text-[16px] border border-gray-200 dark:border-gray-700 rounded-md outline-0"
+          className="flex-1 px-4 py-2 h-[48px] text-[16px] border-0 outline-0"
         />
       </div>
       <div className="flex flex-col gap-2 overflow-auto flex-1 no-scrollbar">
