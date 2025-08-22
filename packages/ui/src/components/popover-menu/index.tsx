@@ -8,6 +8,7 @@ export interface PopoverMenuItem {
   disabled?: boolean;
   isDivider?: boolean;
   visible?: boolean;
+  children?: React.ReactNode;
   [key: string]: any;
 }
 
@@ -41,6 +42,9 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
 
   const render = useMemo(() => {
     return (items || []).map((item, index) => {
+      if (item.children) {
+        return <Fragment key={item.path || item.title || item.key || index}>{item.children}</Fragment>;
+      }
       if (item.visible === false) {
         return <Fragment key={item.path || item.title || item.key || index} />;
       }

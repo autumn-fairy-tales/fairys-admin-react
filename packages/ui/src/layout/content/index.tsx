@@ -33,7 +33,6 @@ const OutletContentContext = () => {
 
   return (
     <Fragment>
-      <button onClick={() => tabBarInstance.onToggleFullScreen()}>{pageFullScreen ? '关闭' : '打开'}</button>
       <FullScreen open={pageFullScreen} onClose={tabBarInstance.onToggleFullScreen}>
         {render}
       </FullScreen>

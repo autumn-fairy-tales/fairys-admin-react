@@ -131,6 +131,11 @@ const TabBarItem = (props: TabBarItemProps) => {
         tabBarInstance.removeLeft(currentIndex);
       } else if (item.title === '关闭右侧标签') {
         tabBarInstance.removeRight(currentIndex);
+      } else if (item.title === '最大化') {
+        tabBarInstance.onToggleFullScreen();
+      } else if (item.title === '新窗口打开') {
+        const href = window.location.href.replace(location.pathname, currentPath);
+        window.open(href, '_blank');
       }
     },
     [currentIndex, currentPath],
