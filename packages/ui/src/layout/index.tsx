@@ -7,6 +7,7 @@ import { LayoutSider } from './sider';
 import { useLocation } from 'react-router';
 import { menuDataInstance } from 'context/menu-data';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
+import { SettingDrawer } from 'setting';
 
 export const Layout = () => {
   const [state] = useSetting();
@@ -115,6 +116,7 @@ export const Layout = () => {
           </Fragment>
         )}
       </div>
+      <SettingDrawer />
     </DarkModeInstanceContextProvider>
   );
 };

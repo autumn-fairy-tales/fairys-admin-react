@@ -1,8 +1,9 @@
 import { useAccountData } from 'context/account-data';
 import { settingInstance } from 'context/setting';
 import { forwardRef, Fragment, useMemo } from 'react';
+import { ContextMenu, ContextMenuItem } from 'components/context-menu';
+import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import { ContextMenu } from 'components/context-menu';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   mode?: 'sider' | 'header';
@@ -14,16 +15,17 @@ const baseClassName =
 
 export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElement>) => {
   const { mode, nameMode, className, ...rest } = props;
-  const [accountData] = useAccountData();
-  const userName = accountData.userName || 'fairys';
+  const [accountState, accountData] = useAccountData();
+  const userName = accountState.userName || 'fairys';
+  const navigate = useNavigate();
 
   const avatarRender = useMemo(() => {
-    const avatar = accountData.userAvatar || settingInstance.state.logo;
+    const avatar = accountState.userAvatar || settingInstance.state.logo;
     if (avatar) {
       return <img width={32} height={32} src={avatar} alt={userName} />;
     }
     return userName;
-  }, [accountData.userAvatar]);
+  }, [accountState.userAvatar, userName]);
 
   const classNameBase = useMemo(() => {
     return clsx(baseClassName, className, {
@@ -52,7 +54,15 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
     ];
   }, []);
 
-  const onMenuItemClick = () => {};
+  const onMenuItemClick = (item: ContextMenuItem) => {
+    if (item.title === '主页') {
+      navigate('/');
+    } else if (item.title === '偏好设置') {
+      settingInstance.onToggleOpen();
+    } else if (item.title === '退出登录') {
+      accountData.onLogout?.();
+    }
+  };
 
   const placement = useMemo(() => {
     if (mode === 'header') {

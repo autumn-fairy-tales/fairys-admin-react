@@ -23,7 +23,7 @@ export interface ModalBaseProps {
   /**额外内容 */
   extra?: React.ReactNode;
   /**关闭回调 */
-  onClose: () => void;
+  onClose?: () => void;
   /**内容类名 */
   className?: string;
   /**头部类名 */
@@ -71,6 +71,7 @@ export const ModalBase = (props: ModalBaseProps) => {
   if (!show) {
     return <Fragment />;
   }
+
   const overlayClassName = overlay_className[mode] || overlay_className.modal;
   const baseClassName = base_className[mode] || base_className.modal;
   const overlayVariants = overlay_variants[mode] || overlay_variants.modal;
@@ -96,24 +97,19 @@ export const ModalBase = (props: ModalBaseProps) => {
               transition={transitionBase}
               onAnimationComplete={onAnimationComplete}
             >
-              {onClose ? (
-                <span
-                  className="fairys_admin_modal_base_close text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 absolute top-4 right-4 size-[16px] cursor-pointer icon-[ant-design--close-outlined]"
-                  onClick={onClose}
-                />
-              ) : (
-                <Fragment />
-              )}
               {title || extra ? (
                 <div
                   style={headerStyle}
                   className={clsx(
-                    'fairys_admin_modal_base_header relative flex items-center justify-between border-b border-gray-200 dark:border-gray-700 ',
+                    'fairys_admin_modal_base_header box-border p-4 relative flex items-center justify-between border-b border-gray-200 dark:border-gray-700 ',
                     headerClassName,
                   )}
                 >
                   {title ? (
-                    <div style={titleStyle} className={`fairys_admin_modal_base_header_title ${titleClassName}`}>
+                    <div
+                      style={titleStyle}
+                      className={`fairys_admin_modal_base_header_title font-medium text-lg ${titleClassName}`}
+                    >
                       {title}
                     </div>
                   ) : (
@@ -124,19 +120,28 @@ export const ModalBase = (props: ModalBaseProps) => {
               ) : (
                 <Fragment />
               )}
+
               <div
                 style={bodyStyle}
-                className={`fairys_admin_modal_base_content flex-1 overflow-hidden ${bodyClassName}`}
+                className={`fairys_admin_modal_base_content p-4 box-border flex-1 overflow-hidden ${bodyClassName}`}
               >
                 {children}
               </div>
               {footer ? (
                 <div
                   style={footerStyle}
-                  className={`fairys_admin_modal_base_footer border-t border-gray-200 dark:border-gray-700 ${footerClassName}`}
+                  className={`fairys_admin_modal_base_footer  p-4  box-border border-t border-gray-200 dark:border-gray-700 ${footerClassName}`}
                 >
                   {footer}
                 </div>
+              ) : (
+                <Fragment />
+              )}
+              {onClose ? (
+                <span
+                  className="fairys_admin_modal_base_close text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 absolute top-4 right-4 size-[16px] cursor-pointer icon-[ant-design--close-outlined]"
+                  onClick={onClose}
+                />
               ) : (
                 <Fragment />
               )}

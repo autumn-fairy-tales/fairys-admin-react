@@ -14,6 +14,8 @@ export class AccountData {
   state = proxy<AccountDataState>({
     userName: 'fairys',
   });
+  /**退出登录*/
+  public onLogout: () => void = () => void 0;
 }
 
 export const accountData = new AccountData();

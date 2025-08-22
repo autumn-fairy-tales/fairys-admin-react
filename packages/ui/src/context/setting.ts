@@ -23,6 +23,8 @@ export type LayoutMode =
   | 'mobile';
 
 export interface SettingInstanceState {
+  /**是否打开偏好设置*/
+  open?: boolean;
   /**logo加载地址*/
   logo?: string;
   /**项目名*/
@@ -77,8 +79,10 @@ class SettingInstance {
   static localStorageKey = 'fairys_setting_state';
 
   state = proxy<SettingInstanceState>({
+    open: false,
     /**布局模式*/
-    layoutMode: 'main_top_sub_left_header',
+    layoutMode: 'main_sub_left',
+    // layoutMode: "main_top_sub_left_header",
     // /**自动监听系统的明暗色系*/
     // autoListenSystemTheme: true,
     /**侧边栏模式*/
@@ -142,7 +146,7 @@ class SettingInstance {
   /**初始配置*/
   initSetting = (state: SettingInstanceState) => {
     const _newState: SettingInstanceState = {
-      layoutMode: 'main_top_sub_left_header',
+      layoutMode: 'main_sub_left',
       ...state,
       ...this.state,
     };
@@ -190,6 +194,11 @@ class SettingInstance {
       this.state.layoutMode === 'main_left_sub_all' ||
       this.state.layoutMode === 'main_top_sub_left_header'
     );
+  };
+
+  /**切换打开偏好设置*/
+  onToggleOpen = () => {
+    this.updated({ open: !this.state.open });
   };
 }
 

@@ -11,6 +11,7 @@ import { Icon } from '@iconify/react';
 import { usePopoverInstance, Popover } from 'components/popover';
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
+import { Logo } from 'logo';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -113,9 +114,6 @@ const MainMenuItems = (props: MainMenuProps) => {
 
 export const MainMenu = (props: MainMenuProps) => {
   const { layoutMode } = props;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [state] = useSetting();
 
   const mainMenuClassName = useMemo(() => {
     return clsx('fairys_admin_main_menu flex box-border overflow-auto items-center justify-between px-[8px]', {
@@ -125,25 +123,14 @@ export const MainMenu = (props: MainMenuProps) => {
   }, [layoutMode]);
 
   const mainMenuBodyClassName = useMemo(() => {
-    return clsx('fairys_admin_main_menu_body flex-1 w-full overflow-hidden flex gap-2 items-center', {
-      'flex-col ': layoutMode === 'vertical',
-      'flex-row': layoutMode === 'horizontal',
-    });
+    return clsx(
+      'fairys_admin_main_menu_body flex-1 w-full overflow-hidden flex gap-2 items-center box-border py-[8px]',
+      {
+        'flex-col ': layoutMode === 'vertical',
+        'flex-row': layoutMode === 'horizontal',
+      },
+    );
   }, [layoutMode]);
-
-  const projectNameClassName = useMemo(() => {
-    return clsx('fairys_admin_main_menu_body_name cursor-pointer whitespace-nowrap', {
-      'overflow-hidden w-full text-ellipsis': layoutMode === 'vertical',
-      'px-2': layoutMode === 'horizontal',
-    });
-  }, [layoutMode]);
-
-  const onClickHome = () => {
-    if (location.pathname === '/') {
-      return;
-    }
-    navigate('/');
-  };
 
   const bodyMenusClassName = useMemo(() => {
     return clsx('fairys_admin_main_menu_body_menus flex', {
@@ -155,12 +142,7 @@ export const MainMenu = (props: MainMenuProps) => {
   return (
     <div className={mainMenuClassName}>
       <div className={mainMenuBodyClassName}>
-        <div className="fairys_admin_main_menu_body_logo flex items-center justify-center cursor-pointer">
-          <img width={48} height={48} src={state.logo} alt={state.projectName} onClick={onClickHome} />
-        </div>
-        <div className={projectNameClassName} onClick={onClickHome}>
-          {state.projectName}
-        </div>
+        <Logo mode={layoutMode === 'horizontal' ? 'open' : 'close'} />
         <div className={bodyMenusClassName}>
           <MainMenuItems layoutMode={layoutMode} />
         </div>
