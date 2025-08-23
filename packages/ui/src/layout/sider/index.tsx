@@ -13,7 +13,7 @@ const LayoutSiderMainMenu = () => {
   const layoutMode = state.layoutMode;
 
   const isShow = useMemo(() => {
-    return ['main_sub_left', 'main_left_sub_all', 'main_left'].includes(layoutMode);
+    return ['main_sub_left', 'main_left'].includes(layoutMode);
   }, [layoutMode]);
   // 判断是否显示
   if (!isShow) {

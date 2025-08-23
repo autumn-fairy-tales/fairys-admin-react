@@ -3,7 +3,7 @@ import { proxy, useSnapshot } from 'valtio';
 /**
  * 1. main_sub_left:左侧主菜单 + 子菜单 + 无头部信息
  * 2. main_left:左侧主菜单 + 移入子菜单展示 + 无头部信息
- * 3. main_left_sub_all:左侧主菜单 + 移入子菜单展示所有  + 无头部信息
+ * // 3. main_left_sub_all:左侧主菜单 + 移入子菜单展示所有  + 无头部信息
  * 4. main_top_header:顶部菜单 +  移入子菜单展示 + 有头部信息
  * // 5. main_top_sub_all_header:顶部菜单 +  移入子菜单展示所有 + 有头部信息
  * 6. main_top_sub_left_header:顶部主菜单 + 侧边子菜单 + 有头部信息
@@ -14,7 +14,7 @@ import { proxy, useSnapshot } from 'valtio';
 export type LayoutMode =
   | 'main_sub_left'
   | 'main_left'
-  | 'main_left_sub_all'
+  // | "main_left_sub_all"
   | 'main_top_header'
   // | "main_top_sub_all_header"
   | 'main_top_sub_left_header'
@@ -81,7 +81,7 @@ class SettingInstance {
   state = proxy<SettingInstanceState>({
     open: false,
     /**布局模式*/
-    layoutMode: 'main_sub_left',
+    layoutMode: 'main_top_sub_left_header',
     // layoutMode: "main_top_sub_left_header",
     // /**自动监听系统的明暗色系*/
     // autoListenSystemTheme: true,
@@ -103,6 +103,26 @@ class SettingInstance {
       }
     }
   }
+
+  /**初始配置*/
+  initSetting = (state: SettingInstanceState) => {
+    const _newState: SettingInstanceState = {
+      layoutMode: 'main_top_sub_left_header',
+      ...state,
+      ...this.state,
+    };
+    this.state = proxy({
+      ..._newState,
+      /**项目名和logo 始终取设置的值*/
+      projectName: state.projectName,
+      logo: state.logo,
+    });
+    if (this.state.themeColor) {
+      document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
+    }
+    this.autoListenSystemTheme();
+    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
+  };
 
   mediaQueryList: MediaQueryList | null = null;
 
@@ -143,26 +163,6 @@ class SettingInstance {
     }
   };
 
-  /**初始配置*/
-  initSetting = (state: SettingInstanceState) => {
-    const _newState: SettingInstanceState = {
-      layoutMode: 'main_sub_left',
-      ...state,
-      ...this.state,
-    };
-    this.state = proxy({
-      ..._newState,
-      /**项目名和logo 始终取设置的值*/
-      projectName: state.projectName,
-      logo: state.logo,
-    });
-    if (this.state.themeColor) {
-      document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
-    }
-    this.autoListenSystemTheme();
-    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
-  };
-
   /**更新主题颜色*/
   updatedThemeColor = (themeColor: string) => {
     this.updated({ themeColor });
@@ -191,7 +191,6 @@ class SettingInstance {
       this.state.layoutMode === 'main_sub_left' ||
       this.state.layoutMode === 'main_left' ||
       this.state.layoutMode === 'main_top_header' ||
-      this.state.layoutMode === 'main_left_sub_all' ||
       this.state.layoutMode === 'main_top_sub_left_header'
     );
   };

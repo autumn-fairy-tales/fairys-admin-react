@@ -114,7 +114,8 @@ const MainMenuItems = (props: MainMenuProps) => {
 
 export const MainMenu = (props: MainMenuProps) => {
   const { layoutMode } = props;
-
+  const [settingState] = useSetting();
+  const layoutModeState = settingState.layoutMode;
   const mainMenuClassName = useMemo(() => {
     return clsx('fairys_admin_main_menu flex box-border overflow-auto items-center justify-between px-[8px]', {
       'fairys_admin_main_menu_vertical flex-col h-full': layoutMode === 'vertical',
@@ -142,10 +143,18 @@ export const MainMenu = (props: MainMenuProps) => {
   return (
     <div className={mainMenuClassName}>
       <div className={mainMenuBodyClassName}>
-        <Logo mode={layoutMode === 'horizontal' ? 'open' : 'close'} />
-        <div className={bodyMenusClassName}>
-          <MainMenuItems layoutMode={layoutMode} />
-        </div>
+        <Logo
+          isHeader={layoutMode === 'horizontal'}
+          logoSize={layoutMode === 'horizontal' ? 32 : 48}
+          mode={layoutMode === 'horizontal' ? 'open' : 'close'}
+        />
+        {layoutModeState === 'left_top_header' ? (
+          <Fragment />
+        ) : (
+          <div className={bodyMenusClassName}>
+            <MainMenuItems layoutMode={layoutMode} />
+          </div>
+        )}
       </div>
       <div className="fairys_admin_main_menu_extra">
         <Avatar mode={layoutMode === 'horizontal' ? 'header' : 'sider'} />

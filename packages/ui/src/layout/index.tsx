@@ -14,7 +14,7 @@ export const Layout = () => {
   /**
    * 1. main_sub_left:左侧主菜单 + 子菜单 + 无头部信息
    * 2. main_left:左侧主菜单 + 移入子菜单展示 + 无头部信息
-   * 3. main_left_sub_all:左侧主菜单 + 移入子菜单展示所有  + 无头部信息
+   * // 3. main_left_sub_all:左侧主菜单 + 移入子菜单展示所有  + 无头部信息
    * 4. main_top_header:顶部菜单 +  移入子菜单展示 + 有头部信息
    * // 5. main_top_sub_all_header:顶部菜单 +  移入子菜单展示所有 + 有头部信息
    * 6. main_top_sub_left_header:顶部主菜单 + 侧边子菜单 + 有头部信息
@@ -40,18 +40,13 @@ export const Layout = () => {
   }, [layoutMode]);
 
   const isShowSider = useMemo(() => {
-    return [
-      'main_sub_left',
-      'main_left',
-      'main_left_sub_all',
-      'left',
-      'main_top_sub_left_header',
-      'left_top_header',
-    ].includes(`${layoutMode}`);
+    return ['main_sub_left', 'main_left', 'left', 'main_top_sub_left_header', 'left_top_header'].includes(
+      `${layoutMode}`,
+    );
   }, [layoutMode]);
 
   const isSiderFull = useMemo(() => {
-    return ['main_sub_left', 'main_left', 'main_left_sub_all', 'left'].includes(`${layoutMode}`);
+    return ['main_sub_left', 'main_left', 'left'].includes(`${layoutMode}`);
   }, [layoutMode]);
 
   const layoutCls = useMemo(() => {
