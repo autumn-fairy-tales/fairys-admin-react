@@ -42,7 +42,7 @@ export interface SettingInstanceState {
   /**侧边栏模式*/
   sideMenuMode?: 'open' | 'close';
   /**页面切换动画*/
-  pageTransitionMode?: '';
+  pageTransitionMode?: '无动画' | '滑动' | '缩放消退' | '闪现' | string;
   /**标签栏*/
   /**是否启用标签栏*/
   enableTabBar?: boolean;
@@ -82,6 +82,7 @@ class SettingInstance {
     open: false,
     /**布局模式*/
     layoutMode: 'main_top_sub_left_header',
+    pageTransitionMode: '滑动',
     // layoutMode: "main_top_sub_left_header",
     // /**自动监听系统的明暗色系*/
     // autoListenSystemTheme: true,
@@ -121,14 +122,12 @@ class SettingInstance {
       document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
     }
     this.autoListenSystemTheme();
-    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify({ ...this.state }));
   };
 
   mediaQueryList: MediaQueryList | null = null;
 
   setDocumentAndBodyTheme = () => {
     const theme = this.state.theme;
-    console.log(theme);
     if (theme) {
       if (document.documentElement) {
         document.documentElement.classList.remove(theme === 'dark' ? 'light' : 'dark');
@@ -175,14 +174,25 @@ class SettingInstance {
 
   /**更新配置*/
   updated = (state: SettingInstanceState) => {
+    /**只做更改值存储，其他的默认值不做处理*/
+    let _state = {};
+    try {
+      _state = JSON.parse(localStorage.getItem(SettingInstance.localStorageKey) || '{}');
+    } catch (error) {
+      console.log(error);
+    }
     for (const key in state) {
       const element = state[key];
       this.state[key] = element;
+      /**open 不做本地存储*/
+      if (key !== 'open') {
+        _state[key] = element;
+      }
       if (key === 'theme') {
         this.setDocumentAndBodyTheme();
       }
     }
-    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(this.state));
+    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(_state));
   };
 
   /**判断是否主子菜单模板*/

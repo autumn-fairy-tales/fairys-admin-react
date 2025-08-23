@@ -1,13 +1,36 @@
-import { Outlet, useLocation, useOutlet } from 'react-router';
+import { Outlet, useLocation } from 'react-router';
 import { TabBar } from 'layout/tab-bar';
 import { ToolBar } from 'layout/tool-bar';
 import { KeepAlive } from 'react-activation';
 import { useFairysRootContext } from 'components/root';
-import { Fragment } from 'react/jsx-runtime';
+import { Fragment } from 'react';
 import { useMemo } from 'react';
 import { FullScreen } from 'components/full-screen';
 import { useTabBar } from 'context/tab-bar';
 import { AliveControllerBase } from 'context/alive-controller';
+import { motion } from 'framer-motion';
+import { useSetting } from 'context/setting';
+import { motionAnimation } from 'context/motion-animation';
+
+interface MotionAnimationProps {
+  children: React.ReactNode;
+}
+
+const MotionAnimation = (props: MotionAnimationProps) => {
+  const location = useLocation();
+  const [setting] = useSetting();
+  const pageTransitionMode = setting.pageTransitionMode;
+
+  const config = useMemo(() => {
+    return motionAnimation.getAnimationConfig(pageTransitionMode);
+  }, [pageTransitionMode]);
+
+  return (
+    <motion.div {...config} className="w-full h-full overflow-hidden" key={location.pathname}>
+      {props.children}
+    </motion.div>
+  );
+};
 
 const KeepAliveContent = () => {
   const location = useLocation();
@@ -15,9 +38,11 @@ const KeepAliveContent = () => {
     return AliveControllerBase.convertIdOrNameOne(location.pathname);
   }, [location.pathname]);
   return (
-    <KeepAlive autoFreeze={false} name={id} id={id} cacheKey={id}>
-      <Outlet />
-    </KeepAlive>
+    <MotionAnimation>
+      <KeepAlive autoFreeze={false} name={id} id={id} cacheKey={id}>
+        <Outlet />
+      </KeepAlive>
+    </MotionAnimation>
   );
 };
 
@@ -25,10 +50,13 @@ const OutletContentContext = () => {
   const fairysRootClass = useFairysRootContext();
   const [state, tabBarInstance] = useTabBar();
   const pageFullScreen = state.pageFullScreen;
-
   const render = useMemo(() => {
     if (fairysRootClass.keepAlive) return <KeepAliveContent />;
-    return <Outlet />;
+    return (
+      <MotionAnimation>
+        <Outlet />
+      </MotionAnimation>
+    );
   }, [fairysRootClass.keepAlive]);
 
   return (
