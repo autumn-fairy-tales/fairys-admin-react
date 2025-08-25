@@ -19,6 +19,8 @@ export interface PopoverMenuItem {
   onClick?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
   /**删除按钮事件*/
   onClose?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
+  /**value值*/
+  value?: string;
   [key: string]: any;
 }
 
@@ -31,6 +33,8 @@ export interface PopoverMenuProps {
   className?: string;
   /**点击外部关闭(在弹框类中使用，用于关闭弹框)*/
   onOpenChange?: (open: boolean) => void;
+  /**当使用这个时items每一项必须需要value值*/
+  value?: string | string[];
 }
 
 class PopoverMenuInstance {
@@ -42,18 +46,41 @@ class PopoverMenuInstance {
   /**点击外部关闭(在弹框类中使用，用于关闭弹框)*/
   onOpenChange?: PopoverMenuProps['onOpenChange'];
 }
+
 const usePopoverMenuInstance = () => useRef<PopoverMenuInstance>(new PopoverMenuInstance()).current;
 
 const popoverMenuItemBaseCls = `shrink-0 text-gray-400 transition-all duration-300 flex flex-row items-center gap-1 py-[5px] px-[8px] mx-[5px] rounded-sm`;
+const popoverMenuItemBaseClsDisabled = `cursor-not-allowed opacity-70 select-none`;
+const popoverMenuItemBaseClsNotDisabled = `text-gray-600 cursor-pointer hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100`;
+const popoverMenuItemBaseClsActive = `active bg-(--theme-color)! text-white!`;
 
 export const PopoverMenu = (props: PopoverMenuProps) => {
-  const { onClick, onClose, items, layoutMode = 'vertical', isHideClose = false, className, onOpenChange } = props;
+  const {
+    onClick,
+    onClose,
+    items,
+    layoutMode = 'vertical',
+    isHideClose = false,
+    className,
+    onOpenChange,
+    value,
+  } = props;
   const popoverMenuInstance = usePopoverMenuInstance();
   popoverMenuInstance.items = items;
   popoverMenuInstance.onClick = onClick;
   popoverMenuInstance.onClose = onClose;
   popoverMenuInstance.layoutMode = layoutMode;
   popoverMenuInstance.onOpenChange = onOpenChange;
+
+  const isChecked = (item: PopoverMenuItem) => {
+    if (value) {
+      if (Array.isArray(value)) {
+        return value.includes(item.value || '');
+      }
+      return value === item.value;
+    }
+    return false;
+  };
 
   const render = useMemo(() => {
     return (items || []).map((item, index) => {
@@ -89,15 +116,14 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
         popoverMenuInstance.onClose?.(item, e);
         popoverMenuInstance.onOpenChange?.(false);
       };
-
       return (
         <div
           onClick={onClickItem}
           key={item.path || item.title || item.key || index}
           className={clsx(popoverMenuItemBaseCls, {
-            'cursor-not-allowed opacity-70 select-none': item.disabled,
-            'text-gray-600 cursor-pointer hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100':
-              !item.disabled,
+            [popoverMenuItemBaseClsDisabled]: item.disabled,
+            [popoverMenuItemBaseClsNotDisabled]: !item.disabled,
+            [popoverMenuItemBaseClsActive]: isChecked(item),
           })}
           title={item.title}
         >
@@ -108,7 +134,7 @@ export const PopoverMenu = (props: PopoverMenuProps) => {
           ) : (
             <Fragment />
           )}
-          <div className="flex-1  whitespace-nowrap">{item.title}</div>
+          <div className="flex-1 whitespace-nowrap">{item.title}</div>
           {!isHideClose ? (
             <span
               className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white dark:text-gray-500 transition-all duration-300"

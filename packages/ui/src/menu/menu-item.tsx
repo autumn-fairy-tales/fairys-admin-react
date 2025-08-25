@@ -177,7 +177,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
           {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
         </div>
         {isExpandCollapse ? (
-          <div className="fairys_admin_menu_item_extra">
+          <div className="fairys_admin_menu_item_extra fairys_admin_down_up_icon">
             {isSubMenu ? <div className={expandIcon} /> : <Fragment />}
           </div>
         ) : (

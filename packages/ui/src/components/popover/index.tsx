@@ -1,33 +1,13 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variant, Transition, AnimationDefinition } from 'framer-motion';
-import React, { Fragment, cloneElement, createContext, useMemo, useRef, useContext, useState } from 'react';
-import { useAnimationStatus } from '../utils';
-import {
-  useFloating,
-  autoUpdate,
-  useDismiss,
-  useInteractions,
-  useHover,
-  FloatingPortal,
-  size as sizeMiddleware,
-  flip as flipMiddleware,
-  shift as shiftMiddleware,
-  useMergeRefs,
-} from '@floating-ui/react';
+import React, { Fragment, cloneElement, useMemo, useRef, useState } from 'react';
+import { useDismiss, useInteractions, useHover, FloatingPortal, useMergeRefs } from '@floating-ui/react';
 import type { ShiftOptions, FlipOptions, Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import type { Derivable } from '@floating-ui/react-dom';
-import clsx from 'clsx';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
-
-export interface UsePopoverBaseOptions {
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-  placement?: Placement;
-  className?: string;
-  popoverInstance?: PopoverInstance;
-  flipOptions?: FlipOptions | Derivable<FlipOptions>;
-  shiftOptions?: ShiftOptions | Derivable<ShiftOptions>;
-}
+import { getPopoverMotionProps, PopoverEnumVariantType } from './utils';
+import { usePopoverBase, PopoverInstanceContext, PopoverInstance, useFocusReference } from './hooks';
+export * from './hooks';
 
 export interface PopoverProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
@@ -53,68 +33,10 @@ export interface PopoverProps
   onAnimationComplete?: (definition: AnimationDefinition) => void;
   flipOptions?: FlipOptions | Derivable<FlipOptions>;
   shiftOptions?: ShiftOptions | Derivable<ShiftOptions>;
+  modeType?: PopoverEnumVariantType;
+  /**点击标签位置为起始点*/
+  isFocusReference?: boolean;
 }
-class PopoverInstance {
-  /***点击外部关闭*/
-  onOpenChange?: (open: boolean) => void = () => void 0;
-}
-
-export const usePopoverInstance = (instance?: PopoverInstance) => {
-  const ref = useRef<PopoverInstance>();
-  if (!ref.current) {
-    if (instance) {
-      ref.current = instance;
-    } else {
-      ref.current = new PopoverInstance();
-    }
-  }
-  return ref.current;
-};
-
-const PopoverInstanceContext = createContext(new PopoverInstance());
-
-export const usePopoverInstanceContext = () => useContext(PopoverInstanceContext);
-
-export const usePopoverBase = (options: UsePopoverBaseOptions) => {
-  const { open, onOpenChange, placement, className, popoverInstance: instance, flipOptions, shiftOptions } = options;
-  const { show, onAnimationComplete } = useAnimationStatus(open);
-  const popoverInstance = usePopoverInstance(instance);
-  popoverInstance.onOpenChange = onOpenChange;
-  const floating = useFloating({
-    open: show,
-    placement: placement,
-    whileElementsMounted: autoUpdate,
-    onOpenChange: (open) => {
-      if (options.open !== open) popoverInstance.onOpenChange?.(open);
-    },
-    middleware: [
-      sizeMiddleware({
-        apply({ availableWidth, availableHeight, elements }) {
-          Object.assign(elements.floating.style, {
-            overflow: 'auto',
-            maxWidth: `${availableWidth}px`,
-            maxHeight: `min(var(--anchor-max-height, 100vh), ${availableHeight}px)`,
-          });
-        },
-      }),
-      flipMiddleware(flipOptions),
-      shiftMiddleware(shiftOptions),
-    ],
-  });
-  const bodyClasName = useMemo(() => {
-    return clsx('fairys_admin_popover no-scrollbar', className, [
-      'rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm',
-    ]);
-  }, [className]);
-
-  return {
-    floating,
-    bodyClasName,
-    show,
-    onAnimationComplete,
-    popoverInstance,
-  };
-};
 
 export const Popover = (props: PopoverProps) => {
   const {
@@ -135,6 +57,8 @@ export const Popover = (props: PopoverProps) => {
     onAnimationComplete: onAnimationCompleteProp,
     flipOptions,
     shiftOptions,
+    modeType,
+    isFocusReference,
     ...rest
   } = props;
   const { floating, bodyClasName, show, onAnimationComplete, popoverInstance } = usePopoverBase({
@@ -147,19 +71,42 @@ export const Popover = (props: PopoverProps) => {
     popoverInstance: instance,
   });
   const motionRef = useRef<HTMLDivElement>(null);
-  const { refs, floatingStyles, context } = floating;
+  const { refs, context } = floating;
   const useDismissOrHover = isUseHover ? useHover : useDismiss;
   const dismissOrHover = useDismissOrHover(
     context,
     isUseHover ? { ...useHoverProps } : { outsidePress: true, bubbles: { outsidePress: true }, ...useDismissProps },
   );
+
   const { getReferenceProps, getFloatingProps } = useInteractions([dismissOrHover]);
+  const { floatingStyles } = useFocusReference(floating, { enable: isFocusReference });
+
   const childRef = useMergeRefs([refs.setReference, domRef]);
+
+  const motionProps = useMemo(() => {
+    return getPopoverMotionProps(modeType);
+  }, [modeType]);
 
   const onAnimationCompleteClick = (definition: AnimationDefinition) => {
     onAnimationComplete(definition);
     onAnimationCompleteProp?.(definition);
   };
+
+  // const _translate = useMemo(() => {
+  //   if (!refs.reference?.current) {
+  //     return {}
+  //   }
+  //   const { x, y } = refs.reference?.current.getBoundingClientRect();
+  //   return {
+  //     "position": "absolute",
+  //     "left": 0,
+  //     "top": 0,
+  //     "willChange": "transform",
+  //     transform: `translate(${x}px, ${y}px)`,
+  //   }
+  // }, [refs.reference?.current]) as React.CSSProperties
+  // const _floatingStyles = floatingStyles.transform && floatingStyles.transform !== 'translate(0px, 0px)' ? floatingStyles : _translate;
+  // console.log('floatingStyles', floatingStyles)
 
   return (
     <Fragment>
@@ -172,12 +119,13 @@ export const Popover = (props: PopoverProps) => {
       {show ? (
         <FloatingPortal>
           <PopoverInstanceContext.Provider value={popoverInstance}>
-            <AnimatePresence mode="wait">
+            <AnimatePresence>
               <DarkModeInstancePopoverContextProvider>
                 <div
                   {...rest}
                   ref={refs.setFloating}
                   style={{ ...(style || {}), ...floatingStyles }}
+                  // style={{ ...(style || {}), ..._floatingStyles, }}
                   className={bodyClasName}
                   {...getFloatingProps()}
                 >
@@ -191,9 +139,12 @@ export const Popover = (props: PopoverProps) => {
                       ...(variants || {}),
                     }}
                     transition={{
+                      type: 'spring',
+                      bounce: 0,
                       duration: 0.35,
                       ...transition,
                     }}
+                    {...motionProps}
                     onAnimationComplete={onAnimationCompleteClick}
                   >
                     {content}
