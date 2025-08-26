@@ -50,21 +50,9 @@ const transitionBase: Transition = {
 
 export const popoverEnumTransitions: Record<PopoverEnumVariantType, Record<PopoverEnumVariantValueType, Transition>> = {
   select: {
-    open: {
-      type: 'spring',
-      bounce: 0,
-      duration: 0.5,
-    },
-    collapsed: {
-      type: 'spring',
-      bounce: 0,
-      duration: 0.5,
-    },
-    initial: {
-      type: 'spring',
-      bounce: 0,
-      duration: 0.5,
-    },
+    open: transitionBase,
+    collapsed: transitionBase,
+    initial: transitionBase,
   },
   modal: {
     open: transitionBase,

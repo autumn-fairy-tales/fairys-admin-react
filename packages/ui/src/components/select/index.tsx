@@ -61,7 +61,7 @@ export const SelectBase = (props: SelectBaseProps) => {
     <ContextMenu
       eventName="onClick"
       modeType="select"
-      placement="bottom-start"
+      placement="bottom"
       popoverProps={{
         isFocusReference: true,
         className: 'min-w-[120px]',

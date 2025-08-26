@@ -91,14 +91,26 @@ export const useFocusReference = (floating: UseFloatingData, options: UseFocusRe
   const __floatingStyles = useMemo(() => {
     if (enable && refs?.reference?.current) {
       const { x, y, width, height } = refs?.reference?.current?.getBoundingClientRect() || {};
+      const placement = floating.placement;
+      let transform = `translate(${x + width / 2}px, ${y + height / 2}px)`;
+      if (/^top/.test(placement)) {
+        transform = `translate(${x + width / 2}px, ${y}px)`;
+      } else if (/^bottom/.test(placement)) {
+        transform = `translate(${x + width / 2}px, ${y + height}px)`;
+      } else if (/^left/.test(placement)) {
+        transform = `translate(${x}px, ${y + height / 2}px)`;
+      } else if (/^right/.test(placement)) {
+        transform = `translate(${x + width}px, ${y + height / 2}px)`;
+      }
       return {
         ...floatingStyles,
-        transform: `translate(${x + width / 2}px, ${y + height / 2}px)`,
+        transform: transform,
       };
     }
     return floatingStyles;
   }, [enable, refs?.reference?.current]);
   const _newFloatingStyles = enable && x === 0 && y === 0 ? __floatingStyles : floatingStyles;
+  console.log('_newFloatingStyles', _newFloatingStyles);
   return {
     ...floating,
     floatingStyles: _newFloatingStyles,
