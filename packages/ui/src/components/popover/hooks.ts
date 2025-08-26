@@ -110,7 +110,6 @@ export const useFocusReference = (floating: UseFloatingData, options: UseFocusRe
     return floatingStyles;
   }, [enable, refs?.reference?.current]);
   const _newFloatingStyles = enable && x === 0 && y === 0 ? __floatingStyles : floatingStyles;
-  console.log('_newFloatingStyles', _newFloatingStyles);
   return {
     ...floating,
     floatingStyles: _newFloatingStyles,
