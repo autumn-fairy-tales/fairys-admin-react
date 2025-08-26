@@ -16,12 +16,13 @@ interface ContextMenuProps
   placement?: PopoverProps['placement'];
   modeType?: PopoverEnumVariantType;
   value?: PopoverMenuProps['value'];
+  popoverMenuProps?: Omit<PopoverMenuProps, 'items'>;
   /**仅传递open状态*/
   onOpenChange?: (open: boolean) => void;
 }
 class ContextMenuInstance {
+  items: ContextMenuItem[] = [];
   dom = createRef<HTMLDivElement>();
-  items: any[] = [];
   /**仅传递open状态*/
   onOpenChange?: (open: boolean) => void;
   open: boolean;
@@ -34,9 +35,7 @@ class ContextMenuInstance {
     if (item.disabled) {
       return;
     }
-    this.setOpen?.(false);
     this.onMenuItemClick?.(item, e);
-    this.onOpenChange?.(false);
   };
 
   onToggle = (open: boolean) => {
@@ -58,6 +57,7 @@ export const ContextMenu = forwardRef((props: ContextMenuProps, ref: React.Ref<H
     modeType,
     value,
     onOpenChange,
+    popoverMenuProps,
     ...rest
   } = props;
   const [open, setOpen] = useState(false);
@@ -92,7 +92,14 @@ export const ContextMenu = forwardRef((props: ContextMenuProps, ref: React.Ref<H
       placement={placement}
       content={
         show ? (
-          <PopoverMenu value={value} items={items} onClick={contextMenuInstance.onClick} isHideClose />
+          <PopoverMenu
+            {...popoverMenuProps}
+            onOpenChange={contextMenuInstance.onToggle}
+            value={value}
+            items={items}
+            onClick={contextMenuInstance.onClick}
+            isHideClose
+          />
         ) : (
           <Fragment />
         )

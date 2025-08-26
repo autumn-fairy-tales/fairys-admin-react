@@ -8,14 +8,17 @@ export const getPopoverMotionProps = (modeType: PopoverEnumVariantType): MotionN
   // modeType 为 select 时，返回 select 类型的动画
   if (modeType === 'select') {
     return {
-      // initial: false,
-      // animate: 'open',
-      // exit: 'collapsed',
       variants: popoverEnumVariants[modeType],
       transition: popoverEnumTransitions[modeType],
     };
   }
   return {};
+};
+
+export const variantsBase: Record<PopoverEnumVariantValueType, Variant> = {
+  open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
+  collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
+  initial: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
 };
 
 export const popoverEnumVariants: Record<PopoverEnumVariantType, Record<PopoverEnumVariantValueType, Variant>> = {
@@ -42,7 +45,7 @@ export const popoverEnumVariants: Record<PopoverEnumVariantType, Record<PopoverE
   },
 };
 
-const transitionBase: Transition = {
+export const transitionBase: Transition = {
   type: 'spring',
   bounce: 0,
   duration: 0.5,

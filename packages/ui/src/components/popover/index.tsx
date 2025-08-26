@@ -5,7 +5,7 @@ import { useDismiss, useInteractions, useHover, FloatingPortal, useMergeRefs } f
 import type { ShiftOptions, FlipOptions, Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import type { Derivable } from '@floating-ui/react-dom';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
-import { getPopoverMotionProps, PopoverEnumVariantType } from './utils';
+import { getPopoverMotionProps, PopoverEnumVariantType, transitionBase, variantsBase } from './utils';
 import { usePopoverBase, PopoverInstanceContext, PopoverInstance, useFocusReference } from './hooks';
 export * from './hooks';
 
@@ -92,22 +92,6 @@ export const Popover = (props: PopoverProps) => {
     onAnimationCompleteProp?.(definition);
   };
 
-  // const _translate = useMemo(() => {
-  //   if (!refs.reference?.current) {
-  //     return {}
-  //   }
-  //   const { x, y } = refs.reference?.current.getBoundingClientRect();
-  //   return {
-  //     "position": "absolute",
-  //     "left": 0,
-  //     "top": 0,
-  //     "willChange": "transform",
-  //     transform: `translate(${x}px, ${y}px)`,
-  //   }
-  // }, [refs.reference?.current]) as React.CSSProperties
-  // const _floatingStyles = floatingStyles.transform && floatingStyles.transform !== 'translate(0px, 0px)' ? floatingStyles : _translate;
-  // console.log('floatingStyles', floatingStyles)
-
   return (
     <Fragment>
       {React.Children.map(children, (child) => {
@@ -125,7 +109,6 @@ export const Popover = (props: PopoverProps) => {
                   {...rest}
                   ref={refs.setFloating}
                   style={{ ...(style || {}), ...floatingStyles }}
-                  // style={{ ...(style || {}), ..._floatingStyles, }}
                   className={bodyClasName}
                   {...getFloatingProps()}
                 >
@@ -134,14 +117,11 @@ export const Popover = (props: PopoverProps) => {
                     initial="collapsed"
                     animate={open ? 'open' : 'collapsed'}
                     variants={{
-                      open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
-                      collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
-                      ...(variants || {}),
+                      ...variantsBase,
+                      ...variants,
                     }}
                     transition={{
-                      type: 'spring',
-                      bounce: 0,
-                      duration: 0.35,
+                      ...transitionBase,
                       ...transition,
                     }}
                     {...motionProps}

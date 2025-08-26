@@ -62,14 +62,12 @@ export const SelectBase = (props: SelectBaseProps) => {
       eventName="onClick"
       modeType="select"
       placement="bottom"
-      popoverProps={{
-        isFocusReference: true,
-        className: 'min-w-[120px]',
-      }}
+      popoverProps={{ isFocusReference: true, className: 'min-w-[120px]' }}
       onMenuItemClick={onMenuItemClick}
       items={items}
       value={value}
       onOpenChange={(open) => setIsExpand(open)}
+      popoverMenuProps={{ mode: multiple ? 'multiple' : 'single' }}
     >
       <div className="min-w-[120px] px-[8px] py-[4px] border border-gray-200 dark:border-gray-700 rounded-sm cursor-pointer flex flex-row justify-between items-center">
         <span>{render}</span>
