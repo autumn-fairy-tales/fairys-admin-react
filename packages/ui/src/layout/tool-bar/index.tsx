@@ -36,7 +36,7 @@ export const ToolBar = () => {
         <Breadcrumb />
       </div>
       <div className="fairys_admin_tool_bar_body overflow-auto flex flex-row flex-1"></div>
-      <div className="fairys_admin_tool_bar_right flex items-center gap-1 dark:text-gray-200">
+      <div className="fairys_admin_tool_bar_right flex items-center gap-2 dark:text-gray-200 pr-[2px]">
         <MenuSearch />
         <MenuDarkLight />
       </div>

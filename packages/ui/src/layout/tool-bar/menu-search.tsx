@@ -42,7 +42,7 @@ const SearchItem = (props: SearchItemProps) => {
       className="fairys_admin_tool_bar_menu_search_item hover:bg-gray-100 dark:hover:bg-gray-700 hover:*:first:text-[var(--theme-color)] flex items-center flex-row min-h-[70px] transition-all duration-300 border rounded-sm box-border border-gray-200 dark:border-gray-700"
     >
       <div className="w-[65px] flex items-center justify-center icon  transition-all duration-300">
-        <Icon icon={rowItemData.icon} className="size-[16px]" />
+        <Icon icon={rowItemData.icon} className="size-[20px]" />
       </div>
       <div className="flex flex-col flex-1">
         <div className="px-[14px] font-medium text-gray-900 dark:text-gray-300">{rowItemData.title}</div>
@@ -69,7 +69,7 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
     <div className="flex flex-col gap-2 h-full w-[670px] px-5 py-5 overflow-hidden box-border">
       <div className="flex items-center border border-gray-200 dark:border-gray-700 rounded-md ">
         <div className="pl-4 flex items-center justify-center">
-          <span className="icon-[ant-design--search-outlined] size-[26px]" />
+          <span className="icon-[ant-design--search-outlined] size-[26px] text-gray-600 dark:text-gray-200" />
         </div>
         <input
           placeholder="搜索菜单"
@@ -106,10 +106,26 @@ export const MenuSearch = () => {
     };
   }, [open]);
 
+  useEffect(() => {
+    hotkeys('command+k, ctrl+k', (e) => {
+      e.preventDefault();
+      setOpen(true);
+    });
+    return () => {
+      hotkeys.unbind('command+k, ctrl+k');
+    };
+  }, [open]);
+
   return (
     <Fragment>
-      <ButtonBase className="fairys_admin_tool_bar_menu_search" onClick={() => setOpen(true)}>
-        <span className="icon-[ant-design--file-search-outlined] size-[16px]" />
+      <ButtonBase
+        bordered
+        className="fairys_admin_tool_bar_menu_search px-4 flex flex-row gap-x-2"
+        onClick={() => setOpen(true)}
+      >
+        <span className="icon-[ant-design--search-outlined] size-[18px] text-gray-600 dark:text-gray-200" />
+        <span className="text-gray-400">搜索</span>
+        <span className="text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 rounded-sm">⌘ K</span>
       </ButtonBase>
       <ModalBase open={open} onClose={() => setOpen(false)}>
         <ModalBody onClose={() => setOpen(false)} />

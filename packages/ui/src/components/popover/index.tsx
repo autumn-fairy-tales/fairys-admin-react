@@ -1,11 +1,11 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variant, Transition, AnimationDefinition } from 'framer-motion';
-import React, { Fragment, cloneElement, useMemo, useRef, useState } from 'react';
+import React, { Fragment, cloneElement, useRef, useState } from 'react';
 import { useDismiss, useInteractions, useHover, FloatingPortal, useMergeRefs } from '@floating-ui/react';
 import type { ShiftOptions, FlipOptions, Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import type { Derivable } from '@floating-ui/react-dom';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
-import { getPopoverMotionProps, PopoverEnumVariantType, transitionBase, variantsBase } from './utils';
+import { transitionBase, variantsBase } from './utils';
 import { usePopoverBase, PopoverInstanceContext, PopoverInstance, useFocusReference } from './hooks';
 export * from './hooks';
 
@@ -33,7 +33,6 @@ export interface PopoverProps
   onAnimationComplete?: (definition: AnimationDefinition) => void;
   flipOptions?: FlipOptions | Derivable<FlipOptions>;
   shiftOptions?: ShiftOptions | Derivable<ShiftOptions>;
-  modeType?: PopoverEnumVariantType;
   /**点击标签位置为起始点*/
   isFocusReference?: boolean;
 }
@@ -57,7 +56,6 @@ export const Popover = (props: PopoverProps) => {
     onAnimationComplete: onAnimationCompleteProp,
     flipOptions,
     shiftOptions,
-    modeType,
     isFocusReference,
     ...rest
   } = props;
@@ -82,10 +80,6 @@ export const Popover = (props: PopoverProps) => {
   const { floatingStyles } = useFocusReference(floating, { enable: isFocusReference });
 
   const childRef = useMergeRefs([refs.setReference, domRef]);
-
-  const motionProps = useMemo(() => {
-    return getPopoverMotionProps(modeType);
-  }, [modeType]);
 
   const onAnimationCompleteClick = (definition: AnimationDefinition) => {
     onAnimationComplete(definition);
@@ -124,7 +118,6 @@ export const Popover = (props: PopoverProps) => {
                       ...transitionBase,
                       ...transition,
                     }}
-                    {...motionProps}
                     onAnimationComplete={onAnimationCompleteClick}
                   >
                     {content}

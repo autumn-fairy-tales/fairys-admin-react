@@ -97,7 +97,7 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const iconRender = useMemo(() => {
     return item.icon ? (
-      <span className="size-[16px]">
+      <span className="size-[16px] mr-1">
         <Icon icon={item.icon} className="size-[16px]" />
       </span>
     ) : (

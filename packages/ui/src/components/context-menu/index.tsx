@@ -2,7 +2,6 @@ import { createRef, forwardRef, useRef, useImperativeHandle, useState, Fragment,
 import { Popover, PopoverProps } from './../popover';
 import { PopoverMenu, PopoverMenuItem, PopoverMenuProps } from '../popover-menu';
 import { useAnimationStatus } from '../utils';
-import { PopoverEnumVariantType } from 'components/popover/utils';
 export interface ContextMenuItem extends PopoverMenuItem {}
 
 interface ContextMenuProps
@@ -14,7 +13,6 @@ interface ContextMenuProps
   items?: ContextMenuItem[];
   eventName?: 'onContextMenu' | 'onClick';
   placement?: PopoverProps['placement'];
-  modeType?: PopoverEnumVariantType;
   value?: PopoverMenuProps['value'];
   popoverMenuProps?: Omit<PopoverMenuProps, 'items'>;
   /**仅传递open状态*/
@@ -54,7 +52,6 @@ export const ContextMenu = forwardRef((props: ContextMenuProps, ref: React.Ref<H
     items,
     eventName = 'onContextMenu',
     placement = 'right-start',
-    modeType,
     value,
     onOpenChange,
     popoverMenuProps,
@@ -85,7 +82,6 @@ export const ContextMenu = forwardRef((props: ContextMenuProps, ref: React.Ref<H
   return (
     <Popover
       {...popoverProps}
-      modeType={modeType}
       className={`border border-gray-100 dark:border-gray-700 ${popoverProps?.className || ''}`}
       open={open}
       onOpenChange={contextMenuInstance.onToggle}

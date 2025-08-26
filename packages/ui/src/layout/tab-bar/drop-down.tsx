@@ -23,7 +23,10 @@ const Items = () => {
     e.preventDefault();
     const match = matchPath(item.path, location.pathname);
     tabBarInstance.remove(item.path, !!match, navigate);
-    popoverInstance.onOpenChange?.(false);
+    /**最后一个关闭*/
+    if (list.length === 1) {
+      popoverInstance.onOpenChange?.(false);
+    }
   };
   return <PopoverMenu items={list} onClick={onNativeClick} onClose={onClose} />;
 };

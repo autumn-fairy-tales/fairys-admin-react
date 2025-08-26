@@ -60,7 +60,6 @@ export const SelectBase = (props: SelectBaseProps) => {
   return (
     <ContextMenu
       eventName="onClick"
-      modeType="select"
       placement="bottom"
       popoverProps={{ isFocusReference: true, className: 'min-w-[120px]' }}
       onMenuItemClick={onMenuItemClick}
@@ -71,7 +70,7 @@ export const SelectBase = (props: SelectBaseProps) => {
     >
       <div className="min-w-[120px] px-[8px] py-[4px] border border-gray-200 dark:border-gray-700 rounded-sm cursor-pointer flex flex-row justify-between items-center">
         <span>{render}</span>
-        <span className="fairys_admin_down_up_icon">
+        <span className="fairys_admin_down_up_icon ml-[4px]">
           <div className={expandIcon} />
         </span>
       </div>
