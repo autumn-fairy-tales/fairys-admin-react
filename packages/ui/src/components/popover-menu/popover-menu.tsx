@@ -41,10 +41,13 @@ interface MenuComponentBaseProps {
   onOpenChange?: (open: boolean) => void;
   motionClassName?: string;
   className?: string;
+  eventName?: 'click' | 'mousedown' | 'contextMenu';
 }
+const motionClassNameBase =
+  'flex flex-col relative border border-gray-100 dark:border-gray-700 rounded-md gap-1 py-[5px]';
 
 const MenuComponentBase = forwardRef((props: MenuComponentBaseProps, ref: Ref<HTMLDivElement>) => {
-  const { label, children, onOpenChange: parentOnOpenChange, motionClassName, className } = props;
+  const { label, children, onOpenChange: parentOnOpenChange, motionClassName, className, eventName } = props;
   const [open, setIsOpen] = useState(false);
   const { show, onAnimationComplete } = useAnimationStatus(open);
   const onOpenChange = (open: boolean) => {
@@ -65,19 +68,26 @@ const MenuComponentBase = forwardRef((props: MenuComponentBaseProps, ref: Ref<HT
     middleware: [size(), offset({ mainAxis: isNested ? 0 : 4, alignmentAxis: isNested ? -4 : 0 }), flip(), shift()],
     whileElementsMounted: autoUpdate,
   });
+
   const hover = useHover(context, {
     enabled: isNested && allowHover,
     delay: { open: 75 },
     handleClose: safePolygon({ blockPointerEvents: true }),
   });
-  const click = useClick(context, {
+  // const click = useClick(context, {
+  //   event: 'mousedown',
+  //   toggle: !isNested || !allowHover,
+  //   ignoreMouse: isNested,
+  // });
+  const useClickHook = eventName === 'contextMenu' ? () => ({}) : useClick;
+  const clickHook = useClickHook(context, {
     event: 'mousedown',
     toggle: !isNested || !allowHover,
     ignoreMouse: isNested,
   });
   const role = useRole(context, { role: 'menu' });
   const dismiss = useDismiss(context, { bubbles: true });
-  const { getReferenceProps, getFloatingProps } = useInteractions([hover, click, role, dismiss]);
+  const { getReferenceProps, getFloatingProps } = useInteractions([hover, clickHook, role, dismiss]);
 
   useEffect(() => {
     if (!tree) return;
@@ -131,16 +141,28 @@ const MenuComponentBase = forwardRef((props: MenuComponentBaseProps, ref: Ref<HT
   const mergeRef = useMergeRefs([refs.setReference, ref]);
 
   const bodyClasName = useMemo(() => {
-    return clsx('fairys_admin_popover-menu no-scrollbar', className, ['rounded-sm bg-transparent!']);
+    return clsx('fairys_admin_popover-menu-component-base no-scrollbar', className, ['rounded-sm bg-transparent!']);
   }, [className]);
 
   const motionBodyClasName = useMemo(() => {
-    return clsx('', motionClassName, ['rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm']);
+    return clsx('fairys_admin_popover-menu-component-base-motion', motionClassNameBase, motionClassName, [
+      'min-w-[120px] rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm',
+    ]);
   }, [motionClassName]);
 
   return (
     <FloatingNode id={nodeId}>
-      {cloneElement(label as React.ReactElement, { ref: mergeRef, ...getReferenceProps() })}
+      {cloneElement(label as React.ReactElement, {
+        ref: mergeRef,
+        ...getReferenceProps({
+          onContextMenu: (event) => {
+            if (eventName === 'contextMenu') {
+              event.preventDefault();
+              context.onOpenChange(true, event.nativeEvent, 'click');
+            }
+          },
+        }),
+      })}
       {show ? (
         <FloatingPortal>
           <DarkModeInstancePopoverContextProvider>
@@ -211,7 +233,6 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
     popoverMenuInstance.onCloseItem?.(rowItemData, event);
     rowItemData.onCloseItem?.(rowItemData, event);
   };
-
   const isActive = useMemo(() => {
     return popoverMenuInstance.isChecked(rowItemData);
   }, [state.value]);
@@ -253,8 +274,6 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
   );
 });
 
-const motionClassName = 'flex flex-col relative border border-gray-100 dark:border-gray-700 rounded-md gap-1 py-[5px]';
-
 const Menu = forwardRef(
   (props: MenuItemProps & { label?: ReactNode; onOpenChange?: (open: boolean) => void }, ref: Ref<HTMLDivElement>) => {
     const { label, onOpenChange } = props;
@@ -271,7 +290,6 @@ const Menu = forwardRef(
             onOpenChange={onOpenChange}
             ref={ref}
             label={label ? label : <MenuItem rowItemData={rowItemData} isSubMenuItem />}
-            motionClassName={motionClassName}
           >
             {render}
           </MenuComponentBase>
@@ -283,7 +301,6 @@ const Menu = forwardRef(
         ref={ref}
         onOpenChange={onOpenChange}
         label={label ? label : <MenuItem rowItemData={rowItemData} isSubMenuItem />}
-        motionClassName={motionClassName}
       >
         {render}
       </MenuComponentBase>
@@ -307,7 +324,20 @@ const createChildMenu = (item: PopoverMenuItem, index: number) => {
 };
 
 export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDivElement>) => {
-  const { items, children, onOpenChange, onClickItem, onCloseItem, mode, value, isHideClose = true, instance } = props;
+  const {
+    items,
+    children,
+    onOpenChange,
+    onClickItem,
+    onCloseItem,
+    mode,
+    value,
+    isHideClose = true,
+    instance,
+    eventName = 'click',
+    className,
+    motionClassName = '',
+  } = props;
   const popoverMenuInstance = usePopoverMenuInstance(instance);
   popoverMenuInstance.items = items;
   popoverMenuInstance.isHideClose = isHideClose;
@@ -323,7 +353,14 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
   return (
     <PopoverMenuContext.Provider value={popoverMenuInstance}>
       <FloatingTree>
-        <MenuComponentBase onOpenChange={onOpenChange} ref={ref} label={children} motionClassName={motionClassName}>
+        <MenuComponentBase
+          eventName={eventName}
+          onOpenChange={onOpenChange}
+          ref={ref}
+          label={children}
+          className={className}
+          motionClassName={`${motionClassName}`}
+        >
           {render}
         </MenuComponentBase>
       </FloatingTree>

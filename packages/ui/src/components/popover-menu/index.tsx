@@ -141,12 +141,6 @@ const Item = forwardRef((props: PopoverMenuItemProps & { isSubMenu?: boolean }, 
     );
   }, [isExpand]);
 
-  // const expandIcon = useMemo(() => {
-  //   return clsx(
-  //     'close relative ms-1 w-[10px] after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]',
-  //   );
-  // }, []);
-
   return (
     <div
       ref={ref}

@@ -1,9 +1,9 @@
 import { useAccountData } from 'context/account-data';
 import { settingInstance } from 'context/setting';
 import { forwardRef, Fragment, useMemo } from 'react';
-import { ContextMenu, ContextMenuItem } from 'components/context-menu';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   mode?: 'sider' | 'header';
@@ -54,7 +54,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
     ];
   }, []);
 
-  const onMenuItemClick = (item: ContextMenuItem) => {
+  const onMenuItemClick = (item: PopoverMenuItem) => {
     if (item.title === '主页') {
       navigate('/');
     } else if (item.title === '偏好设置') {
@@ -64,25 +64,9 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
     }
   };
 
-  const placement = useMemo(() => {
-    if (mode === 'header') {
-      return 'bottom';
-    }
-    return 'top';
-  }, [mode]);
-
   return (
-    <ContextMenu
-      items={items}
-      onMenuItemClick={onMenuItemClick}
-      ref={ref}
-      placement={placement}
-      eventName="onClick"
-      popoverProps={{
-        className: 'min-w-[120px]',
-      }}
-    >
-      <div {...rest} ref={ref} title={userName} className={classNameBase}>
+    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref} eventName="contextMenu">
+      <div {...rest} title={userName} className={classNameBase}>
         <span className="flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700">
           {avatarRender}
         </span>
@@ -92,6 +76,6 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
           <Fragment />
         )}
       </div>
-    </ContextMenu>
+    </PopoverMenu>
   );
 });

@@ -12,7 +12,7 @@ import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
-import { ContextMenu, ContextMenuItem } from 'components/context-menu';
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
 import { useFairysRootContext } from 'components/root';
 import { appDataInstance } from 'context/app-data';
 
@@ -120,7 +120,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   }, [currentIndex, count]);
 
   const onMenuItemClick = useCallback(
-    (item: ContextMenuItem) => {
+    (item: PopoverMenuItem) => {
       if (item.title === '重新加载') {
         appDataInstance.aliveController?.refreshScope?.(currentPath);
       } else if (item.title === '关闭标签') {
@@ -141,27 +141,14 @@ const TabBarItem = (props: TabBarItemProps) => {
     [currentIndex, currentPath],
   );
 
-  const popoverProps = useMemo(() => {
-    return {
-      flipOptions: {
-        boundary: tabInstance.dom.current,
-      },
-    };
-  }, [tabInstance.dom]);
-
   return (
-    <ContextMenu
-      items={items}
-      onMenuItemClick={onMenuItemClick}
-      ref={tabItemInstance.dom}
-      className={itemClassName}
-      onClick={onClick}
-      popoverProps={popoverProps}
-    >
-      {iconRender}
-      <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
-      {isCloseIconShow ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
-    </ContextMenu>
+    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={tabItemInstance.dom} eventName="contextMenu">
+      <div className={itemClassName} onClick={onClick}>
+        {iconRender}
+        <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
+        {isCloseIconShow ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
+      </div>
+    </PopoverMenu>
   );
 };
 

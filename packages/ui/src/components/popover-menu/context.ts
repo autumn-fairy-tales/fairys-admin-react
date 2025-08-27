@@ -46,6 +46,10 @@ export interface PopoverMenuProps {
   children?: React.ReactNode;
   /**打开关闭回调*/
   onOpenChange?: (open: boolean) => void;
+  /**事件名称*/
+  eventName?: 'click' | 'mousedown' | 'contextMenu';
+  className?: string;
+  motionClassName?: string;
 }
 
 interface PopoverMenuInstanceState {
