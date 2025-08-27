@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from 'framer-motion';
 import type { Variant, Transition, AnimationDefinition } from 'framer-motion';
 import React, { Fragment, cloneElement, useRef, useState } from 'react';
-import { useDismiss, useInteractions, useHover, FloatingPortal, useMergeRefs } from '@floating-ui/react';
+import { useDismiss, useInteractions, useHover, FloatingPortal, useMergeRefs, safePolygon } from '@floating-ui/react';
 import type { ShiftOptions, FlipOptions, Placement, UseDismissProps, UseHoverProps } from '@floating-ui/react';
 import type { Derivable } from '@floating-ui/react-dom';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
@@ -73,7 +73,9 @@ export const Popover = (props: PopoverProps) => {
   const useDismissOrHover = isUseHover ? useHover : useDismiss;
   const dismissOrHover = useDismissOrHover(
     context,
-    isUseHover ? { ...useHoverProps } : { outsidePress: true, bubbles: { outsidePress: true }, ...useDismissProps },
+    isUseHover
+      ? { handleClose: safePolygon(), ...useHoverProps }
+      : { outsidePress: true, bubbles: { outsidePress: true }, ...useDismissProps },
   );
 
   const { getReferenceProps, getFloatingProps } = useInteractions([dismissOrHover]);

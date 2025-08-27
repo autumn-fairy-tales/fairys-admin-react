@@ -1,7 +1,8 @@
-import { useRef, Fragment, useMemo, createContext, useContext } from 'react';
+import { useRef, Fragment, useMemo, createContext, useContext, useState, forwardRef, Ref } from 'react';
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import { proxy, useSnapshot } from 'valtio';
+import { Popover } from 'components/popover';
 
 export interface PopoverMenuItem {
   /**图标*/
@@ -97,10 +98,11 @@ const popoverMenuItemBaseClsActive = `active bg-(--theme-color)! text-white!`;
 interface PopoverMenuItemProps {
   item: PopoverMenuItem;
   level?: number;
+  isExpand?: boolean;
 }
 
-const Item = (props: PopoverMenuItemProps & { isSubMenu?: boolean }) => {
-  const { item, level = 0, isSubMenu = false } = props;
+const Item = forwardRef((props: PopoverMenuItemProps & { isSubMenu?: boolean }, ref: Ref<HTMLDivElement>) => {
+  const { item, level = 0, isSubMenu = false, isExpand = false } = props;
   const [, instance] = usePopoverMenuContext();
   const isHideClose = instance.isHideClose;
   const onClickItem = (e: React.MouseEvent) => {
@@ -129,23 +131,26 @@ const Item = (props: PopoverMenuItemProps & { isSubMenu?: boolean }) => {
     instance.onOpenChange?.(false);
   };
 
-  const itemStyle = useMemo(() => {
-    if (level) {
-      return { paddingLeft: `${level * 10 + 8}px` };
-    }
-    return {};
-  }, [level]);
-
   const expandIcon = useMemo(() => {
     return clsx(
-      'close relative ms-1 w-[10px] after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]',
+      'relative ms-1 w-[10px] after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]',
+      {
+        expand: isExpand,
+        close: !isExpand,
+      },
     );
-  }, []);
+  }, [isExpand]);
+
+  // const expandIcon = useMemo(() => {
+  //   return clsx(
+  //     'close relative ms-1 w-[10px] after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]',
+  //   );
+  // }, []);
 
   return (
     <div
+      ref={ref}
       onClick={onClickItem}
-      style={itemStyle}
       className={clsx(popoverMenuItemBaseCls, {
         [popoverMenuItemBaseClsDisabled]: item.disabled,
         [popoverMenuItemBaseClsNotDisabled]: !item.disabled,
@@ -179,7 +184,7 @@ const Item = (props: PopoverMenuItemProps & { isSubMenu?: boolean }) => {
       )}
     </div>
   );
-};
+});
 
 const SubItem = (props: PopoverMenuItemProps) => {
   const { item, level = 0 } = props;
@@ -187,12 +192,22 @@ const SubItem = (props: PopoverMenuItemProps) => {
   const child = useMemo(() => {
     return (items || []).map((item, index) => createChildMenu(item, index, level + 1));
   }, [items, level]);
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div className="flex flex-col relative">
-      <Item item={item} isSubMenu level={level} />
-      <div className="flex flex-col relative gap-1 py-[5px]">{child}</div>
-    </div>
+    <Popover
+      open={isOpen}
+      onOpenChange={setIsOpen}
+      isFocusReference
+      isUseHover
+      content={
+        <div className="flex flex-col relative border border-gray-100 dark:border-gray-700 rounded-md">
+          <div className="flex flex-col relative gap-1 py-[5px]">{child}</div>
+        </div>
+      }
+    >
+      <Item item={item} isSubMenu level={level} isExpand={isOpen} />
+    </Popover>
   );
 };
 
