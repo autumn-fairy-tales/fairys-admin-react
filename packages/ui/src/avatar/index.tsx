@@ -3,7 +3,7 @@ import { settingInstance } from 'context/setting';
 import { forwardRef, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   mode?: 'sider' | 'header';

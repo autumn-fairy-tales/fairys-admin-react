@@ -26,6 +26,8 @@ export interface PopoverMenuItem {
 }
 
 export interface PopoverMenuProps {
+  /**是否禁用*/
+  disabled?: boolean;
   /**单选或多选*/
   mode?: 'single' | 'multiple';
   /**点击当前项*/
@@ -48,7 +50,9 @@ export interface PopoverMenuProps {
   onOpenChange?: (open: boolean) => void;
   /**事件名称*/
   eventName?: 'click' | 'mousedown' | 'contextMenu';
+  /**外部类名*/
   className?: string;
+  /**运动类名*/
   motionClassName?: string;
 }
 

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useMemo, useState } from 'react';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
 export interface SelectBaseProps {
   items?: PopoverMenuItem[];
   value?: string | string[];
@@ -10,16 +10,13 @@ export interface SelectBaseProps {
 }
 
 export const SelectBase = (props: SelectBaseProps) => {
-  const { items = [], onChange, multiple = false, value } = props;
+  const { items = [], onChange, multiple = false, value, disabled = false } = props;
   const [isExpand, setIsExpand] = useState(false);
   const expandIcon = useMemo(() => {
-    return clsx(
-      'relative ms-1 w-[10px] after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]',
-      {
-        expand: isExpand,
-        close: !isExpand,
-      },
-    );
+    return clsx('relative after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]', {
+      expand: isExpand,
+      close: !isExpand,
+    });
   }, [isExpand]);
 
   const onMenuItemClick = (item: PopoverMenuItem) => {
@@ -57,10 +54,16 @@ export const SelectBase = (props: SelectBaseProps) => {
   }, [value, items, multiple]);
 
   return (
-    <PopoverMenu items={items} onOpenChange={(open) => setIsExpand(open)} onClickItem={onMenuItemClick} value={value}>
-      <div className="min-w-[120px] px-[8px] py-[4px] border border-gray-200 dark:border-gray-700 rounded-sm cursor-pointer flex flex-row justify-between items-center">
+    <PopoverMenu
+      disabled={disabled}
+      items={items}
+      onOpenChange={(open) => setIsExpand(open)}
+      onClickItem={onMenuItemClick}
+      value={value}
+    >
+      <div className="min-w-[120px] min-h-[38px] px-[12px] py-[4px] border border-gray-200 dark:border-gray-700 rounded-sm cursor-pointer flex flex-row justify-between items-center">
         <span>{render}</span>
-        <span className="fairys_admin_down_up_icon ml-[4px]">
+        <span className="fairys_admin_down_up_icon size-[16px] flex items-center justify-center relative">
           <div className={expandIcon} />
         </span>
       </div>

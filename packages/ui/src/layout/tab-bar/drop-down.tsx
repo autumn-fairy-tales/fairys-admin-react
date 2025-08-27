@@ -1,7 +1,7 @@
 import { Fragment, useMemo } from 'react';
 import { useTabBar, tabBarInstance } from 'context/tab-bar';
 import { useNavigate, matchPath, useLocation } from 'react-router';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
 
 const PopoverButton = () => {
   const [state] = useTabBar();

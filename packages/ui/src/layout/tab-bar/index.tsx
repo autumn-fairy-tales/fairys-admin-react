@@ -12,7 +12,7 @@ import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
 import { useFairysRootContext } from 'components/root';
 import { appDataInstance } from 'context/app-data';
 
