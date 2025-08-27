@@ -1,9 +1,8 @@
 import clsx from 'clsx';
 import { useMemo, useState } from 'react';
-import { ContextMenu, ContextMenuItem } from 'components/context-menu';
-
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
 export interface SelectBaseProps {
-  items?: ContextMenuItem[];
+  items?: PopoverMenuItem[];
   value?: string | string[];
   onChange?: (value: string | string[]) => void;
   disabled?: boolean;
@@ -23,7 +22,7 @@ export const SelectBase = (props: SelectBaseProps) => {
     );
   }, [isExpand]);
 
-  const onMenuItemClick = (item: ContextMenuItem) => {
+  const onMenuItemClick = (item: PopoverMenuItem) => {
     if (multiple) {
       if (Array.isArray(value)) {
         const finx = (value || []).find((it) => it === item.value);
@@ -58,22 +57,13 @@ export const SelectBase = (props: SelectBaseProps) => {
   }, [value, items, multiple]);
 
   return (
-    <ContextMenu
-      eventName="onClick"
-      placement="bottom"
-      popoverProps={{ isFocusReference: true, className: 'min-w-[120px]' }}
-      onMenuItemClick={onMenuItemClick}
-      items={items}
-      value={value}
-      onOpenChange={(open) => setIsExpand(open)}
-      popoverMenuProps={{ mode: multiple ? 'multiple' : 'single' }}
-    >
+    <PopoverMenu items={items} onOpenChange={(open) => setIsExpand(open)} onClickItem={onMenuItemClick} value={value}>
       <div className="min-w-[120px] px-[8px] py-[4px] border border-gray-200 dark:border-gray-700 rounded-sm cursor-pointer flex flex-row justify-between items-center">
         <span>{render}</span>
         <span className="fairys_admin_down_up_icon ml-[4px]">
           <div className={expandIcon} />
         </span>
       </div>
-    </ContextMenu>
+    </PopoverMenu>
   );
 };

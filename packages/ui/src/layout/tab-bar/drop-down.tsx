@@ -2,7 +2,7 @@ import { Fragment, useMemo, useState } from 'react';
 import { useTabBar, tabBarInstance } from 'context/tab-bar';
 import { useNavigate, matchPath, useLocation } from 'react-router';
 import { Popover, usePopoverInstanceContext } from 'components/popover';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
+import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu/popover-menu';
 
 const Items = () => {
   const [state] = useTabBar();
@@ -28,7 +28,7 @@ const Items = () => {
       popoverInstance.onOpenChange?.(false);
     }
   };
-  return <PopoverMenu items={list} onClick={onNativeClick} onClose={onClose} />;
+  return <PopoverMenu items={list} onClickItem={onNativeClick} onCloseItem={onClose} />;
 };
 
 const PopoverButton = () => {

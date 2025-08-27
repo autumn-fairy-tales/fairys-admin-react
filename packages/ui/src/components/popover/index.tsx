@@ -99,34 +99,36 @@ export const Popover = (props: PopoverProps) => {
       {show ? (
         <FloatingPortal>
           <PopoverInstanceContext.Provider value={popoverInstance}>
-            <AnimatePresence>
-              <DarkModeInstancePopoverContextProvider>
-                <div
-                  {...rest}
-                  ref={refs.setFloating}
-                  style={{ ...(style || {}), ...floatingStyles }}
-                  className={bodyClasName}
-                  {...getFloatingProps()}
-                >
-                  <motion.div
-                    ref={motionRef}
-                    initial="collapsed"
-                    animate={open ? 'open' : 'collapsed'}
-                    variants={{
-                      ...variantsBase,
-                      ...variants,
-                    }}
-                    transition={{
-                      ...transitionBase,
-                      ...transition,
-                    }}
-                    onAnimationComplete={onAnimationCompleteClick}
+            <DarkModeInstancePopoverContextProvider>
+              <div>
+                <AnimatePresence>
+                  <div
+                    {...rest}
+                    ref={refs.setFloating}
+                    style={{ ...(style || {}), ...floatingStyles }}
+                    {...getFloatingProps()}
                   >
-                    {content}
-                  </motion.div>
-                </div>
-              </DarkModeInstancePopoverContextProvider>
-            </AnimatePresence>
+                    <motion.div
+                      className={bodyClasName}
+                      ref={motionRef}
+                      initial="collapsed"
+                      animate={open ? 'open' : 'collapsed'}
+                      variants={{
+                        ...variantsBase,
+                        ...variants,
+                      }}
+                      transition={{
+                        ...transitionBase,
+                        ...transition,
+                      }}
+                      onAnimationComplete={onAnimationCompleteClick}
+                    >
+                      {content}
+                    </motion.div>
+                  </div>
+                </AnimatePresence>
+              </div>
+            </DarkModeInstancePopoverContextProvider>
           </PopoverInstanceContext.Provider>
         </FloatingPortal>
       ) : (

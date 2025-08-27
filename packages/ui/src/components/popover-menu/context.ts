@@ -34,14 +34,18 @@ export interface PopoverMenuProps {
   onCloseItem?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
   /**渲染数据*/
   items: PopoverMenuItem[];
-  /**是否隐藏关闭按钮*/
+  /**
+   * 是否隐藏关闭按钮
+   * @default true
+   */
   isHideClose?: boolean;
-  /**自定义类名*/
-  className?: string;
   /**当使用这个时items每一项必须需要value值*/
   value?: string | string[];
   /**实例*/
   instance?: PopoverMenuInstance;
+  children?: React.ReactNode;
+  /**打开关闭回调*/
+  onOpenChange?: (open: boolean) => void;
 }
 
 interface PopoverMenuInstanceState {
@@ -51,11 +55,11 @@ interface PopoverMenuInstanceState {
 
 class PopoverMenuInstance {
   /**是否隐藏关闭按钮*/
-  isHideClose?: PopoverMenuItem['isHideClose'];
+  isHideClose?: PopoverMenuProps['isHideClose'] = true;
   /**点击当前项*/
-  onClickItem?: PopoverMenuItem['onClickItem'];
+  onClickItem?: PopoverMenuProps['onClickItem'];
   /**关闭当前项*/
-  onCloseItem?: PopoverMenuItem['onCloseItem'];
+  onCloseItem?: PopoverMenuProps['onCloseItem'];
   /**渲染数据*/
   items: PopoverMenuProps['items'];
   /**单选或多选*/
@@ -88,7 +92,7 @@ export const usePopoverMenuInstance = (instance?: PopoverMenuInstance) => {
   return ref.current;
 };
 
-const PopoverMenuContext = createContext(new PopoverMenuInstance());
+export const PopoverMenuContext = createContext(new PopoverMenuInstance());
 
 export const usePopoverMenuContext = () => {
   const instance = useContext(PopoverMenuContext);

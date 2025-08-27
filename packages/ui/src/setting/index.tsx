@@ -39,7 +39,7 @@ export const SettingDrawer = () => {
                 value: '2',
                 items: [
                   { title: 'mobile_top_header', value: 'mobile_top_header' },
-                  { title: 'mobile_top_sub_left_header', value: 'mobile_top_sub_left_header' },
+                  { title: 'mobile_top_sub_left_header2', value: 'mobile_top_sub_left_header2' },
                   { title: 'mobile_top_sub_left_header', value: 'mobile_top_sub_left_header' },
                 ],
               },

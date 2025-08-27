@@ -46,8 +46,8 @@ export const popoverEnumVariants: Record<PopoverEnumVariantType, Record<PopoverE
 };
 
 export const transitionBase: Transition = {
-  type: 'spring',
-  bounce: 0,
+  // type: 'spring',
+  // bounce: 0,
   duration: 0.5,
 };
 
