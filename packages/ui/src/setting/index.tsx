@@ -34,16 +34,6 @@ export const SettingDrawer = () => {
               { title: 'left', value: 'left' },
               { title: 'left_top_header', value: 'left_top_header' },
               { title: 'mobile', value: 'mobile', disabled: true },
-              {
-                title: '1',
-                value: '2',
-                // disabled: true,
-                items: [
-                  { title: 'mobile_top_header', value: 'mobile_top_header' },
-                  { title: 'mobile_top_sub_left_header2', value: 'mobile_top_sub_left_header2' },
-                  { title: 'mobile_top_sub_left_header', value: 'mobile_top_sub_left_header' },
-                ],
-              },
             ]}
             onChange={(value: LayoutMode) => settingInstance.updated({ layoutMode: value })}
           />
