@@ -78,7 +78,14 @@ class TabBarInstance {
   };
 
   /**关闭其他标签*/
-  removeOther = (current: number) => {
+  removeOther = (current: number, isActive: boolean, navigate: NavigateFunction) => {
+    // 判断当前是否展示页面，如果不是展示页面则直接跳转展示页面
+    if (!isActive) {
+      const nativeItem = this.state.tabBarItems.find((_, index) => index === current);
+      if (nativeItem) {
+        navigate(nativeItem.path);
+      }
+    }
     const paths = this.state.tabBarItems.filter((_, index) => index !== current).map((item) => item.path);
     this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index === current));
     /**移除缓存页面*/
@@ -88,7 +95,14 @@ class TabBarInstance {
   };
 
   /**移除左侧*/
-  removeLeft = (current: number) => {
+  removeLeft = (current: number, isActive: boolean, navigate: NavigateFunction) => {
+    // 判断当前是否展示页面，如果不是展示页面则直接跳转展示页面
+    if (!isActive) {
+      const nativeItem = this.state.tabBarItems.find((_, index) => index === current);
+      if (nativeItem) {
+        navigate(nativeItem.path);
+      }
+    }
     const paths = this.state.tabBarItems.filter((_, index) => index < current).map((item) => item.path);
     this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index >= current));
     /**移除缓存页面*/
@@ -98,7 +112,14 @@ class TabBarInstance {
   };
 
   /**移除右侧*/
-  removeRight = (current: number) => {
+  removeRight = (current: number, isActive: boolean, navigate: NavigateFunction) => {
+    // 判断当前是否展示页面，如果不是展示页面则直接跳转展示页面
+    if (!isActive) {
+      const nativeItem = this.state.tabBarItems.find((_, index) => index === current);
+      if (nativeItem) {
+        navigate(nativeItem.path);
+      }
+    }
     const paths = this.state.tabBarItems.filter((_, index) => index > current).map((item) => item.path);
     this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index <= current));
     /**移除缓存页面*/

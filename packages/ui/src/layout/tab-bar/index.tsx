@@ -30,6 +30,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const navigate = useNavigate();
   const match = useMatch(item.path);
   const currentPath = item.path;
+  const rowItemData = item;
   tabItemInstance.isActive = !!match;
   const fairysRootClass = useFairysRootContext();
 
@@ -126,11 +127,11 @@ const TabBarItem = (props: TabBarItemProps) => {
       } else if (item.title === '关闭标签') {
         tabBarInstance.remove(currentPath, tabItemInstance.isActive, navigate);
       } else if (item.title === '关闭其他标签') {
-        tabBarInstance.removeOther(currentIndex);
+        tabBarInstance.removeOther(currentIndex, tabItemInstance.isActive, navigate);
       } else if (item.title === '关闭左侧标签') {
-        tabBarInstance.removeLeft(currentIndex);
+        tabBarInstance.removeLeft(currentIndex, tabItemInstance.isActive, navigate);
       } else if (item.title === '关闭右侧标签') {
-        tabBarInstance.removeRight(currentIndex);
+        tabBarInstance.removeRight(currentIndex, tabItemInstance.isActive, navigate);
       } else if (item.title === '最大化') {
         tabBarInstance.onToggleFullScreen();
       } else if (item.title === '新窗口打开') {
@@ -138,7 +139,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         window.open(href, '_blank');
       }
     },
-    [currentIndex, currentPath],
+    [currentIndex, currentPath, rowItemData],
   );
 
   return (

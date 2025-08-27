@@ -182,13 +182,7 @@ const MenuComponentBase = forwardRef((props: MenuComponentBaseProps, ref: Ref<HT
           <DarkModeInstancePopoverContextProvider>
             <div>
               <AnimatePresence>
-                <div
-                  ref={refs.setFloating}
-                  style={floatingStyles}
-                  aria-hidden={!open}
-                  className={bodyClasName}
-                  {...getFloatingProps()}
-                >
+                <div ref={refs.setFloating} style={floatingStyles} className={bodyClasName} {...getFloatingProps()}>
                   <motion.div
                     initial="collapsed"
                     animate={open ? 'open' : 'collapsed'}

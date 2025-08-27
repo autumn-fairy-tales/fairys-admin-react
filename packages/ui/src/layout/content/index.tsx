@@ -16,6 +16,7 @@ interface MotionAnimationProps {
   children: React.ReactNode;
 }
 
+/**包裹动画*/
 const MotionAnimation = (props: MotionAnimationProps) => {
   const location = useLocation();
   const [setting] = useSetting();
@@ -39,8 +40,10 @@ const KeepAliveContent = () => {
   }, [location.pathname]);
   return (
     <MotionAnimation>
-      <KeepAlive autoFreeze={false} name={id} id={id} cacheKey={id}>
-        <Outlet />
+      <KeepAlive name={id} id={id} cacheKey={id}>
+        <MotionAnimation>
+          <Outlet />
+        </MotionAnimation>
       </KeepAlive>
     </MotionAnimation>
   );
