@@ -19,7 +19,7 @@ const PopoverButton = () => {
     e.stopPropagation();
     e.preventDefault();
     const match = matchPath(item.path, location.pathname);
-    tabBarInstance.remove(item.path, !!match, navigate);
+    tabBarInstance.remove(item.path, !!match);
   };
 
   return (

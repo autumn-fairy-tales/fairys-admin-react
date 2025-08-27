@@ -3,3 +3,6 @@ export * from './setting';
 export * from './tab-bar';
 export * from './menu-data';
 export * from './app-data';
+export * from './motion-animation';
+export * from './account-data';
+export * from './alive-controller';

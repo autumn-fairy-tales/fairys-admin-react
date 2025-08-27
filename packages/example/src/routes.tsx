@@ -3,7 +3,7 @@ import type { RouteObject } from 'react-router';
 import Home from './pages';
 import List from './pages/list';
 import Detail from './pages/detail';
-import { Layout, routerDataInstance } from '@fairys/admin-tools-react';
+import { Layout } from '@fairys/admin-tools-react';
 
 export const routes: RouteObject[] = [
   {
@@ -31,4 +31,4 @@ export const routes: RouteObject[] = [
   },
 ];
 
-export const router = (routerDataInstance.router = createBrowserRouter(routes));
+export const router = createBrowserRouter(routes);

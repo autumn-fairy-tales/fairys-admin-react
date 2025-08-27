@@ -1,12 +1,17 @@
 import { AliveScope, useAliveController } from 'react-activation';
-import { Fragment, createContext, useContext, useRef } from 'react';
+import { Fragment, createContext, useContext, useMemo, useRef } from 'react';
 import { appDataInstance } from 'context/app-data';
 import { aliveControllerBaseInstance } from 'context/alive-controller';
+import { DataRouter, RouterProvider } from 'react-router';
+import type { NavigateFunction } from 'react-router';
+import { routerDataInstance } from 'context';
 
 export interface FairysRootProps {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   /**启用缓存*/
   keepAlive?: boolean;
+  /**路由*/
+  router?: DataRouter;
 }
 
 export class FairysRootClass {
@@ -36,17 +41,30 @@ export const FairysRootAliveController = () => {
 };
 
 export const FairysRoot = (props: FairysRootProps) => {
-  const { children, keepAlive = true } = props;
+  const { children, keepAlive = true, router } = props;
   const fairysRootClass = useFairysRoot();
   fairysRootClass.keepAlive = keepAlive;
 
+  if (router) {
+    routerDataInstance.router = router;
+    routerDataInstance.__navigate = router.navigate;
+    router.navigate = routerDataInstance.navigate;
+  }
+
+  const childElement = useMemo(() => {
+    if (router) {
+      return <RouterProvider router={router} />;
+    }
+    return children;
+  }, [children, router]);
+
   if (!keepAlive) {
-    return <FairysRootContext.Provider value={fairysRootClass}>{children}</FairysRootContext.Provider>;
+    return <FairysRootContext.Provider value={fairysRootClass}>{childElement}</FairysRootContext.Provider>;
   }
   return (
     <FairysRootContext.Provider value={fairysRootClass}>
       <AliveScope>
-        {children}
+        {childElement}
         <FairysRootAliveController />
       </AliveScope>
     </FairysRootContext.Provider>

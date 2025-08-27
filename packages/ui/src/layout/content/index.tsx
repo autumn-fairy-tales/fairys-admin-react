@@ -10,7 +10,7 @@ import { useTabBar } from 'context/tab-bar';
 import { AliveControllerBase } from 'context/alive-controller';
 import { motion } from 'framer-motion';
 import { useSetting } from 'context/setting';
-import { motionAnimation } from 'context/motion-animation';
+import { motionAnimationInstance } from 'context/motion-animation';
 
 interface MotionAnimationProps {
   children: React.ReactNode;
@@ -23,7 +23,7 @@ const MotionAnimation = (props: MotionAnimationProps) => {
   const pageTransitionMode = setting.pageTransitionMode;
 
   const config = useMemo(() => {
-    return motionAnimation.getAnimationConfig(pageTransitionMode);
+    return motionAnimationInstance.getAnimationConfig(pageTransitionMode);
   }, [pageTransitionMode]);
 
   return (

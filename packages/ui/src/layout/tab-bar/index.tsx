@@ -71,7 +71,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const onClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    tabBarInstance.remove(item.path, tabItemInstance.isActive, navigate);
+    tabBarInstance.remove(item.path, tabItemInstance.isActive);
   };
 
   useEffect(() => {
@@ -125,13 +125,13 @@ const TabBarItem = (props: TabBarItemProps) => {
       if (item.title === '重新加载') {
         appDataInstance.aliveController?.refreshScope?.(currentPath);
       } else if (item.title === '关闭标签') {
-        tabBarInstance.remove(currentPath, tabItemInstance.isActive, navigate);
+        tabBarInstance.remove(currentPath, tabItemInstance.isActive);
       } else if (item.title === '关闭其他标签') {
-        tabBarInstance.removeOther(currentIndex, tabItemInstance.isActive, navigate);
+        tabBarInstance.removeOther(currentIndex, tabItemInstance.isActive);
       } else if (item.title === '关闭左侧标签') {
-        tabBarInstance.removeLeft(currentIndex, tabItemInstance.isActive, navigate);
+        tabBarInstance.removeLeft(currentIndex, tabItemInstance.isActive);
       } else if (item.title === '关闭右侧标签') {
-        tabBarInstance.removeRight(currentIndex, tabItemInstance.isActive, navigate);
+        tabBarInstance.removeRight(currentIndex, tabItemInstance.isActive);
       } else if (item.title === '最大化') {
         tabBarInstance.onToggleFullScreen();
       } else if (item.title === '新窗口打开') {

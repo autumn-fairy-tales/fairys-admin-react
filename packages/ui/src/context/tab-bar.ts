@@ -1,9 +1,9 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import type { MenuItemType } from './menu-data';
-import type { NavigateFunction } from 'react-router';
 import { appDataInstance } from './index';
 import { menuDataInstance } from './menu-data';
 import { createContext, createRef, useContext, useRef } from 'react';
+import { routerDataInstance } from './router-data';
 
 export interface TabBarItemType extends MenuItemType {}
 export interface TabBarInstanceState {
@@ -52,7 +52,7 @@ class TabBarInstance {
   };
 
   /**删除tab项*/
-  remove = (path: string, isActive: boolean, navigate: NavigateFunction) => {
+  remove = (path: string, isActive: boolean) => {
     if (isActive) {
       const pathIndex = this.state.tabBarItems.findIndex((item) => item.path === path);
       this.state.tabBarItems = ref(this.state.tabBarItems.filter((item) => item.path !== path));
@@ -61,7 +61,7 @@ class TabBarInstance {
         nativeItem = this.state.tabBarItems[this.state.tabBarItems.length - 1];
       }
       if (nativeItem) {
-        navigate(nativeItem.path);
+        routerDataInstance.navigate(nativeItem.path);
       }
     } else {
       this.state.tabBarItems = ref(this.state.tabBarItems.filter((item) => item.path !== path));
@@ -78,12 +78,12 @@ class TabBarInstance {
   };
 
   /**关闭其他标签*/
-  removeOther = (current: number, isActive: boolean, navigate: NavigateFunction) => {
+  removeOther = (current: number, isActive: boolean) => {
     // 判断当前是否展示页面，如果不是展示页面则直接跳转展示页面
     if (!isActive) {
       const nativeItem = this.state.tabBarItems.find((_, index) => index === current);
       if (nativeItem) {
-        navigate(nativeItem.path);
+        routerDataInstance.navigate(nativeItem.path);
       }
     }
     const paths = this.state.tabBarItems.filter((_, index) => index !== current).map((item) => item.path);
@@ -95,12 +95,12 @@ class TabBarInstance {
   };
 
   /**移除左侧*/
-  removeLeft = (current: number, isActive: boolean, navigate: NavigateFunction) => {
+  removeLeft = (current: number, isActive: boolean) => {
     // 判断当前是否展示页面，如果不是展示页面则直接跳转展示页面
     if (!isActive) {
       const nativeItem = this.state.tabBarItems.find((_, index) => index === current);
       if (nativeItem) {
-        navigate(nativeItem.path);
+        routerDataInstance.navigate(nativeItem.path);
       }
     }
     const paths = this.state.tabBarItems.filter((_, index) => index < current).map((item) => item.path);
@@ -112,12 +112,12 @@ class TabBarInstance {
   };
 
   /**移除右侧*/
-  removeRight = (current: number, isActive: boolean, navigate: NavigateFunction) => {
+  removeRight = (current: number, isActive: boolean) => {
     // 判断当前是否展示页面，如果不是展示页面则直接跳转展示页面
     if (!isActive) {
       const nativeItem = this.state.tabBarItems.find((_, index) => index === current);
       if (nativeItem) {
-        navigate(nativeItem.path);
+        routerDataInstance.navigate(nativeItem.path);
       }
     }
     const paths = this.state.tabBarItems.filter((_, index) => index > current).map((item) => item.path);

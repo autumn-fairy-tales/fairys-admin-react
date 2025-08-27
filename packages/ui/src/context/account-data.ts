@@ -10,7 +10,7 @@ interface AccountDataState {
   __defaultValue?: string;
 }
 
-export class AccountData {
+export class AccountDataInstance {
   state = proxy<AccountDataState>({
     userName: 'fairys',
   });
@@ -18,13 +18,13 @@ export class AccountData {
   public onLogout: () => void = () => void 0;
 }
 
-export const accountData = new AccountData();
+export const accountDataInstance = new AccountDataInstance();
 
 export const useAccountData = () => {
-  const state = useSnapshot(accountData.state);
-  return [state, accountData, state.__defaultValue] as [
+  const state = useSnapshot(accountDataInstance.state);
+  return [state, accountDataInstance, state.__defaultValue] as [
     AccountDataState,
-    AccountData,
+    AccountDataInstance,
     AccountDataState['__defaultValue'],
   ];
 };
