@@ -65,7 +65,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   };
 
   return (
-    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref} eventName="contextMenu">
+    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref}>
       <div {...rest} title={userName} className={classNameBase}>
         <span className="flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700">
           {avatarRender}
