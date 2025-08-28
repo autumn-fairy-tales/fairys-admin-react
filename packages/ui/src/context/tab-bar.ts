@@ -186,7 +186,7 @@ class TabInstance {
           }
         }
       }
-      console.log('dropDownTabBarItems===>', dropDownTabBarItems);
+      // console.log('dropDownTabBarItems===>', dropDownTabBarItems);
       tabBarInstance.state.dropDownTabBarItems = ref(dropDownTabBarItems);
       clearTimeout(this.timer);
     }, 500);

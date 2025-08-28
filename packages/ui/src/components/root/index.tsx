@@ -45,7 +45,7 @@ export const FairysRoot = (props: FairysRootProps) => {
   const fairysRootClass = useFairysRoot();
   fairysRootClass.keepAlive = keepAlive;
 
-  if (router) {
+  if (router && !routerDataInstance.__navigate) {
     routerDataInstance.router = router;
     routerDataInstance.__navigate = router.navigate;
     router.navigate = routerDataInstance.navigate;

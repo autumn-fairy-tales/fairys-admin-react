@@ -1,4 +1,13 @@
-import type { DataRouter, NavigateFunction, To, NavigateOptions } from 'react-router';
+import type {
+  DataRouter,
+  NavigateFunction,
+  To,
+  NavigateOptions,
+  RouteObject,
+  DOMRouterOpts,
+  MemoryRouterOpts,
+} from 'react-router';
+import { createBrowserRouter, createMemoryRouter, createHashRouter } from 'react-router';
 
 class RouterDataInstance {
   router: DataRouter | undefined = undefined;
@@ -6,6 +15,7 @@ class RouterDataInstance {
   __navigate: NavigateFunction;
   /**跳转前回调*/
   onNavigateBefore: (to: To) => Promise<boolean>;
+
   /**内置跳转方法*/
   navigate = async (to: To | number, options?: NavigateOptions) => {
     const navigate = this.__navigate || this.router.navigate;
@@ -24,6 +34,30 @@ class RouterDataInstance {
       return navigate?.(to, options);
     }
     return Promise.resolve();
+  };
+
+  createBrowserRouter = (routes: RouteObject[], opts?: DOMRouterOpts) => {
+    const router = createBrowserRouter(routes, opts);
+    this.__navigate = router.navigate;
+    router.navigate = this.navigate;
+    this.router = router;
+    return router;
+  };
+
+  createMemoryRouter = (routes: RouteObject[], opts?: MemoryRouterOpts) => {
+    const router = createMemoryRouter(routes, opts);
+    this.__navigate = router.navigate;
+    router.navigate = this.navigate;
+    this.router = router;
+    return router;
+  };
+
+  createHashRouter = (routes: RouteObject[], opts?: DOMRouterOpts) => {
+    const router = createHashRouter(routes, opts);
+    this.__navigate = router.navigate;
+    router.navigate = this.navigate;
+    this.router = router;
+    return router;
   };
 }
 /**路由使用实例*/

@@ -1,9 +1,9 @@
 import ReactDOM from 'react-dom/client';
-import { router } from './routes';
 import { settingInstance, FairysRoot } from '@fairys/admin-tools-react';
-import logo from './assets/logo.png';
-import { menuDataInstance } from '@fairys/admin-tools-react';
+import { menuDataInstance, routerDataInstance } from '@fairys/admin-tools-react';
 import { menuItems } from './menu';
+import { routes } from './routes';
+import logo from './assets/logo.png';
 import './index.css';
 
 settingInstance.initSetting({
@@ -16,6 +16,11 @@ settingInstance.initSetting({
 /**临时加载菜单数据*/
 menuDataInstance.ctor(menuItems);
 /**临时加载一下tabBarItems*/
+
+/**
+ * 判断是否有权限,无权限则跳转到登录页/有权限则进入页面
+ */
+const router = routerDataInstance.createBrowserRouter(routes);
 
 const rootEl = document.getElementById('root');
 if (rootEl) {
