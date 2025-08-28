@@ -31,9 +31,7 @@ export const AuthRoot = () => {
         userAvatar: 'https://gravatar.com/userimage/233185585/f004e2e1534508a34caef161ef76d9f2.jpeg?size=256',
       });
       // 可以对 routes 进行处理
-      routerDataInstance.createHashRouter(routes, {
-        basename: process.env.NODE_ENV === 'production' ? '/fairys-admin-react' : '',
-      });
+      routerDataInstance.createHashRouter(routes);
       // 如果获取权限成功则设置状态为 auth
       authDataInstance.updatedStatus('Auth');
     });

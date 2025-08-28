@@ -4,7 +4,10 @@ import tailwindcss from '@tailwindcss/postcss';
 
 export default defineConfig({
   output: {
-    assetPrefix: process.env.NODE_ENV === 'production' ? '/fairys-admin-react/' : '/',
+    assetPrefix: '/fairys-admin-react/',
+  },
+  server: {
+    base: '/fairys-admin-react/',
   },
   html: {
     title: 'Fairys Admin React',
