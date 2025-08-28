@@ -71,7 +71,7 @@ export const compareParentPath = (oldParentItems: MenuItemType[], newParentItems
   const oldLength = oldParentItems.length;
   const newLength = newParentItems.length;
   if (oldLength === newLength || newLength > oldLength) {
-    return newParentItems;
+    return oldParentItems;
   }
   // 如果新的短，则进行判断父级是否相同
   // 新的移除最后一个进行判断是否相同父级
