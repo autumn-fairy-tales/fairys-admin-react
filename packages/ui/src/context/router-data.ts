@@ -59,6 +59,12 @@ class RouterDataInstance {
     this.router = router;
     return router;
   };
+
+  /**清空tab项*/
+  clear = () => {
+    this.router = undefined;
+    this.__navigate = undefined;
+  };
 }
 /**路由使用实例*/
 export const routerDataInstance = new RouterDataInstance();

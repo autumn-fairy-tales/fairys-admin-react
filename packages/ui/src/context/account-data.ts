@@ -1,8 +1,8 @@
-import { proxy, useSnapshot } from 'valtio';
+import { proxy, ref, useSnapshot } from 'valtio';
 
 interface AccountDataState {
   /**用户名*/
-  userName: string;
+  userName?: string;
   /**用户头像*/
   userAvatar?: string;
   info?: Record<string, any>;
@@ -14,8 +14,27 @@ export class AccountDataInstance {
   state = proxy<AccountDataState>({
     userName: 'fairys',
   });
-  /**退出登录*/
-  public onLogout: () => void = () => void 0;
+  /**更新数据信息*/
+  updated = (state: AccountDataState) => {
+    for (const key in state) {
+      const element = state[key];
+      if (key === 'info') {
+        const info = ref(state.info || {});
+        this.state[key] = info;
+      } else {
+        this.state[key] = element;
+      }
+    }
+  };
+  /**清空tab项*/
+  clear = () => {
+    for (const key in this.state) {
+      this.state[key] = undefined;
+      if (key === 'userName') {
+        this.state[key] = 'fairys';
+      }
+    }
+  };
 }
 
 export const accountDataInstance = new AccountDataInstance();

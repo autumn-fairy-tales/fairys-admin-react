@@ -15,6 +15,15 @@ class AppDataInstance {
   static motionAnimation = motionAnimationInstance;
   /**挂载的AliveController*/
   aliveController: AliveControllerBase;
+  /**清空tab项*/
+  clear = () => {
+    routerDataInstance.clear();
+    settingInstance.clear();
+    menuDataInstance.clear();
+    tabBarInstance.clear();
+    accountDataInstance.clear();
+    this.aliveController.clear();
+  };
 }
 
 /**应用数据使用实例*/

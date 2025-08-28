@@ -1,4 +1,5 @@
 import { useAccountData } from 'context/account-data';
+import { authDataInstance } from 'context/auth-data';
 import { settingInstance } from 'context/setting';
 import { forwardRef, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -15,14 +16,14 @@ const baseClassName =
 
 export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElement>) => {
   const { mode, nameMode, className, ...rest } = props;
-  const [accountState, accountData] = useAccountData();
+  const [accountState] = useAccountData();
   const userName = accountState.userName || 'fairys';
   const navigate = useNavigate();
 
   const avatarRender = useMemo(() => {
     const avatar = accountState.userAvatar || settingInstance.state.logo;
     if (avatar) {
-      return <img width={32} height={32} src={avatar} alt={userName} />;
+      return <img className="rounded-full w-[32px] h-[32px] object-cover" src={avatar} alt={userName} />;
     }
     return userName;
   }, [accountState.userAvatar, userName]);
@@ -60,7 +61,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
     } else if (item.title === '偏好设置') {
       settingInstance.onToggleOpen();
     } else if (item.title === '退出登录') {
-      accountData.onLogout?.();
+      authDataInstance._onLogout?.();
     }
   };
 

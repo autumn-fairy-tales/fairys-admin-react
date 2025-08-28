@@ -13,6 +13,7 @@ const MenuDarkLight = () => {
     settingInstance.updated({
       theme: theme === 'dark' ? 'light' : 'dark',
     });
+    settingInstance.onToggleAutoListenSystemTheme(false);
   };
 
   const className = useMemo(() => {

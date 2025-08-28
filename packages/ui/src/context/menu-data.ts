@@ -224,6 +224,16 @@ export class MenuDataInstance {
       }
     }
   };
+
+  /**清空*/
+  clear = () => {
+    this.state.menuItems = ref([]);
+    this.state.mainMenuItems = ref([]);
+    this.state.mainMenuItemSelected = '';
+    this.state.expandItems = ref([]);
+    this.state.mainExpandItem = undefined;
+    this.state.searchMenuItems = ref([]);
+  };
 }
 /**菜单数据使用实例*/
 export const menuDataInstance = new MenuDataInstance();

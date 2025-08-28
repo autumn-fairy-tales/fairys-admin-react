@@ -225,6 +225,9 @@ class SettingInstance {
   onToggleOpen = () => {
     this.updated({ open: !this.state.open });
   };
+
+  /**清空*/
+  clear = () => {};
 }
 
 export const settingInstance = new SettingInstance();

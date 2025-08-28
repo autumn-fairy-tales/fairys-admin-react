@@ -127,6 +127,12 @@ class TabBarInstance {
       appDataInstance.aliveController.dropScopeByIds(paths);
     }
   };
+  /**清空tab项*/
+  clear = () => {
+    this.state.tabBarItems = ref([]);
+    this.state.pageFullScreen = false;
+    this.state.dropDownTabBarItems = ref([]);
+  };
 }
 
 export const tabBarInstance = new TabBarInstance();
