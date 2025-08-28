@@ -2,7 +2,7 @@
   "name": "@fairys/admin-tools-react",
   "author": "SunLxy <1011771396@qq.com>",
   "description": "框架组件库",
-  "homepage": "https://github.com/SunLxy/tool-react",
+  "homepage": "https://github.com/autumn-fairy-tales/fairys-admin-react",
   "version": "0.0.1",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
