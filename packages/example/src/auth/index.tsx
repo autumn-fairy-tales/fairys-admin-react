@@ -32,7 +32,7 @@ export const AuthRoot = () => {
       });
       // 可以对 routes 进行处理
       routerDataInstance.createHashRouter(routes, {
-        basename: process.env.NODE_ENV === 'production' ? 'fairys-admin-react' : '',
+        basename: process.env.NODE_ENV === 'production' ? '/fairys-admin-react' : '',
       });
       // 如果获取权限成功则设置状态为 auth
       authDataInstance.updatedStatus('Auth');
