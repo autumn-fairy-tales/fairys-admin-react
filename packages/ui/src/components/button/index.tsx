@@ -20,12 +20,13 @@ export const ButtonBase = (props: ButtonBaseProps) => {
         isBg && 'bg-gray-200 dark:bg-gray-600',
       ],
       {
-        'border-0 bg-transparent': !bordered,
+        'border-0': !bordered,
         'border border-gray-300 dark:border-gray-600': bordered,
+        'bg-transparent': !isBg && !bordered,
       },
       className,
     );
-  }, [className, bordered]);
+  }, [className, bordered, isBg]);
 
   return <button {...rest} className={baseClassName} />;
 };

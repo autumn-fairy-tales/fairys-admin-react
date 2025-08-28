@@ -201,6 +201,16 @@ class SettingInstance {
     this.autoListenSystemTheme();
   };
 
+  /**点击设置切换主题*/
+  onToggleTheme = (theme: 'light' | 'dark' | 'system') => {
+    if (theme === 'system') {
+      this.updated({ autoListenSystemTheme: true });
+    } else {
+      this.updated({ theme, autoListenSystemTheme: false });
+    }
+    this.autoListenSystemTheme();
+  };
+
   /**判断是否主子菜单模板*/
   isMainSubMenuMode = () => {
     return (

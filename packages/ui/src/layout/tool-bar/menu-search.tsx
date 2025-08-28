@@ -39,7 +39,7 @@ const SearchItem = (props: SearchItemProps) => {
   return (
     <div
       onClick={onClick}
-      className="fairys_admin_tool_bar_menu_search_item hover:bg-gray-100 dark:hover:bg-gray-700 hover:*:first:text-[var(--theme-color)] flex items-center flex-row min-h-[70px] transition-all duration-300 border rounded-sm box-border border-gray-200 dark:border-gray-700"
+      className="fairys_admin_tool_bar_menu_search_item hover:bg-gray-100 dark:hover:bg-gray-700 hover:*:first:text-(--theme-color) flex items-center flex-row min-h-[70px] transition-all duration-300 border rounded-sm box-border border-gray-200 dark:border-gray-700"
     >
       <div className="w-[65px] flex items-center justify-center icon  transition-all duration-300">
         <Icon icon={rowItemData.icon} className="size-[20px]" />

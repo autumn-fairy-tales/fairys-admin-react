@@ -41,7 +41,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
       'fairys_admin_main_menu_item transition-all duration-300 px-[8px] py-[4px] shrink-0 transition-all duration-300 rounded-sm box-border flex items-center cursor-pointer gap-1 dark:text-gray-400',
       {
         active: isActive,
-        'bg-[var(--theme-color)]': !!isActive,
+        'bg-(--theme-color)': !!isActive,
         'text-white dark:text-white': isActive,
         'hover:bg-gray-200/75 dark:hover:bg-gray-600': !isActive,
         'flex-col ': layoutMode === 'vertical',
