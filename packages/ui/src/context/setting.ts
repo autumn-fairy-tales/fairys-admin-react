@@ -195,6 +195,12 @@ class SettingInstance {
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(_state));
   };
 
+  /**切换自动监听系统的明暗色系*/
+  onToggleAutoListenSystemTheme = (autoListenSystemTheme: boolean) => {
+    this.updated({ autoListenSystemTheme });
+    this.autoListenSystemTheme();
+  };
+
   /**判断是否主子菜单模板*/
   isMainSubMenuMode = () => {
     return (

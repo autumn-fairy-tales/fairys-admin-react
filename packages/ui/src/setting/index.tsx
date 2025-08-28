@@ -2,6 +2,7 @@ import { LayoutMode, useSetting } from 'context/setting';
 import { ModalBase } from 'components/modal-base';
 import { ReactNode } from 'react';
 import { SelectBase } from 'components/select';
+import { SwitchBase } from 'components/switch';
 
 interface LayoutItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   label: ReactNode;
@@ -36,6 +37,12 @@ export const SettingDrawer = () => {
               { title: 'mobile', value: 'mobile', disabled: true },
             ]}
             onChange={(value: LayoutMode) => settingInstance.updated({ layoutMode: value })}
+          />
+        </LayoutItem>
+        <LayoutItem label="主题跟随系统">
+          <SwitchBase
+            value={state.autoListenSystemTheme}
+            onChange={(value: boolean) => settingInstance.onToggleAutoListenSystemTheme(value)}
           />
         </LayoutItem>
       </div>
