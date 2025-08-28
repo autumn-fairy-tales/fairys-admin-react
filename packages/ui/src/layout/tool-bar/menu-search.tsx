@@ -123,9 +123,11 @@ export const MenuSearch = () => {
         className="fairys_admin_tool_bar_menu_search px-4 flex flex-row gap-x-2"
         onClick={() => setOpen(true)}
       >
-        <span className="icon-[ant-design--search-outlined] size-[18px] text-gray-600 dark:text-gray-200" />
+        <span className="icon-[ant-design--search-outlined] size-[18px] text-gray-600 dark:text-gray-200 transition-all duration-300" />
         <span className="text-gray-400">搜索</span>
-        <span className="text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 rounded-sm">⌘ K</span>
+        <span className="text-gray-500 bg-gray-100 dark:bg-gray-800 px-2 rounded-sm transition-all duration-300">
+          ⌘ K
+        </span>
       </ButtonBase>
       <ModalBase open={open} onClose={() => setOpen(false)}>
         <ModalBody onClose={() => setOpen(false)} />

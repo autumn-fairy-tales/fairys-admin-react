@@ -8,7 +8,7 @@ import { proxy, useSnapshot } from 'valtio';
  * // 5. main_top_sub_all_header:顶部菜单 +  移入子菜单展示所有 + 有头部信息
  * 6. main_top_sub_left_header:顶部主菜单 + 侧边子菜单 + 有头部信息
  * 7. left:不区分主子菜单并且左侧显示 + 无头部信息(用户信息一起移入左侧显示)
- * 8. left_top_header:不区分主子菜单并且左侧显示 + 有头部信息
+ * 8. left_header:不区分主子菜单并且左侧显示 + 有头部信息
  * 9. mobile:移动端布局,不进行区分主子菜单，使用弹框展示，布局使用 `left` 布局
  */
 export type LayoutMode =
@@ -19,7 +19,7 @@ export type LayoutMode =
   // | "main_top_sub_all_header"
   | 'main_top_sub_left_header'
   | 'left'
-  | 'left_top_header'
+  | 'left_header'
   | 'mobile';
 
 export interface SettingInstanceState {
@@ -42,7 +42,7 @@ export interface SettingInstanceState {
   /**侧边栏模式*/
   sideMenuMode?: 'open' | 'close';
   /**页面切换动画*/
-  pageTransitionMode?: '无动画' | '滑动' | '缩放消退' | '闪现' | string;
+  pageTransitionMode?: '无动画' | '滑动' | '缩放消退' | '闪现' | '淡入淡出' | string;
   /**标签栏*/
   /**是否启用标签栏*/
   enableTabBar?: boolean;

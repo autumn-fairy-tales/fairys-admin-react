@@ -6,7 +6,7 @@ import type { ShiftOptions, FlipOptions, Placement, UseDismissProps, UseHoverPro
 import type { Derivable } from '@floating-ui/react-dom';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
 import { transitionBase, variantsBase } from './utils';
-import { usePopoverBase, PopoverInstanceContext, PopoverInstance, useFocusReference } from './hooks';
+import { usePopoverBase, PopoverInstanceContext, PopoverInstance } from './hooks';
 export * from './hooks';
 
 export interface PopoverProps
@@ -69,7 +69,7 @@ export const Popover = (props: PopoverProps) => {
     popoverInstance: instance,
   });
   const motionRef = useRef<HTMLDivElement>(null);
-  const { refs, context } = floating;
+  const { refs, context, floatingStyles } = floating;
   const useDismissOrHover = isUseHover ? useHover : useDismiss;
   const dismissOrHover = useDismissOrHover(
     context,
@@ -79,7 +79,6 @@ export const Popover = (props: PopoverProps) => {
   );
 
   const { getReferenceProps, getFloatingProps } = useInteractions([dismissOrHover]);
-  const { floatingStyles } = useFocusReference(floating, { enable: isFocusReference });
 
   const childRef = useMergeRefs([refs.setReference, domRef]);
 
@@ -106,10 +105,10 @@ export const Popover = (props: PopoverProps) => {
                     {...rest}
                     ref={refs.setFloating}
                     style={{ ...(style || {}), ...floatingStyles }}
+                    className={bodyClasName}
                     {...getFloatingProps()}
                   >
                     <motion.div
-                      className={bodyClasName}
                       ref={motionRef}
                       initial="collapsed"
                       animate={open ? 'open' : 'collapsed'}

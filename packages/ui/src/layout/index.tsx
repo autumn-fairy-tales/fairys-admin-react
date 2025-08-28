@@ -19,7 +19,7 @@ export const Layout = () => {
    * // 5. main_top_sub_all_header:顶部菜单 +  移入子菜单展示所有 + 有头部信息
    * 6. main_top_sub_left_header:顶部主菜单 + 侧边子菜单 + 有头部信息
    * 7. left:不区分主子菜单并且左侧显示 + 无头部信息(用户信息一起移入左侧显示)
-   * 8. left_top_header:不区分主子菜单并且左侧显示 + 有头部信息
+   * 8. left_header:不区分主子菜单并且左侧显示 + 有头部信息
    */
   const layoutMode = state.layoutMode;
   const sideMenuMode = state.sideMenuMode;
@@ -36,13 +36,11 @@ export const Layout = () => {
   }, [location.pathname, sideMenuMode]);
 
   const isShowHeader = useMemo(() => {
-    return ['main_top_header', 'main_top_sub_left_header', 'left_top_header'].includes(`${layoutMode}`);
+    return ['main_top_header', 'main_top_sub_left_header', 'left_header'].includes(`${layoutMode}`);
   }, [layoutMode]);
 
   const isShowSider = useMemo(() => {
-    return ['main_sub_left', 'main_left', 'left', 'main_top_sub_left_header', 'left_top_header'].includes(
-      `${layoutMode}`,
-    );
+    return ['main_sub_left', 'main_left', 'left', 'main_top_sub_left_header', 'left_header'].includes(`${layoutMode}`);
   }, [layoutMode]);
 
   const isSiderFull = useMemo(() => {

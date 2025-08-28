@@ -148,7 +148,7 @@ export const MainMenu = (props: MainMenuProps) => {
           logoSize={layoutMode === 'horizontal' ? 32 : 48}
           mode={layoutMode === 'horizontal' ? 'open' : 'close'}
         />
-        {layoutModeState === 'left_top_header' ? (
+        {layoutModeState === 'left_header' ? (
           <Fragment />
         ) : (
           <div className={bodyMenusClassName}>

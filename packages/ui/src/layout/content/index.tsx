@@ -8,7 +8,7 @@ import { useMemo } from 'react';
 import { FullScreen } from 'components/full-screen';
 import { useTabBar } from 'context/tab-bar';
 import { AliveControllerBase } from 'context/alive-controller';
-import { motion } from 'framer-motion';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useSetting } from 'context/setting';
 import { motionAnimationInstance } from 'context/motion-animation';
 
@@ -21,15 +21,15 @@ const MotionAnimation = (props: MotionAnimationProps) => {
   const location = useLocation();
   const [setting] = useSetting();
   const pageTransitionMode = setting.pageTransitionMode;
-
   const config = useMemo(() => {
     return motionAnimationInstance.getAnimationConfig(pageTransitionMode);
   }, [pageTransitionMode]);
-
   return (
-    <motion.div {...config} className="w-full h-full overflow-hidden" key={location.pathname}>
-      {props.children}
-    </motion.div>
+    <AnimatePresence mode="wait">
+      <motion.div {...config} className="w-full h-full overflow-hidden" key={location.pathname}>
+        {props.children}
+      </motion.div>
+    </AnimatePresence>
   );
 };
 

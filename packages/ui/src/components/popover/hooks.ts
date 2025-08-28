@@ -65,6 +65,7 @@ export const usePopoverBase = (options: UsePopoverBaseOptions) => {
       }),
     ],
   });
+
   const bodyClasName = useMemo(() => {
     return clsx('fairys_admin_popover no-scrollbar', className, [
       'rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm',
@@ -77,41 +78,5 @@ export const usePopoverBase = (options: UsePopoverBaseOptions) => {
     show,
     onAnimationComplete,
     popoverInstance,
-  };
-};
-
-interface UseFocusReferenceOptions {
-  enable?: boolean;
-}
-
-/**从点击位置开始动画*/
-export const useFocusReference = (floating: UseFloatingData, options: UseFocusReferenceOptions) => {
-  const { floatingStyles, refs, x, y } = floating;
-  const { enable } = options;
-  const __floatingStyles = useMemo(() => {
-    if (enable && refs?.reference?.current) {
-      const { x, y, width, height } = refs?.reference?.current?.getBoundingClientRect() || {};
-      const placement = floating.placement;
-      let transform = `translate(${x + width / 2}px, ${y + height / 2}px)`;
-      if (/^top/.test(placement)) {
-        transform = `translate(${x + width / 2}px, ${y}px)`;
-      } else if (/^bottom/.test(placement)) {
-        transform = `translate(${x + width / 2}px, ${y + height}px)`;
-      } else if (/^left/.test(placement)) {
-        transform = `translate(${x}px, ${y + height / 2}px)`;
-      } else if (/^right/.test(placement)) {
-        transform = `translate(${x + width}px, ${y + height / 2}px)`;
-      }
-      return {
-        ...floatingStyles,
-        transform: transform,
-      };
-    }
-    return floatingStyles;
-  }, [enable, refs?.reference?.current]);
-  const _newFloatingStyles = enable && x === 0 && y === 0 ? __floatingStyles : floatingStyles;
-  return {
-    ...floating,
-    floatingStyles: _newFloatingStyles,
   };
 };

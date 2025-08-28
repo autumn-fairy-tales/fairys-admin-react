@@ -154,9 +154,12 @@ const MenuComponentBase = forwardRef((props: MenuComponentBaseProps, ref: Ref<HT
   }, [className]);
 
   const motionBodyClasName = useMemo(() => {
-    return clsx('fairys_admin_popover-menu-component-base-motion', motionClassNameBase, motionClassName, [
-      'min-w-[120px] rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm',
-    ]);
+    return clsx(
+      'fairys_admin_popover-menu-component-base-motion overflow-hidden',
+      motionClassNameBase,
+      motionClassName,
+      ['min-w-[120px] rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm'],
+    );
   }, [motionClassName]);
 
   return (

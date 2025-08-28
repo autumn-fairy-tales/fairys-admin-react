@@ -25,7 +25,7 @@ export const Menu = () => {
   const layoutMode = settingState.layoutMode;
 
   const isAllMenuItems = useMemo(() => {
-    return ['left', 'mobile', 'left_top_header'].includes(layoutMode);
+    return ['left', 'mobile', 'left_header'].includes(layoutMode);
   }, [layoutMode]);
 
   const render = useMemo(() => {
