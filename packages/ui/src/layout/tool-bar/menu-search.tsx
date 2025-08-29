@@ -129,7 +129,7 @@ export const MenuSearch = () => {
           ⌘ K
         </span>
       </ButtonBase>
-      <ModalBase open={open} onClose={() => setOpen(false)}>
+      <ModalBase outsidePressClose={false} open={open} onClose={() => setOpen(false)}>
         <ModalBody onClose={() => setOpen(false)} />
       </ModalBase>
     </Fragment>

@@ -43,6 +43,8 @@ export interface ModalBaseProps {
   mode?: 'modal' | 'drawer';
   // 是否全屏
   isFullScreen?: boolean;
+  /**点击 overlay 关闭弹窗 */
+  outsidePressClose?: boolean;
 }
 
 export const ModalBase = (props: ModalBaseProps) => {
@@ -65,6 +67,7 @@ export const ModalBase = (props: ModalBaseProps) => {
     footerStyle,
     mode = 'modal',
     isFullScreen,
+    outsidePressClose = true,
   } = props;
   const { show, onAnimationComplete } = useAnimationStatus(open);
 
@@ -87,6 +90,13 @@ export const ModalBase = (props: ModalBaseProps) => {
             animate={open ? 'open' : 'collapsed'}
             variants={overlayVariants}
             transition={transitionBase}
+            onClick={(event) => {
+              event.preventDefault();
+              // 点击 overlay 关闭弹窗
+              if (event.target === event.currentTarget && outsidePressClose) {
+                onClose?.();
+              }
+            }}
           >
             <motion.div
               className={`${baseClassName} ${isFullScreen ? fullScreen_base_className : ''} ${className}`}
