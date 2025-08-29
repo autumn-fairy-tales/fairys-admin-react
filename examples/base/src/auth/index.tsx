@@ -6,16 +6,20 @@ import {
   FairysRoot,
   useAuthDataInstance,
   authDataInstance,
+  loadingFadeOut,
+  EnterLoading,
 } from '@fairys/admin-tools-react';
 import { menuItems } from '../menu';
 import { routes } from '../routes';
 import { Login } from './login';
-import { Loading } from './loading';
 import { onGetAuth } from './utils';
 
 export const AuthRoot = () => {
   useMemo(() => {
     const token = localStorage.getItem('token');
+    // if (!token) {
+    loadingFadeOut();
+    // }
     authDataInstance.updatedStatus(token ? 'RequestAuth' : 'Login');
   }, []);
   const [authState] = useAuthDataInstance();
@@ -34,6 +38,8 @@ export const AuthRoot = () => {
       routerDataInstance.createHashRouter(routes);
       // 如果获取权限成功则设置状态为 auth
       authDataInstance.updatedStatus('Auth');
+      /**移除页面加载动画*/
+      loadingFadeOut();
     });
   };
   // 如果初始时Loading,则获取权限
@@ -45,7 +51,7 @@ export const AuthRoot = () => {
   if (status === 'Login') {
     return <Login onLogin={onAuth} />;
   } else if (status === 'RequestAuth') {
-    return <Loading />;
+    return <EnterLoading />;
   }
   if (status === 'NoAuth') {
     return <div>NoAuth</div>;

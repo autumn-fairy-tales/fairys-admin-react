@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { onLogin } from './utils';
-
+import { EnterLoading } from '@fairys/admin-tools-react';
 interface LoginProps {
   onLogin: () => void;
 }
@@ -21,8 +21,8 @@ export const Login = (props: LoginProps) => {
   };
   return (
     <div>
-      {loading && <div>加载中...</div>}
-      <button onClick={onClick} disabled={loading}>
+      {loading && <EnterLoading tips="登录中" />}
+      <button className="dark:text-gray-50" onClick={onClick} disabled={loading}>
         登录
       </button>
     </div>

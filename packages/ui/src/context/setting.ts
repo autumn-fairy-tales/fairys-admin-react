@@ -83,9 +83,8 @@ class SettingInstance {
     /**布局模式*/
     layoutMode: 'main_top_sub_left_header',
     pageTransitionMode: '滑动',
-    // layoutMode: "main_top_sub_left_header",
-    // /**自动监听系统的明暗色系*/
-    // autoListenSystemTheme: true,
+    /**自动监听系统的明暗色系*/
+    autoListenSystemTheme: true,
     /**侧边栏模式*/
     sideMenuMode: 'open',
   });
