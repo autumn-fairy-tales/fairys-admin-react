@@ -2,7 +2,7 @@
 pageType: home
 
 hero:
-  name: Fairy Admin
+  name: Fairys Admin
   # text: A cool website!
   # tagline: This is the tagline
   actions:

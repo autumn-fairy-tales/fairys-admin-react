@@ -5,7 +5,7 @@ import { pluginPreview } from '@rspress/plugin-preview';
 export default defineConfig({
   base: process.env.NODE_ENV === 'production' ? '/fairys-admin-react/' : '/',
   root: path.join(__dirname, 'docs'),
-  title: 'Fairy Admin',
+  title: 'Fairys Admin',
   icon: '/logo.png',
   globalStyles: path.join(__dirname, 'styles/index.css'),
   logo: {
