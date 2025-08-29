@@ -5,6 +5,12 @@ interface AccountDataState {
   userName?: string;
   /**用户头像*/
   userAvatar?: string;
+  /**用户邮箱*/
+  userEmail?: string;
+  /**用户手机号*/
+  userPhone?: string;
+  /**用户角色*/
+  userRole?: string;
   info?: Record<string, any>;
   /**默认引用值*/
   __defaultValue?: string;
@@ -26,7 +32,7 @@ export class AccountDataInstance {
       }
     }
   };
-  /**清空tab项*/
+  /**清空账户数据*/
   clear = () => {
     for (const key in this.state) {
       this.state[key] = undefined;

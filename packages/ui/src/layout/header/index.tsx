@@ -1,9 +1,9 @@
 import { MainMenu } from 'main-menu';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { useSetting } from 'context/setting';
-import { useMemo } from 'react';
+import { memo, useMemo } from 'react';
 import clsx from 'clsx';
-export const LayoutHeader = () => {
+export const LayoutHeader = memo(() => {
   const [state] = useSetting();
   const theme = state.theme;
 
@@ -23,4 +23,4 @@ export const LayoutHeader = () => {
       </div>
     </DarkModeInstanceContextProvider>
   );
-};
+});

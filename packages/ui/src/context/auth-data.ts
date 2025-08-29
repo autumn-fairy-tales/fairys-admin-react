@@ -1,4 +1,4 @@
-import { proxy, ref, useSnapshot } from 'valtio';
+import { proxy, useSnapshot } from 'valtio';
 import { appDataInstance } from './index';
 
 interface AuthDataState {

@@ -56,54 +56,50 @@ export const Layout = () => {
     });
   }, [layoutMode, isSiderFull, theme]);
 
-  const headerRender = useMemo(() => {
-    return isShowHeader ? <LayoutHeader /> : null;
-  }, [isShowHeader]);
-
-  const siderRender = useMemo(() => {
-    return isShowSider ? <LayoutSider /> : null;
-  }, [isShowSider]);
-
-  const contentRender = useMemo(() => {
-    return <LayoutContent />;
-  }, []);
-
   return (
     <DarkModeInstanceContextProvider darkMode={theme === 'dark'}>
       <div className={layoutCls}>
         {isSiderFull ? (
           <Fragment>
             {isShowSider ? (
-              <div className="fairys_admin_layout_sider overflow-hidden h-full box-border ">{siderRender}</div>
+              <div className="fairys_admin_layout_sider overflow-hidden h-full box-border ">
+                <LayoutSider />
+              </div>
             ) : (
               <Fragment />
             )}
             <div className="fairys_admin_layout_main overflow-hidden flex flex-col flex-1 h-full box-border">
               {isShowHeader ? (
-                <div className="fairys_admin_layout_main_header overflow-hidden w-full box-border">{headerRender}</div>
+                <div className="fairys_admin_layout_main_header overflow-hidden w-full box-border">
+                  <LayoutHeader />
+                </div>
               ) : (
                 <Fragment />
               )}
               <div className="fairys_admin_layout_main_content overflow-hiddenflex-1 w-full box-border">
-                {contentRender}
+                <LayoutContent />
               </div>
             </div>
           </Fragment>
         ) : (
           <Fragment>
             {isShowHeader ? (
-              <div className="fairys_admin_layout_header overflow-hidden w-full box-border ">{headerRender}</div>
+              <div className="fairys_admin_layout_header overflow-hidden w-full box-border ">
+                <LayoutHeader />
+              </div>
             ) : (
               <Fragment />
             )}
             <div className="fairys_admin_layout_main overflow-hidden flex flex-row flex-1 w-full box-border">
               {isShowSider ? (
-                <div className="fairys_admin_layout_main_sider overflow-hidden h-full box-border">{siderRender}</div>
+                <div className="fairys_admin_layout_main_sider overflow-hidden h-full box-border">
+                  <LayoutSider />
+                </div>
               ) : (
                 <Fragment />
               )}
               <div className="fairys_admin_layout_main_content overflow-hidden flex-1 h-full box-border">
-                {contentRender}
+                <LayoutContent />
               </div>
             </div>
           </Fragment>

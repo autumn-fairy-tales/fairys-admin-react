@@ -130,7 +130,7 @@ export const ModalBase = (props: ModalBaseProps) => {
               {footer ? (
                 <div
                   style={footerStyle}
-                  className={`fairys_admin_modal_base_footer  p-4  box-border border-t border-gray-200 dark:border-gray-700 ${footerClassName}`}
+                  className={`fairys_admin_modal_base_footer p-4 box-border border-t border-gray-200 dark:border-gray-700 ${footerClassName}`}
                 >
                   {footer}
                 </div>

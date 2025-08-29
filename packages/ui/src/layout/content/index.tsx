@@ -3,7 +3,7 @@ import { TabBar } from 'layout/tab-bar';
 import { ToolBar } from 'layout/tool-bar';
 import { KeepAlive } from 'react-activation';
 import { useFairysRootContext } from 'components/root';
-import { Fragment } from 'react';
+import { Fragment, memo } from 'react';
 import { useMemo } from 'react';
 import { FullScreen } from 'components/full-screen';
 import { useTabBar } from 'context/tab-bar';
@@ -71,7 +71,7 @@ const OutletContentContext = () => {
   );
 };
 
-export const LayoutContent = () => {
+export const LayoutContent = memo(() => {
   return (
     <div className="fairys_admin_main_content overflow-hidden flex flex-col w-full h-full">
       <div className="fairys_admin_main_content_header w-full overflow-hidden sticky top-0 shadow-[var(--fairys-box-shadow)]">
@@ -83,4 +83,4 @@ export const LayoutContent = () => {
       </div>
     </div>
   );
-};
+});

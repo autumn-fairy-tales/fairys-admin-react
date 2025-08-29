@@ -1,7 +1,7 @@
 import { Menu } from 'menu';
 import { MainMenu } from 'main-menu';
 import { useSetting } from 'context/setting';
-import { Fragment, useMemo } from 'react';
+import { Fragment, memo, useMemo } from 'react';
 import clsx from 'clsx';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { Avatar } from 'avatar';
@@ -95,7 +95,7 @@ const LayoutSubSider = () => {
   );
 };
 
-export const LayoutSider = () => {
+export const LayoutSider = memo(() => {
   const [state] = useSetting();
   const layoutMode = state.layoutMode;
   const darkMode = state.darkMenu;
@@ -129,4 +129,4 @@ export const LayoutSider = () => {
       </div>
     </DarkModeInstanceContextProvider>
   );
-};
+});
