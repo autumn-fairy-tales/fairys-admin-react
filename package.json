@@ -4,7 +4,8 @@
   "scripts": {
     "prepare": "husky install",
     "start": "npm run-script dev --workspace example",
-    "build:docs": "npm run-script build --workspace example",
+    "build:docs": "npm run-script build --workspace docs",
+    "docs": "npm run-script dev --workspace docs",
     "watch": "npm run-script watch --workspace @fairys/admin-tools-react",
     "build": "npm run-script build --workspace @fairys/admin-tools-react",
     "version": "lerna version --force-publish=* --no-changelog --no-git-tag-version --no-push",
@@ -35,6 +36,8 @@
     "*.{js,jsx,tsx,ts,less,md,json}": "prettier --write"
   },
   "workspaces": [
-    "packages/*"
+    "docs",
+    "packages/*",
+    "examples/*"
   ]
 }

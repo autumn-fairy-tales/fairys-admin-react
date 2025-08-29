@@ -25,7 +25,8 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: ./packages/example/dist
+        publish_dir: ./examples/base/dist
+        # publish_dir: ./docs/doc_build
 
     - name: Create Tag
       id: create_tag
