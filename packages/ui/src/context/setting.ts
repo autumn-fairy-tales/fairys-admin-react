@@ -119,7 +119,12 @@ class SettingInstance {
       logo: state.logo,
     });
     if (this.state.themeColor) {
-      document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
+      if (document.documentElement) {
+        document.documentElement.setAttribute('style', `--theme-color:${this.state.themeColor}`);
+      }
+      if (document.body) {
+        document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
+      }
     }
     this.autoListenSystemTheme();
   };
