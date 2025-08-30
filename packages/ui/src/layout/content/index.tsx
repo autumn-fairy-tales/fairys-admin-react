@@ -1,4 +1,4 @@
-import { Outlet, useLocation } from 'react-router';
+import { Outlet, useLocation, useOutlet } from 'react-router';
 import { TabBar } from 'layout/tab-bar';
 import { ToolBar } from 'layout/tool-bar';
 import { KeepAlive } from 'react-activation';
@@ -38,12 +38,13 @@ const KeepAliveContent = () => {
   const id = useMemo(() => {
     return AliveControllerBase.convertIdOrNameOne(location.pathname);
   }, [location.pathname]);
+
+  const outlet = useOutlet();
+
   return (
     <MotionAnimation>
       <KeepAlive name={id} id={id} cacheKey={id}>
-        <MotionAnimation>
-          <Outlet />
-        </MotionAnimation>
+        <MotionAnimation>{outlet}</MotionAnimation>
       </KeepAlive>
     </MotionAnimation>
   );

@@ -22,7 +22,7 @@ export const Login = (props: LoginProps) => {
   return (
     <div>
       {loading && <EnterLoading tips="登录中" />}
-      <button className="dark:text-gray-50" onClick={onClick} disabled={loading}>
+      <button className="text-black dark:text-gray-50 " onClick={onClick} disabled={loading}>
         登录
       </button>
     </div>

@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { settingInstance } from '@fairys/admin-tools-react';
+import { settingInstance, authDataInstance } from '@fairys/admin-tools-react';
 import { AuthRoot } from './auth';
 
 import logo from './assets/logo.png';
@@ -11,7 +11,11 @@ settingInstance.initSetting({
   themeColor: 'rgba(175, 82, 222, 1)',
   // autoListenSystemTheme: false,
 });
-
+/**挂载退出登录事件*/
+authDataInstance.onLogout = () => {
+  console.log('onLogout');
+  localStorage.removeItem('token');
+};
 // /**临时加载菜单数据*/
 // menuDataInstance.ctor(menuItems);
 // /**临时加载一下tabBarItems*/

@@ -10,3 +10,4 @@ export * from './root';
 export * from './select';
 export * from './switch';
 export * from './utils';
+export * from './main-page';
