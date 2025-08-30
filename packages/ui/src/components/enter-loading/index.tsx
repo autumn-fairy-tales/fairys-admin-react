@@ -1,25 +1,22 @@
 import clsx from 'clsx';
 import { forwardRef, Fragment, Ref, useMemo } from 'react';
-import { motion } from 'framer-motion';
+import { motion, MotionProps } from 'framer-motion';
 import { useAnimationStatus } from './../utils';
 
-export interface EnterLoadingProps
-  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+export interface EnterLoadingProps extends MotionProps {
   title?: string;
   tips?: string;
   loading?: boolean;
+  className?: string;
 }
 
 export const EnterLoading = forwardRef((props: EnterLoadingProps, ref: Ref<HTMLDivElement>) => {
   const { title = '', tips = '载入中', className, loading = false, ...rest } = props;
   const { show, onAnimationComplete } = useAnimationStatus(loading);
-
   const classNames = useMemo(
     () => clsx('fairys_admin_enter_loading bg-white/75 dark:bg-black/75', className),
     [className],
   );
-
-  // @ts-ignore
   return show ? (
     <motion.div
       {...rest}
