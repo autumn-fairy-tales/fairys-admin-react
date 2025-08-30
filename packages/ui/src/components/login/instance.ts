@@ -1,7 +1,7 @@
 import { createContext, isValidElement, useContext, useEffect, useRef } from 'react';
 import { proxy, ref, useSnapshot } from 'valtio';
 
-type RuleItemType = (value: any, formData: any) => Promise<React.ReactNode>;
+type RuleItemType = (value: any, formData: any) => Promise<React.ReactNode> | React.ReactNode;
 
 interface LoginPageFormState {
   formData: Record<string, any>;
