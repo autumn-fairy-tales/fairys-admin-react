@@ -1,4 +1,4 @@
-import { FloatingPortal, FloatingFocusManager } from '@floating-ui/react';
+import { FloatingPortal } from '@floating-ui/react';
 import { Fragment } from 'react';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
 import { motion, AnimatePresence } from 'framer-motion';

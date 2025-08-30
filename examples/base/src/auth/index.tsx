@@ -51,7 +51,7 @@ export const AuthRoot = () => {
   if (status === 'Login') {
     return <Login onLogin={onAuth} />;
   } else if (status === 'RequestAuth') {
-    return <EnterLoading />;
+    return <EnterLoading loading />;
   }
   if (status === 'NoAuth') {
     return <div>NoAuth</div>;
