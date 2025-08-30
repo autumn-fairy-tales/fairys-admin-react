@@ -7,8 +7,13 @@
     "build:docs": "npm run-script build --workspace docs",
     "docs": "npm run-script dev --workspace docs",
     "build:example": "npm run-script build --workspace example",
+    "----": "============================ui=============================",
     "watch": "npm run-script watch --workspace @fairys/admin-tools-react",
     "build": "npm run-script build --workspace @fairys/admin-tools-react",
+    "====": "==================================plugins=================================",
+    "build:plugin": "npm run-script build --workspace @fairys/admin-tools-react-plugins",
+    "watch:plugin": "npm run-script watch --workspace @fairys/admin-tools-react-plugins",
+    "build:all": "npm run build && npm run build:plugin",
     "version": "lerna version --force-publish=* --no-changelog --no-git-tag-version --no-push",
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\""
   },
