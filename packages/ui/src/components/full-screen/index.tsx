@@ -41,15 +41,21 @@ export const FullScreen = (props: FullScreenProps) => {
     });
   }, [open]);
 
+  const closeClassName = useMemo(() => {
+    return clsx(
+      'fairys_admin_full_screen_close transition-all duration-300 justify-center items-center flex absolute top-0 right-0 w-[38px] h-[38px] bg-neutral-500 hover:bg-neutral-600 cursor-pointer',
+      {},
+    );
+  }, [open]);
+
   useEffect(fullScreenInstance.onEsc, [open]);
 
   return (
     <div className={className}>
       {open ? (
-        <span
-          className="fairys_admin_full_screen_close text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 absolute top-4 right-4 size-[16px] cursor-pointer icon-[ant-design--close-outlined]"
-          onClick={onClose}
-        />
+        <div title="退出全屏" className={closeClassName} onClick={onClose}>
+          <span className="absolute top-[4px] right-[4px] text-white dark:hover:text-neutral-300 size-[20px] icon-[mdi-light--fullscreen-exit]" />
+        </div>
       ) : (
         <Fragment />
       )}

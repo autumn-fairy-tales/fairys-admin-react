@@ -42,11 +42,9 @@ const KeepAliveContent = () => {
   const outlet = useOutlet();
 
   return (
-    <MotionAnimation>
-      <KeepAlive name={id} id={id} cacheKey={id}>
-        <MotionAnimation>{outlet}</MotionAnimation>
-      </KeepAlive>
-    </MotionAnimation>
+    <KeepAlive name={id} id={id} cacheKey={id}>
+      <MotionAnimation>{outlet}</MotionAnimation>
+    </KeepAlive>
   );
 };
 
