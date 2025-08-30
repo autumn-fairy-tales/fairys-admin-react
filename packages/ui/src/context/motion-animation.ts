@@ -54,15 +54,6 @@ export class MotionAnimationInstance {
         transition: { duration: 0.5 },
       },
     },
-    {
-      name: '其他',
-      config: {
-        initial: { y: 100, opacity: 0, scale: 0.9 },
-        animate: { y: 0, opacity: 1, scale: 1 },
-        exit: { y: -100, opacity: 0, scale: 0.9 },
-        transition: { duration: 0.7, ease: [0.6, 0.01, -0.05, 0.9] },
-      },
-    },
   ];
 
   /**扩展动画*/
