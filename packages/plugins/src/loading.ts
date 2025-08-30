@@ -463,10 +463,10 @@ export const htmlTags = [
   },
 ];
 
-export const getLoadingHtmlTags = (title: string) => {
+export const getLoadingHtmlTags = (title: string = '') => {
   return htmlTags.map((tag) => {
     if (tag.tag === 'body') {
-      tag.children = tag.children.replace('<%= FAIRYS_APP_TITLE %>', title);
+      tag.children = tag.children.replace('<%= FAIRYS_APP_TITLE %>', title || '');
     }
     return tag;
   });
