@@ -1,7 +1,7 @@
 import { createContext, isValidElement, useContext, useEffect, useRef } from 'react';
 import { proxy, ref, useSnapshot } from 'valtio';
 
-type RuleItemType = (value: any, formData: any) => React.ReactNode;
+type RuleItemType = (value: any, formData: any) => Promise<React.ReactNode>;
 
 interface LoginPageFormState {
   formData: Record<string, any>;
@@ -101,7 +101,7 @@ export class LoginPageFormInstance {
       const rule = this.rules?.[key];
       errors[key] = '';
       if (typeof rule === 'function') {
-        const error = rule(this.state.formData[key], this.state.formData);
+        const error = await rule(this.state.formData[key], this.state.formData);
         if (error) {
           errors[key] = error;
           isSuccess = false;
