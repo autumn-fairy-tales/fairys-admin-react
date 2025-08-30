@@ -1,5 +1,5 @@
 import { createContext, isValidElement, useContext, useEffect, useRef } from 'react';
-import { proxy, ref, useSnapshot } from 'valtio';
+import { proxy, ref, useSnapshot, snapshot } from 'valtio';
 
 type RuleItemType = (value: any, formData: any) => Promise<React.ReactNode> | React.ReactNode;
 
@@ -112,12 +112,12 @@ export class LoginPageFormInstance {
     if (isReturn) {
       if (!isSuccess) {
         return Promise.reject({
-          value: this.state.formData,
+          value: snapshot(this.state.formData),
           errors,
         });
       }
       return Promise.resolve({
-        value: { ...this.state.formData },
+        value: snapshot(this.state.formData),
         errors,
       });
     }
