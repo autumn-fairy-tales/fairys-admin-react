@@ -75,7 +75,11 @@ export class LoginPageFormInstance {
       this.state.formData[key] = value[key];
     }
     if (isValidate) {
-      this.validate(Object.keys(value));
+      try {
+        this.validate(Object.keys(value), false);
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
   /**更新错误信息*/
@@ -90,19 +94,33 @@ export class LoginPageFormInstance {
   };
 
   /**验证表单*/
-  validate = async (keys?: string[]) => {
+  validate = async (keys?: string[], isReturn: boolean = true) => {
     const errors: Record<string, React.ReactNode> = {};
+    let isSuccess = true;
     for (const key of keys || this.items.keys()) {
-      const rule = this.rules[key];
+      const rule = this.rules?.[key];
       errors[key] = '';
       if (typeof rule === 'function') {
         const error = rule(this.state.formData[key], this.state.formData);
         if (error) {
           errors[key] = error;
+          isSuccess = false;
         }
       }
     }
     this.updatedErrors(errors);
+    if (isReturn) {
+      if (!isSuccess) {
+        return Promise.reject({
+          value: this.state.formData,
+          errors,
+        });
+      }
+      return Promise.resolve({
+        value: { ...this.state.formData },
+        errors,
+      });
+    }
   };
 
   /**值更新*/

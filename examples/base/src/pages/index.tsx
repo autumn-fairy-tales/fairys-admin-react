@@ -2,17 +2,47 @@ import { MainPage } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
 import { LoginPage } from '@fairys/admin-tools-react/lib/components/login';
 
+const rules = {
+  username: (value: string) => {
+    if (!value) {
+      return '用户名不能为空';
+    }
+    return '';
+  },
+  password: (value: string) => {
+    if (!value) {
+      return '密码不能为空';
+    }
+    return '';
+  },
+};
+
 const MainIndex = () => {
+  const formInstance = LoginPage.useForm();
+  const onLogin = () => {
+    formInstance
+      .validate()
+      .then((values) => {
+        console.log(values);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <MainPage>
       <div className="w-[500px] h-[500px]">
-        <LoginPage title="登录">
+        <LoginPage title="登录" form={formInstance} rules={rules}>
           <LoginPage.FormItem name="username" label="用户名" required>
             <LoginPage.FormItemInput placeholder="请输入用户名" />
           </LoginPage.FormItem>
           <LoginPage.FormItem name="password" label="密码" required>
             <LoginPage.FormItemInput placeholder="请输入密码" type="password" />
           </LoginPage.FormItem>
+          <button onClick={onLogin} className="bg-(--theme-color) rounded-sm text-white py-[9px]" type="button">
+            登录
+          </button>
         </LoginPage>
       </div>
       <NavLink to="/">首页</NavLink>

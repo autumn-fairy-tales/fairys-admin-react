@@ -1,21 +1,29 @@
 import clsx from 'clsx';
 import { useMemo } from 'react';
-import { LoginPageFormInstanceContext, useLoginPageFormInstance, LoginPageFormInstance } from './instance';
+import {
+  LoginPageFormInstanceContext,
+  useLoginPageFormInstance,
+  LoginPageFormInstance,
+  useLoginPageFormInstanceContext,
+} from './instance';
 import { LoginPageFormItem, LoginPageFormItemInput } from './form.item';
 
 interface LoginPageProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'title'> {
   title?: React.ReactNode;
   form?: LoginPageFormInstance;
+  rules?: LoginPageFormInstance['rules'];
 }
 
 export const LoginPage = (props: LoginPageProps) => {
-  const { className, title, form, children, ...rest } = props;
+  const { className, title, form, children, rules, ...rest } = props;
   const loginPageClassName = useMemo(() => {
     return clsx('fairys_login_page w-full h-full flex items-center justify-center overflow-auto', className);
   }, [className]);
 
   const formInstance = useLoginPageFormInstance(form);
+  formInstance.rules = rules;
+
   return (
     <LoginPageFormInstanceContext.Provider value={formInstance}>
       <div className={loginPageClassName} {...rest}>
@@ -30,5 +38,7 @@ export const LoginPage = (props: LoginPageProps) => {
   );
 };
 
+LoginPage.useForm = useLoginPageFormInstance;
+LoginPage.useFormInstance = useLoginPageFormInstanceContext;
 LoginPage.FormItem = LoginPageFormItem;
 LoginPage.FormItemInput = LoginPageFormItemInput;
