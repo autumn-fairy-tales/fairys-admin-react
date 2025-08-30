@@ -45,7 +45,7 @@ interface MenuComponentBaseProps {
   disabled?: boolean;
 }
 const motionClassNameBase =
-  'flex flex-col relative border border-gray-100 dark:border-gray-700 rounded-md gap-1 py-[5px]';
+  'fairys:flex fairys:flex-col fairys:relative fairys:border fairys:border-gray-100 fairys:dark:border-gray-700 fairys:rounded-md fairys:gap-1 fairys:py-[5px]';
 
 function useEmpty() {
   return {};
@@ -150,15 +150,19 @@ const MenuComponentBase = forwardRef((props: MenuComponentBaseProps, ref: Ref<HT
   const mergeRef = useMergeRefs([refs.setReference, ref]);
 
   const bodyClasName = useMemo(() => {
-    return clsx('fairys_admin_popover-menu-component-base no-scrollbar', className, ['rounded-sm bg-transparent!']);
+    return clsx('fairys_admin_popover-menu-component-base no-scrollbar', className, [
+      'fairys:rounded-sm fairys:bg-transparent!',
+    ]);
   }, [className]);
 
   const motionBodyClasName = useMemo(() => {
     return clsx(
-      'fairys_admin_popover-menu-component-base-motion overflow-hidden',
+      'fairys_admin_popover-menu-component-base-motion fairys:overflow-hidden',
       motionClassNameBase,
       motionClassName,
-      ['min-w-[120px] rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm'],
+      [
+        'fairys:min-w-[120px] fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:shadow-xl fairys:inset-shadow-sm',
+      ],
     );
   }, [motionClassName]);
 
@@ -214,10 +218,10 @@ interface MenuItemProps {
   isSubMenuItem?: boolean;
 }
 
-const popoverMenuItemBaseCls = `shrink-0 text-gray-400 transition-all duration-300 flex flex-row items-center justify-between gap-1 py-[5px] px-[8px] mx-[5px] rounded-sm`;
-const popoverMenuItemBaseClsDisabled = `opacity-70 select-none`;
-const popoverMenuItemBaseClsNotDisabled = `text-gray-600 cursor-pointer hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300 dark:hover:bg-gray-700 hover:bg-gray-100`;
-const popoverMenuItemBaseClsActive = `active bg-(--theme-color)! text-white!`;
+const popoverMenuItemBaseCls = `fairys:shrink-0 fairys:text-gray-400 fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:items-center fairys:justify-between fairys:gap-1 fairys:py-[5px] fairys:px-[8px] fairys:mx-[5px] fairys:rounded-sm`;
+const popoverMenuItemBaseClsDisabled = `fairys:opacity-70 fairys:select-none`;
+const popoverMenuItemBaseClsNotDisabled = `fairys:text-gray-600 fairys:cursor-pointer fairys:hover:text-gray-700 fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300 fairys:dark:hover:bg-gray-700 fairys:hover:bg-gray-100`;
+const popoverMenuItemBaseClsActive = `fairys:active fairys:bg-(--theme-color)! fairys:text-white!`;
 
 const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { rowItemData, isSubMenuItem = false } = props;
@@ -253,16 +257,16 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
       [popoverMenuItemBaseClsDisabled]: rowItemData.disabled,
       [popoverMenuItemBaseClsNotDisabled]: !rowItemData.disabled,
       [popoverMenuItemBaseClsActive]: isActive,
-      'dark:bg-gray-700/75 bg-gray-100/75 text-gray-600!': !rowItemData.disabled && isSubMenuItem,
+      'fairys:dark:bg-gray-700/75 fairys:bg-gray-100/75 fairys:text-gray-600!': !rowItemData.disabled && isSubMenuItem,
     });
   }, [isActive, rowItemData, isSubMenuItem]);
 
   return (
     <div ref={ref} onClick={onClickItem} className={cls}>
-      <div className="flex items-center flex-1">
+      <div className="fairys:flex fairys:items-center fairys:flex-1">
         {rowItemData.icon ? (
-          <span className="size-[16px] mr-2">
-            <Icon icon={rowItemData.icon} className="size-[16px]" />
+          <span className="fairys:size-[16px] fairys:mr-2">
+            <Icon icon={rowItemData.icon} className="fairys:size-[16px]" />
           </span>
         ) : (
           <Fragment />
@@ -271,12 +275,12 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
       </div>
       <div>
         {isSubMenuItem ? (
-          <span className="icon-[ant-design--right-outlined] ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white dark:text-gray-500 transition-all duration-300" />
+          <span className="fairys:icon-[ant-design--right-outlined] fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white fairys:dark:text-gray-500 fairys:transition-all fairys:duration-300" />
         ) : popoverMenuInstance.isHideClose ? (
           <Fragment />
         ) : (
           <span
-            className="icon-[ant-design--close-outlined] ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white dark:text-gray-500 transition-all duration-300"
+            className="fairys:icon-[ant-design--close-outlined] fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white fairys:dark:text-gray-500 fairys:transition-all fairys:duration-300"
             onClick={onCloseItem}
           />
         )}
@@ -328,7 +332,10 @@ const createChildMenu = (item: PopoverMenuItem, index: number) => {
     return <Fragment key={item.path || item.title || item.key || index} />;
   } else if (item.isDivider) {
     return (
-      <div key={item.path || item.title || item.key || index} className="w-full h-[1px] bg-gray-100 dark:bg-gray-700" />
+      <div
+        key={item.path || item.title || item.key || index}
+        className="fairys:w-full fairys:h-[1px] fairys:bg-gray-100 fairys:dark:bg-gray-700"
+      />
     );
   } else if (Array.isArray(item.items)) {
     return <Menu key={item.path || item.title || item.key || index} rowItemData={item} />;

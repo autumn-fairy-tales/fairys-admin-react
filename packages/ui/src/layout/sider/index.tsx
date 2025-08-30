@@ -20,7 +20,7 @@ const LayoutSiderMainMenu = () => {
     return <Fragment />;
   }
   return (
-    <div className="border-r border-gray-200 h-full dark:border-gray-800! transition-all duration-300 w-[80px] overflow-hidden">
+    <div className="fairys:border-r fairys:border-gray-200 fairys:h-full fairys:dark:border-gray-800! fairys:transition-all fairys:duration-300 fairys:w-[80px] fairys:overflow-hidden">
       <MainMenu layoutMode="vertical" />
     </div>
   );
@@ -32,10 +32,10 @@ const LayoutSubSider = () => {
   const layoutMode = state.layoutMode;
   const bodyClassName = useMemo(() => {
     return clsx(
-      'flex flex-col h-full border-r border-gray-200 dark:border-gray-800! transition-all duration-300 dark:text-gray-400 overflow-hidden',
+      'fairys:flex fairys:flex-col fairys:h-full fairys:border-r fairys:border-gray-200 fairys:dark:border-gray-800! fairys:transition-all fairys:duration-300 fairys:dark:text-gray-400 fairys:overflow-hidden',
       {
-        'w-[60px]': sideMenuMode === 'close',
-        'w-[220px]': sideMenuMode !== 'close',
+        'fairys:w-[60px]': sideMenuMode === 'close',
+        'fairys:w-[220px]': sideMenuMode !== 'close',
       },
     );
   }, [sideMenuMode]);
@@ -46,20 +46,20 @@ const LayoutSubSider = () => {
   }, [sideMenuMode]);
 
   const iconClassName = useMemo(() => {
-    return clsx('size-[20px]', {
-      'icon-[ant-design--menu-fold-outlined]': sideMenuMode === 'open',
-      'icon-[ant-design--menu-unfold-outlined]': sideMenuMode === 'close',
+    return clsx('fairys:size-[20px]', {
+      'fairys:icon-[ant-design--menu-fold-outlined]': sideMenuMode === 'open',
+      'fairys:icon-[ant-design--menu-unfold-outlined]': sideMenuMode === 'close',
     });
   }, [sideMenuMode]);
 
   const headerRender = useMemo(() => {
     if (layoutMode === 'main_sub_left' || layoutMode === 'left')
       return (
-        <div className="box-border border-b border-gray-200 dark:border-gray-800">
+        <div className="fairys:box-border fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">
           <Logo
             isOnlyName={layoutMode === 'main_sub_left'}
             logoSize={32}
-            className="mx-[8px] my-[8px] box-border"
+            className="fairys:mx-[8px] fairys:my-[8px] fairys:box-border"
             mode={sideMenuMode === 'open' ? 'open' : 'close'}
           />
         </div>
@@ -70,14 +70,14 @@ const LayoutSubSider = () => {
   return (
     <div className={bodyClassName}>
       {headerRender}
-      <div className="fairys_admin_layout_sider_menu flex-1 overflow-hidden">
+      <div className="fairys_admin_layout_sider_menu fairys:flex-1 fairys:overflow-hidden">
         <Menu />
       </div>
-      <div className="flex flex-col border-t border-gray-200 dark:border-gray-800 ">
+      <div className="fairys:flex fairys:flex-col fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800 ">
         <div
-          className={`flex ${sideMenuMode === 'close' ? 'justify-center' : 'justify-end'} ${
-            layoutMode === 'left' ? ' mt-[8px]' : 'my-[8px]'
-          } items-center box-border mx-[8px] cursor-pointer`}
+          className={`fairys:flex ${sideMenuMode === 'close' ? 'fairys:justify-center' : 'fairys:justify-end'} ${
+            layoutMode === 'left' ? ' fairys:mt-[8px]' : 'fairys:my-[8px]'
+          } fairys:items-center fairys:box-border fairys:mx-[8px] fairys:cursor-pointer`}
         >
           <ButtonBase
             title={sideMenuMode === 'close' ? '打开菜单' : '关闭菜单'}
@@ -114,7 +114,7 @@ export const LayoutSider = memo(() => {
 
   const clssName = useMemo(() => {
     return clsx(
-      'fairys_admin_layout_sider transition-all duration-300 flex flex-row h-full dark:text-gray-400 dark:bg-gray-900!',
+      'fairys_admin_layout_sider fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:h-full fairys:dark:text-gray-400 fairys:dark:bg-gray-900!',
       {
         dark: _darkMode,
       },

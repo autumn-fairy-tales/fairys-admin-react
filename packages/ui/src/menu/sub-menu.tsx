@@ -12,10 +12,10 @@ export interface MenuItemProps {
   isMain?: boolean;
 }
 
-const subMenuClassName = 'fairys_admin_sub_menu shrink-0 flex flex-col gap-y-[2px] ';
-const childClassName = 'fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px]';
+const subMenuClassName = 'fairys_admin_sub_menu fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px] ';
+const childClassName = 'fairys_admin_sub_menu_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px]';
 const popoverChildClassName =
-  'fairys_admin_sub_menu_body shrink-0 flex flex-col gap-y-[2px] p-[5px] dark:border dark:border-gray-700';
+  'fairys_admin_sub_menu_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px] fairys:p-[5px] fairys:dark:border fairys:dark:border-gray-700';
 
 export const SubMenu = (props: MenuItemProps) => {
   const { item, level = 0, isMain = false } = props;

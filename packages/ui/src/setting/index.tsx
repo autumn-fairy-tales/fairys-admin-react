@@ -23,8 +23,8 @@ export const SettingDrawer = memo(() => {
 
   return (
     <ModalBase onClose={settingInstance.onToggleOpen} open={state.open} title="偏好设置" mode="drawer">
-      <div className="h-full overflow-auto">
-        <div className="flex flex-col gap-4 box-border">
+      <div className="fairys:h-full fairys:overflow-auto">
+        <div className="fairys:flex fairys:flex-col fairys:gap-4 fairys:box-border">
           <SettingThemeBase />
           <SettingLayoutMode />
           <SettingPageTransitionMode />

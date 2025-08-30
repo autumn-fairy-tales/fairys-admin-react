@@ -17,9 +17,9 @@ const MenuDarkLight = () => {
   };
 
   const className = useMemo(() => {
-    return clsx('size-[16px]', {
-      'icon-[ant-design--moon-outlined]': theme !== 'dark',
-      'icon-[ant-design--sun-outlined]': theme === 'dark',
+    return clsx('fairys:size-[16px]', {
+      'fairys:icon-[ant-design--moon-outlined]': theme !== 'dark',
+      'fairys:icon-[ant-design--sun-outlined]': theme === 'dark',
     });
   }, [theme]);
 
@@ -32,12 +32,12 @@ const MenuDarkLight = () => {
 
 export const ToolBar = () => {
   return (
-    <div className="fairys_admin_tool_bar transition-all duration-300 overflow-hidden w-full flex flex-row items-center px-[8px] border-b border-gray-200 dark:border-gray-800">
+    <div className="fairys_admin_tool_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:items-center fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">
       <div className="fairys_admin_tool_bar_left">
         <Breadcrumb />
       </div>
-      <div className="fairys_admin_tool_bar_body overflow-auto flex flex-row flex-1"></div>
-      <div className="fairys_admin_tool_bar_right flex items-center gap-2 dark:text-gray-200 pr-[2px]">
+      <div className="fairys_admin_tool_bar_body fairys:overflow-auto fairys:flex fairys:flex-row fairys:flex-1"></div>
+      <div className="fairys_admin_tool_bar_right fairys:flex fairys:items-center fairys:gap-2 fairys:dark:text-gray-200 fairys:pr-[2px]">
         <MenuSearch />
         <MenuDarkLight />
       </div>

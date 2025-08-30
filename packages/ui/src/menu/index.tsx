@@ -66,7 +66,7 @@ export const Menu = () => {
       <MenuInstanceContext.Provider value={menuInstance}>
         <div
           ref={menuInstance.dom}
-          className="fairys_admin_menu transition-all duration-300 box-border flex flex-col gap-y-2 p-[8px] overflow-auto h-full no-scrollbar max-w-[220px]"
+          className="fairys_admin_menu fairys:transition-all fairys:duration-300 fairys:box-border fairys:flex fairys:flex-col fairys:gap-y-2 fairys:p-[8px] fairys:overflow-auto fairys:h-full no-scrollbar fairys:max-w-[220px]"
         >
           {render}
         </div>

@@ -26,7 +26,7 @@ const MotionAnimation = (props: MotionAnimationProps) => {
   }, [pageTransitionMode]);
   return (
     <AnimatePresence mode="wait">
-      <motion.div {...config} className="w-full h-full overflow-hidden" key={location.pathname}>
+      <motion.div {...config} className="fairys:w-full fairys:h-full fairys:overflow-hidden" key={location.pathname}>
         {props.children}
       </motion.div>
     </AnimatePresence>
@@ -72,12 +72,12 @@ const OutletContentContext = () => {
 
 export const LayoutContent = memo(() => {
   return (
-    <div className="fairys_admin_main_content overflow-hidden flex flex-col w-full h-full">
-      <div className="fairys_admin_main_content_header w-full overflow-hidden sticky top-0 shadow-[var(--fairys-box-shadow)]">
+    <div className="fairys_admin_main_content fairys:overflow-hidden fairys:flex fairys:flex-col fairys:w-full fairys:h-full">
+      <div className="fairys_admin_main_content_header fairys:w-full fairys:overflow-hidden fairys:sticky fairys:top-0 fairys:shadow-[var(--fairys-box-shadow)]">
         <ToolBar />
         <TabBar />
       </div>
-      <div className="fairys_admin_main_content_body overflow-hidden flex-1 w-full">
+      <div className="fairys_admin_main_content_body fairys:overflow-hidden fairys:flex-1 fairys:w-full">
         <OutletContentContext />
       </div>
     </div>

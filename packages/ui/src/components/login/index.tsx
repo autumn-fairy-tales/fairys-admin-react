@@ -22,25 +22,31 @@ export const LoginPage = (props: LoginPageProps) => {
   const { className, title, form, children, rules, bodyClassName, titleClassName, mainClassName, ...rest } = props;
 
   const loginPageClassName = useMemo(() => {
-    return clsx('fairys_login_page w-full h-full flex items-center justify-center overflow-auto box-border', className);
+    return clsx(
+      'fairys_login_page fairys:w-full fairys:h-full fairys:flex fairys:items-center fairys:justify-center fairys:overflow-auto fairys:box-border',
+      className,
+    );
   }, [className]);
 
   const mainClass = useMemo(() => {
     return clsx(
-      'fairys_login_page_content p-[14px] flex flex-col w-[400px] h-[400px] rounded-sm gap-y-[20px] box-border  shadow-xl inset-shadow-sm ',
+      'fairys_login_page_content fairys:p-[14px] fairys:flex fairys:flex-col fairys:w-[400px] fairys:h-[400px] fairys:rounded-sm fairys:gap-y-[20px] fairys:box-border  fairys:shadow-xl fairys:inset-shadow-sm ',
       mainClassName,
     );
   }, [mainClassName]);
 
   const titleClass = useMemo(() => {
     return clsx(
-      'fairys_login_page_content_title flex items-center justify-center text-[24px] font-bold box-border',
+      'fairys_login_page_content_title fairys:flex fairys:items-center fairys:justify-center fairys:text-[24px] fairys:font-bold fairys:box-border',
       titleClassName,
     );
   }, [titleClassName]);
 
   const bodyClass = useMemo(() => {
-    return clsx('fairys_login_page_content_form flex-1 flex flex-col gap-[14px] box-border', bodyClassName);
+    return clsx(
+      'fairys_login_page_content_form fairys:flex-1 fairys:flex fairys:flex-col fairys:gap-[14px] fairys:box-border',
+      bodyClassName,
+    );
   }, [bodyClassName]);
 
   const formInstance = useLoginPageFormInstance(form);

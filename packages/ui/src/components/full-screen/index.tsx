@@ -36,14 +36,18 @@ export const FullScreen = (props: FullScreenProps) => {
   fullScreenInstance.open = open;
 
   const className = useMemo(() => {
-    return clsx('fairys_admin_full_screen transparent transition-all duration-300 overflow-hidden w-full h-full', {
-      'absolute bg-white dark:bg-gray-800 top-0 left-0 right-0 bottom-0': !!open,
-    });
+    return clsx(
+      'fairys_admin_full_screen fairys:transparent fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:h-full',
+      {
+        'fairys:absolute fairys:bg-white fairys:dark:bg-gray-800 fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0':
+          !!open,
+      },
+    );
   }, [open]);
 
   const closeClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_full_screen_close transition-all duration-300 justify-center items-center flex absolute top-0 right-0 w-[38px] h-[38px] bg-neutral-500 hover:bg-neutral-600 cursor-pointer',
+      'fairys_admin_full_screen_close fairys:transition-all fairys:duration-300 fairys:justify-center fairys:items-center fairys:flex fairys:absolute fairys:top-0 fairys:right-0 fairys:w-[38px] fairys:h-[38px] fairys:bg-neutral-500 fairys:hover:bg-neutral-600 fairys:cursor-pointer',
       {},
     );
   }, [open]);
@@ -54,7 +58,7 @@ export const FullScreen = (props: FullScreenProps) => {
     <div className={className}>
       {open ? (
         <div title="退出全屏" className={closeClassName} onClick={onClose}>
-          <span className="absolute top-[4px] right-[4px] text-white dark:hover:text-neutral-300 size-[20px] icon-[mdi-light--fullscreen-exit]" />
+          <span className="fairys:absolute fairys:top-[4px] fairys:right-[4px] fairys:text-white fairys:dark:hover:text-neutral-300 fairys:size-[20px] fairys:icon-[mdi-light--fullscreen-exit]" />
         </div>
       ) : (
         <Fragment />

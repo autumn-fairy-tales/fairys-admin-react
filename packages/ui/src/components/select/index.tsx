@@ -13,10 +13,13 @@ export const SelectBase = (props: SelectBaseProps) => {
   const { items = [], onChange, multiple = false, value, disabled = false } = props;
   const [isExpand, setIsExpand] = useState(false);
   const expandIcon = useMemo(() => {
-    return clsx('relative after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]', {
-      expand: isExpand,
-      close: !isExpand,
-    });
+    return clsx(
+      'fairys:relative fairys:after:bg-current fairys:before:bg-current fairys:after:-translate-y-[1px] fairys:before:-translate-y-[1px]',
+      {
+        expand: isExpand,
+        close: !isExpand,
+      },
+    );
   }, [isExpand]);
 
   const onMenuItemClick = (item: PopoverMenuItem) => {
@@ -61,9 +64,9 @@ export const SelectBase = (props: SelectBaseProps) => {
       onClickItem={onMenuItemClick}
       value={value}
     >
-      <div className="min-w-[120px] min-h-[38px] px-[12px] py-[4px] border border-gray-200 dark:border-gray-700 rounded-sm cursor-pointer flex flex-row justify-between items-center">
+      <div className="fairys:min-w-[120px] fairys:min-h-[38px] fairys:px-[12px] fairys:py-[4px] fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:rounded-sm fairys:cursor-pointer fairys:flex fairys:flex-row fairys:justify-between fairys:items-center">
         <span>{render}</span>
-        <span className="fairys_admin_down_up_icon size-[16px] flex items-center justify-center relative">
+        <span className="fairys_admin_down_up_icon fairys:size-[16px] fairys:flex fairys:items-center fairys:justify-center fairys:relative">
           <div className={expandIcon} />
         </span>
       </div>

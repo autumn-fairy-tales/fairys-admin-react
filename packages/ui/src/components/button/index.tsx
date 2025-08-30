@@ -13,16 +13,16 @@ export const ButtonBase = (props: ButtonBaseProps) => {
     return clsx(
       'fairys_admin_button_base ',
       [
-        'outline-0',
-        'flex items-center justify-center min-w-[36px] min-h-[36px] rounded-sm cursor-pointer',
-        'transition-all duration-300',
-        'hover:bg-gray-200 dark:hover:bg-gray-600 ',
-        isBg && 'bg-gray-200 dark:bg-gray-600',
+        'fairys:outline-0',
+        'fairys:flex fairys:items-center fairys:justify-center fairys:min-w-[36px] fairys:min-h-[36px] fairys:rounded-sm fairys:cursor-pointer',
+        'fairys:transition-all duration-300',
+        'fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-600 ',
+        isBg && 'fairys:bg-gray-200 fairys:dark:bg-gray-600',
       ],
       {
-        'border-0': !bordered,
-        'border border-gray-300 dark:border-gray-600': bordered,
-        'bg-transparent': !isBg && !bordered,
+        'fairys:border-0': !bordered,
+        'fairys:border fairys:border-gray-300 fairys:dark:border-gray-600': bordered,
+        'fairys:bg-transparent': !isBg && !bordered,
       },
       className,
     );

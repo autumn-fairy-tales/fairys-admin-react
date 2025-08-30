@@ -5,7 +5,7 @@
 import clsx from 'clsx';
 import { useMemo, Fragment } from 'react';
 import { useSetting } from 'context/setting';
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation } from 'react-router';
 import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon } from '@iconify/react';
 import { usePopoverInstance, Popover } from 'components/popover';
@@ -38,14 +38,14 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
   const className = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu_item transition-all duration-300 px-[8px] py-[4px] shrink-0 transition-all duration-300 rounded-sm box-border flex items-center cursor-pointer gap-1 dark:text-gray-400',
+      'fairys_admin_main_menu_item fairys:transition-all fairys:duration-300 fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:box-border fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
       {
         active: isActive,
-        'bg-(--theme-color)': !!isActive,
-        'text-white dark:text-white': isActive,
-        'hover:bg-gray-200/75 dark:hover:bg-gray-600': !isActive,
-        'flex-col ': layoutMode === 'vertical',
-        'flex-row': layoutMode === 'horizontal',
+        'fairys:bg-(--theme-color)': !!isActive,
+        'fairys:text-white fairys:dark:text-white': isActive,
+        'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
+        'fairys:flex-col ': layoutMode === 'vertical',
+        'fairys:flex-row': layoutMode === 'horizontal',
       },
     );
   }, [isActive, layoutMode]);
@@ -60,8 +60,8 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
   const iconClassName = useMemo(() => {
     return clsx('', {
-      'size-[20px]': layoutMode === 'horizontal',
-      'size-[26px]': layoutMode === 'vertical',
+      'fairys:size-[20px]': layoutMode === 'horizontal',
+      'fairys:size-[26px]': layoutMode === 'vertical',
     });
   }, [layoutMode]);
 
@@ -117,26 +117,30 @@ export const MainMenu = (props: MainMenuProps) => {
   const [settingState] = useSetting();
   const layoutModeState = settingState.layoutMode;
   const mainMenuClassName = useMemo(() => {
-    return clsx('fairys_admin_main_menu flex box-border overflow-auto items-center justify-between px-[8px]', {
-      'fairys_admin_main_menu_vertical flex-col h-full': layoutMode === 'vertical',
-      'fairys_admin_main_menu_horizontal flex-row overflow-auto shrink-0': layoutMode === 'horizontal',
-    });
+    return clsx(
+      'fairys_admin_main_menu fairys:flex fairys:box-border fairys:overflow-auto fairys:items-center fairys:justify-between fairys:px-[8px]',
+      {
+        'fairys_admin_main_menu_vertical fairys:flex-col fairys:h-full': layoutMode === 'vertical',
+        'fairys_admin_main_menu_horizontal fairys:flex-row fairys:overflow-auto fairys:shrink-0':
+          layoutMode === 'horizontal',
+      },
+    );
   }, [layoutMode]);
 
   const mainMenuBodyClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu_body flex-1 w-full overflow-hidden flex gap-2 items-center box-border py-[8px]',
+      'fairys_admin_main_menu_body fairys:flex-1 fairys:w-full fairys:overflow-hidden fairys:flex fairys:gap-2 fairys:items-center fairys:box-border fairys:py-[8px]',
       {
-        'flex-col ': layoutMode === 'vertical',
-        'flex-row': layoutMode === 'horizontal',
+        'fairys:flex-col ': layoutMode === 'vertical',
+        'fairys:flex-row': layoutMode === 'horizontal',
       },
     );
   }, [layoutMode]);
 
   const bodyMenusClassName = useMemo(() => {
-    return clsx('fairys_admin_main_menu_body_menus flex', {
-      'flex-col gap-y-2  w-full': layoutMode === 'vertical',
-      'flex-row flex-1 gap-x-2': layoutMode === 'horizontal',
+    return clsx('fairys_admin_main_menu_body_menus fairys:flex', {
+      'fairys:flex-col fairys:gap-y-2 fairys:w-full': layoutMode === 'vertical',
+      'fairys:flex-row fairys:flex-1 fairys:gap-x-2': layoutMode === 'horizontal',
     });
   }, [layoutMode]);
 

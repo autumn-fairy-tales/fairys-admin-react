@@ -43,18 +43,18 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item shrink-0 transition-all duration-300 relative flex flex-row items-center gap-1 px-[20px] py-[10px] cursor-pointer',
+      'fairys_admin_tab_bar_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:relative fairys:flex fairys:flex-row fairys:items-center fairys:gap-1 fairys:px-[20px] fairys:py-[10px] fairys:cursor-pointer',
       {
         active: !!match,
-        'dark:before:bg-gray-600': true,
-        'text-gray-500 hover:text-gray-500': !!match,
-        'text-gray-400 hover:text-gray-500': !match,
-        'bg-gray-100 hover:bg-gray-200': !match,
-        'bg-white hover:bg-white': !!match,
-        'dark:text-gray-200 dark:hover:text-gray-200': !!match,
-        'dark:text-gray-400 dark:hover:text-gray-300': !match,
-        'dark:bg-gray-800 dark:hover:bg-gray-700': !match,
-        'dark:bg-gray-600 dark:hover:bg-gray-600': !!match,
+        'fairys:dark:before:bg-gray-600': true,
+        'fairys:text-gray-500 fairys:hover:text-gray-500': !!match,
+        'fairys:text-gray-400 fairys:hover:text-gray-500': !match,
+        'fairys:bg-gray-100 fairys:hover:bg-gray-200': !match,
+        'fairys:bg-white fairys:hover:bg-white': !!match,
+        'fairys:dark:text-gray-200 fairys:dark:hover:text-gray-200': !!match,
+        'fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300': !match,
+        'fairys:dark:bg-gray-800 fairys:dark:hover:bg-gray-700': !match,
+        'fairys:dark:bg-gray-600 fairys:dark:hover:bg-gray-600': !!match,
       },
     );
   }, [match]);
@@ -88,18 +88,18 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const iconClassName = useMemo(() => {
     return clsx(
-      'icon-[ant-design--close-outlined] transition-all duration-300 ml-5 text-gray-400 hover:text-gray-600 dark:hover:text-white',
+      'icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white',
       {
-        'dark:text-gray-400': !!match,
-        'dark:text-gray-500': !match,
+        'fairys:dark:text-gray-400': !!match,
+        'fairys:dark:text-gray-500': !match,
       },
     );
   }, [match]);
 
   const iconRender = useMemo(() => {
     return item.icon ? (
-      <span className="size-[16px] mr-1">
-        <Icon icon={item.icon} className="size-[16px]" />
+      <span className="fairys:size-[16px] fairys:mr-1">
+        <Icon icon={item.icon} className="fairys:size-[16px]" />
       </span>
     ) : (
       <Fragment />
@@ -159,7 +159,7 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar transition-all duration-300 overflow-hidden w-full flex flex-row bg-gray-300/25 px-[8px] border-b border-gray-200 dark:border-gray-800 dark:bg-gray-800',
+      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-gray-300/25 fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800 fairys:dark:bg-gray-800',
     );
   }, []);
   const location = useLocation();
@@ -185,12 +185,12 @@ export const TabBar = () => {
       <div className={tabBarClassName}>
         <div className="fairys_admin_tab_bar_left"></div>
         <div
-          className="fairys_admin_tab_bar_body overflow-auto flex flex-row flex-1 no-scrollbar"
+          className="fairys_admin_tab_bar_body fairys:overflow-auto fairys:flex fairys:flex-row fairys:flex-1 no-scrollbar"
           ref={tabInstance.dom}
         >
           {render}
         </div>
-        <div className="fairys_admin_tab_bar_right flex items-center justify-center">
+        <div className="fairys_admin_tab_bar_right fairys:flex fairys:items-center fairys:justify-center">
           <DropDownTabBarItems />
         </div>
       </div>

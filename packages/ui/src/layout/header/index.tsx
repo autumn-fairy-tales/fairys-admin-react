@@ -9,7 +9,7 @@ export const LayoutHeader = memo(() => {
 
   const headerCls = useMemo(() => {
     return clsx(
-      'fairys_admin_layout_header transition-all duration-300 h-[48px] border-b border-gray-200 dark:border-gray-800 dark:bg-gray-900!',
+      'fairys_admin_layout_header fairys:transition-all fairys:duration-300 fairys:h-[48px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800 fairys:dark:bg-gray-900!',
       {
         [theme]: true,
       },

@@ -111,14 +111,14 @@ export const ModalBase = (props: ModalBaseProps) => {
                 <div
                   style={headerStyle}
                   className={clsx(
-                    'fairys_admin_modal_base_header box-border p-4 relative flex items-center justify-between border-b border-gray-200 dark:border-gray-700 ',
+                    'fairys_admin_modal_base_header fairys:box-border fairys:p-4 fairys:relative fairys:flex fairys:items-center fairys:justify-between fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-700 ',
                     headerClassName,
                   )}
                 >
                   {title ? (
                     <div
                       style={titleStyle}
-                      className={`fairys_admin_modal_base_header_title font-medium text-lg ${titleClassName}`}
+                      className={`fairys_admin_modal_base_header_title fairys:font-medium fairys:text-lg ${titleClassName}`}
                     >
                       {title}
                     </div>
@@ -133,14 +133,14 @@ export const ModalBase = (props: ModalBaseProps) => {
 
               <div
                 style={bodyStyle}
-                className={`fairys_admin_modal_base_content p-4 box-border flex-1 overflow-hidden ${bodyClassName}`}
+                className={`fairys_admin_modal_base_content fairys:p-4 fairys:box-border fairys:flex-1 fairys:overflow-hidden ${bodyClassName}`}
               >
                 {children}
               </div>
               {footer ? (
                 <div
                   style={footerStyle}
-                  className={`fairys_admin_modal_base_footer p-4 box-border border-t border-gray-200 dark:border-gray-700 ${footerClassName}`}
+                  className={`fairys_admin_modal_base_footer fairys:p-4 fairys:box-border fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-700 ${footerClassName}`}
                 >
                   {footer}
                 </div>
@@ -149,7 +149,7 @@ export const ModalBase = (props: ModalBaseProps) => {
               )}
               {onClose ? (
                 <span
-                  className="fairys_admin_modal_base_close text-gray-400 hover:text-gray-500 dark:hover:text-gray-300 absolute top-4 right-4 size-[16px] cursor-pointer icon-[ant-design--close-outlined]"
+                  className="fairys_admin_modal_base_close fairys:text-gray-400 fairys:hover:text-gray-500 fairys:dark:hover:text-gray-300 fairys:absolute fairys:top-4 fairys:right-4 fairys:size-[16px] fairys:cursor-pointer fairys:icon-[ant-design--close-outlined]"
                   onClick={onClose}
                 />
               ) : (

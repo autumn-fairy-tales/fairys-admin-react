@@ -21,19 +21,19 @@ export const Logo = (props: LogoProps) => {
   };
 
   const baseClassName = useMemo(() => {
-    return clsx('fairys_admin_logo flex items-center', className, {
-      'justify-center': mode === 'close' || isOnlyName,
-      'gap-2': mode === 'open',
-      'min-h-[32px]': isOnlyName,
-      'ml-2': isHeader,
+    return clsx('fairys_admin_logo fairys:flex fairys:items-center', className, {
+      'fairys:justify-center': mode === 'close' || isOnlyName,
+      'fairys:gap-2': mode === 'open',
+      'fairys:min-h-[32px]': isOnlyName,
+      'fairys:ml-2': isHeader,
     });
   }, [mode, className, isOnlyName]);
 
   const pname = useMemo(() => {
     return clsx(
-      'fairys_admin_logo_name px-2 box-border flex-1 cursor-pointer whitespace-nowrap overflow-hidden text-ellipsis',
+      'fairys_admin_logo_name fairys:px-2 fairys:box-border fairys:flex-1 fairys:cursor-pointer fairys:whitespace-nowrap fairys:overflow-hidden fairys:text-ellipsis',
       {
-        'min-w-[165px]': isHeader,
+        'fairys:min-w-[165px]': isHeader,
       },
     );
   }, [isHeader]);
@@ -43,7 +43,7 @@ export const Logo = (props: LogoProps) => {
       {isOnlyName ? (
         <Fragment />
       ) : (
-        <div className="flex items-center justify-center cursor-pointer">
+        <div className="fairys:flex fairys:items-center fairys:justify-center fairys:cursor-pointer">
           <img width={logoSize} height={logoSize} src={state.logo} alt={state.projectName} onClick={onClickHome} />
         </div>
       )}

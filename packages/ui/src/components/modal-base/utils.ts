@@ -32,19 +32,19 @@ export interface ModalBaseProps {
 
 export const overlay_className = {
   modal:
-    'fairys_admin_modal_base_overlay absolute top-0 left-0 right-0 bottom-0 flex flex-col items-center no-scrollbar justify-around',
+    'fairys_admin_modal_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-col fairys:items-center no-scrollbar fairys:justify-around',
   drawer:
-    'fairys_admin_drawer_base_overlay absolute top-0 left-0 right-0 bottom-0 flex flex-row justify-end no-scrollbar',
+    'fairys_admin_drawer_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-row fairys:justify-end no-scrollbar',
 };
 
 export const base_className = {
   modal:
-    'fairys_admin_modal_base min-w-[400px] min-h-[200px] max-h-[calc(100vh-100px)] rounded-sm bg-white dark:bg-gray-800! border border-gray-200 dark:border-gray-700 shadow-xl inset-shadow-sm relative flex flex-col max-h-[100vh] overflow-hidden',
+    'fairys_admin_modal_base fairys:min-w-[400px] fairys:min-h-[200px] fairys:max-h-[calc(100vh-100px)] fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:overflow-hidden',
   drawer:
-    'fairys_admin_drawer_base_drawer min-w-[400px] min-h-[100vh] rounded-l-sm bg-white dark:bg-gray-800! border border-gray-200 dark:border-gray-700 shadow-xl inset-shadow-sm relative flex flex-col max-h-[100vh] overflow-hidden',
+    'fairys_admin_drawer_base_drawer fairys:min-w-[400px] fairys:min-h-[100vh] fairys:rounded-l-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:overflow-hidden',
 };
 
-export const fullScreen_base_className = 'min-w-[100vw]! min-h-[100vh]! p-0!';
+export const fullScreen_base_className = 'fairys:min-w-[100vw]! fairys:min-h-[100vh]! fairys:p-0!';
 
 export const overlay_variants = {
   modal: {

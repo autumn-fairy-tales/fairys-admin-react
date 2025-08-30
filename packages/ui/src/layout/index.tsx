@@ -48,12 +48,15 @@ export const Layout = () => {
   }, [layoutMode]);
 
   const layoutCls = useMemo(() => {
-    return clsx('fairys_admin_layout transition-all duration-300 overflow-hidden w-full h-full flex box-border ', {
-      [`fairys_admin_layout_${layoutMode}`]: !!layoutMode,
-      'flex-col': !isSiderFull,
-      'flex-row': isSiderFull,
-      [theme]: true,
-    });
+    return clsx(
+      'fairys_admin_layout fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:h-full fairys:flex fairys:box-border ',
+      {
+        [`fairys_admin_layout_${layoutMode}`]: !!layoutMode,
+        'fairys:flex-col': !isSiderFull,
+        'fairys:flex-row': isSiderFull,
+        [theme]: true,
+      },
+    );
   }, [layoutMode, isSiderFull, theme]);
 
   return (
@@ -62,21 +65,21 @@ export const Layout = () => {
         {isSiderFull ? (
           <Fragment>
             {isShowSider ? (
-              <div className="fairys_admin_layout_sider overflow-hidden h-full box-border ">
+              <div className="fairys_admin_layout_sider fairys:overflow-hidden fairys:h-full fairys:box-border ">
                 <LayoutSider />
               </div>
             ) : (
               <Fragment />
             )}
-            <div className="fairys_admin_layout_main overflow-hidden flex flex-col flex-1 h-full box-border">
+            <div className="fairys_admin_layout_main fairys:overflow-hidden fairys:flex fairys:flex-col fairys:flex-1 fairys:h-full fairys:box-border">
               {isShowHeader ? (
-                <div className="fairys_admin_layout_main_header overflow-hidden w-full box-border">
+                <div className="fairys_admin_layout_main_header fairys:overflow-hidden fairys:w-full fairys:box-border">
                   <LayoutHeader />
                 </div>
               ) : (
                 <Fragment />
               )}
-              <div className="fairys_admin_layout_main_content overflow-hiddenflex-1 w-full box-border">
+              <div className="fairys_admin_layout_main_content fairys:overflow-hidden fairys:flex-1 fairys:w-full fairys:box-border">
                 <LayoutContent />
               </div>
             </div>
@@ -84,21 +87,21 @@ export const Layout = () => {
         ) : (
           <Fragment>
             {isShowHeader ? (
-              <div className="fairys_admin_layout_header overflow-hidden w-full box-border ">
+              <div className="fairys_admin_layout_header fairys:overflow-hidden fairys:w-full fairys:box-border ">
                 <LayoutHeader />
               </div>
             ) : (
               <Fragment />
             )}
-            <div className="fairys_admin_layout_main overflow-hidden flex flex-row flex-1 w-full box-border">
+            <div className="fairys_admin_layout_main fairys:overflow-hidden fairys:flex fairys:flex-row fairys:flex-1 fairys:w-full fairys:box-border">
               {isShowSider ? (
-                <div className="fairys_admin_layout_main_sider overflow-hidden h-full box-border">
+                <div className="fairys_admin_layout_main_sider fairys:overflow-hidden fairys:h-full fairys:box-border">
                   <LayoutSider />
                 </div>
               ) : (
                 <Fragment />
               )}
-              <div className="fairys_admin_layout_main_content overflow-hidden flex-1 h-full box-border">
+              <div className="fairys_admin_layout_main_content fairys:overflow-hidden fairys:flex-1 fairys:h-full fairys:box-border">
                 <LayoutContent />
               </div>
             </div>

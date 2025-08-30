@@ -1,5 +1,4 @@
-import { motion, useCycle } from 'framer-motion';
-import { useEffect } from 'react';
+import { motion } from 'framer-motion';
 
 export interface SwitchBaseProps {
   value?: boolean;

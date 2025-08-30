@@ -8,7 +8,7 @@ import {
   flip as flipMiddleware,
   shift as shiftMiddleware,
 } from '@floating-ui/react';
-import type { ShiftOptions, FlipOptions, Placement, UseFloatingData } from '@floating-ui/react';
+import type { ShiftOptions, FlipOptions, Placement } from '@floating-ui/react';
 import type { Derivable } from '@floating-ui/react-dom';
 import clsx from 'clsx';
 
@@ -68,7 +68,7 @@ export const usePopoverBase = (options: UsePopoverBaseOptions) => {
 
   const bodyClasName = useMemo(() => {
     return clsx('fairys_admin_popover no-scrollbar', className, [
-      'rounded-sm bg-white dark:bg-gray-800! shadow-xl inset-shadow-sm',
+      'fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:shadow-xl fairys:inset-shadow-sm',
     ]);
   }, [className]);
 

@@ -9,9 +9,9 @@ export const LoginPageFormItemInput = (props: LoginPageFormItemInputProps) => {
   const { className, ...rest } = props;
   const inputClassName = useMemo(() => {
     return clsx(
-      'fairys_login_page_content_form_item_input transition-all duration-300 py-[8px] px-[12px] outline-none box-border w-full min-h-[32px] rounded-sm text-sm',
+      'fairys_login_page_content_form_item_input fairys:transition-all fairys:duration-300 fairys:py-[8px] fairys:px-[12px] fairys:outline-none fairys:box-border fairys:w-full fairys:min-h-[32px] fairys:rounded-sm fairys:text-sm',
       [
-        'border border-gray-200 dark:border-gray-700 data-[is-error=true]:text-red-600 data-[is-error=true]:border-b-red-600',
+        'fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:data-[is-error=true]:text-red-600 fairys:data-[is-error=true]:border-b-red-600',
       ],
       className,
     );
@@ -34,13 +34,16 @@ export const LoginPageFormItem = (props: LoginPageFormItemProps) => {
   const hasError = Boolean(errors);
 
   const formItemClassName = useMemo(() => {
-    return clsx('fairys_login_page_content_form_item flex flex-col gap-y-[4px]', className);
+    return clsx('fairys_login_page_content_form_item flex fairys:flex-col fairys:gap-y-[4px]', className);
   }, [className]);
 
   const labelcCls = useMemo(() => {
-    return clsx(`fairys_login_page_content_form_item_label relative block font-medium text-[14px]`, {
-      [`before:content-['*'] before:text-red-600 before:mr-[2px]`]: required,
-    });
+    return clsx(
+      `fairys_login_page_content_form_item_label fairys:relative fairys:block fairys:font-medium fairys:text-[14px]`,
+      {
+        [`fairys:before:content-['*'] fairys:before:text-red-600 fairys:before:mr-[2px]`]: required,
+      },
+    );
   }, [required]);
 
   const _value =

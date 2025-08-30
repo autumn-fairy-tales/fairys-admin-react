@@ -12,7 +12,7 @@ export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttribute
 }
 
 const baseClassName =
-  'flex transition-all duration-300 hover:bg-gray-200 dark:hover:bg-gray-700 rounded-md cursor-pointer';
+  'fairys:flex fairys:transition-all fairys:duration-300 fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-700 fairys:rounded-md fairys:cursor-pointer';
 
 export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElement>) => {
   const { mode, nameMode, className, ...rest } = props;
@@ -24,18 +24,24 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   const avatarRender = useMemo(() => {
     const avatar = accountState.userAvatar || settingInstance.state.logo;
     if (avatar) {
-      return <img className="rounded-full w-[32px] h-[32px] object-cover" src={avatar} alt={userName} />;
+      return (
+        <img
+          className="fairys:rounded-full fairys:w-[32px] fairys:h-[32px] fairys:object-cover"
+          src={avatar}
+          alt={userName}
+        />
+      );
     }
     return userName;
   }, [accountState.userAvatar, userName]);
 
   const classNameBase = useMemo(() => {
     return clsx(baseClassName, className, {
-      'p-[2px] items-center justify-center mr-2': mode === 'header',
-      'p-[4px] mx-[8px] my-[8px] bg-gray-200 dark:bg-gray-700': mode === 'sider',
-      'px-[14px] ': mode === 'sider' && nameMode === 'show',
-      'items-center gap-4': nameMode === 'show',
-      'items-center justify-center': nameMode === 'node',
+      'fairys:p-[2px] fairys:items-center jfairysadmin:ustify-center mr-2': mode === 'header',
+      'fairys:p-[4px] fairys:mx-[8px] fairys:my-[8px] fairys:bg-gray-200 fairys:dark:bg-gray-700': mode === 'sider',
+      'fairys:px-[14px] ': mode === 'sider' && nameMode === 'show',
+      'fairys:items-center fairys:gap-4': nameMode === 'show',
+      'fairys:items-center fairys:justify-center': nameMode === 'node',
     });
   }, [mode, className, nameMode]);
 
@@ -43,13 +49,15 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
     return [
       {
         children: (
-          <div className="p-2 flex flex-col gap-y-4">
-            <span className="text-[12px] text-gray-300 dark:text-gray-500">当前登录账号</span>
-            <div className="flex min-h-[38px] gap-x-2">
+          <div className="fairys:p-2 fairys:flex fairys:flex-col fairys:gap-y-4">
+            <span className="fairys:text-[12px] fairys:text-gray-300 fairys:dark:text-gray-500">当前登录账号</span>
+            <div className="fairys:flex fairys:min-h-[38px] fairys:gap-x-2">
               {avatarRender}
-              <div className="flex flex-col gap-y-1">
-                <div className="text-[14px] font-medium text-gray-900 dark:text-gray-400">{userName}</div>
-                <div className="text-[12px] text-gray-400 dark:text-gray-500">[{userEmail}]</div>
+              <div className="fairys:flex fairys:flex-col fairys:gap-y-1">
+                <div className="fairys:text-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-400">
+                  {userName}
+                </div>
+                <div className="fairys:text-[12px] fairys:text-gray-400 fairys:dark:text-gray-500">[{userEmail}]</div>
               </div>
             </div>
           </div>
@@ -90,13 +98,15 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   };
 
   return (
-    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref} motionClassName="min-w-[180px]">
+    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref} motionClassName="fairys:min-w-[180px]">
       <div {...rest} title={userName} className={classNameBase}>
-        <span className="flex items-center justify-center rounded-full bg-gray-200 dark:bg-gray-700">
+        <span className="fairys:flex fairys:items-center fairys:justify-center fairys:rounded-full fairys:bg-gray-200 fairys:dark:bg-gray-700">
           {avatarRender}
         </span>
         {nameMode === 'show' ? (
-          <span className="text-[14px] font-medium text-gray-900 dark:text-gray-400">{userName}</span>
+          <span className="fairys:text-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-400">
+            {userName}
+          </span>
         ) : (
           <Fragment />
         )}

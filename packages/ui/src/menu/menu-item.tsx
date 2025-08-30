@@ -14,10 +14,12 @@ export interface MenuItemProps {
 }
 
 const menuItemBaseClassName =
-  'fairys_admin_menu_item shrink-0 transition-all duration-300 rounded-sm h-[36px] box-border flex items-center justify-between cursor-pointer gap-1 dark:text-gray-400 px-[14px]';
+  'fairys_admin_menu_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:h-[36px] fairys:box-border fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400 fairys:px-[14px]';
 
-const titleClassName = 'fairys_admin_menu_item_title flex flex-1 items-center justify-center overflow-hidden gap-1';
-const titleTextClassName = 'fairys_admin_menu_item_title_text flex-1 text-ellipsis overflow-hidden whitespace-nowrap';
+const titleClassName =
+  'fairys_admin_menu_item_title fairys:flex fairys:flex-1 fairys:items-center fairys:justify-center fairys:overflow-hidden fairys:gap-1';
+const titleTextClassName =
+  'fairys_admin_menu_item_title_text fairys:flex-1 fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap';
 
 export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item } = props;
@@ -32,16 +34,16 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
   }, [location.pathname, sideMenuMode]);
 
   const className = useMemo(() => {
-    return clsx(menuItemBaseClassName, ['text-gray-400', 'dark:text-gray-600'], {
-      'bg-(--theme-color)': !!isActive,
-      'text-white dark:text-white': !!isActive,
+    return clsx(menuItemBaseClassName, ['fairys:text-gray-400', 'fairys:dark:text-gray-600'], {
+      'fairys:bg-(--theme-color)': !!isActive,
+      'fairys:text-white fairys:dark:text-white': !!isActive,
     });
   }, [isActive]);
 
   const iconRender = useMemo(() => {
     return item.icon ? (
-      <span className={'size-[16px]'}>
-        <Icon icon={item.icon} className={'size-[16px]'} />
+      <span className={'fairys:size-[16px]'}>
+        <Icon icon={item.icon} className={'fairys:size-[16px]'} />
       </span>
     ) : (
       <Fragment />
@@ -101,9 +103,9 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     return clsx(menuItemBaseClassName, {
       [`data-level=${level}`]: true,
       active: !!isActive,
-      'bg-(--theme-color)': !!isActive,
-      'text-white dark:text-white': !!isActive,
-      'hover:bg-gray-200/75 dark:hover:bg-gray-600': !isActive,
+      'fairys:bg-(--theme-color)': !!isActive,
+      'fairys:text-white fairys:dark:text-white': !!isActive,
+      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
     });
   }, [isActive, level]);
 
@@ -129,7 +131,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
 
   const expandIcon = useMemo(() => {
     return clsx(
-      'relative ms-1 w-[10px] after:bg-current before:bg-current after:-translate-y-[1px] before:-translate-y-[1px]',
+      'fairys:relative fairys:ms-1 fairys:w-[10px] fairys:after:bg-current fairys:before:bg-current fairys:after:-translate-y-[1px] fairys:before:-translate-y-[1px]',
       {
         expand: isExpand,
         close: !isExpand,
@@ -138,7 +140,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   }, [isExpand]);
 
   const iconClassName = useMemo(() => {
-    return clsx('size-[16px]', {});
+    return clsx('fairys:size-[16px]', {});
   }, [isExpandCollapse]);
 
   useEffect(() => {

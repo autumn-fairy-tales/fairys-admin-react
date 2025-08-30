@@ -24,8 +24,8 @@ const PopoverButton = () => {
 
   return (
     <PopoverMenu items={list} onClickItem={onNativeClick} onCloseItem={onClose} isHideClose={false}>
-      <div className="w-[25px] h-[25px] flex justify-center items-center text-sm/6 font-semibold bg-white dark:bg-gray-600 text-gray-400 hover:text-gray-600 cursor-pointer dark:text-gray-400 dark:hover:text-white">
-        <span className="icon-[ant-design--caret-down-outlined]" />
+      <div className="fairys:w-[25px] fairys:h-[25px] fairys:flex fairys:justify-center fairys:items-center fairys:text-sm/6 fairys:font-semibold fairys:bg-white fairys:dark:bg-gray-600 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:cursor-pointer fairys:dark:text-gray-400 fairys:dark:hover:text-white">
+        <span className="fairys:icon-[ant-design--caret-down-outlined]" />
       </div>
     </PopoverMenu>
   );
@@ -41,7 +41,7 @@ export const DropDownTabBarItems = () => {
       return <Fragment />;
     }
     return (
-      <div className="h-full  flex items-center justify-center w-[50px]">
+      <div className="fairys:h-full  fairys:flex fairys:items-center fairys:justify-center fairys:w-[50px]">
         <PopoverButton />
       </div>
     );

@@ -6,7 +6,7 @@ interface MainPageBaseProps extends React.DetailedHTMLProps<React.HTMLAttributes
 export const MainPageSearch = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
-    return clsx('fairys_admin_main_page_search w-full box-border', className);
+    return clsx('fairys_admin_main_page_search fairys:w-full fairys:box-border', className);
   }, [className]);
 
   return (
@@ -19,7 +19,10 @@ export const MainPageSearch = forwardRef((props: MainPageBaseProps, ref: Ref<HTM
 export const MainPageBody = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
-    return clsx('fairys_admin_main_page_body w-full box-border flex-1 flex flex-col overflow-auto', className);
+    return clsx(
+      'fairys_admin_main_page_body fairys:w-full fairys:box-border fairys:flex-1 fairys:flex fairys:flex-col fairys:overflow-auto',
+      className,
+    );
   }, [className]);
 
   return (
@@ -32,7 +35,7 @@ export const MainPageBody = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLD
 export const MainPageFooter = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
-    return clsx('fairys_admin_main_page_footer box-border w-full', className);
+    return clsx('fairys_admin_main_page_footer fairys:box-border fairys:w-full', className);
   }, [className]);
 
   return (
@@ -46,12 +49,15 @@ export const MainPage = forwardRef(
   (props: MainPageBaseProps & { bodyClassName?: string }, ref: Ref<HTMLDivElement>) => {
     const { className, children, bodyClassName, ...rest } = props;
     const clx = useMemo(() => {
-      return clsx('fairys_admin_main_page p-[14px] box-border h-full w-full bg-gray-100 dark:bg-gray-950', className);
+      return clsx(
+        'fairys_admin_main_page fairys:p-[14px] fairys:box-border fairys:h-full fairys:w-full fairys:bg-stone-100 fairys:dark:bg-gray-950',
+        className,
+      );
     }, [className]);
 
     const mainBodyCls = useMemo(() => {
       return clsx(
-        'fairys_admin_main_page_main p-[14px] flex flex-col box-border h-full w-full bg-white dark:bg-gray-800 rounded-sm',
+        'fairys_admin_main_page_main fairys:p-[14px] fairys:flex fairys:flex-col fairys:box-border fairys:h-full fairys:w-full fairys:bg-white fairys:dark:bg-gray-800 fairys:rounded-sm',
         bodyClassName,
       );
     }, [bodyClassName]);
