@@ -1,30 +1,73 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import { onLogin } from './utils';
 import { EnterLoading } from '@fairys/admin-tools-react';
+import { LoginPage } from '@fairys/admin-tools-react';
 
 interface LoginProps {
   onLogin: () => void;
 }
 
+const rules = {
+  username: (value: string) => {
+    if (!value) {
+      return '用户名不能为空';
+    }
+    return '';
+  },
+  password: (value: string) => {
+    if (!value) {
+      return '密码不能为空';
+    }
+    return '';
+  },
+};
+
 export const Login = (props: LoginProps) => {
   const [loading, setLoading] = useState(false);
-  const onClick = () => {
-    setLoading(true);
-    onLogin()
-      .then(() => {
-        console.log('登录成功');
-        props.onLogin();
+  const formInstance = LoginPage.useForm();
+  const onLoginClick = () => {
+    formInstance
+      .validate()
+      .then((values) => {
+        setLoading(true);
+        onLogin()
+          .then(() => {
+            console.log('登录成功');
+            props.onLogin();
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+        console.log(values);
       })
-      .finally(() => {
-        setLoading(false);
+      .catch((err) => {
+        console.log(err);
       });
   };
+
   return (
-    <div>
+    <Fragment>
+      <LoginPage
+        mainClassName="bg-white dark:bg-gray-900 px-[50px] py-[50px]"
+        title="登录"
+        form={formInstance}
+        rules={rules}
+      >
+        <LoginPage.FormItem name="username" label="用户名" required>
+          <LoginPage.FormItemInput placeholder="请输入用户名" />
+        </LoginPage.FormItem>
+        <LoginPage.FormItem name="password" label="密码" required>
+          <LoginPage.FormItemInput placeholder="请输入密码" type="password" />
+        </LoginPage.FormItem>
+        <button
+          onClick={onLoginClick}
+          className="bg-(--theme-color)/90 rounded-sm text-white py-[9px] mt-[20px] hover:bg-(--theme-color) cursor-pointer transition-all duration-300"
+          type="button"
+        >
+          登录
+        </button>
+      </LoginPage>
       <EnterLoading loading={loading} tips="登录中" />
-      <button className="text-black dark:text-gray-50 " onClick={onClick} disabled={loading}>
-        登录
-      </button>
-    </div>
+    </Fragment>
   );
 };
