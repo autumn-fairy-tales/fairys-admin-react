@@ -1,7 +1,11 @@
 import './styles/indx.css';
+export * from './avatar';
+export * from './breadcrumb';
 export * from './components';
 export * from './context';
 export * from './layout';
+export * from './logo';
 export * from './main-menu';
 export * from './menu';
-export * from './utils/loading-fade-out';
+export * from './setting';
+export * from './utils';

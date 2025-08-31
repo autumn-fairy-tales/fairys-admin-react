@@ -15,7 +15,7 @@ export const ButtonBase = (props: ButtonBaseProps) => {
       [
         'fairys:outline-0',
         'fairys:flex fairys:items-center fairys:justify-center fairys:min-w-[36px] fairys:min-h-[36px] fairys:rounded-sm fairys:cursor-pointer',
-        'fairys:transition-all duration-300',
+        'fairys:transition-all fairys:duration-300',
         'fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-600 ',
         isBg && 'fairys:bg-gray-200 fairys:dark:bg-gray-600',
       ],

@@ -221,7 +221,7 @@ interface MenuItemProps {
 const popoverMenuItemBaseCls = `fairys:shrink-0 fairys:text-gray-400 fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:items-center fairys:justify-between fairys:gap-1 fairys:py-[5px] fairys:px-[8px] fairys:mx-[5px] fairys:rounded-sm`;
 const popoverMenuItemBaseClsDisabled = `fairys:opacity-70 fairys:select-none`;
 const popoverMenuItemBaseClsNotDisabled = `fairys:text-gray-600 fairys:cursor-pointer fairys:hover:text-gray-700 fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300 fairys:dark:hover:bg-gray-700 fairys:hover:bg-gray-100`;
-const popoverMenuItemBaseClsActive = `fairys:active fairys:bg-(--theme-color)! fairys:text-white!`;
+const popoverMenuItemBaseClsActive = `active fairys:bg-(--theme-color)! fairys:text-white!`;
 
 const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { rowItemData, isSubMenuItem = false } = props;

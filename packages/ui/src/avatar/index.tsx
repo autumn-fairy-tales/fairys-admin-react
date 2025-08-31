@@ -37,7 +37,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
 
   const classNameBase = useMemo(() => {
     return clsx(baseClassName, className, {
-      'fairys:p-[2px] fairys:items-center jfairysadmin:ustify-center mr-2': mode === 'header',
+      'fairys:p-[2px] fairys:items-center fairys:justify-center fairys:mr-2': mode === 'header',
       'fairys:p-[4px] fairys:mx-[8px] fairys:my-[8px] fairys:bg-gray-200 fairys:dark:bg-gray-700': mode === 'sider',
       'fairys:px-[14px] ': mode === 'sider' && nameMode === 'show',
       'fairys:items-center fairys:gap-4': nameMode === 'show',

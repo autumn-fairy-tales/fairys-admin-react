@@ -34,7 +34,7 @@ export const LoginPageFormItem = (props: LoginPageFormItemProps) => {
   const hasError = Boolean(errors);
 
   const formItemClassName = useMemo(() => {
-    return clsx('fairys_login_page_content_form_item flex fairys:flex-col fairys:gap-y-[4px]', className);
+    return clsx('fairys_login_page_content_form_item fairys:flex fairys:flex-col fairys:gap-y-[4px]', className);
   }, [className]);
 
   const labelcCls = useMemo(() => {
