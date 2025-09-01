@@ -28,6 +28,9 @@ body,
     transition-timing-function: var(--tw-ease, var(--fairys-default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
   }
+  .dark #root {
+    color: var(--fairys-color-gray-400) !important;
+  }
   .ka-wrapper,
   .ka-content {
     width: 100%;
