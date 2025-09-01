@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import {
   LoginPageFormInstanceContext,
   useLoginPageFormInstance,

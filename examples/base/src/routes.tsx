@@ -2,6 +2,7 @@ import type { RouteObject } from 'react-router';
 import Home from './pages';
 import List from './pages/list';
 import Detail from './pages/detail';
+import About from './pages/about';
 import { Layout } from '@fairys/admin-tools-react';
 export const routes: RouteObject[] = [
   {
@@ -20,6 +21,10 @@ export const routes: RouteObject[] = [
       {
         path: '/detail',
         Component: Detail,
+      },
+      {
+        path: '/about',
+        Component: About,
       },
       {
         path: '*',

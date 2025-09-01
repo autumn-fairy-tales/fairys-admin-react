@@ -71,6 +71,9 @@ export class LoginPageFormInstance {
   };
   /**更新表单值*/
   updatedFormData = (value: Record<string, any>, isValidate?: boolean) => {
+    if (!value) {
+      return;
+    }
     for (const key in value) {
       this.state.formData[key] = value[key];
     }
@@ -92,7 +95,6 @@ export class LoginPageFormInstance {
       }
     }
   };
-
   /**验证表单*/
   validate = async (keys?: string[], isReturn: boolean = true) => {
     const errors: Record<string, React.ReactNode> = {};
@@ -122,7 +124,6 @@ export class LoginPageFormInstance {
       });
     }
   };
-
   /**值更新*/
   onValueChange = (name: string, value: any) => {
     this.updatedFormData({ [name]: value }, true);

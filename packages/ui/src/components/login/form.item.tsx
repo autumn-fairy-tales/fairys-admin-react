@@ -8,7 +8,7 @@ export interface LoginPageFormItemInputProps
 }
 
 export const LoginPageFormItemInputClassName =
-  'fairys_login_page_content_form_item_input fairys:transition-all fairys:duration-300 fairys:py-[8px] fairys:px-[12px] fairys:outline-none fairys:box-border fairys:w-full fairys:min-h-[32px] fairys:rounded-sm fairys:text-sm fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:data-[is-error=true]:text-red-500 fairys:data-[is-error=true]:placeholder:text-red-500';
+  'fairys_login_page_content_form_item_input fairys:disabled:bg-gray-100 fairys:dark:disabled:bg-gray-700 fairys:transition-all fairys:duration-300 fairys:py-[8px] fairys:px-[12px] fairys:outline-none fairys:box-border fairys:w-full fairys:min-h-[32px] fairys:rounded-sm fairys:text-sm fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:data-[is-error=true]:text-red-500 fairys:data-[is-error=true]:placeholder:text-red-500';
 
 export const LoginPageFormItemInput = (props: LoginPageFormItemInputProps) => {
   const { className, errorBorderd = 'bottom', ...rest } = props;

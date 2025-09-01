@@ -57,7 +57,7 @@ export const MainPage = forwardRef(
 
     const mainBodyCls = useMemo(() => {
       return clsx(
-        'fairys_admin_main_page_main fairys:p-[14px] fairys:flex fairys:flex-col fairys:box-border fairys:h-full fairys:w-full fairys:bg-white fairys:dark:bg-gray-800 fairys:rounded-sm',
+        'fairys_admin_main_page_main fairys:p-[14px] fairys:flex fairys:flex-col fairys:box-border fairys:h-full fairys:w-full fairys:bg-white fairys:dark:bg-gray-900 fairys:rounded-sm',
         bodyClassName,
       );
     }, [bodyClassName]);

@@ -1,7 +1,6 @@
 import { MainPage } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
 import { LoginPage } from '@fairys/admin-tools-react';
-
 const rules = {
   username: (value: string) => {
     if (!value) {
@@ -41,7 +40,7 @@ const MainIndex = () => {
           rules={rules}
         >
           <LoginPage.FormItem name="username" label="用户名" required>
-            <LoginPage.FormItemInput placeholder="请输入用户名" />
+            <LoginPage.FormItemInput disabled placeholder="请输入用户名" />
           </LoginPage.FormItem>
           <LoginPage.FormItem name="password" label="密码" required>
             <LoginPage.FormItemInput placeholder="请输入密码" type="password" />

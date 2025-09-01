@@ -140,6 +140,11 @@ export const menuItems: MenuItemType[] = [
         icon: 'ant-design:home-outlined',
       },
       {
+        title: '关于',
+        path: '/about',
+        icon: 'ant-design:info-circle-outlined',
+      },
+      {
         title: '详情2',
         path: '/main-menu2/detail',
         icon: 'ant-design:info-circle-outlined',

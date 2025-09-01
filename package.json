@@ -25,18 +25,18 @@
     "pretty-quick": "~4.2.2",
     "lint-staged": "~16.1.4",
     "typescript": "~5.9.2",
-    "@tailwindcss/postcss": "^4.1.11",
-    "tailwindcss": "^4.1.11",
-    "@iconify/tailwind4": "^1.0.6",
-    "@iconify/json": "^2.2.367"
+    "@tailwindcss/postcss": "~4.1.11",
+    "tailwindcss": "~4.1.11",
+    "@iconify/tailwind4": "~1.0.6",
+    "@iconify/json": "~2.2.367"
   },
   "overrides": {
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7"
+    "@types/react": "~18.2.21",
+    "@types/react-dom": "~18.2.7"
   },
   "resolutions": {
-    "@types/react": "^18.2.21",
-    "@types/react-dom": "^18.2.7"
+    "@types/react": "~18.2.21",
+    "@types/react-dom": "~18.2.7"
   },
   "lint-staged": {
     "*.{js,jsx,tsx,ts,less,md,json}": "prettier --write"
