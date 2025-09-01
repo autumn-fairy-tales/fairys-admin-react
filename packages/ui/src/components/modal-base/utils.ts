@@ -49,13 +49,13 @@ export const fullScreen_base_className = 'fairys:min-w-[100vw]! fairys:min-h-[10
 export const overlay_variants = {
   modal: {
     open: {
-      backgroundColor: 'var(--bg-modal,oklch(27.8% 0.033 256.848 /0.5))',
+      backgroundColor: 'var(--fairys-bg-modal,oklch(27.8% 0.033 256.848 /0.5))',
     },
     collapsed: { backgroundColor: 'transparent' },
   },
   drawer: {
     open: {
-      backgroundColor: 'var(--bg-modal,oklch(27.8% 0.033 256.848 /0.5))',
+      backgroundColor: 'var(--fairys-bg-modal,oklch(27.8% 0.033 256.848 /0.5))',
     },
     collapsed: { backgroundColor: 'transparent' },
   },

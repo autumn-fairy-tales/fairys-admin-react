@@ -49,7 +49,7 @@ export const Layout = () => {
 
   const layoutCls = useMemo(() => {
     return clsx(
-      'fairys_admin_layout fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:h-full fairys:flex fairys:box-border ',
+      'fairys_admin_layout fairys:bg-modal fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:h-full fairys:flex fairys:box-border ',
       {
         [`fairys_admin_layout_${layoutMode}`]: !!layoutMode,
         'fairys:flex-col': !isSiderFull,

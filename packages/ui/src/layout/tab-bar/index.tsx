@@ -88,7 +88,7 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const iconClassName = useMemo(() => {
     return clsx(
-      'icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white',
+      'fairys:icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white',
       {
         'fairys:dark:text-gray-400': !!match,
         'fairys:dark:text-gray-500': !match,

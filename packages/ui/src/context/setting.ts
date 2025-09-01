@@ -119,10 +119,10 @@ class SettingInstance {
     });
     if (this.state.themeColor) {
       if (document.documentElement) {
-        document.documentElement.setAttribute('style', `--theme-color:${this.state.themeColor}`);
+        document.documentElement.setAttribute('style', `--fairys-theme-color:${this.state.themeColor}`);
       }
       if (document.body) {
-        document.body.setAttribute('style', `--theme-color:${this.state.themeColor}`);
+        document.body.setAttribute('style', `--fairys-theme-color:${this.state.themeColor}`);
       }
     }
     this.autoListenSystemTheme();
@@ -170,7 +170,7 @@ class SettingInstance {
   updatedThemeColor = (themeColor: string) => {
     this.updated({ themeColor });
     if (themeColor) {
-      document.body.setAttribute('style', `--theme-color:${themeColor}`);
+      document.body.setAttribute('style', `--fairys-theme-color:${themeColor}`);
     } else {
       document.body.removeAttribute('style');
     }

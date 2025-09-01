@@ -14,7 +14,7 @@ class RouterDataInstance {
   /**从root挂载的数据*/
   __navigate: NavigateFunction;
   /**跳转前回调*/
-  onNavigateBefore: (to: To) => Promise<boolean>;
+  onNavigateBefore: (to: To, next: (to?: To, options?: NavigateOptions) => void) => Promise<boolean>;
 
   /**内置跳转方法*/
   navigate = async (to: To | number, options?: NavigateOptions) => {
@@ -28,7 +28,9 @@ class RouterDataInstance {
     }
     let isNavigate = true;
     if (this.onNavigateBefore) {
-      isNavigate = await this.onNavigateBefore(to);
+      isNavigate = await this.onNavigateBefore(to, (_newTo = to, _options = options) => {
+        if (_newTo !== null) navigate?.(_newTo, _options);
+      });
     }
     if (isNavigate) {
       return navigate?.(to, options);

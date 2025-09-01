@@ -41,7 +41,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
       'fairys_admin_main_menu_item fairys:transition-all fairys:duration-300 fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:box-border fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
       {
         active: isActive,
-        'fairys:bg-(--theme-color)': !!isActive,
+        'fairys:bg-(--fairys-theme-color)': !!isActive,
         'fairys:text-white fairys:dark:text-white': isActive,
         'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
         'fairys:flex-col ': layoutMode === 'vertical',

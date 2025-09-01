@@ -55,7 +55,7 @@ export const DarkModeInstancePopoverContextProvider = (props: DarkModeInstanceCo
         return child;
       }
       return cloneElement(child as React.ReactElement, {
-        className: clsx(prop?.className, 'transition-all duration-300', {
+        className: clsx(prop?.className, 'fairys:transition-all fairys:duration-300', {
           dark: darkMode,
         }),
       });

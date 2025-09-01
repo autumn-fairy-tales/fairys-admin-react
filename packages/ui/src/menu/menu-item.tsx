@@ -35,7 +35,7 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
 
   const className = useMemo(() => {
     return clsx(menuItemBaseClassName, ['fairys:text-gray-400', 'fairys:dark:text-gray-600'], {
-      'fairys:bg-(--theme-color)': !!isActive,
+      'fairys:bg-(--fairys-theme-color)': !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
     });
   }, [isActive]);
@@ -103,7 +103,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     return clsx(menuItemBaseClassName, {
       [`data-level=${level}`]: true,
       active: !!isActive,
-      'fairys:bg-(--theme-color)': !!isActive,
+      'fairys:bg-(--fairys-theme-color)': !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
       'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
     });

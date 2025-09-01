@@ -13,23 +13,20 @@ body,
 @import 'tailwindcss' prefix(fairys);
 @plugin "@iconify/tailwind4";
 
+@theme static {
+  --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
+  --theme-color: var(--color-blue-500, oklch(62.3% 0.214 259.815));
+  --bg-modal: oklch(27.8% 0.033 256.848 /0.5);
+  --enter-loading-transform-color: #00a98e;
+}
+
 @layer base {
-  :root,
-  :host {
-    --fairys-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02),
-      0 2px 4px 0 rgba(0, 0, 0, 0.02);
-    --theme-color: var(--color-blue-500, oklch(62.3% 0.214 259.815));
-    --bg-modal: oklch(27.8% 0.033 256.848 /0.5);
-    --fairys-enter-loading-transform-color: #00a98e;
-  }
   .dark {
     background-color: black;
     color: var(--fairys-color-gray-400);
     transition-property: all;
-    transition-timing-function: var(--tw-ease, var(--default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--default-transition-duration));
-    --tw-duration: 0.3s;
-    transition-duration: 0.3s;
+    transition-timing-function: var(--tw-ease, var(--fairys-default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
   }
   .ka-wrapper,
   .ka-content {

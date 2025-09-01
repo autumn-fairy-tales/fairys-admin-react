@@ -1,4 +1,4 @@
-export const styles = `
+const styles = `
     @keyframes rainbow {
     0% {
       --rainbow-color: #00a98e;
@@ -435,7 +435,18 @@ export const styles = `
     content: "…";
   }
 `;
-export const body = `
+export const getLoadingHtmlTags = (title: string = '', tips: string = '载入中') => {
+  const htmlTags = [
+    {
+      tag: 'style',
+      children: styles,
+      head: true,
+      append: false,
+      attrs: { id: 'loading-container-style' },
+    },
+    {
+      tag: 'body',
+      children: `
 <div id="loading-container">
   <div class="loading">
     <div class="square"></div>
@@ -443,31 +454,14 @@ export const body = `
     <div class="square"></div>
     <div class="square"></div>
   </div>
-  <div class="name"><%= FAIRYS_APP_TITLE %></div>
-  <div class="tips">载入中</div>
+  ${title ? `<div class="name">${title}</div>` : ''}
+  ${tips ? `<div class="tips">${tips}</div>` : ''}
 </div>
-`;
-export const htmlTags = [
-  {
-    tag: 'style',
-    children: styles,
-    head: true,
-    append: false,
-    attrs: { id: 'loading-container-style' },
-  },
-  {
-    tag: 'body',
-    children: body,
-    head: false,
-    append: false,
-  },
-];
+`,
+      head: false,
+      append: false,
+    },
+  ];
 
-export const getLoadingHtmlTags = (title: string = '') => {
-  return htmlTags.map((tag) => {
-    if (tag.tag === 'body') {
-      tag.children = tag.children.replace('<%= FAIRYS_APP_TITLE %>', title || '');
-    }
-    return tag;
-  });
+  return htmlTags;
 };
