@@ -26,7 +26,11 @@ const MotionAnimation = (props: MotionAnimationProps) => {
   }, [pageTransitionMode]);
   return (
     <AnimatePresence mode="wait">
-      <motion.div {...config} className="fairys:w-full fairys:h-full fairys:overflow-hidden" key={location.pathname}>
+      <motion.div
+        {...config}
+        className="fairys_admin_main_content_body_motion fairys:w-full fairys:h-full fairys:overflow-hidden"
+        key={location.pathname}
+      >
         {props.children}
       </motion.div>
     </AnimatePresence>
@@ -63,7 +67,11 @@ const OutletContentContext = () => {
 
   return (
     <Fragment>
-      <FullScreen open={pageFullScreen} onClose={tabBarInstance.onToggleFullScreen}>
+      <FullScreen
+        className="fairys_admin_main_content_body_full_screen"
+        open={pageFullScreen}
+        onClose={tabBarInstance.onToggleFullScreen}
+      >
         {render}
       </FullScreen>
     </Fragment>

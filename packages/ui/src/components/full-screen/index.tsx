@@ -5,6 +5,7 @@ import hotkeys from 'hotkeys-js';
 interface FullScreenProps {
   open?: boolean;
   children?: React.ReactNode;
+  className?: string;
   onClose?: () => void;
 }
 
@@ -30,7 +31,7 @@ class FullScreenInstance {
 const useFullScreenInstance = () => useRef(new FullScreenInstance()).current;
 
 export const FullScreen = (props: FullScreenProps) => {
-  const { open, children, onClose } = props;
+  const { open, children, onClose, className: cls } = props;
   const fullScreenInstance = useFullScreenInstance();
   fullScreenInstance.onClose = onClose;
   fullScreenInstance.open = open;
@@ -38,12 +39,13 @@ export const FullScreen = (props: FullScreenProps) => {
   const className = useMemo(() => {
     return clsx(
       'fairys_admin_full_screen fairys:transparent fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:h-full',
+      cls,
       {
         'fairys:absolute fairys:bg-white fairys:dark:bg-gray-800 fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0':
           !!open,
       },
     );
-  }, [open]);
+  }, [open, cls]);
 
   const closeClassName = useMemo(() => {
     return clsx(
