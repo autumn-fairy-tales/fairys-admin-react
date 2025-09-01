@@ -2,10 +2,9 @@ import clsx from 'clsx';
 import { Fragment, useEffect, useMemo, useRef } from 'react';
 import hotkeys from 'hotkeys-js';
 
-interface FullScreenProps {
+interface FullScreenProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   open?: boolean;
   children?: React.ReactNode;
-  className?: string;
   onClose?: () => void;
 }
 
@@ -31,7 +30,7 @@ class FullScreenInstance {
 const useFullScreenInstance = () => useRef(new FullScreenInstance()).current;
 
 export const FullScreen = (props: FullScreenProps) => {
-  const { open, children, onClose, className: cls } = props;
+  const { open, children, onClose, className: cls, ...rest } = props;
   const fullScreenInstance = useFullScreenInstance();
   fullScreenInstance.onClose = onClose;
   fullScreenInstance.open = open;
@@ -57,7 +56,7 @@ export const FullScreen = (props: FullScreenProps) => {
   useEffect(fullScreenInstance.onEsc, [open]);
 
   return (
-    <div className={className}>
+    <div {...rest} className={className}>
       {open ? (
         <div title="退出全屏" className={closeClassName} onClick={onClose}>
           <span className="fairys:absolute fairys:top-[4px] fairys:right-[4px] fairys:text-white fairys:dark:hover:text-neutral-300 fairys:size-[20px] fairys:icon-[mdi-light--fullscreen-exit]" />
