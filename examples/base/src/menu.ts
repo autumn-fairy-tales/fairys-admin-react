@@ -6,7 +6,7 @@ export const menuItems: MenuItemType[] = [
     path: 'main-menu',
     isMain: true,
     icon: 'ant-design:home-outlined',
-    children: [
+    items: [
       {
         title: '首页',
         path: '/',
@@ -16,7 +16,7 @@ export const menuItems: MenuItemType[] = [
         title: '列表',
         path: '/list',
         icon: 'ant-design:unordered-list',
-        children: [
+        items: [
           {
             title: '列表-1',
             path: '/list1-1',
@@ -26,7 +26,7 @@ export const menuItems: MenuItemType[] = [
             title: '列表-1-1',
             path: '/list1-1-1',
             icon: 'ant-design:unordered-list',
-            children: [
+            items: [
               {
                 title: '列表-1-1-1',
                 path: '/list1-1-1-1',
@@ -45,7 +45,7 @@ export const menuItems: MenuItemType[] = [
         title: '列表2列表2列表2列表2列表2列表2列表2列表2列表2',
         path: '/list2',
         icon: 'ant-design:unordered-list',
-        children: [
+        items: [
           {
             title: '列表2-1',
             path: '/list2-1',
@@ -55,7 +55,7 @@ export const menuItems: MenuItemType[] = [
             title: '列表2-1-1',
             path: '/list2-1-1',
             icon: 'ant-design:unordered-list',
-            children: [
+            items: [
               {
                 title: '列表2-1-1-1',
                 path: '/list2-1-1-1',
@@ -132,7 +132,7 @@ export const menuItems: MenuItemType[] = [
     path: 'main-menu2',
     isMain: true,
     icon: 'ant-design:home-outlined',
-    children: [
+    items: [
       {
         title: '首页2',
         path: '/main-menu2/home',
@@ -147,7 +147,7 @@ export const menuItems: MenuItemType[] = [
         title: '列表10',
         path: '/main-menu2/list2',
         icon: 'ant-design:unordered-list',
-        children: [
+        items: [
           {
             title: '列表2-1',
             path: '/main-menu2/list2-1',
@@ -157,7 +157,7 @@ export const menuItems: MenuItemType[] = [
             title: '列表2-1-1',
             path: '/main-menu2/list2-1-1',
             icon: 'ant-design:unordered-list',
-            children: [
+            items: [
               {
                 title: '列表2-1-1-1',
                 path: '/main-menu2/list2-1-1-1',

@@ -11,8 +11,8 @@ export interface MenuItemType {
   /**判断是否主子菜单字段，仅在第一层生效*/
   isMain?: boolean;
   /**子项菜单*/
-  children?: MenuItemType[];
-  [x: string]: any;
+  items?: MenuItemType[];
+  // [x: string]: any;
 }
 
 export interface MenuDataInstanceState {
@@ -45,8 +45,8 @@ const flatMenuItems = (
     if (item.path) {
       parentMenuItemMap.set(item.path, [...parentPath].concat(item));
     }
-    if (Array.isArray(item.children)) {
-      _list.push(...flatMenuItems(item.children, [...parentPath].concat(item), parentMenuItemMap));
+    if (Array.isArray(item.items)) {
+      _list.push(...flatMenuItems(item.items, [...parentPath].concat(item), parentMenuItemMap));
     }
   }
   return _list;
@@ -55,8 +55,8 @@ const flatMenuItems = (
 /**菜单搜索*/
 const filterMenuItems = (items: MenuItemType[], keyword: string) => {
   return items.filter((item) => {
-    if (Array.isArray(item.children) && item.children.length) {
-      return filterMenuItems(item.children, keyword).length > 0;
+    if (Array.isArray(item.items) && item.items.length) {
+      return filterMenuItems(item.items, keyword).length > 0;
     }
     return item.title.includes(keyword);
   });
@@ -170,7 +170,7 @@ export class MenuDataInstance {
     // 如果不存在子菜单，则不进行更新展开项
     const _item = this.get_path_menuItem(path);
     const parentItems = this._parentMenuItemMap.get(path) || [];
-    if (Array.isArray(_item?.children) && _item.children.length) {
+    if (Array.isArray(_item?.items) && _item.items.length) {
       this.state.expandItems = ref([...parentItems]);
     } else {
       this.state.expandItems = compareParentPath(this.state.expandItems, parentItems);
@@ -208,7 +208,7 @@ export class MenuDataInstance {
         this.state.mainMenuItemSelected = currentMainMenuItemPath;
         const _item = this.state.mainMenuItems.find((ite) => ite.path === currentMainMenuItemPath);
         if (_item) {
-          this.state.menuItems = ref(_item.children);
+          this.state.menuItems = ref(_item.items);
         }
       }
     }
@@ -218,8 +218,8 @@ export class MenuDataInstance {
   onMainMenu = (path: string) => {
     const _item = this.state.mainMenuItems.find((ite) => ite.path === path);
     if (_item) {
-      if (Array.isArray(_item.children)) {
-        this.state.menuItems = ref(_item.children);
+      if (Array.isArray(_item.items)) {
+        this.state.menuItems = ref(_item.items);
         this.state.mainMenuItemSelected = path;
       }
     }

@@ -33,13 +33,13 @@ export const SubMenu = (props: MenuItemProps) => {
   }, [expandItems, item.path, isMain, mainExpandItem]);
 
   const child = useMemo(() => {
-    return item.children?.map((child) => {
-      if (Array.isArray(child.children)) {
+    return item.items?.map((child) => {
+      if (Array.isArray(child.items)) {
         return <SubMenu key={child.path} item={child} level={level + 1} />;
       }
       return <MenuItem key={child.path} item={child} level={level + 1} />;
     });
-  }, [item.children, level, isMain]);
+  }, [item.items, level, isMain]);
 
   const render = useMemo(() => {
     if (sideMenuMode !== 'close') {

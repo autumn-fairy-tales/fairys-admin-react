@@ -5,7 +5,7 @@ import { MenuItem } from './menu-item';
 import { useSetting } from 'context/setting';
 
 const createChildMenu = (item: MenuItemType, level?: number) => {
-  if (Array.isArray(item.children)) {
+  if (Array.isArray(item.items)) {
     return <SubMenu key={item.path} item={item} level={level} />;
   }
   return <MenuItem key={item.path} item={item} level={level} />;
@@ -33,7 +33,7 @@ export const Menu = () => {
       const _menuItems = menuDataInstance._menuItems || [];
       let isRenderMainFirst = false;
       return _menuItems.map((item) => {
-        const childMenuItems = item.children || [];
+        const childMenuItems = item.items || [];
         if (item.isMain) {
           if (isRenderMainFirst) {
             return <SubMenu key={item.path} item={item} isMain />;
