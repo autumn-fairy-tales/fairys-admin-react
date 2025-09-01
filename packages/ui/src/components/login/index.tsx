@@ -44,7 +44,7 @@ export const LoginPage = (props: LoginPageProps) => {
 
   const bodyClass = useMemo(() => {
     return clsx(
-      'fairys_login_page_content_form fairys:flex-1 fairys:flex fairys:flex-col fairys:gap-[14px] fairys:box-border',
+      'fairys_login_page_content_form fairys:flex-1 fairys:flex fairys:flex-col fairys:gap-[20px] fairys:box-border',
       bodyClassName,
     );
   }, [bodyClassName]);
