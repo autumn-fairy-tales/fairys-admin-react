@@ -429,12 +429,38 @@
     opacity: 0.5;
     line-height: 1.5;
   }
-  #loading-container .tips::after {
-    position: absolute;
-    padding-left: 5px;
-    content: "…";
+ 
+  #loading-container .loading-dots {
+    display: inline-block;
+    width: 20px;
+    text-align: left;
   }
-</style><link rel="icon" href="/fairys-admin-react/logo.png"><title>Fairys Admin React</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/fairys-admin-react/static/js/lib-react.3e59c042.js"></script><script defer src="/fairys-admin-react/static/js/lib-router.07971d03.js"></script><script defer src="/fairys-admin-react/static/js/517.829a269e.js"></script><script defer src="/fairys-admin-react/static/js/index.8d93f468.js"></script><link href="/fairys-admin-react/static/css/index.16a5d0c8.css" rel="stylesheet"></head><body><div id="root"></div><body>
+
+  #loading-container .loading-dots::after {
+    content: "";
+    animation: dots 1.5s steps(4) infinite;
+  }
+
+  @keyframes dots {
+    0% {
+      content: "";
+    }
+    25% {
+      content: ".";
+    }
+    50% {
+      content: "..";
+    }
+    75% {
+      content: "...";
+    }
+    100% {
+      content: "";
+    }
+  }
+
+
+</style><link rel="icon" href="/fairys-admin-react/logo.png"><title>Fairys Admin React</title><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><script defer src="/fairys-admin-react/static/js/lib-react.3e59c042.js"></script><script defer src="/fairys-admin-react/static/js/lib-router.07971d03.js"></script><script defer src="/fairys-admin-react/static/js/517.829a269e.js"></script><script defer src="/fairys-admin-react/static/js/index.34280490.js"></script><link href="/fairys-admin-react/static/css/index.58aec71e.css" rel="stylesheet"></head><body><div id="root"></div><body>
 <div id="loading-container">
   <div class="loading">
     <div class="square"></div>
@@ -443,6 +469,6 @@
     <div class="square"></div>
   </div>
   <div class="name">Fairys</div>
-  <div class="tips">载入中</div>
+  <div class="tips">载入中<span class="loading-dots"></span></div>
 </div>
 </body></body></html>
