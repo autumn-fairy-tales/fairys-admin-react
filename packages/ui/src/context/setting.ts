@@ -163,6 +163,7 @@ class SettingInstance {
     } else {
       this.mediaQueryList?.removeEventListener('change', this.onListenChangeSystemTheme);
       this.mediaQueryList = null;
+      this.setDocumentAndBodyTheme();
     }
   };
 

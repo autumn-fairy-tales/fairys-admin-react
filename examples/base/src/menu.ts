@@ -132,6 +132,7 @@ export const menuItems: MenuItemType[] = [
     path: 'main-menu2',
     isMain: true,
     icon: 'ant-design:home-outlined',
+    left_isMainShow: true,
     items: [
       {
         title: '首页2',

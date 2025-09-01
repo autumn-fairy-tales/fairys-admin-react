@@ -10,9 +10,13 @@ export interface MenuItemType {
   icon?: string;
   /**判断是否主子菜单字段，仅在第一层生效*/
   isMain?: boolean;
+  /**在left布局中，父级是否显示
+   * @default true
+   */
+  left_isMainShow?: boolean;
   /**子项菜单*/
   items?: MenuItemType[];
-  // [x: string]: any;
+  [x: string]: any;
 }
 
 export interface MenuDataInstanceState {

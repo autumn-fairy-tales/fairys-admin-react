@@ -31,14 +31,12 @@ export const Menu = () => {
   const render = useMemo(() => {
     if (isAllMenuItems) {
       const _menuItems = menuDataInstance._menuItems || [];
-      let isRenderMainFirst = false;
       return _menuItems.map((item) => {
         const childMenuItems = item.items || [];
         if (item.isMain) {
-          if (isRenderMainFirst) {
+          if (item.left_isMainShow) {
             return <SubMenu key={item.path} item={item} isMain />;
           }
-          isRenderMainFirst = true;
           const child = createChildMenus(childMenuItems);
           return <Fragment key={item.path}>{child}</Fragment>;
         }

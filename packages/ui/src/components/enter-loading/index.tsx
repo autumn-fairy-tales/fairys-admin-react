@@ -34,7 +34,10 @@ export const EnterLoading = forwardRef((props: EnterLoadingProps, ref: Ref<HTMLD
         <div className="square"></div>
       </div>
       <div className="name">{title}</div>
-      <div className="tips">{tips}</div>
+      <div className="tips">
+        {tips}
+        <span className="loading-dots" />
+      </div>
     </motion.div>
   ) : (
     <Fragment />

@@ -14,10 +14,12 @@ import { motionAnimationInstance } from 'context/motion-animation';
 
 interface MotionAnimationProps {
   children: React.ReactNode;
+  className?: string;
 }
 
 /**包裹动画*/
 const MotionAnimation = (props: MotionAnimationProps) => {
+  const { children, className = '' } = props;
   const location = useLocation();
   const [setting] = useSetting();
   const pageTransitionMode = setting.pageTransitionMode;
@@ -28,10 +30,10 @@ const MotionAnimation = (props: MotionAnimationProps) => {
     <AnimatePresence mode="wait">
       <motion.div
         {...config}
-        className="fairys_admin_main_content_body_motion fairys:w-full fairys:h-full fairys:overflow-hidden"
+        className={`fairys_admin_main_content_body_motion fairys:w-full fairys:h-full fairys:overflow-hidden ${className}`}
         key={location.pathname}
       >
-        {props.children}
+        {children}
       </motion.div>
     </AnimatePresence>
   );
@@ -45,10 +47,13 @@ const KeepAliveContent = () => {
 
   const outlet = useOutlet();
 
+  //嵌套多个 MotionAnimation ，为了解决页面刷新时，动画不生效的问题
   return (
-    <KeepAlive name={id} id={id} cacheKey={id}>
-      <MotionAnimation>{outlet}</MotionAnimation>
-    </KeepAlive>
+    <MotionAnimation>
+      <KeepAlive name={id} id={id} cacheKey={id}>
+        <MotionAnimation>{outlet}</MotionAnimation>
+      </KeepAlive>
+    </MotionAnimation>
   );
 };
 

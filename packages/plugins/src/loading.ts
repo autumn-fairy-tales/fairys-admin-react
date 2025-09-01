@@ -429,11 +429,37 @@ const styles = `
     opacity: 0.5;
     line-height: 1.5;
   }
-  #loading-container .tips::after {
-    position: absolute;
-    padding-left: 5px;
-    content: "…";
+ 
+  #loading-container .loading-dots {
+    display: inline-block;
+    width: 20px;
+    text-align: left;
   }
+
+  #loading-container .loading-dots::after {
+    content: "";
+    animation: dots 1.5s steps(4) infinite;
+  }
+
+  @keyframes dots {
+    0% {
+      content: "";
+    }
+    25% {
+      content: ".";
+    }
+    50% {
+      content: "..";
+    }
+    75% {
+      content: "...";
+    }
+    100% {
+      content: "";
+    }
+  }
+
+
 `;
 export const getLoadingHtmlTags = (title: string = '', tips: string = '载入中') => {
   const htmlTags = [
@@ -455,7 +481,7 @@ export const getLoadingHtmlTags = (title: string = '', tips: string = '载入中
     <div class="square"></div>
   </div>
   ${title ? `<div class="name">${title}</div>` : ''}
-  ${tips ? `<div class="tips">${tips}</div>` : ''}
+  ${tips ? `<div class="tips">${tips}<span class="loading-dots"></span></div>` : '<div class="loading-dots"></div>'}
 </div>
 `,
       head: false,
