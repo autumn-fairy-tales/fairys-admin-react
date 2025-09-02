@@ -92,35 +92,20 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
 const Menu = forwardRef(
   (props: MenuItemProps & { label?: ReactNode; onOpenChange?: (open: boolean) => void }, ref: Ref<HTMLDivElement>) => {
     const { label, onOpenChange } = props;
-    const parentId = useFloatingParentNodeId();
     const { rowItemData } = props;
     const { items } = rowItemData;
     const render = useMemo(() => {
       return (items || []).map((item, index) => createChildMenu(item, index));
     }, [items]);
-    if (parentId === null) {
-      return (
-        <FloatingTree>
-          <PopoverBaseComponent
-            disabled={rowItemData.disabled}
-            onOpenChange={onOpenChange}
-            ref={ref}
-            label={label ? label : <MenuItem rowItemData={rowItemData} isSubMenuItem />}
-          >
-            {render}
-          </PopoverBaseComponent>
-        </FloatingTree>
-      );
-    }
     return (
-      <PopoverBaseComponent
-        ref={ref}
-        onOpenChange={onOpenChange}
+      <PopoverBase
         disabled={rowItemData.disabled}
+        onOpenChange={onOpenChange}
+        ref={ref}
         label={label ? label : <MenuItem rowItemData={rowItemData} isSubMenuItem />}
       >
         {render}
-      </PopoverBaseComponent>
+      </PopoverBase>
     );
   },
 );

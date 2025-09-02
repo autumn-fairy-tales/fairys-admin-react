@@ -20,6 +20,7 @@ import {
   FloatingNode,
   FloatingPortal,
   useMergeRefs,
+  Placement,
 } from '@floating-ui/react';
 import { useAnimationStatus } from 'components/utils';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -41,6 +42,10 @@ interface PopoverComponentBaseProps {
   eventName?: 'click' | 'mousedown' | 'contextMenu' | 'hover';
   /**是否禁用*/
   disabled?: boolean;
+  /**弹框位置*/
+  placement?: Placement;
+  /**不设置最小宽度*/
+  isNotMinWidth?: boolean;
 }
 
 const motionClassNameBase =
@@ -59,12 +64,15 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
     className,
     eventName,
     disabled = false,
+    placement,
+    isNotMinWidth = false,
   } = props;
   const [open, setIsOpen] = useState(false);
   const { show, onAnimationComplete } = useAnimationStatus(open);
   const onOpenChange = (open: boolean) => {
     parentOnOpenChange?.(open);
     setIsOpen(open);
+    console.log('open', open);
   };
   // 处理弹框
   const tree = useFloatingTree();
@@ -76,7 +84,7 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
     nodeId,
     open: open,
     onOpenChange: onOpenChange,
-    placement: isNested ? 'right-start' : 'bottom-start',
+    placement: placement ? placement : isNested ? 'right-start' : 'bottom-start',
     middleware: [size(), offset({ mainAxis: isNested ? 0 : 4, alignmentAxis: isNested ? -4 : 0 }), flip(), shift()],
     whileElementsMounted: autoUpdate,
   });
@@ -88,7 +96,6 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
   });
 
   const useClickHook = eventName === 'contextMenu' ? useEmpty : useClick;
-
   const clickHook = useClickHook(context, {
     event: 'mousedown',
     toggle: !isNested || !allowHover,
@@ -153,15 +160,22 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
   }, [className]);
 
   const motionBodyClasName = useMemo(() => {
-    return clsx('fairys_admin_popover-base-motion fairys:overflow-hidden', motionClassNameBase, motionClassName, [
-      'fairys:min-w-[120px] fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:shadow-xl fairys:inset-shadow-sm',
-    ]);
-  }, [motionClassName]);
+    return clsx(
+      'fairys_admin_popover-base-motion fairys:overflow-hidden',
+      motionClassNameBase,
+      motionClassName,
+      ['fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:shadow-xl fairys:inset-shadow-sm'],
+      {
+        'fairys:min-w-[120px]': isNotMinWidth === false,
+      },
+    );
+  }, [motionClassName, isNotMinWidth]);
 
   return (
     <FloatingNode id={nodeId}>
       {React.Children.map(label, (child) => {
         if (!React.isValidElement(child)) {
+          console.log('child', child);
           return child;
         }
         return cloneElement(child as React.ReactElement, {
@@ -203,9 +217,11 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
     </FloatingNode>
   );
 });
-
 export interface PopoverBaseProps extends PopoverComponentBaseProps {}
 
+/**
+ * 弹出层基础组件
+ */
 export const PopoverBase = forwardRef((props: PopoverBaseProps, ref: Ref<HTMLDivElement>) => {
   const {
     children,
@@ -215,21 +231,52 @@ export const PopoverBase = forwardRef((props: PopoverBaseProps, ref: Ref<HTMLDiv
     motionClassName = '',
     disabled = false,
     label,
+    placement,
+    isNotMinWidth = false,
   } = props;
 
+  const parentId = useFloatingParentNodeId();
+
+  if (parentId === null) {
+    return (
+      <FloatingTree>
+        <PopoverBaseComponent
+          placement={placement}
+          eventName={eventName}
+          onOpenChange={onOpenChange}
+          ref={ref}
+          label={label}
+          className={className}
+          disabled={disabled}
+          motionClassName={motionClassName}
+          isNotMinWidth={isNotMinWidth}
+        >
+          {children}
+        </PopoverBaseComponent>
+      </FloatingTree>
+    );
+  }
   return (
-    <FloatingTree>
-      <PopoverBaseComponent
-        eventName={eventName}
-        onOpenChange={onOpenChange}
-        ref={ref}
-        label={label}
-        className={className}
-        disabled={disabled}
-        motionClassName={motionClassName}
-      >
-        {children}
-      </PopoverBaseComponent>
-    </FloatingTree>
+    <PopoverBaseComponent
+      eventName={eventName}
+      placement={placement}
+      onOpenChange={onOpenChange}
+      ref={ref}
+      label={label}
+      className={className}
+      disabled={disabled}
+      motionClassName={motionClassName}
+      isNotMinWidth={isNotMinWidth}
+    >
+      {children}
+    </PopoverBaseComponent>
   );
 });
+
+export const PopoverBaseFloatingTreeParent = (props: { children: React.ReactNode }) => {
+  const parentId = useFloatingParentNodeId();
+  if (parentId === null) {
+    return <FloatingTree>{props.children}</FloatingTree>;
+  }
+  return props.children;
+};
