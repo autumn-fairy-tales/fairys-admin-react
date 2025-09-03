@@ -4,7 +4,6 @@ export * from './disclosure';
 export * from './enter-loading';
 export * from './full-screen';
 export * from './modal-base';
-export * from './popover';
 export * from './popover-menu';
 export * from './root';
 export * from './select';

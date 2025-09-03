@@ -25,7 +25,6 @@ export const SubMenu = (props: MenuItemProps) => {
   const [settingState] = useSetting();
   const sideMenuMode = settingState.sideMenuMode;
   const [isOpen, setIsOpen] = useState(false);
-
   const isExpand = useMemo(() => {
     if (isMain) {
       return mainExpandItem?.path === item.path;
@@ -42,31 +41,28 @@ export const SubMenu = (props: MenuItemProps) => {
     });
   }, [item.items, level, isMain]);
 
-  const render = useMemo(() => {
-    if (sideMenuMode !== 'close') {
-      return (
-        <div className={subMenuClassName}>
-          {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />}
-          <DisclosureItem open={isMain ? true : isExpand} className={childClassName}>
-            {child}
-          </DisclosureItem>
-        </div>
-      );
-    }
+  if (sideMenuMode !== 'close') {
     return (
       <div className={subMenuClassName}>
-        <PopoverBase
-          className="fairys_admin_sub_menu_popover"
-          eventName="hover"
-          content={<div className={popoverChildClassName}>{child}</div>}
-          onOpenChange={setIsOpen}
-          placement="right-start"
-          isNotMinWidth
-        >
-          {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isOpen} />}
-        </PopoverBase>
+        {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />}
+        <DisclosureItem open={isMain ? true : isExpand} className={childClassName}>
+          {child}
+        </DisclosureItem>
       </div>
     );
-  }, [child, isMain, isExpand, item, level, sideMenuMode, isOpen]);
-  return render;
+  }
+  return (
+    <div className={subMenuClassName}>
+      <PopoverBase
+        className="fairys_admin_sub_menu_popover"
+        eventName="hover"
+        content={<div className={popoverChildClassName}>{child}</div>}
+        onOpenChange={setIsOpen}
+        placement="right-start"
+        isNotMinWidth
+      >
+        {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isOpen} />}
+      </PopoverBase>
+    </div>
+  );
 };

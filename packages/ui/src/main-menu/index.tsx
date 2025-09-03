@@ -8,7 +8,6 @@ import { useSetting } from 'context/setting';
 import { useLocation } from 'react-router';
 import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon } from '@iconify/react';
-import { usePopoverInstance, Popover } from 'components/popover';
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';

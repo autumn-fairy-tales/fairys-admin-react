@@ -60,18 +60,16 @@ export const Menu = () => {
     }
   }, [sideMenuMode, layoutMode]);
 
-  return useMemo(() => {
-    return (
-      <MenuInstanceContext.Provider value={menuInstance}>
-        <PopoverBaseFloatingTreeParent key={layoutMode}>
-          <div
-            ref={menuInstance.dom}
-            className="fairys_admin_menu fairys:transition-all fairys:duration-300 fairys:box-border fairys:flex fairys:flex-col fairys:gap-y-2 fairys:p-[8px] fairys:overflow-auto fairys:h-full no-scrollbar fairys:max-w-[220px]"
-          >
-            {render}
-          </div>
-        </PopoverBaseFloatingTreeParent>
-      </MenuInstanceContext.Provider>
-    );
-  }, [render, menuInstance, layoutMode]);
+  return (
+    <MenuInstanceContext.Provider value={menuInstance}>
+      <PopoverBaseFloatingTreeParent key={layoutMode}>
+        <div
+          ref={menuInstance.dom}
+          className="fairys_admin_menu fairys:transition-all fairys:duration-300 fairys:box-border fairys:flex fairys:flex-col fairys:gap-y-2 fairys:p-[8px] fairys:overflow-auto fairys:h-full no-scrollbar fairys:max-w-[220px]"
+        >
+          {render}
+        </div>
+      </PopoverBaseFloatingTreeParent>
+    </MenuInstanceContext.Provider>
+  );
 };
