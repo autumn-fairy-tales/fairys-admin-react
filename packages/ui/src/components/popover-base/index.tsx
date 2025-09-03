@@ -77,8 +77,7 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
   const tree = useFloatingTree();
   const nodeId = useFloatingNodeId();
   const parentId = useFloatingParentNodeId();
-  // const isNested = eventName === 'hover' ? true : parentId != null;
-  const isNested = false;
+  const isNested = eventName === 'hover' ? true : parentId != null;
   const [allowHover, setAllowHover] = useState(false);
   const { floatingStyles, refs, context } = useFloating<HTMLButtonElement>({
     nodeId,
