@@ -1,3 +1,4 @@
+import { Placement } from '@floating-ui/react';
 import { useRef, createContext, useContext } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 
@@ -54,6 +55,8 @@ export interface PopoverMenuProps {
   className?: string;
   /**运动类名*/
   motionClassName?: string;
+  /**位置*/
+  placement?: Placement;
 }
 
 interface PopoverMenuInstanceState {

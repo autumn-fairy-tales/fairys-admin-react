@@ -6,10 +6,10 @@ import {
   PopoverMenuContext,
   usePopoverMenuInstance,
 } from './context';
-import { useFloatingParentNodeId, FloatingTree, useFloatingTree } from '@floating-ui/react';
+import { useFloatingTree } from '@floating-ui/react';
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
-import { PopoverBase, PopoverBaseComponent } from 'components/popover-base';
+import { PopoverBase } from 'components/popover-base';
 export * from './context';
 
 interface MenuItemProps {
@@ -138,6 +138,7 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
     className,
     motionClassName = '',
     disabled = false,
+    placement,
   } = props;
   const popoverMenuInstance = usePopoverMenuInstance(instance);
   popoverMenuInstance.items = items;
@@ -164,6 +165,7 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
         className={className}
         disabled={disabled}
         motionClassName={motionClassName}
+        placement={placement}
       >
         {children}
       </PopoverBase>

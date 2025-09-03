@@ -72,7 +72,6 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
   const onOpenChange = (open: boolean) => {
     parentOnOpenChange?.(open);
     setIsOpen(open);
-    console.log('open', open);
   };
   // 处理弹框
   const tree = useFloatingTree();
@@ -86,7 +85,10 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
     onOpenChange: onOpenChange,
     placement: placement ? placement : isNested ? 'right-start' : 'bottom-start',
     middleware: [
-      offset({ mainAxis: isNested ? 0 : 4, alignmentAxis: isNested ? -4 : 0 }),
+      offset({
+        mainAxis: isNested ? 0 : 4,
+        alignmentAxis: isNested ? -4 : 0,
+      }),
       flip(),
       shift(),
       size({

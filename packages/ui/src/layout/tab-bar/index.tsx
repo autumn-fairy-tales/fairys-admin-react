@@ -143,7 +143,13 @@ const TabBarItem = (props: TabBarItemProps) => {
   );
 
   return (
-    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={tabItemInstance.dom} eventName="contextMenu">
+    <PopoverMenu
+      placement="right-start"
+      items={items}
+      onClickItem={onMenuItemClick}
+      ref={tabItemInstance.dom}
+      eventName="contextMenu"
+    >
       <div className={itemClassName} onClick={onClick}>
         {iconRender}
         <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
