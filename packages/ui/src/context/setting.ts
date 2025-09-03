@@ -128,8 +128,10 @@ class SettingInstance {
     this.autoListenSystemTheme();
   };
 
+  /**监听系统主题变化*/
   mediaQueryList: MediaQueryList | null = null;
 
+  /**更新文档和body的主题*/
   setDocumentAndBodyTheme = () => {
     const theme = this.state.theme;
     if (theme) {
@@ -143,7 +145,7 @@ class SettingInstance {
       }
     }
   };
-
+  /**监听事件更新系统主题*/
   onListenChangeSystemTheme = (e: MediaQueryListEvent) => {
     this.updated({ theme: e.matches ? 'dark' : 'light' });
     this.setDocumentAndBodyTheme();

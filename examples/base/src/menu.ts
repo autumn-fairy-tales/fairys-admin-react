@@ -11,6 +11,7 @@ export const menuItems: MenuItemType[] = [
         title: '首页',
         path: '/',
         icon: 'ant-design:home-outlined',
+        isTabFixed: true,
       },
       {
         title: '列表',
@@ -21,6 +22,7 @@ export const menuItems: MenuItemType[] = [
             title: '列表-1',
             path: '/list1-1',
             icon: 'ant-design:unordered-list',
+            isTabFixed: true,
           },
           {
             title: '列表-1-1',

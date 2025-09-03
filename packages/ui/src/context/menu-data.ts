@@ -1,6 +1,7 @@
 import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
 import { settingInstance } from './setting';
+import { tabBarInstance } from './tab-bar';
 export interface MenuItemType {
   /**标题*/
   title: string;
@@ -16,6 +17,10 @@ export interface MenuItemType {
   left_isMainShow?: boolean;
   /**子项菜单*/
   items?: MenuItemType[];
+  /**是否为固定菜单,(直接固定到tabbar上，不可删除)*/
+  isTabFixed?: boolean;
+  /**排序-固定菜单*/
+  sortTabFixed?: number;
   [x: string]: any;
 }
 
@@ -117,6 +122,10 @@ export class MenuDataInstance {
     this.state.menuItems = ref(items);
     this.state.mainMenuItems = ref(items.filter((item) => item.isMain));
     this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain));
+    const fixedItems = this._flatMenuItems.filter((it) => it.isTabFixed && !it.isMain);
+    if (fixedItems.length) {
+      tabBarInstance.ctor(fixedItems);
+    }
   };
 
   /**更新主菜单展开项*/

@@ -23,6 +23,10 @@ export interface PopoverMenuItem {
   value?: string;
   /**子项*/
   items?: PopoverMenuItem[];
+  /**是否显示关闭按钮
+   * @default true
+   */
+  isShowClose?: boolean;
   [key: string]: any;
 }
 

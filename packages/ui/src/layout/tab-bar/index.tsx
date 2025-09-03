@@ -24,6 +24,7 @@ interface TabBarItemProps {
 
 const TabBarItem = (props: TabBarItemProps) => {
   const { item, currentIndex, count } = props;
+  const isTabFixed = item.isTabFixed;
   const tabInstance = useTabInstanceContext();
   const tabItemInstance = useTabItemInstance();
   tabItemInstance.item = item;
@@ -109,7 +110,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const items = useMemo(() => {
     return [
       { icon: 'ri:refresh-line', title: '重新加载', visible: !!fairysRootClass.keepAlive },
-      { icon: 'ri:close-line', title: '关闭标签', disabled: count === 1 },
+      { icon: 'ri:close-line', title: '关闭标签', disabled: count === 1 || isTabFixed },
       { isDivider: true },
       { icon: 'ant-design:expand-outlined', title: '最大化' },
       { icon: 'ant-design:credit-card-outlined', title: '新窗口打开' },
@@ -118,7 +119,7 @@ const TabBarItem = (props: TabBarItemProps) => {
       { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签', disabled: currentIndex === 0 },
       { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签', disabled: currentIndex === count - 1 },
     ];
-  }, [currentIndex, count]);
+  }, [currentIndex, count, isTabFixed]);
 
   const onMenuItemClick = useCallback(
     (item: PopoverMenuItem) => {
@@ -153,7 +154,7 @@ const TabBarItem = (props: TabBarItemProps) => {
       <div className={itemClassName} onClick={onClick}>
         {iconRender}
         <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
-        {isCloseIconShow ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
+        {isCloseIconShow && !isTabFixed ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
       </div>
     </PopoverMenu>
   );

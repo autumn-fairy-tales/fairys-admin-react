@@ -26,7 +26,7 @@ class TabBarInstance {
 
   /**初始化渲染菜单数据*/
   ctor = (tabBarItems: MenuItemType[]) => {
-    this.state.tabBarItems = ref(tabBarItems);
+    this.state.tabBarItems = ref(tabBarItems.sort((a, b) => (a.sortTabFixed || 0) - (b.sortTabFixed || 0)));
   };
 
   /**添加tab项*/
@@ -86,8 +86,10 @@ class TabBarInstance {
         routerDataInstance.navigate(nativeItem.path);
       }
     }
-    const paths = this.state.tabBarItems.filter((_, index) => index !== current).map((item) => item.path);
-    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index === current));
+    const paths = this.state.tabBarItems
+      .filter((it, index) => index !== current && !it.isTabFixed)
+      .map((item) => item.path);
+    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index === current || item.isTabFixed));
     /**移除缓存页面*/
     if (appDataInstance.aliveController) {
       appDataInstance.aliveController.dropScopeByIds(paths);
@@ -103,8 +105,10 @@ class TabBarInstance {
         routerDataInstance.navigate(nativeItem.path);
       }
     }
-    const paths = this.state.tabBarItems.filter((_, index) => index < current).map((item) => item.path);
-    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index >= current));
+    const paths = this.state.tabBarItems
+      .filter((it, index) => index < current && !it.isTabFixed)
+      .map((item) => item.path);
+    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index >= current || item.isTabFixed));
     /**移除缓存页面*/
     if (appDataInstance.aliveController) {
       appDataInstance.aliveController.dropScopeByIds(paths);
@@ -120,8 +124,10 @@ class TabBarInstance {
         routerDataInstance.navigate(nativeItem.path);
       }
     }
-    const paths = this.state.tabBarItems.filter((_, index) => index > current).map((item) => item.path);
-    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index <= current));
+    const paths = this.state.tabBarItems
+      .filter((it, index) => index > current && !it.isTabFixed)
+      .map((item) => item.path);
+    this.state.tabBarItems = ref(this.state.tabBarItems.filter((item, index) => index <= current || item.isTabFixed));
     /**移除缓存页面*/
     if (appDataInstance.aliveController) {
       appDataInstance.aliveController.dropScopeByIds(paths);
@@ -192,8 +198,8 @@ class TabInstance {
           }
         }
       }
-      // console.log('dropDownTabBarItems===>', dropDownTabBarItems);
-      tabBarInstance.state.dropDownTabBarItems = ref(dropDownTabBarItems);
+      const _li = dropDownTabBarItems.map((it) => ({ ...it, isShowClose: it.isTabFixed === true ? false : true }));
+      tabBarInstance.state.dropDownTabBarItems = ref(_li);
       clearTimeout(this.timer);
     }, 500);
   };

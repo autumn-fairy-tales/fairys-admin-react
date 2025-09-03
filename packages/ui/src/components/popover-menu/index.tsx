@@ -25,6 +25,8 @@ const popoverMenuItemBaseClsActive = `active fairys:bg-(--fairys-theme-color)! f
 
 const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { rowItemData, isSubMenuItem = false } = props;
+  const { isShowClose = true } = rowItemData;
+
   const tree = useFloatingTree();
   const [state, popoverMenuInstance] = usePopoverMenuContext();
   const onClickItem: React.MouseEventHandler<HTMLDivElement> = (event) => {
@@ -76,7 +78,7 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
       <div>
         {isSubMenuItem ? (
           <span className="fairys:icon-[ant-design--right-outlined] fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white fairys:dark:text-gray-500 fairys:transition-all fairys:duration-300" />
-        ) : popoverMenuInstance.isHideClose ? (
+        ) : popoverMenuInstance.isHideClose || isShowClose === false ? (
           <Fragment />
         ) : (
           <span
