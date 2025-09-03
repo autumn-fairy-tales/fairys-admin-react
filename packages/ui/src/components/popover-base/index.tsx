@@ -49,7 +49,7 @@ interface PopoverComponentBaseProps {
 }
 
 const motionClassNameBase =
-  'fairys:flex fairys:flex-col fairys:relative fairys:border fairys:border-gray-100 fairys:dark:border-gray-700 fairys:rounded-md fairys:gap-1 fairys:py-[5px]';
+  'fairys:flex fairys:flex-col fairys:relative fairys:border fairys:border-gray-100 fairys:dark:border-gray-700 fairys:rounded-md fairys:gap-1';
 
 function useEmpty() {
   return {};
@@ -77,7 +77,8 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
   const tree = useFloatingTree();
   const nodeId = useFloatingNodeId();
   const parentId = useFloatingParentNodeId();
-  const isNested = eventName === 'hover' ? true : parentId != null;
+  // const isNested = eventName === 'hover' ? true : parentId != null;
+  const isNested = false;
   const [allowHover, setAllowHover] = useState(false);
   const { floatingStyles, refs, context } = useFloating<HTMLButtonElement>({
     nodeId,

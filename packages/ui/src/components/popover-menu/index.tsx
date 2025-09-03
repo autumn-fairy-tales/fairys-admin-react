@@ -135,7 +135,7 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
     isHideClose = true,
     instance,
     eventName = 'click',
-    className,
+    className = '',
     motionClassName = '',
     disabled = false,
     placement,
@@ -164,7 +164,7 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
         content={render}
         className={className}
         disabled={disabled}
-        motionClassName={motionClassName}
+        motionClassName={`fairys:py-[6px] ${motionClassName}`}
         placement={placement}
       >
         {children}

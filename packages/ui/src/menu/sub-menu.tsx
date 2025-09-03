@@ -15,7 +15,7 @@ export interface MenuItemProps {
 const subMenuClassName = 'fairys_admin_sub_menu fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px] ';
 const childClassName = 'fairys_admin_sub_menu_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px]';
 const popoverChildClassName =
-  'fairys_admin_sub_menu_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px] fairys:p-[5px] fairys:dark:border fairys:dark:border-gray-700';
+  'fairys_admin_sub_menu_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px] fairys:p-[5px]';
 
 export const SubMenu = (props: MenuItemProps) => {
   const { item, level = 0, isMain = false } = props;
