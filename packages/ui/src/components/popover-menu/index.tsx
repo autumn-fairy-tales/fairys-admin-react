@@ -98,13 +98,8 @@ const Menu = forwardRef(
       return (items || []).map((item, index) => createChildMenu(item, index));
     }, [items]);
     return (
-      <PopoverBase
-        disabled={rowItemData.disabled}
-        onOpenChange={onOpenChange}
-        ref={ref}
-        label={label ? label : <MenuItem rowItemData={rowItemData} isSubMenuItem />}
-      >
-        {render}
+      <PopoverBase disabled={rowItemData.disabled} onOpenChange={onOpenChange} ref={ref} content={render}>
+        {label ? label : <MenuItem rowItemData={rowItemData} isSubMenuItem />}
       </PopoverBase>
     );
   },
@@ -165,12 +160,12 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
         eventName={eventName}
         onOpenChange={onOpenChange}
         ref={ref}
-        label={children}
+        content={render}
         className={className}
         disabled={disabled}
         motionClassName={motionClassName}
       >
-        {render}
+        {children}
       </PopoverBase>
     </PopoverMenuContext.Provider>
   );

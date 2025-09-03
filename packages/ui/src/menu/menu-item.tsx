@@ -5,12 +5,14 @@ import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from 'c
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
-
-export interface MenuItemProps {
+import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
+import { useSetting } from 'context/setting';
+export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   item: MenuItemType;
   level?: number;
   isSubMenu?: boolean;
   isExpand?: boolean;
+  disabled?: boolean;
 }
 
 const menuItemBaseClassName =
@@ -69,17 +71,20 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
 });
 
 export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
-  const { item, level = 0, isSubMenu = false, isExpand = false } = props;
+  const { item, level = 0, isSubMenu = false, isExpand = false, ...rest } = props;
   const match = useMatch(item.path);
   const navigate = useNavigate();
   const [menuState, menuInstance] = useMenuInstanceContext();
   const menuItemInstance = useMenuItemInstance();
+  const tree = useFloatingTree();
+
   const location = useLocation();
   menuItemInstance.item = item;
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
-  useImperativeHandle(ref, () => menuItemInstance.dom.current);
   const sideMenuMode = menuState.menuModeExpandCollapse;
+  const [settingState] = useSetting();
+  const sideMenuMode2 = settingState.sideMenuMode;
 
   const isActive = useMemo(() => {
     if (sideMenuMode === 'close' && level === 0) {
@@ -110,15 +115,19 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   }, [isActive, level]);
 
   const titleStyle = useMemo(() => {
-    if (sideMenuMode === 'close') {
+    if (sideMenuMode === 'close' || sideMenuMode2 === 'close') {
       return {};
     }
     return {
       paddingLeft: `${level * 20}px`,
     };
-  }, [level, sideMenuMode]);
+  }, [level, sideMenuMode, sideMenuMode2]);
 
-  const onClick = (e: React.MouseEvent) => {
+  const onClick: MenuItemProps['onClick'] = (e) => {
+    if (props.disabled) {
+      return;
+    }
+    props.onClick?.(e);
     if (isSubMenu) {
       //  如果是父级菜单渲染，则展开子菜单
       menuDataInstance.onToggleItems(item.path);
@@ -126,6 +135,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
       navigate(item.path);
       tabBarInstance.addItem(item);
       menuDataInstance.updateMainExpandItem(undefined);
+      tree.events.emit('click');
     }
   };
 
@@ -165,37 +175,21 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     );
   }, [iconClassName, item.icon]);
 
-  return useMemo(() => {
-    return (
-      <div
-        ref={menuItemInstance.dom}
-        data-level={level}
-        title={item.title}
-        className={menuItemClassName}
-        onClick={onClick}
-      >
-        <div className={titleClassName} style={titleStyle}>
-          {iconRender}
-          {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
-        </div>
-        {isExpandCollapse ? (
-          <div className="fairys_admin_menu_item_extra fairys_admin_down_up_icon">
-            {isSubMenu ? <div className={expandIcon} /> : <Fragment />}
-          </div>
-        ) : (
-          <Fragment />
-        )}
+  const mergeRef = useMergeRefs([menuItemInstance.dom, ref]);
+
+  return (
+    <div {...rest} ref={mergeRef} data-level={level} title={item.title} className={menuItemClassName} onClick={onClick}>
+      <div className={titleClassName} style={titleStyle}>
+        {iconRender}
+        {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
       </div>
-    );
-  }, [
-    iconRender,
-    isExpandCollapse,
-    isSubMenu,
-    level,
-    menuItemClassName,
-    titleClassName,
-    titleStyle,
-    expandIcon,
-    titleTextClassName,
-  ]);
+      {isExpandCollapse ? (
+        <div className="fairys_admin_menu_item_extra fairys_admin_down_up_icon">
+          {isSubMenu ? <div className={expandIcon} /> : <Fragment />}
+        </div>
+      ) : (
+        <Fragment />
+      )}
+    </div>
+  );
 });

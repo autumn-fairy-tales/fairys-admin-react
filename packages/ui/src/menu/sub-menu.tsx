@@ -1,10 +1,10 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import type { MenuItemType } from 'context/menu-data';
-import { useMenuData, menuDataInstance } from 'context/menu-data';
+import { useMenuData } from 'context/menu-data';
 import { MenuItem, MainMenuItem } from './menu-item';
 import { useSetting } from 'context/setting';
 import { DisclosureItem } from 'components/disclosure';
-import { Popover } from 'components/popover';
+import { PopoverBase } from 'components/popover-base';
 
 export interface MenuItemProps {
   item: MenuItemType;
@@ -24,6 +24,7 @@ export const SubMenu = (props: MenuItemProps) => {
   const mainExpandItem = state.mainExpandItem;
   const [settingState] = useSetting();
   const sideMenuMode = settingState.sideMenuMode;
+  const [isOpen, setIsOpen] = useState(false);
 
   const isExpand = useMemo(() => {
     if (isMain) {
@@ -54,21 +55,18 @@ export const SubMenu = (props: MenuItemProps) => {
     }
     return (
       <div className={subMenuClassName}>
-        <Popover
+        <PopoverBase
           className="fairys_admin_sub_menu_popover"
-          onOpenChange={(open) => {
-            if (open === false) {
-              menuDataInstance.clearExpandItems();
-              menuDataInstance.updateMainExpandItem(undefined);
-            }
-          }}
-          open={isExpand}
+          eventName="hover"
           content={<div className={popoverChildClassName}>{child}</div>}
+          onOpenChange={setIsOpen}
+          placement="right-start"
+          isNotMinWidth
         >
-          {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />}
-        </Popover>
+          {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isOpen} />}
+        </PopoverBase>
       </div>
     );
-  }, [child, isMain, isExpand, item, level, sideMenuMode]);
+  }, [child, isMain, isExpand, item, level, sideMenuMode, isOpen]);
   return render;
 };

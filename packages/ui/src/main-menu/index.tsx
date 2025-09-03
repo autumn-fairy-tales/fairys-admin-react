@@ -12,7 +12,7 @@ import { usePopoverInstance, Popover } from 'components/popover';
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';
-
+import { PopoverBaseFloatingTreeParent, PopoverBase } from 'components/popover-base';
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
 }
@@ -26,19 +26,13 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const location = useLocation();
   const [state, menuInstance] = useMenuData();
   const mainMenuItemSelected = state.mainMenuItemSelected;
-  const mainExpandItem = state.mainExpandItem;
   const isActive = mainMenuItemSelected === item.path;
   const [settingState] = useSetting();
   const layoutModeState = settingState.layoutMode;
-  const popoverInstance = usePopoverInstance();
-
-  const isExpand = useMemo(() => {
-    return mainExpandItem?.path === item.path;
-  }, [mainExpandItem, item]);
 
   const className = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu_item fairys:transition-all fairys:duration-300 fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:box-border fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
+      'fairys_admin_main_menu_item fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:box-border fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
       {
         active: isActive,
         'fairys:bg-(--fairys-theme-color)': !!isActive,
@@ -82,20 +76,20 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
   if (['main_top_header', 'main_left'].includes(layoutModeState)) {
     return (
-      <Popover
+      <PopoverBase
         className="fairys_admin_main_menu_popover"
-        placement={layoutMode === 'vertical' ? 'right-start' : 'bottom-start'}
-        open={isExpand}
         content={<Menu />}
-        popoverInstance={popoverInstance}
+        eventName="hover"
+        placement={layoutMode === 'vertical' ? 'right-start' : 'bottom-start'}
+        isNotMinWidth
         onOpenChange={(open) => {
-          if (open === false) {
-            menuDataInstance.updateMainExpandItem(undefined);
+          if (open) {
+            onClickMainMenuItem();
           }
         }}
       >
         {render}
-      </Popover>
+      </PopoverBase>
     );
   }
   return render;
@@ -109,7 +103,8 @@ const MainMenuItems = (props: MainMenuProps) => {
   const menuRender = useMemo(() => {
     return mainMenuItems.map((item) => <MainMenuItem layoutMode={layoutMode} item={item} key={item.path} />);
   }, [mainMenuItems, layoutMode]);
-  return menuRender;
+
+  return <PopoverBaseFloatingTreeParent>{menuRender}</PopoverBaseFloatingTreeParent>;
 };
 
 export const MainMenu = (props: MainMenuProps) => {

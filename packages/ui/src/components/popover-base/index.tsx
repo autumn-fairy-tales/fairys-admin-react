@@ -28,9 +28,9 @@ import { variantsBase, transitionBase } from './utils';
 import clsx from 'clsx';
 
 interface PopoverComponentBaseProps {
-  // 按钮内容
-  label?: ReactNode;
   /**弹框渲染内容*/
+  content?: ReactNode;
+  /**按钮内容*/
   children?: ReactNode;
   /**更新弹框状态*/
   onOpenChange?: (open: boolean) => void;
@@ -57,7 +57,7 @@ function useEmpty() {
 
 export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps, ref: Ref<HTMLDivElement>) => {
   const {
-    label,
+    content,
     children,
     onOpenChange: parentOnOpenChange,
     motionClassName,
@@ -85,7 +85,20 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
     open: open,
     onOpenChange: onOpenChange,
     placement: placement ? placement : isNested ? 'right-start' : 'bottom-start',
-    middleware: [size(), offset({ mainAxis: isNested ? 0 : 4, alignmentAxis: isNested ? -4 : 0 }), flip(), shift()],
+    middleware: [
+      offset({ mainAxis: isNested ? 0 : 4, alignmentAxis: isNested ? -4 : 0 }),
+      flip(),
+      shift(),
+      size({
+        apply({ availableWidth, availableHeight, elements }) {
+          Object.assign(elements.floating.style, {
+            overflow: 'auto',
+            maxWidth: `${availableWidth}px`,
+            maxHeight: `min(var(--anchor-max-height, 100vh), ${availableHeight}px)`,
+          });
+        },
+      }),
+    ],
     whileElementsMounted: autoUpdate,
   });
 
@@ -170,12 +183,10 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
       },
     );
   }, [motionClassName, isNotMinWidth]);
-
   return (
     <FloatingNode id={nodeId}>
-      {React.Children.map(label, (child) => {
+      {React.Children.map(children, (child) => {
         if (!React.isValidElement(child)) {
-          console.log('child', child);
           return child;
         }
         return cloneElement(child as React.ReactElement, {
@@ -204,7 +215,7 @@ export const PopoverBaseComponent = forwardRef((props: PopoverComponentBaseProps
                     onAnimationComplete={onAnimationComplete}
                     className={motionBodyClasName}
                   >
-                    {children}
+                    {content}
                   </motion.div>
                 </div>
               </AnimatePresence>
@@ -230,7 +241,7 @@ export const PopoverBase = forwardRef((props: PopoverBaseProps, ref: Ref<HTMLDiv
     className,
     motionClassName = '',
     disabled = false,
-    label,
+    content,
     placement,
     isNotMinWidth = false,
   } = props;
@@ -245,7 +256,7 @@ export const PopoverBase = forwardRef((props: PopoverBaseProps, ref: Ref<HTMLDiv
           eventName={eventName}
           onOpenChange={onOpenChange}
           ref={ref}
-          label={label}
+          content={content}
           className={className}
           disabled={disabled}
           motionClassName={motionClassName}
@@ -262,7 +273,7 @@ export const PopoverBase = forwardRef((props: PopoverBaseProps, ref: Ref<HTMLDiv
       placement={placement}
       onOpenChange={onOpenChange}
       ref={ref}
-      label={label}
+      content={content}
       className={className}
       disabled={disabled}
       motionClassName={motionClassName}
