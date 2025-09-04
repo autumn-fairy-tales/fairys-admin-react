@@ -1,8 +1,8 @@
 import clsx from 'clsx';
 import { useMemo, useState } from 'react';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
+import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
 export interface SelectBaseProps {
-  items?: PopoverMenuItem[];
+  items?: PopoverMenuItemType[];
   value?: string | string[];
   onChange?: (value: string | string[]) => void;
   disabled?: boolean;
@@ -22,7 +22,7 @@ export const SelectBase = (props: SelectBaseProps) => {
     );
   }, [isExpand]);
 
-  const onMenuItemClick = (item: PopoverMenuItem) => {
+  const onMenuItemClick = (item: PopoverMenuItemType) => {
     if (multiple) {
       if (Array.isArray(value)) {
         const finx = (value || []).find((it) => it === item.value);

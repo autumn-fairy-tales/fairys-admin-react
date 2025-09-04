@@ -1,9 +1,10 @@
 import { Breadcrumb } from 'breadcrumb';
 import { useSetting } from 'context/setting';
-import { useMemo } from 'react';
+import { Fragment, useMemo } from 'react';
 import clsx from 'clsx';
 import { ButtonBase } from 'components/button';
 import { MenuSearch } from './menu-search';
+import { appPluginDataInstance } from 'context/app-plugins-data';
 
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
@@ -31,6 +32,20 @@ const MenuDarkLight = () => {
 };
 
 export const ToolBar = () => {
+  const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
+  const rightRender = useMemo(() => {
+    if (plugin?.override) {
+      return plugin?.override(<MenuSearch />, <MenuDarkLight />);
+    }
+    return (
+      <Fragment>
+        <MenuSearch />
+        {plugin?.render ? plugin?.render : <Fragment />}
+        <MenuDarkLight />
+      </Fragment>
+    );
+  }, [plugin]);
+
   return (
     <div className="fairys_admin_tool_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:items-center fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">
       <div className="fairys_admin_tool_bar_left">
@@ -38,8 +53,7 @@ export const ToolBar = () => {
       </div>
       <div className="fairys_admin_tool_bar_body fairys:overflow-auto fairys:flex fairys:flex-row fairys:flex-1"></div>
       <div className="fairys_admin_tool_bar_right fairys:flex fairys:items-center fairys:gap-2 fairys:dark:text-gray-200 fairys:pr-[2px]">
-        <MenuSearch />
-        <MenuDarkLight />
+        {rightRender}
       </div>
     </div>
   );

@@ -1,21 +1,21 @@
 import { Fragment, useMemo } from 'react';
 import { useTabBar, tabBarInstance } from 'context/tab-bar';
 import { useNavigate, matchPath, useLocation } from 'react-router';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
+import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
 
 const PopoverButton = () => {
   const [state] = useTabBar();
   const navigate = useNavigate();
-  const list = state.dropDownTabBarItems as PopoverMenuItem[];
+  const list = state.dropDownTabBarItems as PopoverMenuItemType[];
   const location = useLocation();
 
-  const onNativeClick = (item: PopoverMenuItem, e: React.MouseEvent) => {
+  const onNativeClick = (item: PopoverMenuItemType, e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     navigate(item.path);
   };
 
-  const onClose = (item: PopoverMenuItem, e: React.MouseEvent) => {
+  const onClose = (item: PopoverMenuItemType, e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     const match = matchPath(item.path, location.pathname);

@@ -2,7 +2,7 @@ import { Placement } from '@floating-ui/react';
 import { useRef, createContext, useContext } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 
-export interface PopoverMenuItem {
+export interface PopoverMenuItemType {
   /**图标*/
   icon?: string;
   /**标题*/
@@ -16,17 +16,21 @@ export interface PopoverMenuItem {
   /**自定义内容*/
   children?: React.ReactNode;
   /**点击当前项*/
-  onClick?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
+  onClick?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
   /**删除按钮事件*/
-  onClose?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
+  onClose?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
   /**value值*/
   value?: string;
   /**子项*/
-  items?: PopoverMenuItem[];
+  items?: PopoverMenuItemType[];
   /**是否显示关闭按钮
    * @default true
    */
   isShowClose?: boolean;
+  /**是否点击关闭
+   * @default true
+   */
+  isClickClose?: boolean;
   [key: string]: any;
 }
 
@@ -36,11 +40,11 @@ export interface PopoverMenuProps {
   /**单选或多选*/
   mode?: 'single' | 'multiple';
   /**点击当前项*/
-  onClickItem?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
+  onClickItem?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
   /**关闭当前项*/
-  onCloseItem?: (item: PopoverMenuItem, event: React.MouseEvent) => void;
+  onCloseItem?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
   /**渲染数据*/
-  items: PopoverMenuItem[];
+  items: PopoverMenuItemType[];
   /**
    * 是否隐藏关闭按钮
    * @default true
@@ -84,7 +88,7 @@ class PopoverMenuInstance {
     value: undefined,
   });
   /**判断是否选中*/
-  isChecked = (item: PopoverMenuItem) => {
+  isChecked = (item: PopoverMenuItemType) => {
     if (this.state.value) {
       if (Array.isArray(this.state.value)) {
         return this.state.value.includes(item.value || '');

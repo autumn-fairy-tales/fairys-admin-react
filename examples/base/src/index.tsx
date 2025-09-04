@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { settingInstance, authDataInstance } from '@fairys/admin-tools-react';
+import { settingInstance, authDataInstance, appPluginDataInstance } from '@fairys/admin-tools-react';
 import { AuthRoot } from './auth';
 
 import logo from './assets/logo.png';
@@ -16,6 +16,15 @@ authDataInstance.onLogout = () => {
   console.log('onLogout');
   localStorage.removeItem('token');
 };
+
+appPluginDataInstance.addPlugin({
+  'avatar-menus': {
+    menus: [
+      { title: '测试', icon: 'ant-design:question-circle-outlined' },
+      { title: '测试2', icon: 'ant-design:question-circle-outlined' },
+    ],
+  },
+});
 // /**临时加载菜单数据*/
 // menuDataInstance.ctor(menuItems);
 // /**临时加载一下tabBarItems*/

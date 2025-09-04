@@ -4,7 +4,8 @@ import { settingInstance } from 'context/setting';
 import { forwardRef, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
+import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
+import { appPluginDataInstance } from 'context/app-plugins-data';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   mode?: 'sider' | 'header';
@@ -20,6 +21,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   const userName = accountState.userName || 'fairys';
   const userEmail = accountState.userEmail || '未绑定邮箱';
   const navigate = useNavigate();
+  const plugin = appPluginDataInstance.appPlugins?.['avatar-menus'];
 
   const avatarRender = useMemo(() => {
     const avatar = accountState.userAvatar || settingInstance.state.logo;
@@ -46,7 +48,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   }, [mode, className, nameMode]);
 
   const items = useMemo(() => {
-    return [
+    const _items = [
       {
         children: (
           <div className="fairys:p-2 fairys:flex fairys:flex-col fairys:gap-y-4">
@@ -67,27 +69,29 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
         isDivider: true,
       },
       {
-        // <HomeOutlined />
         title: '主页',
         icon: 'ant-design:home-outlined',
       },
       {
-        // <SettingOutlined />
         title: '偏好设置',
         icon: 'ant-design:setting-outlined',
       },
+      ...(plugin?.menus || []),
       {
         isDivider: true,
       },
       {
-        // <LogoutOutlined />
         title: '退出登录',
         icon: 'ant-design:logout-outlined',
       },
-    ];
-  }, [userEmail, avatarRender, userName]);
+    ].filter(Boolean);
+    if (plugin?.override) {
+      return plugin.override(_items);
+    }
+    return _items;
+  }, [userEmail, avatarRender, userName, plugin]);
 
-  const onMenuItemClick = (item: PopoverMenuItem) => {
+  const onMenuItemClick = (item: PopoverMenuItemType) => {
     if (item.title === '主页') {
       navigate('/');
     } else if (item.title === '偏好设置') {

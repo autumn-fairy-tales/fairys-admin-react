@@ -1,7 +1,7 @@
 import React, { forwardRef, type Ref, ReactNode, Fragment, useMemo } from 'react';
 import {
   PopoverMenuProps,
-  PopoverMenuItem,
+  PopoverMenuItemType,
   usePopoverMenuContext,
   PopoverMenuContext,
   usePopoverMenuInstance,
@@ -13,7 +13,7 @@ import { PopoverBase } from 'components/popover-base';
 export * from './context';
 
 interface MenuItemProps {
-  rowItemData: PopoverMenuItem;
+  rowItemData: PopoverMenuItemType;
   /**是否父级菜单展示*/
   isSubMenuItem?: boolean;
 }
@@ -37,7 +37,7 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
     popoverMenuInstance.onClickItem?.(rowItemData, event);
     rowItemData.onClick?.(rowItemData, event);
     /**如果是多选，不进行关闭弹框*/
-    if (popoverMenuInstance.mode === 'multiple') {
+    if (popoverMenuInstance.mode === 'multiple' || rowItemData.isClickClose === false) {
       return;
     }
     tree.events.emit('click');
@@ -107,7 +107,7 @@ const Menu = forwardRef(
   },
 );
 
-const createChildMenu = (item: PopoverMenuItem, index: number) => {
+const createChildMenu = (item: PopoverMenuItemType, index: number) => {
   if (item.children) {
     return <Fragment key={item.path || item.title || item.key || index}>{item.children}</Fragment>;
   } else if (item.visible === false) {

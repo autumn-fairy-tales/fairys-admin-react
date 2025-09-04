@@ -12,7 +12,7 @@ import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
-import { PopoverMenu, PopoverMenuItem } from 'components/popover-menu';
+import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
 import { useFairysRootContext } from 'components/root';
 import { appDataInstance } from 'context/app-data';
 
@@ -122,7 +122,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   }, [currentIndex, count, isTabFixed]);
 
   const onMenuItemClick = useCallback(
-    (item: PopoverMenuItem) => {
+    (item: PopoverMenuItemType) => {
       if (item.title === '重新加载') {
         appDataInstance.aliveController?.refreshScope?.(currentPath);
       } else if (item.title === '关闭标签') {
