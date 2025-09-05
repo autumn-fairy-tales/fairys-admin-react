@@ -5,6 +5,8 @@ import { useLoginPageFormItemInstance, UseLoginPageFormItemInstanceProps } from 
 export interface LoginPageFormItemInputProps
   extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   errorBorderd?: 'bottom' | 'none' | 'all';
+  /**是否存在验证不通过信息*/
+  'data-is-error'?: boolean;
 }
 
 export const LoginPageFormItemInputClassName =

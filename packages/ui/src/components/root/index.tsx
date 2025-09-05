@@ -3,7 +3,6 @@ import { Fragment, createContext, useContext, useMemo, useRef } from 'react';
 import { appDataInstance } from 'context/app-data';
 import { aliveControllerBaseInstance } from 'context/alive-controller';
 import { DataRouter, RouterProvider } from 'react-router';
-import type { NavigateFunction } from 'react-router';
 import { routerDataInstance } from 'context';
 
 export interface FairysRootProps {
@@ -15,6 +14,7 @@ export interface FairysRootProps {
 }
 
 export class FairysRootClass {
+  /**启用缓存*/
   keepAlive: boolean;
 }
 export const useFairysRoot = (fairysRootClass?: FairysRootClass) => {
