@@ -1,10 +1,12 @@
 import { Breadcrumb } from 'breadcrumb';
 import { useSetting } from 'context/setting';
-import { Fragment, useMemo, useEffect } from 'react';
+import { Fragment, useMemo, useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 import { ButtonBase } from 'components/button';
 import { MenuSearch } from './menu-search';
 import { appPluginDataInstance } from 'context/app-plugins-data';
+import { appDataInstance } from 'context/app-data';
+import { useLocation } from 'react-router-dom';
 
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
@@ -51,6 +53,33 @@ const FullScreen = () => {
   );
 };
 
+const Reload = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const timer = useRef<NodeJS.Timeout>();
+  const location = useLocation();
+
+  const onClick = () => {
+    appDataInstance.aliveController?.refreshScope?.(location.pathname);
+    setIsLoading(true);
+    timer.current = setTimeout(() => {
+      setIsLoading(false);
+      clearTimeout(timer.current);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    return () => {
+      clearTimeout(timer.current);
+    };
+  }, []);
+
+  return (
+    <ButtonBase className="fairys_admin_tool_bar_reload" onClick={onClick}>
+      <span className={clsx('fairys-icon fairys:icon-[ant-design--sync-outlined]', { 'fairys-spin': isLoading })} />
+    </ButtonBase>
+  );
+};
+
 export const ToolBar = () => {
   const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
   const rightRender = useMemo(() => {
@@ -58,6 +87,7 @@ export const ToolBar = () => {
       return plugin?.override([
         <MenuSearch key="menu-search" />,
         <FullScreen key="menu-full-screen" />,
+        <Reload key="menu-reload" />,
         <MenuDarkLight key="menu-dark-light" />,
       ]);
     }
@@ -65,6 +95,7 @@ export const ToolBar = () => {
       <Fragment>
         <MenuSearch key="menu-search" />
         <FullScreen key="menu-full-screen" />
+        <Reload key="menu-reload" />
         {plugin?.render ? plugin?.render : <Fragment />}
         <MenuDarkLight key="menu-dark-light" />
       </Fragment>

@@ -643,4 +643,16 @@ body,
   .fairys_admin_full_screen_close {
     clip-path: inset(0% 0% 0% 0% round 0% 0% 0% 100%);
   }
+
+  .fairys-spin {
+    -webkit-animation: loadingCircle 1s infinite linear;
+    animation: loadingCircle 1s infinite linear;
+  }
+
+  @keyframes loadingCircle {
+    100% {
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+    }
+  }
 }
