@@ -233,21 +233,33 @@ class SettingInstance {
     this.updated({ open: !this.state.open });
   };
 
+  /**全屏监听*/
+  onFullscreenChange = () => {
+    // 如果有元素处于全屏模式，则 document.fullscreenElement 将指向该元素。如果没有元素处于全屏模式，则该属性的值为 null。
+    if (!document.fullscreenElement) {
+      this.state.isFullScreen = false;
+    } else {
+      this.state.isFullScreen = true;
+    }
+  };
+  addEventListenerFullscreenChange = () => {
+    document.addEventListener('fullscreenchange', this.onFullscreenChange);
+    return () => {
+      document.removeEventListener('fullscreenchange', this.onFullscreenChange);
+    };
+  };
   /**全屏*/
   onToggleFullScreen = async () => {
     try {
       if (!document.fullscreenElement) {
         await document.documentElement.requestFullscreen();
-        this.state.isFullScreen = true;
       } else if (document.exitFullscreen) {
-        await document.exitFullscreen();
-        this.state.isFullScreen = false;
+        document.exitFullscreen();
       }
     } catch (error) {
       console.log('onToggleFullScreen===>', error);
     }
   };
-
   /**清空*/
   clear = () => {};
 }

@@ -1,6 +1,6 @@
 import { Breadcrumb } from 'breadcrumb';
 import { useSetting } from 'context/setting';
-import { Fragment, useMemo } from 'react';
+import { Fragment, useMemo, useEffect } from 'react';
 import clsx from 'clsx';
 import { ButtonBase } from 'components/button';
 import { MenuSearch } from './menu-search';
@@ -34,6 +34,8 @@ const MenuDarkLight = () => {
 const FullScreen = () => {
   const [state, settingInstance] = useSetting();
   const isFullScreen = state.isFullScreen;
+
+  useEffect(settingInstance.addEventListenerFullscreenChange, []);
 
   const className = useMemo(() => {
     return clsx('fairys:size-[16px]', {
