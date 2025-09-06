@@ -31,15 +31,38 @@ const MenuDarkLight = () => {
   );
 };
 
+const FullScreen = () => {
+  const [state, settingInstance] = useSetting();
+  const isFullScreen = state.isFullScreen;
+
+  const className = useMemo(() => {
+    return clsx('fairys:size-[16px]', {
+      'fairys:icon-[ant-design--fullscreen-outlined]': !isFullScreen,
+      'fairys:icon-[ant-design--fullscreen-exit-outlined]': isFullScreen,
+    });
+  }, [isFullScreen]);
+
+  return (
+    <ButtonBase className="fairys_admin_tool_bar_full_screen" onClick={settingInstance.onToggleFullScreen}>
+      <span className={className} />
+    </ButtonBase>
+  );
+};
+
 export const ToolBar = () => {
   const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
   const rightRender = useMemo(() => {
     if (plugin?.override) {
-      return plugin?.override(<MenuSearch />, <MenuDarkLight />);
+      return plugin?.override([
+        <MenuSearch key="menu-search" />,
+        <FullScreen key="menu-full-screen" />,
+        <MenuDarkLight key="menu-dark-light" />,
+      ]);
     }
     return (
       <Fragment>
         <MenuSearch />
+        <FullScreen />
         {plugin?.render ? plugin?.render : <Fragment />}
         <MenuDarkLight />
       </Fragment>

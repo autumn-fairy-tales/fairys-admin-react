@@ -6,7 +6,7 @@ export type AppPluginType = {
     /**渲染组件*/
     render?: React.ReactNode;
     /**渲染重写函数*/
-    override?: (menuSearch: React.ReactNode, menuDarkLight: React.ReactNode) => React.ReactNode;
+    override?: (menus: React.ReactNode[]) => React.ReactNode;
   };
   /**头像菜单插件*/
   'avatar-menus'?: {

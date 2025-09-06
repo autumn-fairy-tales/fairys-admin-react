@@ -63,9 +63,9 @@ export interface SettingInstanceState {
   enableToolBarNotification?: boolean;
   /**全屏*/
   enableToolBarFullScreen?: boolean;
+  isFullScreen?: boolean;
   /**页面刷新*/
   enableToolBarRefresh?: boolean;
-
   /**是否启用页面水印*/
   enableWatermark?: boolean;
   /**载入进度条*/
@@ -231,6 +231,21 @@ class SettingInstance {
   /**切换打开偏好设置*/
   onToggleOpen = () => {
     this.updated({ open: !this.state.open });
+  };
+
+  /**全屏*/
+  onToggleFullScreen = async () => {
+    try {
+      if (!document.fullscreenElement) {
+        await document.documentElement.requestFullscreen();
+        this.state.isFullScreen = true;
+      } else if (document.exitFullscreen) {
+        await document.exitFullscreen();
+        this.state.isFullScreen = false;
+      }
+    } catch (error) {
+      console.log('onToggleFullScreen===>', error);
+    }
   };
 
   /**清空*/
