@@ -61,10 +61,10 @@ export const ToolBar = () => {
     }
     return (
       <Fragment>
-        <MenuSearch />
-        <FullScreen />
+        <MenuSearch key="menu-search" />
+        <FullScreen key="menu-full-screen" />
         {plugin?.render ? plugin?.render : <Fragment />}
-        <MenuDarkLight />
+        <MenuDarkLight key="menu-dark-light" />
       </Fragment>
     );
   }, [plugin]);
