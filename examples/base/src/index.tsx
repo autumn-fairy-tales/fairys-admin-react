@@ -1,5 +1,10 @@
 import ReactDOM from 'react-dom/client';
-import { settingInstance, authDataInstance, appPluginDataInstance } from '@fairys/admin-tools-react';
+import {
+  settingInstance,
+  authDataInstance,
+  appPluginDataInstance,
+  notificationDataInstance,
+} from '@fairys/admin-tools-react';
 import { AuthRoot } from './auth';
 
 import logo from './assets/logo.png';
@@ -15,6 +20,26 @@ settingInstance.initSetting({
 authDataInstance.onLogout = () => {
   console.log('onLogout');
   localStorage.removeItem('token');
+};
+notificationDataInstance.ctor({
+  tabItems: [
+    {
+      title: '全部',
+      key: 'all',
+    },
+    {
+      title: '未读',
+      key: 'unread',
+    },
+    {
+      title: '已读',
+      key: 'read',
+    },
+  ],
+});
+/**点击数据*/
+notificationDataInstance.onClickItem = (item) => {
+  console.log(item);
 };
 
 appPluginDataInstance.addPlugin({

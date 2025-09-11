@@ -8,3 +8,4 @@ export * from './motion-animation';
 export * from './account-data';
 export * from './alive-controller';
 export * from './auth-data';
+export * from './notification-data';

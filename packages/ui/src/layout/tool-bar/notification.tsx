@@ -1,12 +1,15 @@
-import { FairysNotificationList } from 'components/notification';
+import { FairysNotificationListBase } from 'components/notification';
 import { FairysTabs } from 'components/tabs';
 import { useNotificationData } from 'context/notification-data';
+import { Fragment } from 'react/jsx-runtime';
 
 export const Notification = () => {
-  const [state] = useNotificationData();
+  const [state, notificationDataInstance] = useNotificationData();
   const title = state.title;
-
   const isTabs = !!(state.tabItems || []).length;
+  const activeKey = state.activeKey;
+  const dataList = isTabs ? state[`dataList_${activeKey}`] : state.dataList;
+  const isEmpty = !dataList?.length;
 
   return (
     <div className="fairys_admin_tool_bar_notification fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col fairys:box-border">
@@ -14,21 +17,9 @@ export const Notification = () => {
         {isTabs ? (
           <div className="fairys:py-1 fairys:px-3">
             <FairysTabs
-              activeKey="all"
-              items={[
-                {
-                  title: '全部',
-                  key: 'all',
-                },
-                {
-                  title: '未读',
-                  key: 'unread',
-                },
-                {
-                  title: '已读',
-                  key: 'read',
-                },
-              ]}
+              activeKey={activeKey}
+              items={state.tabItems}
+              onChange={notificationDataInstance.updateActiveKey}
             />
           </div>
         ) : (
@@ -38,21 +29,25 @@ export const Notification = () => {
         )}
       </div>
       <div className="fairys_admin_tool_bar_notification_list fairys:flex-1 fairys:overflow-auto no-scrollbar">
-        <FairysNotificationList
-          items={Array.from({ length: 100 }).map((item, index) => ({
-            id: index.toString(),
-            type: 'ddd',
-            title: '登录成功',
-            date: '2023-01-01 12:00:00',
-            icon: 'ant-design:unordered-list',
-          }))}
-        />
+        {isEmpty ? (
+          <div className="fairys:py-20 fairys:text-center fairys:text-[14px]">暂无通知</div>
+        ) : (
+          <FairysNotificationListBase
+            onClickItem={notificationDataInstance._onClickItem}
+            isShowIcon={state.isShowIcon}
+            items={dataList}
+          />
+        )}
       </div>
-      <div className="fairys_admin_tool_bar_notification_footer fairys:py-3 fairys:text-[12px] fairys:font-medium fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800">
-        <div className="fairys:flex fairys:justify-center fairys:items-center">
-          <div className="fairys:cursor-pointer">查看全部</div>
+      {isEmpty ? (
+        <Fragment />
+      ) : (
+        <div className="fairys_admin_tool_bar_notification_footer fairys:py-3 fairys:text-[12px] fairys:font-medium fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800">
+          <div className="fairys:flex fairys:justify-center fairys:items-center">
+            <div className="fairys:cursor-pointer">查看全部</div>
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 };

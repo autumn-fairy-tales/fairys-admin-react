@@ -2,8 +2,8 @@ import { proxy, ref, useSnapshot } from 'valtio';
 
 export interface NotificationTabItemType {
   title: string;
-  type: string;
-  icon: string;
+  key: string;
+  icon?: string;
   [s: string]: any;
 }
 
@@ -49,11 +49,19 @@ export class NotificationDataInstance {
     isShowIcon: true,
     count: 0,
   });
-  ctor = (tabItems: NotificationTabItemType[]) => {
+  ctor = (options: { tabItems?: NotificationTabItemType[]; title?: string; isShowIcon?: boolean }) => {
+    const { tabItems, title, isShowIcon } = options;
     this.state.tabItems = ref(tabItems || []);
     /**默认第一个*/
-    this.state.activeKey = tabItems?.[0]?.type;
+    this.state.activeKey = tabItems?.[0]?.key;
+    this.state.title = title || '通知';
+    this.state.isShowIcon = isShowIcon ?? true;
   };
+  /**更新值*/
+  updateActiveKey = (key: string) => {
+    this.state.activeKey = key;
+  };
+
   /**根据类型获取数据*/
   getDataType = (type: string) => {
     return this.state[`dataList_${type}`] || [];
@@ -69,6 +77,13 @@ export class NotificationDataInstance {
   /**更新列表数据*/
   updateDataList = (data: NotificationItemType[]) => {
     this.state.dataList = ref(data || []);
+  };
+
+  /**点击数据(外部挂载事件)*/
+  onClickItem: (item: NotificationItemType) => void;
+  /**点击数据*/
+  _onClickItem = (item: NotificationItemType) => {
+    this.onClickItem?.(item);
   };
   /**清空数据*/
   clear = () => {

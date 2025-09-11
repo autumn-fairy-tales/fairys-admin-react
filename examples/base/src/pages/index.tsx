@@ -1,7 +1,7 @@
 import { MainPage } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
 import { LoginPage } from '@fairys/admin-tools-react';
-import { FairysNotificationList } from '@fairys/admin-tools-react/lib/components/notification';
+import { FairysNotificationListBase } from '@fairys/admin-tools-react/lib/components/notification';
 
 const rules = {
   username: (value: string) => {
@@ -33,7 +33,7 @@ const MainIndex = () => {
 
   return (
     <MainPage>
-      <FairysNotificationList
+      <FairysNotificationListBase
         items={[
           {
             id: '1',

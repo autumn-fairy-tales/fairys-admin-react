@@ -1,5 +1,5 @@
 import type { NotificationItemType } from 'context/notification-data';
-import { ForwardedRef, forwardRef, Fragment, useMemo } from 'react';
+import { ForwardedRef, forwardRef, Fragment, useMemo, useRef, createContext, useContext } from 'react';
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 
@@ -12,9 +12,33 @@ export interface FairysNotificationItemProps
   isShowIcon?: boolean;
 }
 
-export const FairysNotificationItem = forwardRef(
+class FairysNotification {
+  /**点击数据*/
+  onClickItem?: (item: NotificationItemType) => void;
+}
+
+export const useFairysNotificationBase = (instance?: FairysNotification) => {
+  const notification = useRef<FairysNotification>();
+  if (!notification.current) {
+    if (instance) {
+      notification.current = instance;
+    } else {
+      notification.current = new FairysNotification();
+    }
+  }
+  return notification.current;
+};
+
+const FairysNotificationBaseContext = createContext<FairysNotification>(new FairysNotification());
+
+export const useFairysNotificationBaseContext = () => {
+  return useContext(FairysNotificationBaseContext);
+};
+
+export const FairysNotificationBaseItem = forwardRef(
   (props: FairysNotificationItemProps, ref: ForwardedRef<HTMLDivElement>) => {
     const { item, className, isShowIcon = true, ...rest } = props;
+    const notification = useFairysNotificationBaseContext();
 
     const clxName = useMemo(() => {
       return clsx(
@@ -26,8 +50,14 @@ export const FairysNotificationItem = forwardRef(
       );
     }, [item?.type, className]);
 
+    const onClickItem: React.MouseEventHandler<HTMLDivElement> = (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+      notification.onClickItem?.(item);
+    };
+
     return (
-      <div ref={ref} {...rest} className={clxName}>
+      <div ref={ref} {...rest} className={clxName} onClick={onClickItem}>
         {isShowIcon ? (
           <div className="fairys_admin_notification_item-icon fairys:w-[36px] fairys:h-[36px] fairys:min-w-[36px] fairys:flex fairys:justify-center fairys:items-center">
             {item?.icon ? <Icon icon={item.icon} className="fairys:w-[16px] fairys:h-[16px]" /> : <Fragment />}
@@ -51,18 +81,24 @@ export const FairysNotificationItem = forwardRef(
   },
 );
 
-export interface FairysNotificationListProps
+export interface FairysNotificationListBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   items?: NotificationItemType[];
   /**是否显示图标
    * @default true
    */
   isShowIcon?: boolean;
+  /**点击数据*/
+  onClickItem?: (item: NotificationItemType) => void;
 }
 
-export const FairysNotificationList = forwardRef(
-  (props: FairysNotificationListProps, ref: ForwardedRef<HTMLDivElement>) => {
-    const { items, className, isShowIcon, ...rest } = props;
+export const FairysNotificationListBase = forwardRef(
+  (props: FairysNotificationListBaseProps, ref: ForwardedRef<HTMLDivElement>) => {
+    const { items, className, isShowIcon, onClickItem, ...rest } = props;
+
+    const notification = useFairysNotificationBase();
+    notification.onClickItem = onClickItem;
+
     const clxName = useMemo(() => {
       return clsx(
         'fairys_admin_notification_list fairys:min-w-[200px] fairys:bg-white fairys:dark:bg-gray-800 fairys:rounded-sm fairys:flex fairys:flex-col',
@@ -71,13 +107,17 @@ export const FairysNotificationList = forwardRef(
     }, [className]);
 
     const itemRender = useMemo(() => {
-      return items.map((item) => <FairysNotificationItem key={item.id} item={item} isShowIcon={isShowIcon} />);
+      return (items || []).map((item) => (
+        <FairysNotificationBaseItem key={item.id} item={item} isShowIcon={isShowIcon} />
+      ));
     }, [items, isShowIcon]);
 
     return (
-      <div ref={ref} {...rest} className={clxName}>
-        {itemRender}
-      </div>
+      <FairysNotificationBaseContext.Provider value={notification}>
+        <div ref={ref} {...rest} className={clxName}>
+          {itemRender}
+        </div>
+      </FairysNotificationBaseContext.Provider>
     );
   },
 );
