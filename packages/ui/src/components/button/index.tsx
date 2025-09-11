@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import { useMemo } from 'react';
+import { forwardRef, useMemo, Ref } from 'react';
 
 interface ButtonBaseProps
   extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
@@ -7,7 +7,7 @@ interface ButtonBaseProps
   bordered?: boolean;
 }
 
-export const ButtonBase = (props: ButtonBaseProps) => {
+export const ButtonBase = forwardRef((props: ButtonBaseProps, ref: Ref<HTMLButtonElement>) => {
   const { className, isBg, bordered = false, ...rest } = props;
   const baseClassName = useMemo(() => {
     return clsx(
@@ -28,5 +28,5 @@ export const ButtonBase = (props: ButtonBaseProps) => {
     );
   }, [className, bordered, isBg]);
 
-  return <button {...rest} className={baseClassName} />;
-};
+  return <button {...rest} ref={ref} className={baseClassName} />;
+});

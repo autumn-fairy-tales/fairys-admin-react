@@ -247,42 +247,22 @@ export const PopoverBase = forwardRef((props: PopoverBaseProps, ref: Ref<HTMLDiv
     placement,
     isNotMinWidth = false,
   } = props;
-
-  const parentId = useFloatingParentNodeId();
-
-  if (parentId === null) {
-    return (
-      <FloatingTree>
-        <PopoverBaseComponent
-          placement={placement}
-          eventName={eventName}
-          onOpenChange={onOpenChange}
-          ref={ref}
-          content={content}
-          className={className}
-          disabled={disabled}
-          motionClassName={motionClassName}
-          isNotMinWidth={isNotMinWidth}
-        >
-          {children}
-        </PopoverBaseComponent>
-      </FloatingTree>
-    );
-  }
   return (
-    <PopoverBaseComponent
-      eventName={eventName}
-      placement={placement}
-      onOpenChange={onOpenChange}
-      ref={ref}
-      content={content}
-      className={className}
-      disabled={disabled}
-      motionClassName={motionClassName}
-      isNotMinWidth={isNotMinWidth}
-    >
-      {children}
-    </PopoverBaseComponent>
+    <PopoverBaseFloatingTreeParent>
+      <PopoverBaseComponent
+        eventName={eventName}
+        placement={placement}
+        onOpenChange={onOpenChange}
+        ref={ref}
+        content={content}
+        className={className}
+        disabled={disabled}
+        motionClassName={motionClassName}
+        isNotMinWidth={isNotMinWidth}
+      >
+        {children}
+      </PopoverBaseComponent>
+    </PopoverBaseFloatingTreeParent>
   );
 });
 

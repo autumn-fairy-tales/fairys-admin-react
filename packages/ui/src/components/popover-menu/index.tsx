@@ -55,7 +55,7 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
   }, [state.value]);
 
   const cls = useMemo(() => {
-    return clsx('popover-menu-item', popoverMenuItemBaseCls, {
+    return clsx('fairys_admin_popover_menu_item', popoverMenuItemBaseCls, {
       [popoverMenuItemBaseClsDisabled]: rowItemData.disabled,
       [popoverMenuItemBaseClsNotDisabled]: !rowItemData.disabled,
       [popoverMenuItemBaseClsActive]: isActive,

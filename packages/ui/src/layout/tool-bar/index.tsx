@@ -7,6 +7,9 @@ import { MenuSearch } from './menu-search';
 import { appPluginDataInstance } from 'context/app-plugins-data';
 import { appDataInstance } from 'context/app-data';
 import { useLocation } from 'react-router-dom';
+import { PopoverBase } from 'components/popover-base';
+import { Notification } from './notification';
+import { useNotificationData } from 'context/notification-data';
 
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
@@ -20,7 +23,7 @@ const MenuDarkLight = () => {
   };
 
   const className = useMemo(() => {
-    return clsx('fairys:size-[16px]', {
+    return clsx('fairys:size-[18px]', {
       'fairys:icon-[ant-design--moon-outlined]': theme !== 'dark',
       'fairys:icon-[ant-design--sun-outlined]': theme === 'dark',
     });
@@ -40,7 +43,7 @@ const FullScreen = () => {
   useEffect(settingInstance.addEventListenerFullscreenChange, []);
 
   const className = useMemo(() => {
-    return clsx('fairys:size-[16px]', {
+    return clsx('fairys:size-[18px]', {
       'fairys:icon-[ant-design--fullscreen-outlined]': !isFullScreen,
       'fairys:icon-[ant-design--fullscreen-exit-outlined]': isFullScreen,
     });
@@ -75,8 +78,37 @@ const Reload = () => {
 
   return (
     <ButtonBase className="fairys_admin_tool_bar_reload" onClick={onClick}>
-      <span className={clsx('fairys-icon fairys:icon-[ant-design--sync-outlined]', { 'fairys-spin': isLoading })} />
+      <span
+        className={clsx('fairys-icon fairys:icon-[ant-design--sync-outlined] fairys:size-[18px]', {
+          'fairys-spin': isLoading,
+        })}
+      />
     </ButtonBase>
+  );
+};
+
+const NotificationBtn = () => {
+  const [state] = useNotificationData();
+  const count = state.count;
+
+  const tipClassName = useMemo(() => {
+    return clsx(
+      'fairys:absolute fairys:p-1 fairys:flex fairys:items-center fairys:justify-center fairys:text-[10px] fairys:rounded-[50%] fairys:bg-red-500 fairys:text-white',
+      {
+        'fairys:size-[25px] fairys:top-[-4px] fairys:right-[-8px] ': count > 99,
+        'fairys:size-[20px] fairys:top-[0px] fairys:right-[0px] ': count <= 99 && count >= 10,
+        'fairys:size-[16px] fairys:top-[0px] fairys:right-[0px]': count < 10,
+      },
+    );
+  }, [count]);
+
+  return (
+    <PopoverBase placement="bottom" content={<Notification />}>
+      <ButtonBase className="fairys_admin_tool_bar_notification fairys:relative">
+        <span className="fairys:icon-[ant-design--bell-outlined] fairys:size-[18px]" />
+        {count > 0 ? <span className={tipClassName}>{count > 99 ? '99+' : count}</span> : <Fragment />}
+      </ButtonBase>
+    </PopoverBase>
   );
 };
 
@@ -86,6 +118,7 @@ export const ToolBar = () => {
     if (plugin?.override) {
       return plugin?.override([
         <MenuSearch key="menu-search" />,
+        <NotificationBtn key="menu-notification" />,
         <FullScreen key="menu-full-screen" />,
         <Reload key="menu-reload" />,
         <MenuDarkLight key="menu-dark-light" />,
@@ -94,6 +127,7 @@ export const ToolBar = () => {
     return (
       <Fragment>
         <MenuSearch key="menu-search" />
+        <NotificationBtn key="menu-notification" />
         <FullScreen key="menu-full-screen" />
         <Reload key="menu-reload" />
         {plugin?.render ? plugin?.render : <Fragment />}

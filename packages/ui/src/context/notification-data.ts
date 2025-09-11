@@ -1,31 +1,86 @@
-import { proxy, useSnapshot } from 'valtio';
+import { proxy, ref, useSnapshot } from 'valtio';
 
-interface NotificationTabItem {
+export interface NotificationTabItemType {
   title: string;
   type: string;
+  icon: string;
+  [s: string]: any;
 }
 
-interface NotificationDataState {
+export interface NotificationItemType {
+  /**通知id*/
+  id: string;
+  /**通知类型*/
+  type: string;
+  /**通知标题*/
+  title: string;
+  /**通知时间*/
+  date: string;
+  /**通知内容*/
+  content?: string;
+  /**图标*/
+  icon?: string;
+  [s: string]: any;
+}
+
+export type NotificationDataState = {
   /**通知tab列表*/
-  tabItems?: NotificationTabItem[];
+  tabItems?: NotificationTabItemType[];
+  activeKey?: string;
+  /**列表数据(在不分类的时候渲染)*/
+  dataList?: Pick<NotificationItemType, 'type'>[];
+  /**通知标题*/
+  title?: string;
+  /**是否显示图标
+   * @default true
+   */
+  isShowIcon?: boolean;
   /**默认引用值*/
   __defaultValue?: string;
-}
+  /**显示数量*/
+  count?: number;
+};
 
 export class NotificationDataInstance {
   state = proxy<NotificationDataState>({
     tabItems: [],
+    dataList: [],
+    title: '通知',
+    isShowIcon: true,
+    count: 0,
   });
-  /**更新数据信息*/
-  updated = (state: NotificationDataState) => {};
+  ctor = (tabItems: NotificationTabItemType[]) => {
+    this.state.tabItems = ref(tabItems || []);
+    /**默认第一个*/
+    this.state.activeKey = tabItems?.[0]?.type;
+  };
+  /**根据类型获取数据*/
+  getDataType = (type: string) => {
+    return this.state[`dataList_${type}`] || [];
+  };
+  /**根据类型更新数据*/
+  updatedToType = (type: string, data: NotificationItemType[]) => {
+    this.state[`dataList_${type}`] = ref(data || []);
+  };
+  /**获取数据*/
+  getDataList = () => {
+    return this.state.dataList || [];
+  };
+  /**更新列表数据*/
+  updateDataList = (data: NotificationItemType[]) => {
+    this.state.dataList = ref(data || []);
+  };
   /**清空数据*/
   clear = () => {
     for (const key in this.state) {
-      this.state[key] = undefined;
+      if (key !== 'tabItems') {
+        this.state[key] = undefined;
+      }
     }
   };
 }
 
+/**消息通知*/
 export const notificationDataInstance = new NotificationDataInstance();
 
 export const useNotificationData = () => {

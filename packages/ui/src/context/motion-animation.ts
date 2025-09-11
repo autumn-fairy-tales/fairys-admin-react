@@ -28,9 +28,9 @@ export class MotionAnimationInstance {
     {
       name: '滑动',
       config: {
-        initial: { opacity: 0, x: -50 },
+        initial: { opacity: 0, x: '-20%' },
         animate: { opacity: 1, x: 0 },
-        exit: { opacity: 0, x: 50 },
+        exit: { opacity: 0, x: '20%' },
         transition: { duration: 0.5, ease: 'easeOut' },
       },
     },

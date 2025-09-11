@@ -1,6 +1,8 @@
 import { MainPage } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
 import { LoginPage } from '@fairys/admin-tools-react';
+import { FairysNotificationList } from '@fairys/admin-tools-react/lib/components/notification';
+
 const rules = {
   username: (value: string) => {
     if (!value) {
@@ -31,6 +33,25 @@ const MainIndex = () => {
 
   return (
     <MainPage>
+      <FairysNotificationList
+        items={[
+          {
+            id: '1',
+            type: 'ddd',
+            title: '登录成功',
+            date: '2023-01-01 12:00:00',
+            icon: 'ant-design:unordered-list',
+          },
+          {
+            id: '2',
+            type: 'ddd',
+            title: '登录成功',
+            date: '2023-01-01 12:00:00',
+            icon: 'ant-design:unordered-list',
+          },
+        ]}
+      />
+
       <div className="w-[500px] h-[500px]">
         <LoginPage
           className="bg-red-50 dark:bg-red-950"
