@@ -91,22 +91,17 @@ const NotificationBtn = () => {
   const [state] = useNotificationData();
   const count = state.count;
 
-  const tipClassName = useMemo(() => {
-    return clsx(
-      'fairys:absolute fairys:p-1 fairys:flex fairys:items-center fairys:justify-center fairys:text-[10px] fairys:rounded-[50%] fairys:bg-red-500 fairys:text-white',
-      {
-        'fairys:size-[25px] fairys:top-[-4px] fairys:right-[-8px] ': count > 99,
-        'fairys:size-[20px] fairys:top-[0px] fairys:right-[0px] ': count <= 99 && count >= 10,
-        'fairys:size-[16px] fairys:top-[0px] fairys:right-[0px]': count < 10,
-      },
-    );
-  }, [count]);
-
   return (
     <PopoverBase placement="bottom" content={<Notification />}>
       <ButtonBase className="fairys_admin_tool_bar_notification fairys:relative">
         <span className="fairys:icon-[ant-design--bell-outlined] fairys:size-[18px]" />
-        {count > 0 ? <span className={tipClassName}>{count > 99 ? '99+' : count}</span> : <Fragment />}
+        {count > 0 ? (
+          <span className="fairys:absolute fairys:px-[6px] fairys:top-[0px] fairys:left-[40%]  fairys:flex fairys:items-center fairys:justify-center fairys:text-[10px] fairys:rounded-[10px] fairys:bg-red-500 fairys:text-white">
+            {count > 99 ? '99+' : count}
+          </span>
+        ) : (
+          <Fragment />
+        )}
       </ButtonBase>
     </PopoverBase>
   );

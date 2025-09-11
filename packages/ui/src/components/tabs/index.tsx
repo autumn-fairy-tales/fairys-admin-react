@@ -19,32 +19,23 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
   const { item } = props;
   const disabled = item.disabled;
   const [state, instance] = useTabsInstanceContext();
-
-  const clsName = useMemo(() => {
-    return clsx('fairys_admin_tabs_item fairys:relative  fairys:flex-1 fairys:cursor-pointer fairys:px-2 fairys:py-1', {
-      'fairys:opacity-50': disabled,
-    });
-  }, [disabled]);
-
   const selected = state.activeKey === item.key;
 
-  const animationProps: MotionNodeAnimationOptions = useMemo(() => {
-    return {
-      initial: {
-        color: selected ? 'var(--fairys-color-gray-50)' : 'var(--fairys-color-gray-500)',
+  const clsName = useMemo(() => {
+    return clsx(
+      'fairys_admin_tabs_item fairys:relative fairys:flex-1 fairys:cursor-pointer fairys:px-2 fairys:py-1 fairys:transition-all fairys:duration-300',
+      {
+        'fairys:opacity-50': disabled,
+        'fairys:text-white': selected,
+        'fairys:text-gray-600 fairys:dark:text-gray-400': !selected,
       },
-      animate: {
-        color: selected ? 'var(--fairys-color-gray-50)' : 'var(--fairys-color-gray-500)',
-      },
-      transition: { duration: 0.3 },
-    };
-  }, [selected]);
+    );
+  }, [disabled, selected]);
 
   return (
     <motion.div
       ref={ref}
       className={clsName}
-      {...animationProps}
       onClick={(event) => {
         event.preventDefault();
         if (disabled) {
