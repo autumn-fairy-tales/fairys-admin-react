@@ -1,13 +1,13 @@
 import clsx from 'clsx';
 import { forwardRef, useMemo, Ref } from 'react';
 
-interface ButtonBaseProps
+interface FairysButtonBaseProps
   extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
   isBg?: boolean;
   bordered?: boolean;
 }
 
-export const ButtonBase = forwardRef((props: ButtonBaseProps, ref: Ref<HTMLButtonElement>) => {
+export const FairysButtonBase = forwardRef((props: FairysButtonBaseProps, ref: Ref<HTMLButtonElement>) => {
   const { className, isBg, bordered = false, ...rest } = props;
   const baseClassName = useMemo(() => {
     return clsx(

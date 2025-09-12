@@ -3,7 +3,7 @@ import { useMenuData, MenuInstanceContext, useMenuInstance, MenuItemType } from 
 import { SubMenu } from './sub-menu';
 import { MenuItem } from './menu-item';
 import { useSetting } from 'context/setting';
-import { PopoverBaseFloatingTreeParent } from 'components/popover-base';
+import { FairysPopoverBaseFloatingTreeParent } from 'components/popover-base';
 
 const createChildMenu = (item: MenuItemType, level?: number) => {
   if (Array.isArray(item.items)) {
@@ -62,14 +62,14 @@ export const Menu = () => {
 
   return (
     <MenuInstanceContext.Provider value={menuInstance}>
-      <PopoverBaseFloatingTreeParent key={layoutMode}>
+      <FairysPopoverBaseFloatingTreeParent key={layoutMode}>
         <div
           ref={menuInstance.dom}
           className="fairys_admin_menu fairys:transition-all fairys:duration-300 fairys:box-border fairys:flex fairys:flex-col fairys:gap-y-2 fairys:p-[8px] fairys:overflow-auto fairys:h-full no-scrollbar fairys:max-w-[220px]"
         >
           {render}
         </div>
-      </PopoverBaseFloatingTreeParent>
+      </FairysPopoverBaseFloatingTreeParent>
     </MenuInstanceContext.Provider>
   );
 };

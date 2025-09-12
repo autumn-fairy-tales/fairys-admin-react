@@ -1,9 +1,10 @@
 import clsx from 'clsx';
 import { forwardRef, Ref, useMemo } from 'react';
 
-interface MainPageBaseProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
+interface FairysMainPageBaseProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
-export const MainPageSearch = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLDivElement>) => {
+export const FairysMainPageSearch = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx('fairys_admin_main_page_search fairys:w-full fairys:box-border', className);
@@ -16,7 +17,7 @@ export const MainPageSearch = forwardRef((props: MainPageBaseProps, ref: Ref<HTM
   );
 });
 
-export const MainPageBody = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLDivElement>) => {
+export const FairysMainPageBody = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx(
@@ -32,7 +33,7 @@ export const MainPageBody = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLD
   );
 });
 
-export const MainPageFooter = forwardRef((props: MainPageBaseProps, ref: Ref<HTMLDivElement>) => {
+export const FairysMainPageFooter = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx('fairys_admin_main_page_footer fairys:box-border fairys:w-full', className);
@@ -45,8 +46,8 @@ export const MainPageFooter = forwardRef((props: MainPageBaseProps, ref: Ref<HTM
   );
 });
 
-export const MainPage = forwardRef(
-  (props: MainPageBaseProps & { bodyClassName?: string }, ref: Ref<HTMLDivElement>) => {
+export const FairysMainPage = forwardRef(
+  (props: FairysMainPageBaseProps & { bodyClassName?: string }, ref: Ref<HTMLDivElement>) => {
     const { className, children, bodyClassName, ...rest } = props;
     const clx = useMemo(() => {
       return clsx(

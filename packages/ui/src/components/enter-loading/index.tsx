@@ -3,14 +3,14 @@ import { forwardRef, Fragment, Ref, useMemo } from 'react';
 import { motion, MotionProps } from 'framer-motion';
 import { useAnimationStatus } from './../utils';
 
-export interface EnterLoadingProps extends MotionProps {
+export interface FairysEnterLoadingProps extends MotionProps {
   title?: string;
   tips?: string;
   loading?: boolean;
   className?: string;
 }
 
-export const EnterLoading = forwardRef((props: EnterLoadingProps, ref: Ref<HTMLDivElement>) => {
+export const FairysEnterLoading = forwardRef((props: FairysEnterLoadingProps, ref: Ref<HTMLDivElement>) => {
   const { title = '', tips = '载入中', className, loading = false, ...rest } = props;
   const { show, onAnimationComplete } = useAnimationStatus(loading);
   const classNames = useMemo(

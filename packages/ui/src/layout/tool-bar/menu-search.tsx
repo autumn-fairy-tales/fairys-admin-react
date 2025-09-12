@@ -1,10 +1,10 @@
-import { ModalBase } from 'components/modal-base';
-import { ButtonBase } from 'components/button';
+import { FairysModalBase } from 'components/modal-base';
+import { FairysButtonBase } from 'components/button';
 import { Fragment } from 'react/jsx-runtime';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon } from '@iconify/react';
-import { BreadcrumbBase } from 'components/breadcrumb';
+import { FairysBreadcrumbBase } from 'components/breadcrumb';
 import { useNavigate } from 'react-router';
 import hotkeys from 'hotkeys-js';
 
@@ -27,7 +27,7 @@ const SearchItem = (props: SearchItemProps) => {
   const parentItemsRender = useMemo(() => {
     const list = menuDataInstance._parentMenuItemMap.get(rowItemData.path);
     return (
-      <BreadcrumbBase
+      <FairysBreadcrumbBase
         className="fairys:py-0! fairys:min-h-[auto]!"
         itemClassName="fairys:py-0! fairys:text-[12px]!"
         items={list}
@@ -120,7 +120,7 @@ export const MenuSearch = () => {
 
   return (
     <Fragment>
-      <ButtonBase
+      <FairysButtonBase
         bordered
         className="fairys_admin_tool_bar_menu_search fairys:px-4 fairys:flex fairys:flex-row fairys:gap-x-2"
         onClick={() => setOpen(true)}
@@ -130,10 +130,10 @@ export const MenuSearch = () => {
         <span className="fairys:text-gray-500 fairys:bg-gray-100 fairys:dark:bg-gray-800 fairys:px-2 fairys:rounded-sm fairys:transition-all fairys:duration-300">
           ⌘ K
         </span>
-      </ButtonBase>
-      <ModalBase outsidePressClose={false} open={open} onClose={() => setOpen(false)}>
+      </FairysButtonBase>
+      <FairysModalBase outsidePressClose={false} open={open} onClose={() => setOpen(false)}>
         <ModalBody onClose={() => setOpen(false)} />
-      </ModalBase>
+      </FairysModalBase>
     </Fragment>
   );
 };

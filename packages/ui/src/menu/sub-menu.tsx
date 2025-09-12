@@ -3,8 +3,8 @@ import type { MenuItemType } from 'context/menu-data';
 import { useMenuData } from 'context/menu-data';
 import { MenuItem, MainMenuItem } from './menu-item';
 import { useSetting } from 'context/setting';
-import { DisclosureItem } from 'components/disclosure';
-import { PopoverBase } from 'components/popover-base';
+import { FairysDisclosureItem } from 'components/disclosure';
+import { FairysPopoverBase } from 'components/popover-base';
 
 export interface MenuItemProps {
   item: MenuItemType;
@@ -45,15 +45,15 @@ export const SubMenu = (props: MenuItemProps) => {
     return (
       <div className={subMenuClassName}>
         {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />}
-        <DisclosureItem open={isMain ? true : isExpand} className={childClassName}>
+        <FairysDisclosureItem open={isMain ? true : isExpand} className={childClassName}>
           {child}
-        </DisclosureItem>
+        </FairysDisclosureItem>
       </div>
     );
   }
   return (
     <div className={subMenuClassName}>
-      <PopoverBase
+      <FairysPopoverBase
         className="fairys_admin_sub_menu_popover"
         eventName="hover"
         content={<div className={popoverChildClassName}>{child}</div>}
@@ -62,7 +62,7 @@ export const SubMenu = (props: MenuItemProps) => {
         isNotMinWidth
       >
         {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isOpen} />}
-      </PopoverBase>
+      </FairysPopoverBase>
     </div>
   );
 };

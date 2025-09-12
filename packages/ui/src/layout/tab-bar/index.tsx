@@ -12,7 +12,7 @@ import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import { Icon } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
-import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
+import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 import { useFairysRootContext } from 'components/root';
 import { appDataInstance } from 'context/app-data';
 
@@ -122,7 +122,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   }, [currentIndex, count, isTabFixed]);
 
   const onMenuItemClick = useCallback(
-    (item: PopoverMenuItemType) => {
+    (item: FairysPopoverMenuItemType) => {
       if (item.title === '重新加载') {
         appDataInstance.aliveController?.refreshScope?.(currentPath);
       } else if (item.title === '关闭标签') {
@@ -144,7 +144,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   );
 
   return (
-    <PopoverMenu
+    <FairysPopoverMenu
       placement="right-start"
       items={items}
       onClickItem={onMenuItemClick}
@@ -156,7 +156,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
         {isCloseIconShow && !isTabFixed ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
       </div>
-    </PopoverMenu>
+    </FairysPopoverMenu>
   );
 };
 

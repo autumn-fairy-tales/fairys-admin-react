@@ -1,30 +1,30 @@
 import { createContext, isValidElement, useContext, useEffect, useRef } from 'react';
 import { proxy, ref, useSnapshot, snapshot } from 'valtio';
 
-type RuleItemType = (value: any, formData: any) => Promise<React.ReactNode> | React.ReactNode;
+export type FairysRuleItemType = (value: any, formData: any) => Promise<React.ReactNode> | React.ReactNode;
 
-interface LoginPageFormState {
+interface FairysLoginPageFormState {
   formData: Record<string, any>;
   errors: Record<string, React.ReactNode>;
 }
 
-class LoginPageFormItemInstance {
+class FairysLoginPageFormItemInstance {
   name: string;
   value: any;
   errors: React.ReactNode;
 }
 
-export interface UseLoginPageFormItemInstanceProps {
+export interface UseFairysLoginPageFormItemInstanceProps {
   name: string;
   valuePropName?: string;
-  formatValue?: (value: any, form: LoginPageFormInstance, event: any) => any;
+  formatValue?: (value: any, form: FairysLoginPageFormInstance, event: any) => any;
 }
 
-export const useLoginPageFormItemInstance = (props: UseLoginPageFormItemInstanceProps) => {
+export const useFairysLoginPageFormItemInstance = (props: UseFairysLoginPageFormItemInstanceProps) => {
   const { name, valuePropName = 'value', formatValue } = props;
-  const formInstance = useLoginPageFormInstanceContext();
+  const formInstance = useFairysLoginPageFormInstanceContext();
   const snapshot = useSnapshot(formInstance.state);
-  const itemInstance = useRef<LoginPageFormItemInstance>(new LoginPageFormItemInstance()).current;
+  const itemInstance = useRef<FairysLoginPageFormItemInstance>(new FairysLoginPageFormItemInstance()).current;
   itemInstance.name = name;
   const errors = snapshot.errors?.[name];
   const value = snapshot.formData?.[name];
@@ -52,18 +52,18 @@ export const useLoginPageFormItemInstance = (props: UseLoginPageFormItemInstance
   return { value, errors, itemInstance, formInstance, onChange };
 };
 
-export class LoginPageFormInstance {
+export class FairysLoginPageFormInstance {
   /**所有表单项值*/
-  state = proxy<LoginPageFormState>({
+  state = proxy<FairysLoginPageFormState>({
     formData: {},
     errors: {},
   });
   /**所有表单项*/
-  items: Map<string, LoginPageFormItemInstance> = new Map([]);
+  items: Map<string, FairysLoginPageFormItemInstance> = new Map([]);
   /**验证规则*/
-  rules: Record<string, RuleItemType> = {};
+  rules: Record<string, FairysRuleItemType> = {};
   // 注册表单项
-  register = (name: string, item: LoginPageFormItemInstance) => {
+  register = (name: string, item: FairysLoginPageFormItemInstance) => {
     this.items.set(name, item);
     return () => {
       this.items.delete(name);
@@ -130,17 +130,19 @@ export class LoginPageFormInstance {
   };
 }
 
-export const useLoginPageFormInstance = (form?: LoginPageFormInstance) => {
-  const ref = useRef<LoginPageFormInstance>();
+export const useFairysLoginPageFormInstance = (form?: FairysLoginPageFormInstance) => {
+  const ref = useRef<FairysLoginPageFormInstance>();
   if (!ref.current) {
     if (form) {
       ref.current = form;
     } else {
-      ref.current = new LoginPageFormInstance();
+      ref.current = new FairysLoginPageFormInstance();
     }
   }
   return ref.current;
 };
 
-export const LoginPageFormInstanceContext = createContext<LoginPageFormInstance>(new LoginPageFormInstance());
-export const useLoginPageFormInstanceContext = () => useContext(LoginPageFormInstanceContext);
+export const FairysLoginPageFormInstanceContext = createContext<FairysLoginPageFormInstance>(
+  new FairysLoginPageFormInstance(),
+);
+export const useFairysLoginPageFormInstanceContext = () => useContext(FairysLoginPageFormInstanceContext);

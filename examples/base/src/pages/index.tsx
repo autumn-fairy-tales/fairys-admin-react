@@ -1,6 +1,6 @@
-import { MainPage } from '@fairys/admin-tools-react';
+import { FairysMainPage } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
-import { LoginPage } from '@fairys/admin-tools-react';
+import { FairysLoginPage } from '@fairys/admin-tools-react';
 import { FairysNotificationListBase } from '@fairys/admin-tools-react/lib/components/notification';
 
 const rules = {
@@ -19,7 +19,7 @@ const rules = {
 };
 
 const MainIndex = () => {
-  const formInstance = LoginPage.useForm();
+  const formInstance = FairysLoginPage.useForm();
   const onLogin = () => {
     formInstance
       .validate()
@@ -32,7 +32,7 @@ const MainIndex = () => {
   };
 
   return (
-    <MainPage>
+    <FairysMainPage>
       <FairysNotificationListBase
         items={[
           {
@@ -53,19 +53,19 @@ const MainIndex = () => {
       />
 
       <div className="w-[500px] h-[500px]">
-        <LoginPage
+        <FairysLoginPage
           className="bg-red-50 dark:bg-red-950"
           mainClassName="bg-white dark:bg-gray-900 px-[50px] py-[50px]"
           title="登录"
           form={formInstance}
           rules={rules}
         >
-          <LoginPage.FormItem name="username" label="用户名" required>
-            <LoginPage.FormItemInput disabled placeholder="请输入用户名" />
-          </LoginPage.FormItem>
-          <LoginPage.FormItem name="password" label="密码" required>
-            <LoginPage.FormItemInput placeholder="请输入密码" type="password" />
-          </LoginPage.FormItem>
+          <FairysLoginPage.FormItem name="username" label="用户名" required>
+            <FairysLoginPage.FormItemInput disabled placeholder="请输入用户名" />
+          </FairysLoginPage.FormItem>
+          <FairysLoginPage.FormItem name="password" label="密码" required>
+            <FairysLoginPage.FormItemInput placeholder="请输入密码" type="password" />
+          </FairysLoginPage.FormItem>
           <button
             onClick={onLogin}
             className="bg-(--fairys-theme-color)/90 rounded-sm text-white py-[9px] mt-[20px] hover:bg-(--fairys-theme-color) cursor-pointer transition-all duration-300"
@@ -73,12 +73,12 @@ const MainIndex = () => {
           >
             登录
           </button>
-        </LoginPage>
+        </FairysLoginPage>
       </div>
       <NavLink to="/">首页</NavLink>
       <NavLink to="/list">列表</NavLink>
       <NavLink to="/detail">详情</NavLink>
-    </MainPage>
+    </FairysMainPage>
   );
 };
 

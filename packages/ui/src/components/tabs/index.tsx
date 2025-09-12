@@ -1,9 +1,13 @@
 import { forwardRef, Ref, useMemo, Fragment } from 'react';
-import { TabsInstanceContext, useTabsInstance, useTabsInstanceContext, FairysTabsItemType } from './context';
+import {
+  FairysTabsInstanceContext,
+  useFairysTabsInstance,
+  useFairysTabsInstanceContext,
+  FairysTabsItemType,
+} from './context';
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
-import type { MotionNodeAnimationOptions } from 'framer-motion';
 
 export interface FairysTabsItemProps {
   item: FairysTabsItemType;
@@ -18,7 +22,7 @@ export interface FairysTabsProps {
 export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<HTMLDivElement>) => {
   const { item } = props;
   const disabled = item.disabled;
-  const [state, instance] = useTabsInstanceContext();
+  const [state, instance] = useFairysTabsInstanceContext();
   const selected = state.activeKey === item.key;
 
   const clsName = useMemo(() => {
@@ -78,7 +82,7 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
 
 export const FairysTabs = forwardRef((props: FairysTabsProps, ref: Ref<HTMLDivElement>) => {
   const { items, activeKey, onChange } = props;
-  const instance = useTabsInstance();
+  const instance = useFairysTabsInstance();
   instance.onChange = onChange;
 
   useMemo(() => {
@@ -96,10 +100,10 @@ export const FairysTabs = forwardRef((props: FairysTabsProps, ref: Ref<HTMLDivEl
   }, []);
 
   return (
-    <TabsInstanceContext.Provider value={instance}>
+    <FairysTabsInstanceContext.Provider value={instance}>
       <div ref={ref} className={clsName}>
         {itemRender}
       </div>
-    </TabsInstanceContext.Provider>
+    </FairysTabsInstanceContext.Provider>
   );
 });

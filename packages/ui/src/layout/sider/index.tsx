@@ -5,7 +5,7 @@ import { Fragment, memo, useMemo } from 'react';
 import clsx from 'clsx';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { Avatar } from 'avatar';
-import { ButtonBase } from 'components/button';
+import { FairysButtonBase } from 'components/button';
 import { Logo } from 'logo';
 
 const LayoutSiderMainMenu = () => {
@@ -79,7 +79,7 @@ const LayoutSubSider = () => {
             layoutMode === 'left' ? ' fairys:mt-[8px]' : 'fairys:my-[8px]'
           } fairys:items-center fairys:box-border fairys:mx-[8px] fairys:cursor-pointer`}
         >
-          <ButtonBase
+          <FairysButtonBase
             title={sideMenuMode === 'close' ? '打开菜单' : '关闭菜单'}
             isBg
             onClick={() => {
@@ -87,7 +87,7 @@ const LayoutSubSider = () => {
             }}
           >
             <span className={iconClassName} />
-          </ButtonBase>
+          </FairysButtonBase>
         </div>
         {avatarRender}
       </div>

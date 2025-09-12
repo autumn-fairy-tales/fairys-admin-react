@@ -13,7 +13,7 @@ import {
   fullScreen_base_className,
 } from './utils';
 
-export interface ModalBaseProps {
+export interface FairysModalBaseProps {
   /**显示隐藏*/
   open?: boolean;
   /**标题 */
@@ -47,7 +47,7 @@ export interface ModalBaseProps {
   outsidePressClose?: boolean;
 }
 
-export const ModalBase = (props: ModalBaseProps) => {
+export const FairysModalBase = (props: FairysModalBaseProps) => {
   const {
     title,
     children,

@@ -1,12 +1,12 @@
 import { LayoutMode, useSetting } from 'context/setting';
-import { SelectBase } from 'components/select';
+import { FairysSelectBase } from 'components/select';
 import { LayoutItem } from './base';
 
 export const SettingLayoutMode = () => {
   const [state, settingInstance] = useSetting();
   return (
     <LayoutItem label="布局模式">
-      <SelectBase
+      <FairysSelectBase
         value={state.layoutMode}
         items={[
           { title: '主子菜单侧边', value: 'main_sub_left' },

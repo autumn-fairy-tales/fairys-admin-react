@@ -1,7 +1,7 @@
 import { Fragment, useState } from 'react';
 import { onLogin } from './utils';
-import { EnterLoading } from '@fairys/admin-tools-react';
-import { LoginPage } from '@fairys/admin-tools-react';
+import { FairysEnterLoading } from '@fairys/admin-tools-react';
+import { FairysLoginPage } from '@fairys/admin-tools-react';
 
 interface LoginProps {
   onLogin: () => void;
@@ -24,7 +24,7 @@ const rules = {
 
 export const Login = (props: LoginProps) => {
   const [loading, setLoading] = useState(false);
-  const formInstance = LoginPage.useForm();
+  const formInstance = FairysLoginPage.useForm();
   const onLoginClick = () => {
     formInstance
       .validate()
@@ -47,18 +47,18 @@ export const Login = (props: LoginProps) => {
 
   return (
     <Fragment>
-      <LoginPage
+      <FairysLoginPage
         mainClassName="bg-white dark:bg-gray-900 px-[50px] py-[50px]"
         title="登录"
         form={formInstance}
         rules={rules}
       >
-        <LoginPage.FormItem name="username" label="用户名" required>
-          <LoginPage.FormItemInput placeholder="请输入用户名" />
-        </LoginPage.FormItem>
-        <LoginPage.FormItem name="password" label="密码" required>
-          <LoginPage.FormItemInput placeholder="请输入密码" type="password" />
-        </LoginPage.FormItem>
+        <FairysLoginPage.FormItem name="username" label="用户名" required>
+          <FairysLoginPage.FormItemInput placeholder="请输入用户名" />
+        </FairysLoginPage.FormItem>
+        <FairysLoginPage.FormItem name="password" label="密码" required>
+          <FairysLoginPage.FormItemInput placeholder="请输入密码" type="password" />
+        </FairysLoginPage.FormItem>
         <button
           onClick={onLoginClick}
           className="bg-(--fairys-theme-color)/90 rounded-sm text-white py-[9px] mt-[20px] hover:bg-(--fairys-theme-color) cursor-pointer transition-all duration-300"
@@ -66,8 +66,8 @@ export const Login = (props: LoginProps) => {
         >
           登录
         </button>
-      </LoginPage>
-      <EnterLoading loading={loading} tips="登录中" />
+      </FairysLoginPage>
+      <FairysEnterLoading loading={loading} tips="登录中" />
     </Fragment>
   );
 };

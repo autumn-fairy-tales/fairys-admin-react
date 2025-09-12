@@ -1,19 +1,19 @@
 import React, { forwardRef, type Ref, ReactNode, Fragment, useMemo } from 'react';
 import {
-  PopoverMenuProps,
-  PopoverMenuItemType,
-  usePopoverMenuContext,
-  PopoverMenuContext,
-  usePopoverMenuInstance,
+  FairysPopoverMenuProps,
+  FairysPopoverMenuItemType,
+  useFairysPopoverMenuContext,
+  FairysPopoverMenuContext,
+  useFairysPopoverMenuInstance,
 } from './context';
 import { useFloatingTree } from '@floating-ui/react';
 import { Icon } from '@iconify/react';
 import clsx from 'clsx';
-import { PopoverBase } from 'components/popover-base';
+import { FairysPopoverBase } from 'components/popover-base';
 export * from './context';
 
-interface MenuItemProps {
-  rowItemData: PopoverMenuItemType;
+interface FairysMenuItemProps {
+  rowItemData: FairysPopoverMenuItemType;
   /**是否父级菜单展示*/
   isSubMenuItem?: boolean;
 }
@@ -23,12 +23,12 @@ const popoverMenuItemBaseClsDisabled = `fairys:opacity-70 fairys:select-none`;
 const popoverMenuItemBaseClsNotDisabled = `fairys:text-gray-600 fairys:cursor-pointer fairys:hover:text-gray-700 fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300 fairys:dark:hover:bg-gray-700 fairys:hover:bg-gray-100`;
 const popoverMenuItemBaseClsActive = `active fairys:bg-(--fairys-theme-color)! fairys:text-white!`;
 
-const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
+const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { rowItemData, isSubMenuItem = false } = props;
   const { isShowClose = true } = rowItemData;
 
   const tree = useFloatingTree();
-  const [state, popoverMenuInstance] = usePopoverMenuContext();
+  const [state, popoverMenuInstance] = useFairysPopoverMenuContext();
   const onClickItem: React.MouseEventHandler<HTMLDivElement> = (event) => {
     if (rowItemData.disabled || isSubMenuItem) {
       return;
@@ -91,8 +91,11 @@ const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => 
   );
 });
 
-const Menu = forwardRef(
-  (props: MenuItemProps & { label?: ReactNode; onOpenChange?: (open: boolean) => void }, ref: Ref<HTMLDivElement>) => {
+const FairysMenu = forwardRef(
+  (
+    props: FairysMenuItemProps & { label?: ReactNode; onOpenChange?: (open: boolean) => void },
+    ref: Ref<HTMLDivElement>,
+  ) => {
     const { label, onOpenChange } = props;
     const { rowItemData } = props;
     const { items } = rowItemData;
@@ -100,14 +103,14 @@ const Menu = forwardRef(
       return (items || []).map((item, index) => createChildMenu(item, index));
     }, [items]);
     return (
-      <PopoverBase disabled={rowItemData.disabled} onOpenChange={onOpenChange} ref={ref} content={render}>
-        {label ? label : <MenuItem rowItemData={rowItemData} isSubMenuItem />}
-      </PopoverBase>
+      <FairysPopoverBase disabled={rowItemData.disabled} onOpenChange={onOpenChange} ref={ref} content={render}>
+        {label ? label : <FairysMenuItem rowItemData={rowItemData} isSubMenuItem />}
+      </FairysPopoverBase>
     );
   },
 );
 
-const createChildMenu = (item: PopoverMenuItemType, index: number) => {
+const createChildMenu = (item: FairysPopoverMenuItemType, index: number) => {
   if (item.children) {
     return <Fragment key={item.path || item.title || item.key || index}>{item.children}</Fragment>;
   } else if (item.visible === false) {
@@ -120,12 +123,12 @@ const createChildMenu = (item: PopoverMenuItemType, index: number) => {
       />
     );
   } else if (Array.isArray(item.items)) {
-    return <Menu key={item.path || item.title || item.key || index} rowItemData={item} />;
+    return <FairysMenu key={item.path || item.title || item.key || index} rowItemData={item} />;
   }
-  return <MenuItem key={item.path || item.title || item.key || index} rowItemData={item} />;
+  return <FairysMenuItem key={item.path || item.title || item.key || index} rowItemData={item} />;
 };
 
-export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDivElement>) => {
+export const FairysPopoverMenu = forwardRef((props: FairysPopoverMenuProps, ref: Ref<HTMLDivElement>) => {
   const {
     items,
     children,
@@ -142,7 +145,7 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
     disabled = false,
     placement,
   } = props;
-  const popoverMenuInstance = usePopoverMenuInstance(instance);
+  const popoverMenuInstance = useFairysPopoverMenuInstance(instance);
   popoverMenuInstance.items = items;
   popoverMenuInstance.isHideClose = isHideClose;
   popoverMenuInstance.onClickItem = onClickItem;
@@ -158,8 +161,8 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
   }, [items]);
 
   return (
-    <PopoverMenuContext.Provider value={popoverMenuInstance}>
-      <PopoverBase
+    <FairysPopoverMenuContext.Provider value={popoverMenuInstance}>
+      <FairysPopoverBase
         eventName={eventName}
         onOpenChange={onOpenChange}
         ref={ref}
@@ -170,7 +173,7 @@ export const PopoverMenu = forwardRef((props: PopoverMenuProps, ref: Ref<HTMLDiv
         placement={placement}
       >
         {children}
-      </PopoverBase>
-    </PopoverMenuContext.Provider>
+      </FairysPopoverBase>
+    </FairysPopoverMenuContext.Provider>
   );
 });

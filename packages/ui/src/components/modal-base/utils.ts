@@ -1,6 +1,6 @@
 import type { Transition } from 'framer-motion';
 
-export interface ModalBaseProps {
+export interface FairysModalBaseProps {
   /**显示隐藏*/
   open?: boolean;
   /**标题 */

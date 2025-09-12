@@ -1,12 +1,12 @@
 import { motion } from 'framer-motion';
 
-export interface SwitchBaseProps {
+export interface FairysSwitchBaseProps {
   value?: boolean;
   onChange?: (value: boolean) => void;
   disabled?: boolean;
 }
 
-export function SwitchBase(props: SwitchBaseProps) {
+export function FairysSwitchBase(props: FairysSwitchBaseProps) {
   const { value = false, onChange = () => void 0, disabled = false } = props;
   return (
     <motion.div

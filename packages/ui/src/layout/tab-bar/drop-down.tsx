@@ -1,21 +1,21 @@
 import { Fragment, useMemo } from 'react';
 import { useTabBar, tabBarInstance } from 'context/tab-bar';
 import { useNavigate, matchPath, useLocation } from 'react-router';
-import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
+import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 
 const PopoverButton = () => {
   const [state] = useTabBar();
   const navigate = useNavigate();
-  const list = state.dropDownTabBarItems as PopoverMenuItemType[];
+  const list = state.dropDownTabBarItems as FairysPopoverMenuItemType[];
   const location = useLocation();
 
-  const onNativeClick = (item: PopoverMenuItemType, e: React.MouseEvent) => {
+  const onNativeClick = (item: FairysPopoverMenuItemType, e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     navigate(item.path);
   };
 
-  const onClose = (item: PopoverMenuItemType, e: React.MouseEvent) => {
+  const onClose = (item: FairysPopoverMenuItemType, e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     const match = matchPath(item.path, location.pathname);
@@ -23,11 +23,11 @@ const PopoverButton = () => {
   };
 
   return (
-    <PopoverMenu items={list} onClickItem={onNativeClick} onCloseItem={onClose} isHideClose={false}>
+    <FairysPopoverMenu items={list} onClickItem={onNativeClick} onCloseItem={onClose} isHideClose={false}>
       <div className="fairys:w-[25px] fairys:h-[25px] fairys:flex fairys:justify-center fairys:items-center fairys:text-sm/6 fairys:font-semibold fairys:bg-white fairys:dark:bg-gray-600 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:cursor-pointer fairys:dark:text-gray-400 fairys:dark:hover:text-white">
         <span className="fairys:icon-[ant-design--caret-down-outlined]" />
       </div>
-    </PopoverMenu>
+    </FairysPopoverMenu>
   );
 };
 

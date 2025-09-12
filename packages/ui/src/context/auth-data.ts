@@ -28,6 +28,8 @@ export class AuthDataInstance {
     appDataInstance.clear();
     this.onLogout?.();
   };
+  /**清空数据*/
+  clear = () => {};
 }
 
 export const authDataInstance = new AuthDataInstance();

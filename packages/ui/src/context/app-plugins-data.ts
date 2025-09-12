@@ -1,4 +1,4 @@
-import { PopoverMenuItemType } from 'components/popover-menu';
+import { FairysPopoverMenuItemType } from 'components/popover-menu';
 
 export type AppPluginType = {
   /**工具条右侧插件*/
@@ -11,9 +11,9 @@ export type AppPluginType = {
   /**头像菜单插件*/
   'avatar-menus'?: {
     /**添加菜单项*/
-    menus?: PopoverMenuItemType[];
+    menus?: FairysPopoverMenuItemType[];
     /**重写菜单项*/
-    override?: (menus: PopoverMenuItemType[]) => PopoverMenuItemType[];
+    override?: (menus: FairysPopoverMenuItemType[]) => FairysPopoverMenuItemType[];
   };
 };
 
@@ -24,6 +24,8 @@ export class AppPluginDataInstance {
   addPlugin = (plugin: AppPluginType) => {
     this.appPlugins = { ...this.appPlugins, ...plugin };
   };
+  /**清空数据*/
+  clear = () => {};
 }
 /**应用插件,用于添加或重写组件渲染*/
 export const appPluginDataInstance = new AppPluginDataInstance();

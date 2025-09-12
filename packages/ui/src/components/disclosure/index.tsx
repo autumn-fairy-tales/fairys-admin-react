@@ -2,12 +2,12 @@ import { motion, AnimatePresence } from 'framer-motion';
 import type { MotionProps } from 'framer-motion';
 import { useAnimationStatus } from '../utils';
 
-interface DisclosureItemProps extends MotionProps {
+interface FairysDisclosureItemProps extends MotionProps {
   open?: boolean;
   className?: string;
 }
 
-export const DisclosureItem = (props: DisclosureItemProps) => {
+export const FairysDisclosureItem = (props: FairysDisclosureItemProps) => {
   const { children, open, className, ...rest } = props;
   const { show, onAnimationComplete } = useAnimationStatus(open);
 

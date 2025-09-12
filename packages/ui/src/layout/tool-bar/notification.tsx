@@ -30,7 +30,7 @@ export const Notification = () => {
       </div>
       <div className="fairys_admin_tool_bar_notification_list fairys:flex-1 fairys:overflow-auto no-scrollbar">
         {isEmpty ? (
-          <div className="fairys:py-20 fairys:text-center fairys:text-[14px]">暂无通知</div>
+          <div className="fairys:py-20 fairys:text-center fairys:text-[14px] fairys:text-gray-400">暂无通知</div>
         ) : (
           <FairysNotificationListBase
             onClickItem={notificationDataInstance._onClickItem}

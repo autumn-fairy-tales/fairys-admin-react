@@ -7,7 +7,7 @@ import {
   useAuthDataInstance,
   authDataInstance,
   loadingFadeOut,
-  EnterLoading,
+  FairysEnterLoading,
 } from '@fairys/admin-tools-react';
 import { menuItems } from '../menu';
 import { routes } from '../routes';
@@ -51,7 +51,7 @@ export const AuthRoot = () => {
   if (status === 'Login') {
     return <Login onLogin={onAuth} />;
   } else if (status === 'RequestAuth') {
-    return <EnterLoading loading />;
+    return <FairysEnterLoading loading />;
   }
   if (status === 'NoAuth') {
     return <div>NoAuth</div>;

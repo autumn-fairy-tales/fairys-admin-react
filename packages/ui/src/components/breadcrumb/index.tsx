@@ -2,17 +2,17 @@ import { useMemo } from 'react';
 import { MenuItemType } from 'context/menu-data';
 import clsx from 'clsx';
 
-export interface BreadcrumbBaseItemType extends MenuItemType {}
+export interface FairysBreadcrumbBaseItemType extends MenuItemType {}
 
-export interface BreadcrumbBaseProps
+export interface FairysBreadcrumbBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  items?: BreadcrumbBaseItemType[];
+  items?: FairysBreadcrumbBaseItemType[];
   separate?: 'bg' | 'slash';
   itemClassName?: string;
   itemStyle?: React.CSSProperties;
 }
 
-export const BreadcrumbBase = (props: BreadcrumbBaseProps) => {
+export const FairysBreadcrumbBase = (props: FairysBreadcrumbBaseProps) => {
   const { items, separate = 'bg', className, itemClassName, itemStyle, ...rest } = props;
 
   const baseClassName = useMemo(() => {

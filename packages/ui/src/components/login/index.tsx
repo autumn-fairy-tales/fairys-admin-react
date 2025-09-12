@@ -1,24 +1,24 @@
 import clsx from 'clsx';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import {
-  LoginPageFormInstanceContext,
-  useLoginPageFormInstance,
-  LoginPageFormInstance,
-  useLoginPageFormInstanceContext,
+  FairysLoginPageFormInstanceContext,
+  useFairysLoginPageFormInstance,
+  FairysLoginPageFormInstance,
+  useFairysLoginPageFormInstanceContext,
 } from './instance';
-import { LoginPageFormItem, LoginPageFormItemInput } from './form.item';
+import { FairysLoginPageFormItem, FairysLoginPageFormItemInput } from './form.item';
 
-interface LoginPageProps
+interface FairysLoginPageProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'title'> {
   title?: React.ReactNode;
-  form?: LoginPageFormInstance;
-  rules?: LoginPageFormInstance['rules'];
+  form?: FairysLoginPageFormInstance;
+  rules?: FairysLoginPageFormInstance['rules'];
   bodyClassName?: string;
   mainClassName?: string;
   titleClassName?: string;
 }
 
-export const LoginPage = (props: LoginPageProps) => {
+export const FairysLoginPage = (props: FairysLoginPageProps) => {
   const { className, title, form, children, rules, bodyClassName, titleClassName, mainClassName, ...rest } = props;
 
   const loginPageClassName = useMemo(() => {
@@ -49,22 +49,22 @@ export const LoginPage = (props: LoginPageProps) => {
     );
   }, [bodyClassName]);
 
-  const formInstance = useLoginPageFormInstance(form);
+  const formInstance = useFairysLoginPageFormInstance(form);
   formInstance.rules = rules;
 
   return (
-    <LoginPageFormInstanceContext.Provider value={formInstance}>
+    <FairysLoginPageFormInstanceContext.Provider value={formInstance}>
       <div className={loginPageClassName} {...rest}>
         <div className={mainClass}>
           <div className={titleClass}>{title}</div>
           <div className={bodyClass}>{children}</div>
         </div>
       </div>
-    </LoginPageFormInstanceContext.Provider>
+    </FairysLoginPageFormInstanceContext.Provider>
   );
 };
 
-LoginPage.useForm = useLoginPageFormInstance;
-LoginPage.useFormInstance = useLoginPageFormInstanceContext;
-LoginPage.FormItem = LoginPageFormItem;
-LoginPage.FormItemInput = LoginPageFormItemInput;
+FairysLoginPage.useForm = useFairysLoginPageFormInstance;
+FairysLoginPage.useFormInstance = useFairysLoginPageFormInstanceContext;
+FairysLoginPage.FormItem = FairysLoginPageFormItem;
+FairysLoginPage.FormItemInput = FairysLoginPageFormItemInput;

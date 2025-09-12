@@ -2,12 +2,12 @@ import { Breadcrumb } from 'breadcrumb';
 import { useSetting } from 'context/setting';
 import { Fragment, useMemo, useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
-import { ButtonBase } from 'components/button';
+import { FairysButtonBase } from 'components/button';
 import { MenuSearch } from './menu-search';
 import { appPluginDataInstance } from 'context/app-plugins-data';
 import { appDataInstance } from 'context/app-data';
 import { useLocation } from 'react-router-dom';
-import { PopoverBase } from 'components/popover-base';
+import { FairysPopoverBase } from 'components/popover-base';
 import { Notification } from './notification';
 import { useNotificationData } from 'context/notification-data';
 
@@ -30,13 +30,13 @@ const MenuDarkLight = () => {
   }, [theme]);
 
   return (
-    <ButtonBase className="fairys_admin_tool_bar_dark_light" onClick={onToggleTheme}>
+    <FairysButtonBase className="fairys_admin_tool_bar_dark_light" onClick={onToggleTheme}>
       <span className={className} />
-    </ButtonBase>
+    </FairysButtonBase>
   );
 };
 
-const FullScreen = () => {
+const FairysFullScreen = () => {
   const [state, settingInstance] = useSetting();
   const isFullScreen = state.isFullScreen;
 
@@ -50,9 +50,9 @@ const FullScreen = () => {
   }, [isFullScreen]);
 
   return (
-    <ButtonBase className="fairys_admin_tool_bar_full_screen" onClick={settingInstance.onToggleFullScreen}>
+    <FairysButtonBase className="fairys_admin_tool_bar_full_screen" onClick={settingInstance.onToggleFullScreen}>
       <span className={className} />
-    </ButtonBase>
+    </FairysButtonBase>
   );
 };
 
@@ -77,13 +77,13 @@ const Reload = () => {
   }, []);
 
   return (
-    <ButtonBase className="fairys_admin_tool_bar_reload" onClick={onClick}>
+    <FairysButtonBase className="fairys_admin_tool_bar_reload" onClick={onClick}>
       <span
         className={clsx('fairys-icon fairys:icon-[ant-design--sync-outlined] fairys:size-[18px]', {
           'fairys-spin': isLoading,
         })}
       />
-    </ButtonBase>
+    </FairysButtonBase>
   );
 };
 
@@ -92,8 +92,8 @@ const NotificationBtn = () => {
   const count = state.count;
 
   return (
-    <PopoverBase placement="bottom" content={<Notification />}>
-      <ButtonBase className="fairys_admin_tool_bar_notification fairys:relative">
+    <FairysPopoverBase placement="bottom" content={<Notification />}>
+      <FairysButtonBase className="fairys_admin_tool_bar_notification fairys:relative">
         <span className="fairys:icon-[ant-design--bell-outlined] fairys:size-[18px]" />
         {count > 0 ? (
           <span className="fairys:absolute fairys:px-[6px] fairys:top-[0px] fairys:left-[40%]  fairys:flex fairys:items-center fairys:justify-center fairys:text-[10px] fairys:rounded-[10px] fairys:bg-red-500 fairys:text-white">
@@ -102,8 +102,8 @@ const NotificationBtn = () => {
         ) : (
           <Fragment />
         )}
-      </ButtonBase>
-    </PopoverBase>
+      </FairysButtonBase>
+    </FairysPopoverBase>
   );
 };
 
@@ -114,7 +114,7 @@ export const ToolBar = () => {
       return plugin?.override([
         <MenuSearch key="menu-search" />,
         <NotificationBtn key="menu-notification" />,
-        <FullScreen key="menu-full-screen" />,
+        <FairysFullScreen key="menu-full-screen" />,
         <Reload key="menu-reload" />,
         <MenuDarkLight key="menu-dark-light" />,
       ]);
@@ -123,7 +123,7 @@ export const ToolBar = () => {
       <Fragment>
         <MenuSearch key="menu-search" />
         <NotificationBtn key="menu-notification" />
-        <FullScreen key="menu-full-screen" />
+        <FairysFullScreen key="menu-full-screen" />
         <Reload key="menu-reload" />
         {plugin?.render ? plugin?.render : <Fragment />}
         <MenuDarkLight key="menu-dark-light" />

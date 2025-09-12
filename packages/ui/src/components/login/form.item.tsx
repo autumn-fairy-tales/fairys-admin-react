@@ -1,21 +1,21 @@
 import clsx from 'clsx';
 import { cloneElement, Fragment, isValidElement, useMemo } from 'react';
-import { useLoginPageFormItemInstance, UseLoginPageFormItemInstanceProps } from './instance';
+import { useFairysLoginPageFormItemInstance, UseFairysLoginPageFormItemInstanceProps } from './instance';
 
-export interface LoginPageFormItemInputProps
+export interface FairysLoginPageFormItemInputProps
   extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
   errorBorderd?: 'bottom' | 'none' | 'all';
   /**是否存在验证不通过信息*/
   'data-is-error'?: boolean;
 }
 
-export const LoginPageFormItemInputClassName =
+export const FairysLoginPageFormItemInputClassName =
   'fairys_login_page_content_form_item_input fairys:disabled:bg-gray-100 fairys:dark:disabled:bg-gray-700 fairys:transition-all fairys:duration-300 fairys:py-[8px] fairys:px-[12px] fairys:outline-none fairys:box-border fairys:w-full fairys:min-h-[32px] fairys:rounded-sm fairys:text-sm fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:data-[is-error=true]:text-red-500 fairys:data-[is-error=true]:placeholder:text-red-500';
 
-export const LoginPageFormItemInput = (props: LoginPageFormItemInputProps) => {
+export const FairysLoginPageFormItemInput = (props: FairysLoginPageFormItemInputProps) => {
   const { className, errorBorderd = 'bottom', ...rest } = props;
   const inputClassName = useMemo(() => {
-    return clsx(LoginPageFormItemInputClassName, className, {
+    return clsx(FairysLoginPageFormItemInputClassName, className, {
       'fairys:data-[is-error=true]:border-red-500': errorBorderd === 'all',
       'fairys:data-[is-error=true]:border-b-red-500': errorBorderd === 'bottom',
     });
@@ -23,9 +23,9 @@ export const LoginPageFormItemInput = (props: LoginPageFormItemInputProps) => {
   return <input {...rest} className={inputClassName} />;
 };
 
-export interface LoginPageFormItemProps
+export interface FairysLoginPageFormItemProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
-    UseLoginPageFormItemInstanceProps {
+    UseFairysLoginPageFormItemInstanceProps {
   label?: React.ReactNode;
   required?: boolean;
   /**显示错误信息*/
@@ -34,7 +34,7 @@ export interface LoginPageFormItemProps
   labelClassName?: string;
 }
 
-export const LoginPageFormItem = (props: LoginPageFormItemProps) => {
+export const FairysLoginPageFormItem = (props: FairysLoginPageFormItemProps) => {
   const {
     label,
     children,
@@ -48,7 +48,7 @@ export const LoginPageFormItem = (props: LoginPageFormItemProps) => {
     labelClassName,
     ...rest
   } = props;
-  const itemInstance = useLoginPageFormItemInstance({ name: name, formatValue, valuePropName });
+  const itemInstance = useFairysLoginPageFormItemInstance({ name: name, formatValue, valuePropName });
   const errors = itemInstance.errors as any;
   const hasError = Boolean(errors);
 

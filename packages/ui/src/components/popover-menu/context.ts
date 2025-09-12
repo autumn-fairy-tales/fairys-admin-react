@@ -2,7 +2,7 @@ import { Placement } from '@floating-ui/react';
 import { useRef, createContext, useContext } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 
-export interface PopoverMenuItemType {
+export interface FairysPopoverMenuItemType {
   /**图标*/
   icon?: string;
   /**标题*/
@@ -16,13 +16,13 @@ export interface PopoverMenuItemType {
   /**自定义内容*/
   children?: React.ReactNode;
   /**点击当前项*/
-  onClick?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
+  onClick?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
   /**删除按钮事件*/
-  onClose?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
+  onClose?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
   /**value值*/
   value?: string;
   /**子项*/
-  items?: PopoverMenuItemType[];
+  items?: FairysPopoverMenuItemType[];
   /**是否显示关闭按钮
    * @default true
    */
@@ -34,17 +34,17 @@ export interface PopoverMenuItemType {
   [key: string]: any;
 }
 
-export interface PopoverMenuProps {
+export interface FairysPopoverMenuProps {
   /**是否禁用*/
   disabled?: boolean;
   /**单选或多选*/
   mode?: 'single' | 'multiple';
   /**点击当前项*/
-  onClickItem?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
+  onClickItem?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
   /**关闭当前项*/
-  onCloseItem?: (item: PopoverMenuItemType, event: React.MouseEvent) => void;
+  onCloseItem?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
   /**渲染数据*/
-  items: PopoverMenuItemType[];
+  items: FairysPopoverMenuItemType[];
   /**
    * 是否隐藏关闭按钮
    * @default true
@@ -53,7 +53,7 @@ export interface PopoverMenuProps {
   /**当使用这个时items每一项必须需要value值*/
   value?: string | string[];
   /**实例*/
-  instance?: PopoverMenuInstance;
+  instance?: FairysPopoverMenuInstance;
   children?: React.ReactNode;
   /**打开关闭回调*/
   onOpenChange?: (open: boolean) => void;
@@ -67,28 +67,28 @@ export interface PopoverMenuProps {
   placement?: Placement;
 }
 
-interface PopoverMenuInstanceState {
-  value?: PopoverMenuProps['value'];
+interface FairysPopoverMenuInstanceState {
+  value?: FairysPopoverMenuProps['value'];
   __defaultValue?: string;
 }
 
-class PopoverMenuInstance {
+class FairysPopoverMenuInstance {
   /**是否隐藏关闭按钮*/
-  isHideClose?: PopoverMenuProps['isHideClose'] = true;
+  isHideClose?: FairysPopoverMenuProps['isHideClose'] = true;
   /**点击当前项*/
-  onClickItem?: PopoverMenuProps['onClickItem'];
+  onClickItem?: FairysPopoverMenuProps['onClickItem'];
   /**关闭当前项*/
-  onCloseItem?: PopoverMenuProps['onCloseItem'];
+  onCloseItem?: FairysPopoverMenuProps['onCloseItem'];
   /**渲染数据*/
-  items: PopoverMenuProps['items'];
+  items: FairysPopoverMenuProps['items'];
   /**单选或多选*/
-  mode?: PopoverMenuProps['mode'];
+  mode?: FairysPopoverMenuProps['mode'];
   /**状态*/
-  state = proxy<PopoverMenuInstanceState>({
+  state = proxy<FairysPopoverMenuInstanceState>({
     value: undefined,
   });
   /**判断是否选中*/
-  isChecked = (item: PopoverMenuItemType) => {
+  isChecked = (item: FairysPopoverMenuItemType) => {
     if (this.state.value) {
       if (Array.isArray(this.state.value)) {
         return this.state.value.includes(item.value || '');
@@ -99,22 +99,22 @@ class PopoverMenuInstance {
   };
 }
 
-export const usePopoverMenuInstance = (instance?: PopoverMenuInstance) => {
-  const ref = useRef<PopoverMenuInstance>();
+export const useFairysPopoverMenuInstance = (instance?: FairysPopoverMenuInstance) => {
+  const ref = useRef<FairysPopoverMenuInstance>();
   if (!ref.current) {
     if (instance) {
       ref.current = instance;
     } else {
-      ref.current = new PopoverMenuInstance();
+      ref.current = new FairysPopoverMenuInstance();
     }
   }
   return ref.current;
 };
 
-export const PopoverMenuContext = createContext(new PopoverMenuInstance());
+export const FairysPopoverMenuContext = createContext(new FairysPopoverMenuInstance());
 
-export const usePopoverMenuContext = () => {
-  const instance = useContext(PopoverMenuContext);
+export const useFairysPopoverMenuContext = () => {
+  const instance = useContext(FairysPopoverMenuContext);
   const state = useSnapshot(instance.state);
-  return [state, instance, state.__defaultValue] as [PopoverMenuInstanceState, PopoverMenuInstance, string];
+  return [state, instance, state.__defaultValue] as [FairysPopoverMenuInstanceState, FairysPopoverMenuInstance, string];
 };

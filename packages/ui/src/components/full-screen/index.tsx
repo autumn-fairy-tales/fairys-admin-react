@@ -2,13 +2,13 @@ import clsx from 'clsx';
 import { Fragment, useEffect, useMemo, useRef } from 'react';
 import hotkeys from 'hotkeys-js';
 
-interface FullScreenProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+interface FairysFullScreenProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   open?: boolean;
   children?: React.ReactNode;
   onClose?: () => void;
 }
 
-class FullScreenInstance {
+class FairysFullScreenInstance {
   open = false;
   onClose?: () => void;
 
@@ -27,11 +27,11 @@ class FullScreenInstance {
   };
 }
 
-const useFullScreenInstance = () => useRef(new FullScreenInstance()).current;
+const useFairysFullScreenInstance = () => useRef(new FairysFullScreenInstance()).current;
 
-export const FullScreen = (props: FullScreenProps) => {
+export const FairysFullScreen = (props: FairysFullScreenProps) => {
   const { open, children, onClose, className: cls, ...rest } = props;
-  const fullScreenInstance = useFullScreenInstance();
+  const fullScreenInstance = useFairysFullScreenInstance();
   fullScreenInstance.onClose = onClose;
   fullScreenInstance.open = open;
 

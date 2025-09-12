@@ -1,15 +1,15 @@
 import clsx from 'clsx';
 import { useMemo, useState } from 'react';
-import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
-export interface SelectBaseProps {
-  items?: PopoverMenuItemType[];
+import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
+export interface FairysSelectBaseProps {
+  items?: FairysPopoverMenuItemType[];
   value?: string | string[];
   onChange?: (value: string | string[]) => void;
   disabled?: boolean;
   multiple?: boolean;
 }
 
-export const SelectBase = (props: SelectBaseProps) => {
+export const FairysSelectBase = (props: FairysSelectBaseProps) => {
   const { items = [], onChange, multiple = false, value, disabled = false } = props;
   const [isExpand, setIsExpand] = useState(false);
   const expandIcon = useMemo(() => {
@@ -22,7 +22,7 @@ export const SelectBase = (props: SelectBaseProps) => {
     );
   }, [isExpand]);
 
-  const onMenuItemClick = (item: PopoverMenuItemType) => {
+  const onMenuItemClick = (item: FairysPopoverMenuItemType) => {
     if (multiple) {
       if (Array.isArray(value)) {
         const finx = (value || []).find((it) => it === item.value);
@@ -57,7 +57,7 @@ export const SelectBase = (props: SelectBaseProps) => {
   }, [value, items, multiple]);
 
   return (
-    <PopoverMenu
+    <FairysPopoverMenu
       disabled={disabled}
       items={items}
       onOpenChange={(open) => setIsExpand(open)}
@@ -70,6 +70,6 @@ export const SelectBase = (props: SelectBaseProps) => {
           <div className={expandIcon} />
         </span>
       </div>
-    </PopoverMenu>
+    </FairysPopoverMenu>
   );
 };

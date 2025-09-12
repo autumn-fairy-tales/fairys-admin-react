@@ -11,17 +11,17 @@ export interface FairysTabsItemType {
   [s: string]: any;
 }
 
-export interface TabsInstanceState {
+export interface FairysTabsInstanceState {
   /**选中的key*/
   activeKey: string;
 
   __defaultValue?: string;
 }
 
-export class TabsInstance {
+export class FairysTabsInstance {
   activeKey: string;
   onChange: (key: string, item: FairysTabsItemType) => void;
-  state = proxy<TabsInstanceState>({
+  state = proxy<FairysTabsInstanceState>({
     activeKey: '',
   });
   onSelected = (item: FairysTabsItemType) => {
@@ -30,21 +30,21 @@ export class TabsInstance {
   };
 }
 
-export const useTabsInstance = (tabs?: TabsInstance) => {
-  const instance = useRef<TabsInstance>();
+export const useFairysTabsInstance = (tabs?: FairysTabsInstance) => {
+  const instance = useRef<FairysTabsInstance>();
   if (!instance.current) {
     if (tabs) {
       instance.current = tabs;
     } else {
-      instance.current = new TabsInstance();
+      instance.current = new FairysTabsInstance();
     }
   }
   return instance.current;
 };
-export const TabsInstanceContext = createContext<TabsInstance>(new TabsInstance());
+export const FairysTabsInstanceContext = createContext<FairysTabsInstance>(new FairysTabsInstance());
 
-export const useTabsInstanceContext = () => {
-  const instance = useContext(TabsInstanceContext);
+export const useFairysTabsInstanceContext = () => {
+  const instance = useContext(FairysTabsInstanceContext);
   const state = useSnapshot(instance.state);
-  return [state, instance, state.__defaultValue] as [TabsInstanceState, TabsInstance, string];
+  return [state, instance, state.__defaultValue] as [FairysTabsInstanceState, FairysTabsInstance, string];
 };

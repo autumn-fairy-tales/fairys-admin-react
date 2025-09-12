@@ -1,6 +1,6 @@
 import { useSetting } from 'context/setting';
 import { useMemo } from 'react';
-import { ButtonBase } from 'components/button';
+import { FairysButtonBase } from 'components/button';
 import { LayoutItem } from './base';
 
 export const SettingThemeBase = () => {
@@ -24,7 +24,7 @@ export const SettingThemeBase = () => {
   return (
     <LayoutItem isDivider label="主题风格">
       <div className="fairys:flex fairys:items-center fairys:justify-center fairys:gap-2">
-        <ButtonBase
+        <FairysButtonBase
           className="fairys:w-[80px]"
           bordered
           isBg={isCheckTheme.dark}
@@ -32,8 +32,8 @@ export const SettingThemeBase = () => {
         >
           <span className="fairys:icon-[ri--moon-line] fairys:text-[18px]"></span>
           <span className="fairys:text-[14px] fairys:pl-2">暗黑</span>
-        </ButtonBase>
-        <ButtonBase
+        </FairysButtonBase>
+        <FairysButtonBase
           className="fairys:w-[80px]"
           bordered
           isBg={isCheckTheme.light}
@@ -41,8 +41,8 @@ export const SettingThemeBase = () => {
         >
           <span className="fairys:icon-[ri--sun-line] fairys:text-[18px]"></span>
           <span className="fairys:text-[14px] fairys:pl-2">亮色</span>
-        </ButtonBase>
-        <ButtonBase
+        </FairysButtonBase>
+        <FairysButtonBase
           className="fairys:w-[80px]"
           bordered
           isBg={isCheckTheme.system}
@@ -50,7 +50,7 @@ export const SettingThemeBase = () => {
         >
           <span className="fairys:icon-[codicon--color-mode] fairys:text-[18px]"></span>
           <span className="fairys:text-[14px] fairys:pl-2">系统</span>
-        </ButtonBase>
+        </FairysButtonBase>
       </div>
     </LayoutItem>
   );

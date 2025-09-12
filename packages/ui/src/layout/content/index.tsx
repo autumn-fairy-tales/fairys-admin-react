@@ -5,7 +5,7 @@ import { KeepAlive } from 'react-activation';
 import { useFairysRootContext } from 'components/root';
 import { Fragment, memo } from 'react';
 import { useMemo } from 'react';
-import { FullScreen } from 'components/full-screen';
+import { FairysFullScreen } from 'components/full-screen';
 import { useTabBar } from 'context/tab-bar';
 import { AliveControllerBase } from 'context/alive-controller';
 import { motion, AnimatePresence } from 'framer-motion';
@@ -72,13 +72,13 @@ const OutletContentContext = () => {
 
   return (
     <Fragment>
-      <FullScreen
+      <FairysFullScreen
         className="fairys_admin_main_content_body_full_screen"
         open={pageFullScreen}
         onClose={tabBarInstance.onToggleFullScreen}
       >
         {render}
-      </FullScreen>
+      </FairysFullScreen>
     </Fragment>
   );
 };

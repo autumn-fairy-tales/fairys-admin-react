@@ -4,7 +4,7 @@ import { settingInstance } from 'context/setting';
 import { forwardRef, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
-import { PopoverMenu, PopoverMenuItemType } from 'components/popover-menu';
+import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 import { appPluginDataInstance } from 'context/app-plugins-data';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -91,7 +91,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
     return _items;
   }, [userEmail, avatarRender, userName, plugin]);
 
-  const onMenuItemClick = (item: PopoverMenuItemType) => {
+  const onMenuItemClick = (item: FairysPopoverMenuItemType) => {
     if (item.title === '主页') {
       navigate('/');
     } else if (item.title === '偏好设置') {
@@ -102,7 +102,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   };
 
   return (
-    <PopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref} motionClassName="fairys:min-w-[180px]">
+    <FairysPopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref} motionClassName="fairys:min-w-[180px]">
       <div {...rest} title={userName} className={classNameBase}>
         <span className="fairys:flex fairys:items-center fairys:justify-center fairys:rounded-full fairys:bg-gray-200 fairys:dark:bg-gray-700">
           {avatarRender}
@@ -115,6 +115,6 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
           <Fragment />
         )}
       </div>
-    </PopoverMenu>
+    </FairysPopoverMenu>
   );
 });

@@ -11,7 +11,7 @@ import { Icon } from '@iconify/react';
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';
-import { PopoverBaseFloatingTreeParent, PopoverBase } from 'components/popover-base';
+import { FairysPopoverBaseFloatingTreeParent, FairysPopoverBase } from 'components/popover-base';
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
 }
@@ -75,7 +75,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
   if (['main_top_header', 'main_left'].includes(layoutModeState)) {
     return (
-      <PopoverBase
+      <FairysPopoverBase
         className="fairys_admin_main_menu_popover"
         content={<Menu />}
         eventName="hover"
@@ -88,7 +88,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
         }}
       >
         {render}
-      </PopoverBase>
+      </FairysPopoverBase>
     );
   }
   return render;
@@ -103,7 +103,7 @@ const MainMenuItems = (props: MainMenuProps) => {
     return mainMenuItems.map((item) => <MainMenuItem layoutMode={layoutMode} item={item} key={item.path} />);
   }, [mainMenuItems, layoutMode]);
 
-  return <PopoverBaseFloatingTreeParent>{menuRender}</PopoverBaseFloatingTreeParent>;
+  return <FairysPopoverBaseFloatingTreeParent>{menuRender}</FairysPopoverBaseFloatingTreeParent>;
 };
 
 export const MainMenu = (props: MainMenuProps) => {
