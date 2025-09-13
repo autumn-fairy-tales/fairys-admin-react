@@ -33,7 +33,6 @@ const MainIndex = () => {
 
   return (
     <FairysMainPage>
-      <input type="color" />
       <FairysNotificationListBase
         items={[
           {
