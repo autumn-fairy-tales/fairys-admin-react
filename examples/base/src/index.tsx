@@ -13,7 +13,7 @@ import './index.css';
 settingInstance.initSetting({
   logo: logo,
   projectName: 'Fairys Admin',
-  themeColor: 'rgba(175, 82, 222, 1)',
+  themeColor: '#af52de',
   // autoListenSystemTheme: false,
 });
 /**挂载退出登录事件*/

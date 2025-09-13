@@ -3,6 +3,7 @@ import { FairysModalBase } from 'components/modal-base';
 import { SettingThemeBase } from './base/theme';
 import { SettingLayoutMode } from './base/layout-mode';
 import { SettingPageTransitionMode } from './base/page-transition-mode';
+import { SettingColor } from './base/color';
 import hotkeys from 'hotkeys-js';
 import { memo, useEffect } from 'react';
 
@@ -26,6 +27,7 @@ export const SettingDrawer = memo(() => {
       <div className="fairys:h-full fairys:overflow-auto">
         <div className="fairys:flex fairys:flex-col fairys:gap-4 fairys:box-border">
           <SettingThemeBase />
+          <SettingColor />
           <SettingLayoutMode />
           <SettingPageTransitionMode />
         </div>

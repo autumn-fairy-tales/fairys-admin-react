@@ -21,6 +21,8 @@
     "esm"
   ],
   "dependencies": {
+    "tinycolor2": "~1.6.0",
+    "@uiw/react-color-sketch": "~2.8.0",
     "@floating-ui/react": "~0.27.15",
     "@iconify/react": "~6.0.0",
     "clsx": "2.1.1",

@@ -4,10 +4,11 @@ interface LayoutItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<H
   label: ReactNode;
   children: ReactNode;
   isDivider?: boolean;
+  itemClassName?: string;
 }
 
 export const LayoutItem = (props: LayoutItemProps) => {
-  const { label, children, className, isDivider, ...rest } = props;
+  const { label, children, className, isDivider, itemClassName, ...rest } = props;
   const title = useMemo(() => {
     if (isDivider) {
       return (
@@ -38,11 +39,11 @@ export const LayoutItem = (props: LayoutItemProps) => {
   }, [className, isDivider]);
 
   const itemChildClass = useMemo(() => {
-    return clsx('', {
+    return clsx('', itemClassName, {
       'fairys:w-full fairys:flex fairys:items-center fairys:justify-center': isDivider,
       'fairys:w-auto': !isDivider,
     });
-  }, [isDivider]);
+  }, [isDivider, itemClassName]);
 
   return (
     <div {...rest} className={itemClass}>
