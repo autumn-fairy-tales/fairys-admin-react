@@ -26,6 +26,7 @@ const titleTextClassName =
 export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item } = props;
   const iconProps = item.iconProps as IconProps;
+  const _className = item.className;
 
   const [menuState] = useMenuInstanceContext();
   const sideMenuMode = menuState.menuModeExpandCollapse;
@@ -38,11 +39,11 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
   }, [location.pathname, sideMenuMode]);
 
   const className = useMemo(() => {
-    return clsx(menuItemBaseClassName, ['fairys:text-gray-400', 'fairys:dark:text-gray-600'], {
+    return clsx(menuItemBaseClassName, _className, ['fairys:text-gray-400', 'fairys:dark:text-gray-600'], {
       'fairys:bg-(--fairys-theme-color)': !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
     });
-  }, [isActive]);
+  }, [isActive, _className]);
 
   const onClick = (e: React.MouseEvent) => {
     if (sideMenuMode === 'close') {
@@ -71,6 +72,7 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
 export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item, level = 0, isSubMenu = false, isExpand = false, ...rest } = props;
   const iconProps = item.iconProps as IconProps;
+  const _className = item.className;
 
   const match = useMatch(item.path);
   const navigate = useNavigate();
@@ -105,14 +107,15 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   }, [sideMenuMode, level]);
 
   const menuItemClassName = useMemo(() => {
-    return clsx(menuItemBaseClassName, {
+    return clsx(menuItemBaseClassName, _className, {
+      fairys_admin_menu_sub_menu: isSubMenu,
       [`data-level=${level}`]: true,
       active: !!isActive,
       'fairys:bg-(--fairys-theme-color)': !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
       'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
     });
-  }, [isActive, level]);
+  }, [isActive, level, _className, isSubMenu]);
 
   const titleStyle = useMemo(() => {
     if (sideMenuMode === 'close' || sideMenuMode2 === 'close') {

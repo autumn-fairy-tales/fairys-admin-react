@@ -22,6 +22,7 @@ interface MainMenuItemProps extends MainMenuProps {
 
 const MainMenuItem = (props: MainMenuItemProps) => {
   const { item, layoutMode } = props;
+  const _className = item.className;
   const location = useLocation();
   const [state, menuInstance] = useMenuData();
   const mainMenuItemSelected = state.mainMenuItemSelected;
@@ -33,6 +34,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const className = useMemo(() => {
     return clsx(
       'fairys_admin_main_menu_item fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:box-border fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
+      _className,
       {
         active: isActive,
         'fairys:bg-(--fairys-theme-color)': !!isActive,
@@ -42,7 +44,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
         'fairys:flex-row': layoutMode === 'horizontal',
       },
     );
-  }, [isActive, layoutMode]);
+  }, [isActive, layoutMode, _className]);
 
   const onClickMainMenuItem = () => {
     menuInstance.updateMainExpandItem(item);

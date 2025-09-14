@@ -25,7 +25,7 @@ interface TabBarItemProps {
 const TabBarItem = (props: TabBarItemProps) => {
   const { item, currentIndex, count } = props;
   const iconProps = item.iconProps as IconProps;
-
+  const className = item.className;
   const isTabFixed = item.isTabFixed;
   const tabInstance = useTabInstanceContext();
   const tabItemInstance = useTabItemInstance();
@@ -47,6 +47,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const itemClassName = useMemo(() => {
     return clsx(
       'fairys_admin_tab_bar_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:relative fairys:flex fairys:flex-row fairys:items-center fairys:gap-1 fairys:px-[20px] fairys:py-[10px] fairys:cursor-pointer',
+      className,
       {
         active: !!match,
         'fairys:dark:before:bg-gray-600': true,
@@ -60,7 +61,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         'fairys:dark:bg-gray-600 fairys:dark:hover:bg-gray-600': !!match,
       },
     );
-  }, [match]);
+  }, [match, className]);
 
   const onClick = (e: React.MouseEvent) => {
     e.stopPropagation();

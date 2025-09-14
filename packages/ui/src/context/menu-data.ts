@@ -24,6 +24,8 @@ export interface MenuItemType {
   isTabFixed?: boolean;
   /**排序-固定菜单*/
   sortTabFixed?: number;
+  /**样式属性*/
+  className?: string;
   [x: string]: any;
 }
 
