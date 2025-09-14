@@ -25,7 +25,7 @@ const popoverMenuItemBaseClsActive = `active fairys:bg-(--fairys-theme-color)! f
 
 const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { rowItemData, isSubMenuItem = false } = props;
-  const { isShowClose = true } = rowItemData;
+  const { isShowClose = true, className } = rowItemData;
   const iconProps = rowItemData.iconProps || ({} as IconProps);
 
   const tree = useFloatingTree();
@@ -56,13 +56,19 @@ const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivE
   }, [state.value]);
 
   const cls = useMemo(() => {
-    return clsx('fairys_admin_popover_menu_item', popoverMenuItemBaseCls, {
-      [popoverMenuItemBaseClsDisabled]: rowItemData.disabled,
-      [popoverMenuItemBaseClsNotDisabled]: !rowItemData.disabled,
-      [popoverMenuItemBaseClsActive]: isActive,
-      'fairys:dark:bg-gray-700/75 fairys:bg-gray-100/75 fairys:text-gray-600!': !rowItemData.disabled && isSubMenuItem,
-    });
-  }, [isActive, rowItemData, isSubMenuItem]);
+    return clsx(
+      'fairys_admin_popover_menu_item',
+      popoverMenuItemBaseCls,
+      {
+        [popoverMenuItemBaseClsDisabled]: rowItemData.disabled,
+        [popoverMenuItemBaseClsNotDisabled]: !rowItemData.disabled,
+        [popoverMenuItemBaseClsActive]: isActive,
+        'fairys:dark:bg-gray-700/75 fairys:bg-gray-100/75 fairys:text-gray-600!':
+          !rowItemData.disabled && isSubMenuItem,
+      },
+      className,
+    );
+  }, [isActive, rowItemData, isSubMenuItem, className]);
 
   return (
     <div ref={ref} onClick={onClickItem} className={cls}>
@@ -104,11 +110,19 @@ const FairysMenu = forwardRef(
     const { label, onOpenChange } = props;
     const { rowItemData } = props;
     const { items } = rowItemData;
+    const { popoverClassName, motionClassName } = rowItemData;
     const render = useMemo(() => {
       return (items || []).map((item, index) => createChildMenu(item, index));
     }, [items]);
     return (
-      <FairysPopoverBase disabled={rowItemData.disabled} onOpenChange={onOpenChange} ref={ref} content={render}>
+      <FairysPopoverBase
+        className={popoverClassName}
+        motionClassName={motionClassName}
+        disabled={rowItemData.disabled}
+        onOpenChange={onOpenChange}
+        ref={ref}
+        content={render}
+      >
         {label ? label : <FairysMenuItem rowItemData={rowItemData} isSubMenuItem />}
       </FairysPopoverBase>
     );

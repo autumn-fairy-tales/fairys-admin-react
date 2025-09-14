@@ -34,6 +34,12 @@ export interface FairysPopoverMenuItemType {
    * @default true
    */
   isClickClose?: boolean;
+  /**自定义类名*/
+  className?: string;
+  /**自定义弹出层类名*/
+  popoverClassName?: string;
+  /**自定义运动类名*/
+  motionClassName?: string;
   [key: string]: any;
 }
 

@@ -3,7 +3,7 @@
  */
 
 import clsx from 'clsx';
-import { useMemo, Fragment } from 'react';
+import { useMemo, Fragment, useCallback } from 'react';
 import { useSetting } from 'context/setting';
 import { useLocation } from 'react-router';
 import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
@@ -46,13 +46,25 @@ const MainMenuItem = (props: MainMenuItemProps) => {
     );
   }, [isActive, layoutMode, _className]);
 
-  const onClickMainMenuItem = () => {
+  const onClickMainMenuItem = useCallback(async () => {
+    // 打开浏览器新窗口
+    if (item.isOpenNewWindow) {
+      window.open(item.path, '_blank');
+      return;
+    }
+    if (typeof item.onBeforeNavigate === 'function') {
+      const isBool = await item.onBeforeNavigate(item);
+      // 如果为 false 不进行跳转
+      if (!isBool) {
+        return;
+      }
+    }
     menuInstance.updateMainExpandItem(item);
     if (!isActive) {
       menuDataInstance.onExpandItems(location.pathname);
       menuInstance.onMainMenu(item.path);
     }
-  };
+  }, [item, isActive, location, menuDataInstance, menuInstance]);
 
   const iconClassName = useMemo(() => {
     return clsx('', iconProps?.className, {

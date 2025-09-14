@@ -126,8 +126,13 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     };
   }, [level, sideMenuMode, sideMenuMode2]);
 
-  const onClick: MenuItemProps['onClick'] = (e) => {
+  const onClick: MenuItemProps['onClick'] = async (e) => {
     if (props.disabled) {
+      return;
+    }
+    // 打开浏览器新窗口
+    if (item.isOpenNewWindow) {
+      window.open(item.path, '_blank');
       return;
     }
     props.onClick?.(e);
@@ -135,6 +140,13 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
       //  如果是父级菜单渲染，则展开子菜单
       menuDataInstance.onToggleItems(item.path);
     } else if (!match) {
+      if (typeof item.onBeforeNavigate === 'function') {
+        const isBool = await item.onBeforeNavigate(item);
+        // 如果为 false 不进行跳转
+        if (!isBool) {
+          return;
+        }
+      }
       navigate(item.path);
       tabBarInstance.addItem(item);
       menuDataInstance.updateMainExpandItem(undefined);

@@ -26,6 +26,10 @@ export interface MenuItemType {
   sortTabFixed?: number;
   /**样式属性*/
   className?: string;
+  /**是否打开浏览器新窗口*/
+  isOpenNewWindow?: boolean;
+  /**跳转之前触发，返回 false 则不跳转*/
+  onBeforeNavigate?: (item: MenuItemType) => boolean | Promise<boolean>;
   [x: string]: any;
 }
 
