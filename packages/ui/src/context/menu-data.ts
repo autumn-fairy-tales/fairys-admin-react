@@ -141,7 +141,6 @@ export class MenuDataInstance {
   updateMainExpandItem = (item?: MenuItemType) => {
     this.state.mainExpandItem = item;
   };
-
   /**
    * 通过path获取菜单对象
    * 暂不支持 /path/:id 这种动态路由
@@ -256,6 +255,8 @@ export class MenuDataInstance {
     this.state.mainExpandItem = undefined;
     this.state.searchMenuItems = ref([]);
   };
+  /**跳转之前触发，返回 false 则不跳转*/
+  onBeforeNavigate?: (item: MenuItemType) => boolean | Promise<boolean>;
 }
 /**菜单数据使用实例*/
 export const menuDataInstance = new MenuDataInstance();

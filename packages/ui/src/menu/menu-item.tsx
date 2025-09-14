@@ -147,6 +147,13 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
           return;
         }
       }
+      if (typeof menuDataInstance.onBeforeNavigate === 'function') {
+        const isBool = await menuDataInstance.onBeforeNavigate(item);
+        // 如果为 false 不进行跳转
+        if (!isBool) {
+          return;
+        }
+      }
       navigate(item.path);
       tabBarInstance.addItem(item);
       menuDataInstance.updateMainExpandItem(undefined);

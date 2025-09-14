@@ -59,6 +59,13 @@ const MainMenuItem = (props: MainMenuItemProps) => {
         return;
       }
     }
+    if (typeof menuInstance.onBeforeNavigate === 'function') {
+      const isBool = await menuInstance.onBeforeNavigate(item);
+      // 如果为 false 不进行跳转
+      if (!isBool) {
+        return;
+      }
+    }
     menuInstance.updateMainExpandItem(item);
     if (!isActive) {
       menuDataInstance.onExpandItems(location.pathname);
