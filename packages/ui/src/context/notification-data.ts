@@ -1,9 +1,15 @@
+import { IconProps } from '@iconify/react';
 import { proxy, ref, useSnapshot } from 'valtio';
 
 export interface NotificationTabItemType {
+  /**tab标题*/
   title: string;
+  /**tab键*/
   key: string;
+  /**图标*/
   icon?: string;
+  /**图标属性*/
+  iconProps?: IconProps;
   [s: string]: any;
 }
 
@@ -20,6 +26,8 @@ export interface NotificationItemType {
   content?: string;
   /**图标*/
   icon?: string;
+  /**图标属性*/
+  iconProps?: IconProps;
   [s: string]: any;
 }
 

@@ -7,7 +7,7 @@ import { useMemo, Fragment } from 'react';
 import { useSetting } from 'context/setting';
 import { useLocation } from 'react-router';
 import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
-import { Icon } from '@iconify/react';
+import { Icon, IconProps } from '@iconify/react';
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';
@@ -28,6 +28,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const isActive = mainMenuItemSelected === item.path;
   const [settingState] = useSetting();
   const layoutModeState = settingState.layoutMode;
+  const iconProps = item.iconProps as IconProps;
 
   const className = useMemo(() => {
     return clsx(
@@ -52,18 +53,18 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   };
 
   const iconClassName = useMemo(() => {
-    return clsx('', {
+    return clsx('', iconProps?.className, {
       'fairys:size-[20px]': layoutMode === 'horizontal',
       'fairys:size-[26px]': layoutMode === 'vertical',
     });
-  }, [layoutMode]);
+  }, [layoutMode, iconProps?.className]);
 
   const render = useMemo(() => {
     return (
       <div className={className} onClick={onClickMainMenuItem} title={item.title}>
         {item.icon ? (
           <span className={iconClassName}>
-            <Icon icon={item.icon} className={iconClassName} />
+            <Icon {...iconProps} icon={item.icon} className={iconClassName} />
           </span>
         ) : (
           <Fragment />

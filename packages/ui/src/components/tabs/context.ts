@@ -1,10 +1,14 @@
 import { createContext, useRef, useContext, ReactNode } from 'react';
 import { proxy, useSnapshot } from 'valtio';
+import { IconProps } from '@iconify/react';
 
 export interface FairysTabsItemType {
   title: string;
   key: string;
+  /**图标*/
   icon?: string;
+  /**图标属性*/
+  iconProps?: IconProps;
   children?: ReactNode;
   /**是否禁用*/
   disabled?: boolean;

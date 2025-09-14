@@ -10,7 +10,7 @@ import {
 import clsx from 'clsx';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
-import { Icon } from '@iconify/react';
+import { Icon, IconProps } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 import { useFairysRootContext } from 'components/root';
@@ -24,6 +24,8 @@ interface TabBarItemProps {
 
 const TabBarItem = (props: TabBarItemProps) => {
   const { item, currentIndex, count } = props;
+  const iconProps = item.iconProps as IconProps;
+
   const isTabFixed = item.isTabFixed;
   const tabInstance = useTabInstanceContext();
   const tabItemInstance = useTabItemInstance();
@@ -97,16 +99,6 @@ const TabBarItem = (props: TabBarItemProps) => {
     );
   }, [match]);
 
-  const iconRender = useMemo(() => {
-    return item.icon ? (
-      <span className="fairys:size-[16px] fairys:mr-1">
-        <Icon icon={item.icon} className="fairys:size-[16px]" />
-      </span>
-    ) : (
-      <Fragment />
-    );
-  }, [item.icon]);
-
   const items = useMemo(() => {
     return [
       { icon: 'ri:refresh-line', title: '重新加载', visible: !!fairysRootClass.keepAlive },
@@ -152,7 +144,13 @@ const TabBarItem = (props: TabBarItemProps) => {
       eventName="contextMenu"
     >
       <div className={itemClassName} onClick={onClick}>
-        {iconRender}
+        {item.icon ? (
+          <span className="fairys:size-[16px] fairys:mr-1">
+            <Icon {...iconProps} icon={item.icon} className={`fairys:size-[16px] ${iconProps.className || ''}`} />
+          </span>
+        ) : (
+          <Fragment />
+        )}
         <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
         {isCloseIconShow && !isTabFixed ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
       </div>

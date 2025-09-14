@@ -1,6 +1,6 @@
 import type { NotificationItemType } from 'context/notification-data';
 import { ForwardedRef, forwardRef, Fragment, useMemo, useRef, createContext, useContext } from 'react';
-import { Icon } from '@iconify/react';
+import { Icon, IconProps } from '@iconify/react';
 import clsx from 'clsx';
 
 export interface FairysNotificationItemProps
@@ -39,10 +39,11 @@ export const FairysNotificationBaseItem = forwardRef(
   (props: FairysNotificationItemProps, ref: ForwardedRef<HTMLDivElement>) => {
     const { item, className, isShowIcon = true, ...rest } = props;
     const notification = useFairysNotificationBaseContext();
+    const iconProps = item.iconProps || ({} as IconProps);
 
     const clxName = useMemo(() => {
       return clsx(
-        'fairys_admin_notification_item fairys:rounded-sm fairys:p-2 fairys:gap-2 fairys:w-full fairys:flex fairys:items-center fairys:flex-row fairys:cursor-pointer fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-600 fairys:transition-all fairys:duration-300',
+        'fairys_admin_notification_item fairys:rounded-sm fairys:p-2 fairys:gap-1 fairys:w-full fairys:flex fairys:items-start fairys:flex-row fairys:cursor-pointer fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-600 fairys:transition-all fairys:duration-300',
         className,
         {
           [`fairys_admin_notification_item-${item?.type}`]: item?.type,
@@ -59,15 +60,23 @@ export const FairysNotificationBaseItem = forwardRef(
     return (
       <div ref={ref} {...rest} className={clxName} onClick={onClickItem}>
         {isShowIcon ? (
-          <div className="fairys_admin_notification_item-icon fairys:w-[36px] fairys:h-[36px] fairys:min-w-[36px] fairys:flex fairys:justify-center fairys:items-center">
-            {item?.icon ? <Icon icon={item.icon} className="fairys:w-[16px] fairys:h-[16px]" /> : <Fragment />}
+          <div className="fairys_admin_notification_item-icon fairys:shrink-0 fairys:w-[32px] fairys:h-full fairys:min-w-[32px] fairys:flex fairys:justify-center fairys:box-border fairys:pt-1">
+            {item?.icon ? (
+              <Icon
+                {...iconProps}
+                icon={item.icon}
+                className={`fairys:w-[16px] fairys:h-[16px] ${iconProps?.className || ''}`}
+              />
+            ) : (
+              <Fragment />
+            )}
           </div>
         ) : (
           <Fragment />
         )}
         <div className="fairys_admin_notification_item_content fairys:flex fairys:flex-col fairys:flex-1 fairys:overflow-hidden">
           <div
-            className="fairys_admin_notification_item_content_title fairys:text-[14px] fairys:font-medium fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap fairys:w-full"
+            className="fairys_admin_notification_item_content_title fairys:text-[14px] fairys:font-medium fairys:line-clamp-2 fairys:w-full"
             title={item?.title}
           >
             {item?.title}

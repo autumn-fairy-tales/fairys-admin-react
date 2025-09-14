@@ -4,7 +4,7 @@ import { tabBarInstance } from 'context/tab-bar';
 import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from 'context/menu-data';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
-import { Icon } from '@iconify/react';
+import { Icon, IconProps } from '@iconify/react';
 import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
 import { useSetting } from 'context/setting';
 export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -25,6 +25,8 @@ const titleTextClassName =
 
 export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item } = props;
+  const iconProps = item.iconProps as IconProps;
+
   const [menuState] = useMenuInstanceContext();
   const sideMenuMode = menuState.menuModeExpandCollapse;
   const location = useLocation();
@@ -42,16 +44,6 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
     });
   }, [isActive]);
 
-  const iconRender = useMemo(() => {
-    return item.icon ? (
-      <span className={'fairys:size-[16px]'}>
-        <Icon icon={item.icon} className={'fairys:size-[16px]'} />
-      </span>
-    ) : (
-      <Fragment />
-    );
-  }, [item.icon]);
-
   const onClick = (e: React.MouseEvent) => {
     if (sideMenuMode === 'close') {
       //  如果是父级菜单渲染，则展开子菜单
@@ -63,7 +55,13 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
   return (
     <div className={className} ref={ref} onClick={onClick}>
       <div className={titleClassName} title={item.title}>
-        {iconRender}
+        {item.icon ? (
+          <span className={'fairys:size-[16px]'}>
+            <Icon {...iconProps} icon={item.icon} className={`fairys:size-[16px]  ${iconProps?.className || ''}`} />
+          </span>
+        ) : (
+          <Fragment />
+        )}
         {sideMenuMode === 'open' ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
       </div>
     </div>
@@ -72,6 +70,8 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
 
 export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item, level = 0, isSubMenu = false, isExpand = false, ...rest } = props;
+  const iconProps = item.iconProps as IconProps;
+
   const match = useMatch(item.path);
   const navigate = useNavigate();
   const [menuState, menuInstance] = useMenuInstanceContext();
@@ -150,8 +150,8 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   }, [isExpand]);
 
   const iconClassName = useMemo(() => {
-    return clsx('fairys:size-[16px]', {});
-  }, [isExpandCollapse]);
+    return clsx('fairys:size-[16px]', iconProps?.className, {});
+  }, [isExpandCollapse, iconProps?.className]);
 
   useEffect(() => {
     const onMount = menuInstance.register(menuItemInstance);
@@ -165,22 +165,18 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
     }
   }, [isActive, menuItemInstance.dom]);
 
-  const iconRender = useMemo(() => {
-    return item.icon ? (
-      <span className={iconClassName}>
-        <Icon icon={item.icon} className={iconClassName} />
-      </span>
-    ) : (
-      <Fragment />
-    );
-  }, [iconClassName, item.icon]);
-
   const mergeRef = useMergeRefs([menuItemInstance.dom, ref]);
 
   return (
     <div {...rest} ref={mergeRef} data-level={level} title={item.title} className={menuItemClassName} onClick={onClick}>
       <div className={titleClassName} style={titleStyle}>
-        {iconRender}
+        {item.icon ? (
+          <span className={iconClassName}>
+            <Icon {...iconProps} icon={item.icon} className={iconClassName} />
+          </span>
+        ) : (
+          <Fragment />
+        )}
         {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
       </div>
       {isExpandCollapse ? (

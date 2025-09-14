@@ -9,7 +9,7 @@ export const Notification = () => {
   const isTabs = !!(state.tabItems || []).length;
   const activeKey = state.activeKey;
   const dataList = isTabs ? state[`dataList_${activeKey}`] : state.dataList;
-  const isEmpty = !dataList?.length;
+  const isEmpty = !!dataList?.length;
 
   return (
     <div className="fairys_admin_tool_bar_notification fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col fairys:box-border">
@@ -28,14 +28,31 @@ export const Notification = () => {
           </div>
         )}
       </div>
-      <div className="fairys_admin_tool_bar_notification_list fairys:flex-1 fairys:overflow-auto no-scrollbar">
+      <div className="fairys_admin_tool_bar_notification_list fairys:flex-1 fairys:overflow-auto no-scrollbar fairys:box-border fairys:px-3">
         {isEmpty ? (
           <div className="fairys:py-20 fairys:text-center fairys:text-[14px] fairys:text-gray-400">暂无通知</div>
         ) : (
           <FairysNotificationListBase
             onClickItem={notificationDataInstance._onClickItem}
             isShowIcon={state.isShowIcon}
-            items={dataList}
+            // items={dataList}
+            items={[
+              {
+                icon: 'ant-design:unordered-list',
+                id: '1',
+                title:
+                  '通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1',
+                date: '2023-01-01',
+                type: 'info',
+              },
+              {
+                icon: 'ant-design:unordered-list',
+                id: '2',
+                title: '通知2',
+                date: '2023-01-02',
+                type: 'success',
+              },
+            ]}
           />
         )}
       </div>

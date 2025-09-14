@@ -1,10 +1,13 @@
 import { Placement } from '@floating-ui/react';
+import { IconProps } from '@iconify/react';
 import { useRef, createContext, useContext } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 
 export interface FairysPopoverMenuItemType {
   /**图标*/
   icon?: string;
+  /**图标属性*/
+  iconProps?: IconProps;
   /**标题*/
   title?: string;
   /**是否禁用*/

@@ -2,6 +2,7 @@ import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
 import { settingInstance } from './setting';
 import { tabBarInstance } from './tab-bar';
+import { IconProps } from '@iconify/react';
 export interface MenuItemType {
   /**标题*/
   title: string;
@@ -9,6 +10,8 @@ export interface MenuItemType {
   path: string;
   /**图标*/
   icon?: string;
+  /**图标属性*/
+  iconProps?: IconProps;
   /**判断是否主子菜单字段，仅在第一层生效*/
   isMain?: boolean;
   /**在left布局中，父级是否显示
