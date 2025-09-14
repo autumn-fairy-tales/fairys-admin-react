@@ -43,7 +43,7 @@ const SearchItem = (props: SearchItemProps) => {
       className="fairys_admin_tool_bar_menu_search_item fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:min-h-[70px] fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm fairys:box-border fairys:border-gray-200 fairys:dark:border-gray-700"
     >
       <div className="fairys:w-[65px] fairys:flex fairys:items-center fairys:justify-center fairys:icon  fairys:transition-all fairys:duration-300">
-        <Icon {...iconProps} icon={rowItemData.icon} className={`fairys:size-[20px] ${iconProps.className || ''}`} />
+        <Icon {...iconProps} icon={rowItemData.icon} className={`fairys:size-[20px] ${iconProps?.className || ''}`} />
       </div>
       <div className="fairys:flex fairys:flex-col fairys:flex-1">
         <div className="fairys:px-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-300">

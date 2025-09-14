@@ -73,7 +73,7 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
             <Icon
               {...iconProps}
               icon={item.icon}
-              className={`fairys:w-[16px] fairys:h-[16px] ${iconProps.className || ''}`}
+              className={`fairys:w-[16px] fairys:h-[16px] ${iconProps?.className || ''}`}
             />
           </div>
         ) : (

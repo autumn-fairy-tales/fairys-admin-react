@@ -146,7 +146,7 @@ const TabBarItem = (props: TabBarItemProps) => {
       <div className={itemClassName} onClick={onClick}>
         {item.icon ? (
           <span className="fairys:size-[16px] fairys:mr-1">
-            <Icon {...iconProps} icon={item.icon} className={`fairys:size-[16px] ${iconProps.className || ''}`} />
+            <Icon {...iconProps} icon={item.icon} className={`fairys:size-[16px] ${iconProps?.className || ''}`} />
           </span>
         ) : (
           <Fragment />
