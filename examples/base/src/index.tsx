@@ -37,9 +37,32 @@ notificationDataInstance.ctor({
     },
   ],
 });
+
+notificationDataInstance.updatedToType('all', [
+  {
+    icon: 'ant-design:unordered-list',
+    id: '1',
+    title:
+      '通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1',
+    date: '2023-01-01',
+    type: 'info',
+  },
+  {
+    icon: 'ant-design:unordered-list',
+    id: '2',
+    title: '通知2',
+    date: '2023-01-02',
+    type: 'success',
+  },
+]);
+
 /**点击数据*/
 notificationDataInstance.onClickItem = (item) => {
   console.log(item);
+};
+/**点击查看全部*/
+notificationDataInstance.onClickMore = (activeKey) => {
+  console.log(activeKey);
 };
 
 appPluginDataInstance.addPlugin({

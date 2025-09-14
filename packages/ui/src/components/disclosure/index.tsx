@@ -20,8 +20,8 @@ export const FairysDisclosureItem = (props: FairysDisclosureItemProps) => {
           initial="collapsed"
           animate={open ? 'open' : 'collapsed'}
           variants={{
-            open: { scale: 1, rotate: 0, opacity: 1, height: 'auto' },
-            collapsed: { scale: 0.5, rotate: 45, opacity: 0, height: 0 },
+            open: { scale: 1, opacity: 1, height: 'auto' },
+            collapsed: { scale: 0.5, opacity: 0, height: 0 },
           }}
           transition={{ duration: 0.35 }}
           onAnimationComplete={onAnimationComplete}

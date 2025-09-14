@@ -9,7 +9,8 @@ export const Notification = () => {
   const isTabs = !!(state.tabItems || []).length;
   const activeKey = state.activeKey;
   const dataList = isTabs ? state[`dataList_${activeKey}`] : state.dataList;
-  const isEmpty = !!dataList?.length;
+  const isEmpty = !dataList?.length;
+  console.log('dataList', dataList);
 
   return (
     <div className="fairys_admin_tool_bar_notification fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col fairys:box-border">
@@ -35,24 +36,7 @@ export const Notification = () => {
           <FairysNotificationListBase
             onClickItem={notificationDataInstance._onClickItem}
             isShowIcon={state.isShowIcon}
-            // items={dataList}
-            items={[
-              {
-                icon: 'ant-design:unordered-list',
-                id: '1',
-                title:
-                  '通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1',
-                date: '2023-01-01',
-                type: 'info',
-              },
-              {
-                icon: 'ant-design:unordered-list',
-                id: '2',
-                title: '通知2',
-                date: '2023-01-02',
-                type: 'success',
-              },
-            ]}
+            items={dataList}
           />
         )}
       </div>
@@ -61,7 +45,9 @@ export const Notification = () => {
       ) : (
         <div className="fairys_admin_tool_bar_notification_footer fairys:py-3 fairys:text-[12px] fairys:font-medium fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800">
           <div className="fairys:flex fairys:justify-center fairys:items-center">
-            <div className="fairys:cursor-pointer">查看全部</div>
+            <div className="fairys:cursor-pointer" onClick={notificationDataInstance._onClickMore}>
+              查看全部
+            </div>
           </div>
         </div>
       )}

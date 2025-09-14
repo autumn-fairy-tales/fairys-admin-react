@@ -100,7 +100,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
       <FairysPopoverBase
         className="fairys_admin_main_menu_popover"
         content={<Menu />}
-        eventName="hover"
+        // eventName="hover"
         placement={layoutMode === 'vertical' ? 'right-start' : 'bottom-start'}
         isNotMinWidth
         onOpenChange={(open) => {

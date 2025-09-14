@@ -93,6 +93,14 @@ export class NotificationDataInstance {
   _onClickItem = (item: NotificationItemType) => {
     this.onClickItem?.(item);
   };
+
+  /**点击查看全部*/
+  onClickMore: (activeKey: string) => void;
+  /**点击查看全部*/
+  _onClickMore = () => {
+    this.onClickMore?.(this.state.activeKey);
+  };
+
   /**清空数据*/
   clear = () => {
     for (const key in this.state) {

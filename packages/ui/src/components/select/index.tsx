@@ -63,6 +63,7 @@ export const FairysSelectBase = (props: FairysSelectBaseProps) => {
       onOpenChange={(open) => setIsExpand(open)}
       onClickItem={onMenuItemClick}
       value={value}
+      mode={multiple ? 'multiple' : 'single'}
     >
       <div className="fairys:min-w-[120px] fairys:min-h-[38px] fairys:px-[12px] fairys:py-[4px] fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:rounded-sm fairys:cursor-pointer fairys:flex fairys:flex-row fairys:justify-between fairys:items-center">
         <span>{render}</span>

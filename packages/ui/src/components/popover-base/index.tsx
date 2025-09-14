@@ -172,7 +172,9 @@ export const FairysPopoverBaseComponent = forwardRef(
     const mergeRef = useMergeRefs([refs.setReference, ref]);
 
     const bodyClasName = useMemo(() => {
-      return clsx('fairys_admin_popover-base no-scrollbar', className, ['fairys:rounded-sm fairys:bg-transparent!']);
+      return clsx('fairys_admin_popover-base no-scrollbar', className, [
+        'fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:shadow-xl fairys:inset-shadow-sm',
+      ]);
     }, [className]);
 
     const motionBodyClasName = useMemo(() => {
@@ -180,7 +182,7 @@ export const FairysPopoverBaseComponent = forwardRef(
         'fairys_admin_popover-base-motion fairys:overflow-hidden',
         motionClassNameBase,
         motionClassName,
-        ['fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:shadow-xl fairys:inset-shadow-sm'],
+        ['fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800!'],
         {
           'fairys:min-w-[120px]': isNotMinWidth === false,
         },
