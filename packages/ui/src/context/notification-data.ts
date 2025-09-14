@@ -65,9 +65,12 @@ export class NotificationDataInstance {
     this.state.title = title || '通知';
     this.state.isShowIcon = isShowIcon ?? true;
   };
+  /**更新值 tabs 选项key（外部挂载事件）*/
+  onUpdateActiveKey?: (key: string) => void;
   /**更新值*/
-  updateActiveKey = (key: string) => {
+  _onUpdateActiveKey = (key: string) => {
     this.state.activeKey = key;
+    this.onUpdateActiveKey?.(key);
   };
 
   /**根据类型获取数据*/
@@ -88,14 +91,14 @@ export class NotificationDataInstance {
   };
 
   /**点击数据(外部挂载事件)*/
-  onClickItem: (item: NotificationItemType) => void;
+  onClickItem?: (item: NotificationItemType) => void;
   /**点击数据*/
   _onClickItem = (item: NotificationItemType) => {
     this.onClickItem?.(item);
   };
 
-  /**点击查看全部*/
-  onClickMore: (activeKey: string) => void;
+  /**点击查看全部(外部挂载事件)*/
+  onClickMore?: (activeKey: string) => void;
   /**点击查看全部*/
   _onClickMore = () => {
     this.onClickMore?.(this.state.activeKey);

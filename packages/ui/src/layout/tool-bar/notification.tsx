@@ -20,7 +20,7 @@ export const Notification = () => {
             <FairysTabs
               activeKey={activeKey}
               items={state.tabItems}
-              onChange={notificationDataInstance.updateActiveKey}
+              onChange={notificationDataInstance._onUpdateActiveKey}
             />
           </div>
         ) : (

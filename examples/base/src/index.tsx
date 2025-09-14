@@ -64,6 +64,10 @@ notificationDataInstance.onClickItem = (item) => {
 notificationDataInstance.onClickMore = (activeKey) => {
   console.log(activeKey);
 };
+/**更新值 tabs 选项key（外部挂载事件）*/
+notificationDataInstance.onUpdateActiveKey = (key) => {
+  console.log(key);
+};
 
 appPluginDataInstance.addPlugin({
   'avatar-menus': {
