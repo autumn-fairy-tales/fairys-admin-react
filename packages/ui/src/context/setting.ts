@@ -55,6 +55,8 @@ export interface SettingInstanceState {
   enableToolBar?: boolean;
   /**是否启用收藏夹*/
   enableToolBarFavorites?: boolean;
+  /**收藏夹最多可存储多少个*/
+  favoritesMaxLength?: number;
   /**面包屑导航*/
   enableToolBarBreadcrumb?: boolean;
   /**导航搜索*/
@@ -87,6 +89,8 @@ class SettingInstance {
     autoListenSystemTheme: true,
     /**侧边栏模式*/
     sideMenuMode: 'open',
+    /**收藏夹最多可存储多少个*/
+    favoritesMaxLength: 20,
   });
 
   constructor() {

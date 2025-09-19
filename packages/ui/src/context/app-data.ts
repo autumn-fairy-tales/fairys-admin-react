@@ -1,13 +1,14 @@
 import { accountDataInstance } from './account-data';
 import { AliveControllerBase } from './alive-controller';
 import { appPluginDataInstance } from './app-plugins-data';
-import { AuthDataInstance, authDataInstance } from './auth-data';
+import { AuthDataInstance } from './auth-data';
 import { routerDataInstance } from './router-data';
 import { settingInstance } from './setting';
 import { menuDataInstance } from './menu-data';
 import { tabBarInstance } from './tab-bar';
 import { motionAnimationInstance } from './motion-animation';
 import { notificationDataInstance } from './notification-data';
+import { FavoritesDataInstance, favoritesDataInstance } from './favorites-data';
 
 class AppDataInstance {
   static router = routerDataInstance;
@@ -18,9 +19,12 @@ class AppDataInstance {
   static motionAnimation = motionAnimationInstance;
   static appPlugin = appPluginDataInstance;
   static notification = notificationDataInstance;
+  static favoritesDataInstance: FavoritesDataInstance = favoritesDataInstance;
+
   /**挂载的AliveController*/
   aliveController: AliveControllerBase;
   authDataInstance: AuthDataInstance;
+
   /**清空tab项*/
   clear = () => {
     routerDataInstance.clear();

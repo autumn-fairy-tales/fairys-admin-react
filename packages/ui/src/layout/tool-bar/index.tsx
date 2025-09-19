@@ -7,9 +7,8 @@ import { MenuSearch } from './menu-search';
 import { appPluginDataInstance } from 'context/app-plugins-data';
 import { appDataInstance } from 'context/app-data';
 import { useLocation } from 'react-router-dom';
-import { FairysPopoverBase } from 'components/popover-base';
-import { Notification } from './notification';
-import { useNotificationData } from 'context/notification-data';
+import { NotificationBtn } from './notification';
+import { FavoritesBtn } from './favorites';
 
 const MenuDarkLight = () => {
   const [state, settingInstance] = useSetting();
@@ -87,32 +86,13 @@ const Reload = () => {
   );
 };
 
-const NotificationBtn = () => {
-  const [state] = useNotificationData();
-  const count = state.count;
-
-  return (
-    <FairysPopoverBase placement="bottom" content={<Notification />}>
-      <FairysButtonBase className="fairys_admin_tool_bar_notification fairys:relative">
-        <span className="fairys:icon-[ant-design--bell-outlined] fairys:size-[18px]" />
-        {count > 0 ? (
-          <span className="fairys:absolute fairys:px-[6px] fairys:top-[0px] fairys:left-[40%]  fairys:flex fairys:items-center fairys:justify-center fairys:text-[10px] fairys:rounded-[10px] fairys:bg-red-500 fairys:text-white">
-            {count > 99 ? '99+' : count}
-          </span>
-        ) : (
-          <Fragment />
-        )}
-      </FairysButtonBase>
-    </FairysPopoverBase>
-  );
-};
-
 export const ToolBar = () => {
   const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
   const rightRender = useMemo(() => {
     if (plugin?.override) {
       return plugin?.override([
         <MenuSearch key="menu-search" />,
+        <FavoritesBtn key="menu-favorites" />,
         <NotificationBtn key="menu-notification" />,
         <FairysFullScreen key="menu-full-screen" />,
         <Reload key="menu-reload" />,
@@ -122,6 +102,7 @@ export const ToolBar = () => {
     return (
       <Fragment>
         <MenuSearch key="menu-search" />
+        <FavoritesBtn key="menu-favorites" />
         <NotificationBtn key="menu-notification" />
         <FairysFullScreen key="menu-full-screen" />
         <Reload key="menu-reload" />

@@ -2,6 +2,8 @@ import { FairysNotificationListBase } from 'components/notification';
 import { FairysTabs } from 'components/tabs';
 import { useNotificationData } from 'context/notification-data';
 import { Fragment } from 'react/jsx-runtime';
+import { FairysButtonBase } from 'components/button';
+import { FairysPopoverBase } from 'components/popover-base';
 
 export const Notification = () => {
   const [state, notificationDataInstance] = useNotificationData();
@@ -10,7 +12,6 @@ export const Notification = () => {
   const activeKey = state.activeKey;
   const dataList = isTabs ? state[`dataList_${activeKey}`] : state.dataList;
   const isEmpty = !dataList?.length;
-  console.log('dataList', dataList);
 
   return (
     <div className="fairys_admin_tool_bar_notification fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col fairys:box-border">
@@ -24,7 +25,7 @@ export const Notification = () => {
             />
           </div>
         ) : (
-          <div className="fairys:flex fairys:justify-center fairys:items-center fairys:font-bold fairys:my-3">
+          <div className="fairys:flex fairys:justify-start fairys:items-center fairys:font-medium fairys:my-3 fairys:px-3">
             {title || '通知'}
           </div>
         )}
@@ -52,5 +53,24 @@ export const Notification = () => {
         </div>
       )}
     </div>
+  );
+};
+
+export const NotificationBtn = () => {
+  const [state] = useNotificationData();
+  const count = state.count;
+  return (
+    <FairysPopoverBase placement="bottom" content={<Notification />}>
+      <FairysButtonBase className="fairys_admin_tool_bar_notification fairys:relative">
+        <span className="fairys:icon-[ant-design--bell-outlined] fairys:size-[18px]" />
+        {count > 0 ? (
+          <span className="fairys:absolute fairys:px-[6px] fairys:top-[0px] fairys:left-[40%]  fairys:flex fairys:items-center fairys:justify-center fairys:text-[10px] fairys:rounded-[10px] fairys:bg-red-500 fairys:text-white">
+            {count > 99 ? '99+' : count}
+          </span>
+        ) : (
+          <Fragment />
+        )}
+      </FairysButtonBase>
+    </FairysPopoverBase>
   );
 };
