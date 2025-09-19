@@ -88,6 +88,12 @@ const Reload = () => {
 
 export const ToolBar = () => {
   const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
+  const [state] = useSetting();
+  const enableToolBarFavorites = state.enableToolBarFavorites;
+  const enableToolBarNotification = state.enableToolBarNotification;
+  const enableToolBarFullScreen = state.enableToolBarFullScreen;
+  const enableToolBarRefresh = state.enableToolBarRefresh;
+
   const rightRender = useMemo(() => {
     if (plugin?.override) {
       return plugin?.override([
@@ -102,15 +108,15 @@ export const ToolBar = () => {
     return (
       <Fragment>
         <MenuSearch key="menu-search" />
-        <FavoritesBtn key="menu-favorites" />
-        <NotificationBtn key="menu-notification" />
-        <FairysFullScreen key="menu-full-screen" />
-        <Reload key="menu-reload" />
+        {enableToolBarFavorites ? <FavoritesBtn key="menu-favorites" /> : <Fragment />}
+        {enableToolBarNotification ? <NotificationBtn key="menu-notification" /> : <Fragment />}
+        {enableToolBarFullScreen ? <FairysFullScreen key="menu-full-screen" /> : <Fragment />}
+        {enableToolBarRefresh ? <Reload key="menu-reload" /> : <Fragment />}
         {plugin?.render ? plugin?.render : <Fragment />}
         <MenuDarkLight key="menu-dark-light" />
       </Fragment>
     );
-  }, [plugin]);
+  }, [plugin, enableToolBarFavorites, enableToolBarNotification, enableToolBarFullScreen, enableToolBarRefresh]);
 
   return (
     <div className="fairys_admin_tool_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:items-center fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">

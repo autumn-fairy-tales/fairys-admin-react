@@ -70,8 +70,6 @@ export interface SettingInstanceState {
   enableToolBarRefresh?: boolean;
   /**是否启用页面水印*/
   enableWatermark?: boolean;
-  /**载入进度条*/
-  enableProgress?: boolean;
 
   /**只是默认值，不使用*/
   __defaultValue?: string;
@@ -89,8 +87,16 @@ class SettingInstance {
     autoListenSystemTheme: true,
     /**侧边栏模式*/
     sideMenuMode: 'open',
+    /**是否启用收藏夹*/
+    enableToolBarFavorites: true,
     /**收藏夹最多可存储多少个*/
     favoritesMaxLength: 20,
+    /**是否启用工具栏通知中心*/
+    enableToolBarNotification: true,
+    /**是否启用工具栏全屏*/
+    enableToolBarFullScreen: true,
+    /**是否启用工具栏刷新*/
+    enableToolBarRefresh: true,
   });
 
   constructor() {
