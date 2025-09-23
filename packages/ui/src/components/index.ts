@@ -11,3 +11,4 @@ export * from './switch';
 export * from './utils';
 export * from './main-page';
 export * from './login';
+export * from './watermark';

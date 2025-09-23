@@ -4,6 +4,7 @@ import {
   authDataInstance,
   appPluginDataInstance,
   notificationDataInstance,
+  FairysWatermarkBase,
 } from '@fairys/admin-tools-react';
 import { AuthRoot } from './auth';
 
@@ -93,5 +94,9 @@ appPluginDataInstance.addPlugin({
 const rootEl = document.getElementById('root');
 if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
-  root.render(<AuthRoot />);
+  root.render(
+    <FairysWatermarkBase className="h-full w-full" content={['Fairys', 'Happy Working']}>
+      <AuthRoot />
+    </FairysWatermarkBase>,
+  );
 }
