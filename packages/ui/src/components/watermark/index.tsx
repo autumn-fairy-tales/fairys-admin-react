@@ -16,6 +16,9 @@ export const FairysWatermarkRender = () => {
   const darkMode = darkModeState.theme === 'dark';
 
   const style = useMemo(() => {
+    if (!dataUrl && !darkDataUrl) {
+      return {};
+    }
     if (darkMode) {
       return {
         ...markStyle,

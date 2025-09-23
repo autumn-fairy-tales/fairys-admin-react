@@ -239,48 +239,39 @@ export class FairysWatermarkInstance {
    * 绘制水印
    */
   onDrawCanvas = (ctx: CanvasRenderingContext2D, drawContent?: string[] | string | HTMLImageElement) => {
+    if (!drawContent) {
+      return;
+    }
     const ratio = window.devicePixelRatio || 1;
     const [markWidth, markHeight] = this.getMarkSize(ctx);
     const [gapX = DEFAULT_GAP_X, gapY = DEFAULT_GAP_Y] = this.gap;
 
-    const [nextClips, clipWidth, clipHeight] = this.getClips(
-      drawContent,
-      this.rotate ?? -22,
-      ratio,
-      markWidth,
-      markHeight,
-      {
-        color: this.font?.color ?? 'rgba(0, 0, 0, 0.15)',
-        fontSize: this.font?.fontSize ?? 20,
-        fontStyle: this.font?.fontStyle ?? 'normal',
-        fontWeight: this.font?.fontWeight ?? 'normal',
-        fontFamily: this.font?.fontFamily ?? 'sans-serif',
-        textAlign: this.font?.textAlign ?? 'center',
-      },
-      gapX,
-      gapY,
-    );
+    const createClips = (color: CanvasFillStrokeStyles['fillStyle']) => {
+      return this.getClips(
+        drawContent,
+        this.rotate ?? -22,
+        ratio,
+        markWidth,
+        markHeight,
+        {
+          color: color,
+          fontSize: this.font?.fontSize ?? 20,
+          fontStyle: this.font?.fontStyle ?? 'normal',
+          fontWeight: this.font?.fontWeight ?? 'normal',
+          fontFamily: this.font?.fontFamily ?? 'sans-serif',
+          textAlign: this.font?.textAlign ?? 'center',
+        },
+        gapX,
+        gapY,
+      );
+    };
+
+    const [nextClips, clipWidth, clipHeight] = createClips(this.font?.color ?? 'rgba(0, 0, 0, 0.15)');
     this.state.dataURL = nextClips;
     this.state.finalWidth = clipWidth;
     this.state.finalHeight = clipHeight;
 
-    const [_nextClips, _clipWidth, _clipHeight] = this.getClips(
-      drawContent,
-      this.rotate ?? -22,
-      ratio,
-      markWidth,
-      markHeight,
-      {
-        color: this.font?.darkColor ?? 'rgba(255, 255, 255, 0.15)',
-        fontSize: this.font?.fontSize ?? 20,
-        fontStyle: this.font?.fontStyle ?? 'normal',
-        fontWeight: this.font?.fontWeight ?? 'normal',
-        fontFamily: this.font?.fontFamily ?? 'sans-serif',
-        textAlign: this.font?.textAlign ?? 'center',
-      },
-      gapX,
-      gapY,
-    );
+    const [_nextClips, _clipWidth, _clipHeight] = createClips(this.font?.darkColor ?? 'rgba(255, 255, 255, 0.15)');
     this.state.darkDataURL = _nextClips;
     this.state.darkFinalWidth = _clipWidth;
     this.state.darkFinalHeight = _clipHeight;
