@@ -95,7 +95,7 @@ const rootEl = document.getElementById('root');
 if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
   root.render(
-    <FairysWatermarkBase className="h-full w-full" content={['Fairys', 'Happy Working']}>
+    <FairysWatermarkBase zIndex={99} className="h-full w-full" content={['Fairys', 'Happy Working']}>
       <AuthRoot />
     </FairysWatermarkBase>,
   );
