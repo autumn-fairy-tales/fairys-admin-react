@@ -3,6 +3,7 @@ import { useFairysWatermark, FairysWatermarkContext, FairysWatermarkProps, useFa
 import { useMergeRefs } from '@floating-ui/react';
 import { DEFAULT_GAP_X, DEFAULT_GAP_Y } from './utls';
 import clsx from 'clsx';
+import { useSetting } from 'context/setting';
 
 export const FairysWatermarkRender = () => {
   const [state] = useFairysWatermarkContext();
@@ -36,6 +37,8 @@ export const FairysWatermarkBase = forwardRef((props: FairysWatermarkProps, ref:
     ...rest
   } = props;
 
+  const [settingState] = useSetting();
+  const theme = settingState.theme;
   const instance = useFairysWatermark();
   instance.content = content;
   instance.width = width;
@@ -48,12 +51,16 @@ export const FairysWatermarkBase = forwardRef((props: FairysWatermarkProps, ref:
   instance.font = font;
   const {
     color = 'rgba(0, 0, 0, 0.15)',
+    darkColor = 'rgba(255, 255, 255, 0.15)',
     fontSize = 20,
     fontWeight = 'normal',
     fontStyle = 'normal',
     fontFamily = 'sans-serif',
     textAlign = 'center',
   } = font;
+
+  instance.color = theme === 'dark' ? darkColor : color;
+
   const [gapX = DEFAULT_GAP_X, gapY = DEFAULT_GAP_Y] = gap;
   const gapXCenter = gapX / 2;
   const gapYCenter = gapY / 2;
@@ -73,7 +80,7 @@ export const FairysWatermarkBase = forwardRef((props: FairysWatermarkProps, ref:
     height,
     image,
     content,
-    color,
+    instance.color,
     fontSize,
     fontWeight,
     fontStyle,

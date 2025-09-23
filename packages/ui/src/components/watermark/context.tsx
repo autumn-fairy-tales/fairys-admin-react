@@ -38,6 +38,7 @@ export interface FairysWatermarkProps
   zIndex?: number;
   font?: {
     color?: CanvasFillStrokeStyles['fillStyle'];
+    darkColor?: CanvasFillStrokeStyles['fillStyle'];
     fontSize?: number | string;
     fontWeight?: 'normal' | 'light' | 'weight' | number;
     fontStyle?: 'none' | 'normal' | 'italic' | 'oblique';
@@ -66,6 +67,9 @@ export class FairysWatermarkInstance {
    * 水印的图片
    */
   public image?: string;
+
+  public color?: CanvasFillStrokeStyles['fillStyle'];
+
   public rotate?: number = -22;
   public gap?: [number, number] = [DEFAULT_GAP_X, DEFAULT_GAP_Y];
   public offset?: [number, number];
@@ -237,7 +241,7 @@ export class FairysWatermarkInstance {
       markWidth,
       markHeight,
       {
-        color: this.font?.color ?? 'rgba(0, 0, 0, 0.15)',
+        color: this?.color ?? 'rgba(0, 0, 0, 0.15)',
         fontSize: this.font?.fontSize ?? 20,
         fontStyle: this.font?.fontStyle ?? 'normal',
         fontWeight: this.font?.fontWeight ?? 'normal',
