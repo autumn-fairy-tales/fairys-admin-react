@@ -10,6 +10,11 @@ export interface FairysWatermarkState {
   finalWidth: number;
   finalHeight: number;
   markStyle: React.CSSProperties;
+
+  darkDataURL: string;
+  darkFinalWidth: number;
+  darkFinalHeight: number;
+
   __defaultValue?: string;
 }
 
@@ -68,7 +73,7 @@ export class FairysWatermarkInstance {
    */
   public image?: string;
 
-  public color?: CanvasFillStrokeStyles['fillStyle'];
+  // public color?: CanvasFillStrokeStyles['fillStyle'];
 
   public rotate?: number = -22;
   public gap?: [number, number] = [DEFAULT_GAP_X, DEFAULT_GAP_Y];
@@ -81,6 +86,9 @@ export class FairysWatermarkInstance {
     dataURL: '',
     finalWidth: 0,
     finalHeight: 0,
+    darkDataURL: '',
+    darkFinalWidth: 0,
+    darkFinalHeight: 0,
     markStyle: {},
   });
 
@@ -234,6 +242,7 @@ export class FairysWatermarkInstance {
     const ratio = window.devicePixelRatio || 1;
     const [markWidth, markHeight] = this.getMarkSize(ctx);
     const [gapX = DEFAULT_GAP_X, gapY = DEFAULT_GAP_Y] = this.gap;
+
     const [nextClips, clipWidth, clipHeight] = this.getClips(
       drawContent,
       this.rotate ?? -22,
@@ -241,7 +250,7 @@ export class FairysWatermarkInstance {
       markWidth,
       markHeight,
       {
-        color: this?.color ?? 'rgba(0, 0, 0, 0.15)',
+        color: this.font?.color ?? 'rgba(0, 0, 0, 0.15)',
         fontSize: this.font?.fontSize ?? 20,
         fontStyle: this.font?.fontStyle ?? 'normal',
         fontWeight: this.font?.fontWeight ?? 'normal',
@@ -254,6 +263,27 @@ export class FairysWatermarkInstance {
     this.state.dataURL = nextClips;
     this.state.finalWidth = clipWidth;
     this.state.finalHeight = clipHeight;
+
+    const [_nextClips, _clipWidth, _clipHeight] = this.getClips(
+      drawContent,
+      this.rotate ?? -22,
+      ratio,
+      markWidth,
+      markHeight,
+      {
+        color: this.font?.darkColor ?? 'rgba(255, 255, 255, 0.15)',
+        fontSize: this.font?.fontSize ?? 20,
+        fontStyle: this.font?.fontStyle ?? 'normal',
+        fontWeight: this.font?.fontWeight ?? 'normal',
+        fontFamily: this.font?.fontFamily ?? 'sans-serif',
+        textAlign: this.font?.textAlign ?? 'center',
+      },
+      gapX,
+      gapY,
+    );
+    this.state.darkDataURL = _nextClips;
+    this.state.darkFinalWidth = _clipWidth;
+    this.state.darkFinalHeight = _clipHeight;
   };
 
   /**创建水印*/
