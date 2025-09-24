@@ -10,10 +10,11 @@ export interface FairysBreadcrumbBaseProps
   separate?: 'bg' | 'slash';
   itemClassName?: string;
   itemStyle?: React.CSSProperties;
+  isFristNoPadding?: boolean;
 }
 
 export const FairysBreadcrumbBase = (props: FairysBreadcrumbBaseProps) => {
-  const { items, separate = 'bg', className, itemClassName, itemStyle, ...rest } = props;
+  const { items, separate = 'bg', className, itemClassName, itemStyle, isFristNoPadding = false, ...rest } = props;
 
   const baseClassName = useMemo(() => {
     return clsx(
@@ -29,8 +30,10 @@ export const FairysBreadcrumbBase = (props: FairysBreadcrumbBaseProps) => {
     return (items || []).map((item, index) => {
       const isLast = index === items.length - 1;
       const className = clsx(
-        'fairys_admin_breadcrumb_item fairys:transition-all fairys:duration-300 fairys:relative fairys:cursor-pointer fairys:rounded-sm fairys:py-[6px] fairys:px-[14px] fairys:max-w-[150px] fairys:overflow-hidden fairys:text-ellipsis fairys:whitespace-nowrap',
+        'fairys_admin_breadcrumb_item fairys:transition-all fairys:duration-300 fairys:relative fairys:cursor-pointer fairys:rounded-sm fairys:py-[6px] fairys:max-w-[150px] fairys:overflow-hidden fairys:text-ellipsis fairys:whitespace-nowrap',
         {
+          'fairys:px-[14px]': (index !== 0 && isFristNoPadding) || !isFristNoPadding,
+          'fairys:pr-[14px]': isFristNoPadding && index === 0,
           'fairys:text-gray-500 fairys:hover:text-gray-500': isLast,
           'fairys:text-gray-400 fairys:hover:text-gray-500': !isLast,
           'fairys:bg-gray-100 fairys:hover:bg-gray-100': isLast && separate === 'bg',
@@ -48,7 +51,7 @@ export const FairysBreadcrumbBase = (props: FairysBreadcrumbBaseProps) => {
         </div>
       );
     });
-  }, [items, itemStyle]);
+  }, [items, itemStyle, isFristNoPadding]);
 
   return (
     <div {...rest} className={baseClassName}>

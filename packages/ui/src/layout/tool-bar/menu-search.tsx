@@ -33,6 +33,7 @@ const SearchItem = (props: SearchItemProps) => {
         itemClassName="fairys:py-0! fairys:text-[12px]!"
         items={list}
         separate="slash"
+        isFristNoPadding
       />
     );
   }, [rowItemData.path]);
@@ -40,15 +41,13 @@ const SearchItem = (props: SearchItemProps) => {
   return (
     <div
       onClick={onClick}
-      className="fairys_admin_tool_bar_menu_search_item fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:min-h-[70px] fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm fairys:box-border fairys:border-gray-200 fairys:dark:border-gray-700"
+      className="fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm fairys:box-border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:p-[14px] fairys:overflow-auto no-scrollbar"
     >
-      <div className="fairys:w-[65px] fairys:flex fairys:items-center fairys:justify-center fairys:icon  fairys:transition-all fairys:duration-300">
+      <div className="fairys:w-[45px] fairys:min-w-[45px] fairys:flex fairys:items-center fairys:justify-center fairys:icon fairys:transition-all fairys:duration-300">
         <Icon {...iconProps} icon={rowItemData.icon} className={`fairys:size-[20px] ${iconProps?.className || ''}`} />
       </div>
       <div className="fairys:flex fairys:flex-col fairys:flex-1">
-        <div className="fairys:px-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-300">
-          {rowItemData.title}
-        </div>
+        <div className="fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-300">{rowItemData.title}</div>
         <div>{parentItemsRender}</div>
       </div>
     </div>
@@ -69,7 +68,7 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
   };
 
   return (
-    <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:h-full fairys:w-[670px] fairys:px-5 fairys:py-5 fairys:overflow-hidden fairys:box-border">
+    <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:h-full fairys:w-[670px] fairys_max_w_modal fairys:px-5 fairys:py-5 fairys:overflow-hidden fairys:box-border">
       <div className="fairys:flex fairys:items-center fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:rounded-md ">
         <div className="fairys:pl-4 fairys:flex fairys:items-center fairys:justify-center">
           <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[26px] fairys:text-gray-600 fairys:dark:text-gray-200" />
@@ -123,7 +122,7 @@ export const MenuSearch = () => {
     <Fragment>
       <FairysButtonBase
         bordered
-        className="fairys_admin_tool_bar_menu_search fairys:px-4 fairys:flex fairys:flex-row fairys:gap-x-2"
+        className="fairys_admin_tool_bar_menu_search fairys:px-4 fairys:flex fairys:flex-row fairys:gap-x-2 fairys:w-[130px]"
         onClick={() => setOpen(true)}
       >
         <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[18px] fairys:text-gray-600 fairys:dark:text-gray-200 fairys:transition-all fairys:duration-300" />

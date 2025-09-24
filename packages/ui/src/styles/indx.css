@@ -47,6 +47,10 @@ body,
     height: 0px;
   }
 
+  .fairys_max_w_modal {
+    max-width: calc(100vw - calc(var(--fairys-spacing) * 8));
+  }
+
   .fairys_admin_tab_bar .fairys_admin_tab_bar_item:not(:first-child)::before {
     content: '';
     width: 1px;

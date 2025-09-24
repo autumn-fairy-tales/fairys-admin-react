@@ -12,6 +12,8 @@ import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';
 import { FairysPopoverBaseFloatingTreeParent, FairysPopoverBase } from 'components/popover-base';
+import { LayoutMenuMobile } from 'layout/sider';
+
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
 }
@@ -162,13 +164,14 @@ export const MainMenu = (props: MainMenuProps) => {
 
   return (
     <div className={mainMenuClassName}>
+      {layoutModeState === 'mobile' ? <LayoutMenuMobile /> : <Fragment />}
       <div className={mainMenuBodyClassName}>
         <Logo
           isHeader={layoutMode === 'horizontal'}
           logoSize={layoutMode === 'horizontal' ? 32 : 48}
           mode={layoutMode === 'horizontal' ? 'open' : 'close'}
         />
-        {layoutModeState === 'left_header' ? (
+        {['left_header', 'mobile'].includes(layoutModeState) ? (
           <Fragment />
         ) : (
           <div className={bodyMenusClassName}>

@@ -15,7 +15,7 @@ export const SettingLayoutMode = () => {
           { title: '主菜单顶部+子菜单侧边', value: 'main_top_sub_left_header' },
           { title: '主子菜单合并侧边展示', value: 'left' },
           { title: '主子菜单合并侧边展示+顶部信息', value: 'left_header' },
-          { title: '移动', value: 'mobile', disabled: true },
+          { title: '移动', value: 'mobile' },
         ]}
         onChange={(value: LayoutMode) => settingInstance.updated({ layoutMode: value })}
       />

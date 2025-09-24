@@ -7,6 +7,7 @@ import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { Avatar } from 'avatar';
 import { FairysButtonBase } from 'components/button';
 import { Logo } from 'logo';
+import { FairysPopoverBase } from 'components/popover-base';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSetting();
@@ -130,3 +131,13 @@ export const LayoutSider = memo(() => {
     </DarkModeInstanceContextProvider>
   );
 });
+
+export const LayoutMenuMobile = () => {
+  return (
+    <FairysPopoverBase content={<Menu />} placement="bottom-end">
+      <FairysButtonBase className="fairys_admin_layout_menu_mobile_btn fairys:relative">
+        <span className="fairys:icon-[ant-design--appstore-outlined] fairys:size-[18px] fairys:text-[var(--fairys-theme-color)]" />
+      </FairysButtonBase>
+    </FairysPopoverBase>
+  );
+};

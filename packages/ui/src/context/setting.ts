@@ -37,6 +37,8 @@ export interface SettingInstanceState {
   themeColor?: string;
   /**导航栏模式*/
   layoutMode?: LayoutMode;
+  /**旧的导航栏模式,(用于切换mobile布局时，切换回旧的布局模式)*/
+  _oldLayoutMode?: LayoutMode;
   /**暗黑导航栏*/
   darkMenu?: boolean;
   /**侧边栏模式*/
@@ -71,6 +73,12 @@ export interface SettingInstanceState {
   /**是否启用页面水印*/
   enableWatermark?: boolean;
 
+  /**
+   * 判断屏幕宽度是否是移动端布局
+   * @default 1024
+   */
+  maxWidthScreen?: number;
+  isMobile?: boolean;
   /**只是默认值，不使用*/
   __defaultValue?: string;
 }
@@ -82,6 +90,7 @@ class SettingInstance {
     open: false,
     /**布局模式*/
     layoutMode: 'main_top_sub_left_header',
+    _oldLayoutMode: 'main_top_sub_left_header',
     pageTransitionMode: '滑动',
     /**自动监听系统的明暗色系*/
     autoListenSystemTheme: true,
@@ -97,6 +106,12 @@ class SettingInstance {
     enableToolBarFullScreen: true,
     /**是否启用工具栏刷新*/
     enableToolBarRefresh: true,
+    /**
+     * 判断屏幕宽度是否是移动端布局
+     * @default 1024
+     */
+    maxWidthScreen: 1024,
+    isMobile: false,
   });
 
   constructor() {
@@ -121,6 +136,9 @@ class SettingInstance {
       ...state,
       ...this.state,
     };
+    if (_newState) {
+      _newState._oldLayoutMode = _newState.layoutMode;
+    }
     this.state = proxy({
       ..._newState,
       /**项目名和logo 始终取设置的值*/
@@ -138,9 +156,9 @@ class SettingInstance {
     this.autoListenSystemTheme();
   };
 
+  // =============================================主题===================================================
   /**监听系统主题变化*/
   mediaQueryList: MediaQueryList | null = null;
-
   /**更新文档和body的主题*/
   setDocumentAndBodyTheme = () => {
     const theme = this.state.theme;
@@ -160,7 +178,6 @@ class SettingInstance {
     this.updated({ theme: e.matches ? 'dark' : 'light' });
     this.setDocumentAndBodyTheme();
   };
-
   /**自动监听系统的明暗色系*/
   autoListenSystemTheme = () => {
     if (this.state.autoListenSystemTheme) {
@@ -178,7 +195,21 @@ class SettingInstance {
       this.setDocumentAndBodyTheme();
     }
   };
-
+  /**切换自动监听系统的明暗色系*/
+  onToggleAutoListenSystemTheme = (autoListenSystemTheme: boolean) => {
+    this.updated({ autoListenSystemTheme });
+    this.autoListenSystemTheme();
+  };
+  /**点击设置切换主题*/
+  onToggleTheme = (theme: 'light' | 'dark' | 'system') => {
+    if (theme === 'system') {
+      this.updated({ autoListenSystemTheme: true });
+    } else {
+      this.updated({ theme, autoListenSystemTheme: false });
+    }
+    this.autoListenSystemTheme();
+  };
+  // ================================================================================================
   /**更新主题颜色*/
   updatedThemeColor = (themeColor: string) => {
     this.updated({ themeColor });
@@ -188,11 +219,12 @@ class SettingInstance {
       document.body.removeAttribute('style');
     }
   };
+  // ================================================================================================
 
   /**更新配置*/
   updated = (state: SettingInstanceState) => {
     /**只做更改值存储，其他的默认值不做处理*/
-    let _state = {};
+    let _state: Partial<SettingInstanceState> = {};
     try {
       _state = JSON.parse(localStorage.getItem(SettingInstance.localStorageKey) || '{}');
     } catch (error) {
@@ -205,29 +237,15 @@ class SettingInstance {
       if (key !== 'open') {
         _state[key] = element;
       }
+      if (key === 'layoutMode') {
+        _state._oldLayoutMode = this.state.layoutMode;
+      }
       if (key === 'theme') {
         this.setDocumentAndBodyTheme();
       }
     }
     localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(_state));
   };
-
-  /**切换自动监听系统的明暗色系*/
-  onToggleAutoListenSystemTheme = (autoListenSystemTheme: boolean) => {
-    this.updated({ autoListenSystemTheme });
-    this.autoListenSystemTheme();
-  };
-
-  /**点击设置切换主题*/
-  onToggleTheme = (theme: 'light' | 'dark' | 'system') => {
-    if (theme === 'system') {
-      this.updated({ autoListenSystemTheme: true });
-    } else {
-      this.updated({ theme, autoListenSystemTheme: false });
-    }
-    this.autoListenSystemTheme();
-  };
-
   /**判断是否主子菜单模板*/
   isMainSubMenuMode = () => {
     return (
@@ -237,12 +255,11 @@ class SettingInstance {
       this.state.layoutMode === 'main_top_sub_left_header'
     );
   };
-
   /**切换打开偏好设置*/
   onToggleOpen = () => {
     this.updated({ open: !this.state.open });
   };
-
+  // ============================================全屏====================================================
   /**全屏监听*/
   onFullscreenChange = () => {
     // 如果有元素处于全屏模式，则 document.fullscreenElement 将指向该元素。如果没有元素处于全屏模式，则该属性的值为 null。
@@ -270,6 +287,38 @@ class SettingInstance {
       console.log('onToggleFullScreen===>', error);
     }
   };
+  // ============================================屏幕大小====================================================
+  /**监听屏幕变化，用于控制菜单布局*/
+  mediaQueryListScreen: MediaQueryList | null = null;
+
+  /**监听屏幕变化，用于控制菜单布局*/
+  onListenChangeScreen = (e: MediaQueryListEvent) => {
+    this.updated({
+      layoutMode: e.matches ? 'mobile' : this.state._oldLayoutMode,
+      isMobile: e.matches,
+    });
+  };
+
+  /**自动监听屏幕变化，用于控制菜单布局*/
+  autoListenScreen = () => {
+    if (this.state.maxWidthScreen) {
+      if (!this.mediaQueryListScreen) {
+        this.mediaQueryListScreen = window.matchMedia(`(max-width: ${this.state.maxWidthScreen}px)`);
+      } else {
+        this.mediaQueryListScreen.removeEventListener('change', this.onListenChangeScreen);
+      }
+      this.updated({
+        layoutMode: this.mediaQueryListScreen.matches ? 'mobile' : this.state._oldLayoutMode,
+        isMobile: this.mediaQueryListScreen.matches,
+      });
+      this.mediaQueryListScreen.addEventListener('change', this.onListenChangeScreen);
+    }
+    return () => {
+      this.mediaQueryListScreen?.removeEventListener('change', this.onListenChangeScreen);
+      this.mediaQueryListScreen = null;
+    };
+  };
+
   /**清空*/
   clear = () => {};
 }

@@ -1,4 +1,4 @@
-import { Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useMemo } from 'react';
 import { useSetting } from 'context/setting';
 import clsx from 'clsx';
 import { LayoutContent } from './content';
@@ -10,7 +10,7 @@ import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { SettingDrawer } from 'setting';
 
 export const Layout = () => {
-  const [state] = useSetting();
+  const [state, settingInstance] = useSetting();
   /**
    * 1. main_sub_left:左侧主菜单 + 子菜单 + 无头部信息
    * 2. main_left:左侧主菜单 + 移入子菜单展示 + 无头部信息
@@ -35,8 +35,10 @@ export const Layout = () => {
     }
   }, [location.pathname, sideMenuMode]);
 
+  useEffect(settingInstance.autoListenScreen, []);
+
   const isShowHeader = useMemo(() => {
-    return ['main_top_header', 'main_top_sub_left_header', 'left_header'].includes(`${layoutMode}`);
+    return ['main_top_header', 'main_top_sub_left_header', 'left_header', 'mobile'].includes(`${layoutMode}`);
   }, [layoutMode]);
 
   const isShowSider = useMemo(() => {

@@ -32,14 +32,14 @@ export interface FairysModalBaseProps {
 
 export const overlay_className = {
   modal:
-    'fairys_admin_modal_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-col fairys:items-center no-scrollbar fairys:justify-around',
+    'fairys_admin_modal_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-col fairys:items-center no-scrollbar fairys:justify-around fairys:overflow-hidden',
   drawer:
-    'fairys_admin_drawer_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-row fairys:justify-end no-scrollbar',
+    'fairys_admin_drawer_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-row fairys:justify-end no-scrollbar fairys:overflow-hidden',
 };
 
 export const base_className = {
   modal:
-    'fairys_admin_modal_base fairys:min-w-[400px] fairys:min-h-[200px] fairys:max-h-[calc(100vh-100px)] fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:overflow-hidden',
+    'fairys_admin_modal_base fairys:min-w-[400px] fairys:min-h-[200px] fairys:max-h-[calc(100vh-100px)] fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:overflow-hidden fairys:max-w-[100vw]',
   drawer:
     'fairys_admin_drawer_base_drawer fairys:min-w-[400px] fairys:min-h-[100vh] fairys:rounded-l-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:overflow-hidden',
 };
