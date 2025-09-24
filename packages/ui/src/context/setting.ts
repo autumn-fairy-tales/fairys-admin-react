@@ -293,10 +293,8 @@ class SettingInstance {
 
   /**监听屏幕变化，用于控制菜单布局*/
   onListenChangeScreen = (e: MediaQueryListEvent) => {
-    this.updated({
-      layoutMode: e.matches ? 'mobile' : this.state._oldLayoutMode,
-      isMobile: e.matches,
-    });
+    this.state.layoutMode = e.matches ? 'mobile' : this.state._oldLayoutMode;
+    this.state.isMobile = e.matches;
   };
 
   /**自动监听屏幕变化，用于控制菜单布局*/
@@ -307,10 +305,8 @@ class SettingInstance {
       } else {
         this.mediaQueryListScreen.removeEventListener('change', this.onListenChangeScreen);
       }
-      this.updated({
-        layoutMode: this.mediaQueryListScreen.matches ? 'mobile' : this.state._oldLayoutMode,
-        isMobile: this.mediaQueryListScreen.matches,
-      });
+      this.state.layoutMode = this.mediaQueryListScreen.matches ? 'mobile' : this.state._oldLayoutMode;
+      this.state.isMobile = this.mediaQueryListScreen.matches;
       this.mediaQueryListScreen.addEventListener('change', this.onListenChangeScreen);
     }
     return () => {
