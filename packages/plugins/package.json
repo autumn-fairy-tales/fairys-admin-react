@@ -4,20 +4,19 @@
   "description": "插件库",
   "homepage": "https://github.com/autumn-fairy-tales/fairys-admin-react",
   "version": "0.0.7",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "esm/index.js",
+  "types": "esm/index.d.ts",
   "module": "esm/index.js",
   "license": "ISC",
   "scripts": {
-    "build": "carefrees-rslib build --node",
-    "watch": "carefrees-rslib build --watch  --node"
+    "build": "carefrees-rslib build --node --esm",
+    "watch": "carefrees-rslib build --watch  --node  --esm"
   },
   "publishConfig": {
     "access": "public"
   },
   "files": [
     "src",
-    "lib",
     "esm"
   ],
   "dependencies": {
@@ -25,6 +24,6 @@
     "fs-extra": "~11.3.1"
   },
   "devDependencies": {
-    "@rsbuild/core": "~1.5.2"
+    "@rsbuild/core": "~1.5.12"
   }
 }

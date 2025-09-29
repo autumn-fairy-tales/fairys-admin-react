@@ -14,6 +14,11 @@ export const menuItems: MenuItemType[] = [
         isTabFixed: true,
       },
       {
+        title: '异步',
+        path: '/lazy',
+        icon: 'ant-design:home-outlined',
+      },
+      {
         title: '列表',
         path: '/list',
         icon: 'ant-design:unordered-list',

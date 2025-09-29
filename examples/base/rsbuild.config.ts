@@ -1,7 +1,10 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import tailwindcss from '@tailwindcss/postcss';
-import { getLoadingHtmlTags } from '@fairys/admin-tools-react-plugins';
+import { getLoadingHtmlTags, ReactRoutesPlugin } from '@fairys/admin-tools-react-plugins';
+import { rspack } from '@rspack/core';
+
+const virtualModulesPlugin = new rspack.experiments.VirtualModulesPlugin();
 
 export default defineConfig({
   output: {
@@ -19,6 +22,14 @@ export default defineConfig({
   tools: {
     postcss: (_, { addPlugins }) => {
       addPlugins([tailwindcss()]);
+    },
+    rspack: {
+      plugins: [
+        virtualModulesPlugin,
+        new ReactRoutesPlugin(virtualModulesPlugin, {
+          loadType: 'lazy',
+        }),
+      ],
     },
   },
 });

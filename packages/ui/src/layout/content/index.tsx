@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useOutlet } from 'react-router';
+import { Outlet, useLocation, useNavigation, useOutlet } from 'react-router';
 import { TabBar } from 'layout/tab-bar';
 import { ToolBar } from 'layout/tool-bar';
 import { KeepAlive } from 'react-activation';
@@ -44,13 +44,11 @@ const KeepAliveContent = () => {
   const id = useMemo(() => {
     return AliveControllerBase.convertIdOrNameOne(location.pathname);
   }, [location.pathname]);
-
   const outlet = useOutlet();
-
   //嵌套多个 MotionAnimation ，为了解决页面刷新时，动画不生效的问题
   return (
     <MotionAnimation>
-      <KeepAlive name={id} id={id} cacheKey={id}>
+      <KeepAlive name={id} id={id} cacheKey={id} key={id}>
         <MotionAnimation>{outlet}</MotionAnimation>
       </KeepAlive>
     </MotionAnimation>

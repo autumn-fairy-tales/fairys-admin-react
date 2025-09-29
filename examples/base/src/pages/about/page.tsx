@@ -13,3 +13,4 @@ const MainIndex = () => {
 };
 
 export default MainIndex;
+export const Component = MainIndex;

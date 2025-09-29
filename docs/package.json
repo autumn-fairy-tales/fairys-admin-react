@@ -13,8 +13,8 @@
     "@fairys/admin-tools-react": "^0.0.7"
   },
   "devDependencies": {
-    "@rspress/plugin-preview": "~1.45.3",
+    "@rspress/plugin-preview": "~1.45.6",
     "@types/node": "^24.3.0",
-    "rspress": "^1.45.3"
+    "rspress": "^1.45.6"
   }
 }
