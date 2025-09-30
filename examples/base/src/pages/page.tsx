@@ -83,5 +83,5 @@ const MainIndex = () => {
     </FairysMainPage>
   );
 };
-
-export default MainIndex;
+export const Component = MainIndex;
+export default Component;
