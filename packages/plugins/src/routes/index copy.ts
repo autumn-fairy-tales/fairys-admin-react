@@ -170,13 +170,15 @@ export class ReactRoutesPlugin {
   /**生成树路由*/
   #createTreeRoute = () => {};
 
+  _temp_routes_contents = '';
+
   /**生成虚拟路由文件*/
   #createVirtualFile = (compiler: Compiler) => {
     // 路由列表
     const _routeS = this.#createFlatRoute();
     const _filePath = path.resolve(compiler.context, 'src/fairys-routes');
-    console.log('_routeS', _routeS);
     this.virtualModulesPlugin.writeModule(_filePath, _routeS);
+    this._temp_routes_contents = _routeS;
   };
 
   /**创建路由*/
@@ -205,8 +207,10 @@ export class ReactRoutesPlugin {
       .split(path.sep)
       .join('_')
       .toUpperCase();
+
     /**是否是布局文件*/
     const isLayout = link.endsWith('.layout.tsx') || link.endsWith('.layout.jsx') || link.endsWith('.layout.js');
+
     this.routes.set(link, {
       path: '/' + _routePath,
       component: componentPath,
@@ -215,33 +219,59 @@ export class ReactRoutesPlugin {
       isLayout,
     });
   };
+
+  /**新增路由*/
+  #addPath = (link: string, compiler: Compiler) => {
+    this.#createRoute(link);
+    this.#createVirtualFile(compiler);
+  };
+  /**删除路由*/
+  #removePath = (link: string, compiler: Compiler) => {
+    this.routes.delete(link);
+    this.#createVirtualFile(compiler);
+  };
+
   /**监听实例*/
   watcher: FSWatcher | null = null;
   /**监听文件*/
   #watch = (compiler: Compiler) => {
     const watchDirs = this.config.watchDirs || [];
-    let filesDirs: string[] = [];
-    for (let index = 0; index < watchDirs.length; index++) {
-      const item = watchDirs[index];
-      // 监听目录下的文件
-      filesDirs.push(path.join(item.dir, '**/{page,layout}.{tsx,jsx,js}'));
-      filesDirs.push(path.join(item.dir, '{page,layout}.{tsx,jsx,js}'));
-    }
-    console.log('filesDirs', filesDirs);
-    const files = globSync(filesDirs, {
-      cwd: compiler.context,
+    const watchDirsPaths = watchDirs.map((item) => {
+      const _filePath = path.resolve(compiler.context, item.dir);
+      return _filePath;
     });
-    this.routes.clear();
-    for (let index = 0; index < files.length; index++) {
-      const element = files[index];
-      this.#createRoute(element);
-    }
-    console.log('files', files);
-    this.#createVirtualFile(compiler);
+    this.watcher = chokidar.watch(watchDirsPaths, {
+      cwd: compiler.context,
+      ignored: (link, stats) => {
+        if (stats?.isFile()) {
+          const f = path.basename(link);
+          return !this.#isRouteFile(f);
+        }
+        return false;
+      },
+    });
+    this.watcher.on('add', (path) => {
+      console.log('add', path);
+      this.#addPath(path, compiler);
+    });
+    this.watcher.on('unlink', (path) => {
+      console.log('unlink', path);
+      this.#removePath(path, compiler);
+    });
   };
   apply(compiler: Compiler) {
     compiler.hooks.thisCompilation.tap('FairysVirtualReactRoutesPlugin', () => {
-      this.#watch(compiler);
+      // 不能使用，需要使用 thisCompilation 事件，每次变更的时候重新生成，不然内容更新，路由不做更新
+      if (!this.watcher) {
+        this.#watch(compiler);
+      }
+    });
+    // 监听关闭事件
+    compiler.hooks.shutdown.tap('FairysVirtualReactRoutesPlugin', () => {
+      if (this.watcher) {
+        this.watcher.close();
+        this.watcher = null;
+      }
     });
   }
 }

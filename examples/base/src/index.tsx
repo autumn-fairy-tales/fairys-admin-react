@@ -11,8 +11,8 @@ import { AuthRoot } from './auth';
 import logo from './assets/logo.png';
 import './index.css';
 
-import routesData from '@virtual:fairys/routes';
-console.log('routesData', routesData);
+// import routesData from '@virtual:fairys/routes';
+// console.log('routesData', routesData);
 
 settingInstance.initSetting({
   logo: logo,

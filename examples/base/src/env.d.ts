@@ -15,3 +15,9 @@ declare module '@virtual:fairys/routes' {
   const routes: RouteObject[];
   export default routes;
 }
+
+declare module '@/fairys-routes' {
+  import type { RouteObject } from 'react-router';
+  const routes: RouteObject[];
+  export default routes;
+}
