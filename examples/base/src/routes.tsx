@@ -8,8 +8,10 @@ import { Layout } from '@fairys/admin-tools-react';
 // @ts-ignore
 // import routevirtual from '@/fairys-routes';
 // console.log('routevirtual', routevirtual);
+import r from '@fairys:routes';
+
 import routesData from '@/.fairys/routes';
-console.log('routesData', routesData);
+console.log('routesData', routesData, r);
 
 export const routes: RouteObject[] = [
   {

@@ -1,7 +1,7 @@
 import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import tailwindcss from '@tailwindcss/postcss';
-import { getLoadingHtmlTags, ReactRoutesPlugin } from '@fairys/admin-tools-react-plugins';
+import { getLoadingHtmlTags, ReactRoutesPlugin, RsbuildReactRoutesPlugin } from '@fairys/admin-tools-react-plugins';
 export default defineConfig({
   output: {
     assetPrefix: '/fairys-admin-react/',
@@ -14,18 +14,24 @@ export default defineConfig({
     favicon: './public/logo.png',
     tags: getLoadingHtmlTags('Fairys'),
   },
-  plugins: [pluginReact()],
+  plugins: [
+    pluginReact(),
+    RsbuildReactRoutesPlugin({
+      loadType: 'lazy',
+      keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',
+    }),
+  ],
   tools: {
     postcss: (_, { addPlugins }) => {
       addPlugins([tailwindcss()]);
     },
-    rspack: {
-      plugins: [
-        new ReactRoutesPlugin({
-          loadType: 'lazy',
-          keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',
-        }),
-      ],
-    },
+    // rspack: {
+    //   plugins: [
+    //     new ReactRoutesPlugin({
+    //       loadType: 'lazy',
+    //       keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',
+    //     }),
+    //   ],
+    // },
   },
 });

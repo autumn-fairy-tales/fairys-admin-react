@@ -56,5 +56,5 @@ export const AuthRoot = () => {
   if (status === 'NoAuth') {
     return <div>NoAuth</div>;
   }
-  return <FairysRoot router={routerDataInstance.router} keepAlive={true} />;
+  return <FairysRoot isOutletKeepAlive={false} router={routerDataInstance.router} keepAlive={true} />;
 };

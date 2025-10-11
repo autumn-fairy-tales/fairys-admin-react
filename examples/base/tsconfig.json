@@ -19,7 +19,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@@/*": ["./src/.fairys/*"],
+      "@fairys:routes": ["./src/.fairys/routes"]
     }
   },
   "include": ["src"]

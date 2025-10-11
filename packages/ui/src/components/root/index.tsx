@@ -12,7 +12,7 @@ export interface FairysRootProps {
   /**路由*/
   router?: DataRouter;
   /**是否是Outlet组件启用缓存*/
-  isOutletKeepAlive: boolean;
+  isOutletKeepAlive?: boolean;
 }
 
 export class FairysRootClass {
