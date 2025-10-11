@@ -143,7 +143,6 @@ export class ReactRoutesPlugin {
     if (this.config.keepAliveBasePath) {
       importString += `import KeepAliveBaseHOC from '${this.config.keepAliveBasePath}';\n`;
     }
-
     for (const groupItem of list) {
       const pages = groupItem.pages;
       const layout = groupItem.layout;
@@ -153,7 +152,14 @@ export class ReactRoutesPlugin {
         if (element.path === element.routePrefix) {
           // 根路由
           importString = `import ${element.componentName} from '${element.component}';\n` + importString;
-          _route = `{index:true, path:'${element.path}',Component:${element.componentName}},\n` + _route;
+          if (this.config.keepAliveBasePath) {
+            _route =
+              `{index:true, path:'${element.path}',Component:KeepAliveBaseHOC(${
+                element.componentName
+              },'${ReactRoutesPlugin.convertIdOrNameOne(element.path)}')},\n` + _route;
+          } else {
+            _route = `{index:true, path:'${element.path}',Component:${element.componentName}},\n` + _route;
+          }
         } else {
           if (this.config.loadType === 'lazy') {
             if (this.config.keepAliveBasePath) {
@@ -167,7 +173,13 @@ export class ReactRoutesPlugin {
             }
           } else {
             importString += `import ${element.componentName} from '${element.component}';\n`;
-            _route += `{path:'${element.path}',Component:${element.componentName}},\n`;
+            if (this.config.keepAliveBasePath) {
+              _route += `{path:'${element.path}',Component:KeepAliveBaseHOC(${
+                element.componentName
+              },'${ReactRoutesPlugin.convertIdOrNameOne(element.path)}')},\n`;
+            } else {
+              _route += `{path:'${element.path}',Component:${element.componentName}},\n`;
+            }
           }
         }
       }
@@ -261,11 +273,11 @@ export class ReactRoutesPlugin {
       },
     });
     this.watcher.on('add', (path) => {
-      console.log('add', path);
+      // console.log('add', path);
       this.#addPath(path, compiler);
     });
     this.watcher.on('unlink', (path) => {
-      console.log('unlink', path);
+      // console.log('unlink', path);
       this.#removePath(path, compiler);
     });
   };
