@@ -2,10 +2,6 @@ import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import tailwindcss from '@tailwindcss/postcss';
 import { getLoadingHtmlTags, ReactRoutesPlugin } from '@fairys/admin-tools-react-plugins';
-import { rspack } from '@rspack/core';
-
-const virtualModulesPlugin = new rspack.experiments.VirtualModulesPlugin();
-
 export default defineConfig({
   output: {
     assetPrefix: '/fairys-admin-react/',
@@ -25,9 +21,9 @@ export default defineConfig({
     },
     rspack: {
       plugins: [
-        virtualModulesPlugin,
-        new ReactRoutesPlugin(virtualModulesPlugin, {
+        new ReactRoutesPlugin({
           loadType: 'lazy',
+          keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',
         }),
       ],
     },

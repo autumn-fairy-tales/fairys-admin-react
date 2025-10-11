@@ -11,11 +11,15 @@ export interface FairysRootProps {
   keepAlive?: boolean;
   /**路由*/
   router?: DataRouter;
+  /**是否是Outlet组件启用缓存*/
+  isOutletKeepAlive: boolean;
 }
 
 export class FairysRootClass {
   /**启用缓存*/
   keepAlive: boolean;
+  /**是否是Outlet组件启用缓存*/
+  isOutletKeepAlive: boolean;
 }
 export const useFairysRoot = (fairysRootClass?: FairysRootClass) => {
   const ref = useRef<FairysRootClass>();
@@ -41,9 +45,10 @@ export const FairysRootAliveController = () => {
 };
 
 export const FairysRoot = (props: FairysRootProps) => {
-  const { children, keepAlive = true, router } = props;
+  const { children, keepAlive = true, router, isOutletKeepAlive = true } = props;
   const fairysRootClass = useFairysRoot();
   fairysRootClass.keepAlive = keepAlive;
+  fairysRootClass.isOutletKeepAlive = isOutletKeepAlive;
 
   if (router && !routerDataInstance.__navigate) {
     routerDataInstance.router = router;

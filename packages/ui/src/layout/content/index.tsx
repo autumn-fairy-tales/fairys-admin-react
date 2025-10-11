@@ -60,7 +60,7 @@ const OutletContentContext = () => {
   const [state, tabBarInstance] = useTabBar();
   const pageFullScreen = state.pageFullScreen;
   const render = useMemo(() => {
-    if (fairysRootClass.keepAlive) return <KeepAliveContent />;
+    if (fairysRootClass.keepAlive && !fairysRootClass.isOutletKeepAlive) return <KeepAliveContent />;
     return (
       <MotionAnimation>
         <Outlet />

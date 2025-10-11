@@ -1,7 +1,8 @@
 import type { Compiler } from '@rspack/core';
+import type { VirtualModulesPlugin } from '@rspack/core/dist/VirtualModulesPlugin';
 import chokidar, { FSWatcher } from 'chokidar';
 import path from 'path';
-import FS from 'fs-extra';
+import { globSync } from 'glob';
 
 interface WatchDirsItem {
   /**
@@ -40,11 +41,6 @@ export interface ReactRoutesPluginOptions {
    * @description 是否根据目录结构生成树路由
    */
   isTreeRoute?: boolean;
-
-  /**
-   * @description 保持路由组件的 HOC 函数
-   */
-  keepAliveBasePath?: string;
 }
 export interface RouteItem {
   /**
@@ -78,12 +74,12 @@ export class ReactRoutesPlugin {
    * @description 路由列表
    */
   routes: Map<string, RouteItem> = new Map([]);
+  /**
+   * @description 虚拟模块插件
+   */
+  virtualModulesPlugin: VirtualModulesPlugin;
 
-  static convertIdOrNameOne = (value: string) => {
-    return `fairys_admin_keep_alive_${value}`;
-  };
-
-  constructor(options: ReactRoutesPluginOptions = {}) {
+  constructor(virtualModulesPlugin: VirtualModulesPlugin, options: ReactRoutesPluginOptions = {}) {
     this.config = {
       loadType: 'layout_default_lazy',
       ...options,
@@ -95,6 +91,10 @@ export class ReactRoutesPlugin {
       dir: item.dir.replace(/^\//, '').replace(/\/$/, ''),
       routePrefix: item.routePrefix?.replace(/^\//, '').replace(/\/$/, '') || '/',
     }));
+    if (!virtualModulesPlugin) {
+      throw new Error('ReactRoutesPlugin: virtualModulesPlugin is required');
+    }
+    this.virtualModulesPlugin = virtualModulesPlugin;
   }
 
   /**
@@ -140,10 +140,6 @@ export class ReactRoutesPlugin {
     let importString = '';
     const list = [...routeGroups.values()];
     let routes: string = '';
-    if (this.config.keepAliveBasePath) {
-      importString += `import KeepAliveBaseHOC from '${this.config.keepAliveBasePath}';\n`;
-    }
-
     for (const groupItem of list) {
       const pages = groupItem.pages;
       const layout = groupItem.layout;
@@ -156,15 +152,7 @@ export class ReactRoutesPlugin {
           _route = `{index:true, path:'${element.path}',Component:${element.componentName}},\n` + _route;
         } else {
           if (this.config.loadType === 'lazy') {
-            if (this.config.keepAliveBasePath) {
-              _route += `{path:'${element.path}',lazy:async() => { const data = await import('${
-                element.component
-              }');\n return { ...data,Component:KeepAliveBaseHOC(data.Component || data.element,'${ReactRoutesPlugin.convertIdOrNameOne(
-                element.path,
-              )}') } }},\n`;
-            } else {
-              _route += `{path:'${element.path}',lazy:() => import('${element.component}')},\n`;
-            }
+            _route += `{path:'${element.path}',lazy:() => import('${element.component}')},\n`;
           } else {
             importString += `import ${element.componentName} from '${element.component}';\n`;
             _route += `{path:'${element.path}',Component:${element.componentName}},\n`;
@@ -186,9 +174,9 @@ export class ReactRoutesPlugin {
   #createVirtualFile = (compiler: Compiler) => {
     // 路由列表
     const _routeS = this.#createFlatRoute();
-    const _filePath = path.resolve(compiler.context, 'src/.fairys/routes.ts');
-    FS.ensureFileSync(_filePath);
-    FS.writeFileSync(_filePath, _routeS, 'utf-8');
+    const _filePath = path.resolve(compiler.context, 'src/fairys-routes');
+    console.log('_routeS', _routeS);
+    this.virtualModulesPlugin.writeModule(_filePath, _routeS);
   };
 
   /**创建路由*/
@@ -217,10 +205,8 @@ export class ReactRoutesPlugin {
       .split(path.sep)
       .join('_')
       .toUpperCase();
-
     /**是否是布局文件*/
     const isLayout = link.endsWith('.layout.tsx') || link.endsWith('.layout.jsx') || link.endsWith('.layout.js');
-
     this.routes.set(link, {
       path: '/' + _routePath,
       component: componentPath,
@@ -229,56 +215,33 @@ export class ReactRoutesPlugin {
       isLayout,
     });
   };
-
-  /**新增路由*/
-  #addPath = (link: string, compiler: Compiler) => {
-    this.#createRoute(link);
-    this.#createVirtualFile(compiler);
-  };
-  /**删除路由*/
-  #removePath = (link: string, compiler: Compiler) => {
-    this.routes.delete(link);
-    this.#createVirtualFile(compiler);
-  };
-
   /**监听实例*/
   watcher: FSWatcher | null = null;
   /**监听文件*/
   #watch = (compiler: Compiler) => {
     const watchDirs = this.config.watchDirs || [];
-    const watchDirsPaths = watchDirs.map((item) => {
-      const _filePath = path.resolve(compiler.context, item.dir);
-      return _filePath;
-    });
-    this.watcher = chokidar.watch(watchDirsPaths, {
+    let filesDirs: string[] = [];
+    for (let index = 0; index < watchDirs.length; index++) {
+      const item = watchDirs[index];
+      // 监听目录下的文件
+      filesDirs.push(path.join(item.dir, '**/{page,layout}.{tsx,jsx,js}'));
+      filesDirs.push(path.join(item.dir, '{page,layout}.{tsx,jsx,js}'));
+    }
+    console.log('filesDirs', filesDirs);
+    const files = globSync(filesDirs, {
       cwd: compiler.context,
-      ignored: (link, stats) => {
-        if (stats?.isFile()) {
-          const f = path.basename(link);
-          return !this.#isRouteFile(f);
-        }
-        return false;
-      },
     });
-    this.watcher.on('add', (path) => {
-      console.log('add', path);
-      this.#addPath(path, compiler);
-    });
-    this.watcher.on('unlink', (path) => {
-      console.log('unlink', path);
-      this.#removePath(path, compiler);
-    });
+    this.routes.clear();
+    for (let index = 0; index < files.length; index++) {
+      const element = files[index];
+      this.#createRoute(element);
+    }
+    console.log('files', files);
+    this.#createVirtualFile(compiler);
   };
   apply(compiler: Compiler) {
-    compiler.hooks.afterPlugins.tap('FairysVirtualReactRoutesPlugin', () => {
+    compiler.hooks.thisCompilation.tap('FairysVirtualReactRoutesPlugin', () => {
       this.#watch(compiler);
-    });
-    // 监听关闭事件
-    compiler.hooks.shutdown.tap('FairysVirtualReactRoutesPlugin', () => {
-      if (this.watcher) {
-        this.watcher.close();
-        this.watcher = null;
-      }
     });
   }
 }

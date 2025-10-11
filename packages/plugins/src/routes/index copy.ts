@@ -2,7 +2,6 @@ import type { Compiler } from '@rspack/core';
 import type { VirtualModulesPlugin } from '@rspack/core/dist/VirtualModulesPlugin';
 import chokidar, { FSWatcher } from 'chokidar';
 import path from 'path';
-import { globSync } from 'glob';
 
 interface WatchDirsItem {
   /**
