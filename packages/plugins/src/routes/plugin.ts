@@ -223,7 +223,10 @@ export class ReactRoutesPlugin {
   #createVirtualFile = () => {
     // 路由列表
     const _routeS = this.#createFlatRoute();
-    const _filePath = path.resolve(this.context, 'src/.fairys/routes.ts');
+    let _filePath = path.resolve(this.context, 'src/.fairys/routes.ts');
+    if (!this.#isTsConfigFile()) {
+      _filePath = path.resolve(this.context, 'src/.fairys/routes.js');
+    }
     FS.ensureFileSync(_filePath);
     FS.writeFileSync(_filePath, _routeS, 'utf-8');
   };
@@ -272,6 +275,7 @@ export class ReactRoutesPlugin {
     this.#createRoute(link);
     this.#createVirtualFile();
   };
+
   /**删除路由*/
   #removePath = (link: string) => {
     this.routes.delete(link);
@@ -280,6 +284,7 @@ export class ReactRoutesPlugin {
 
   /**监听实例*/
   watcher: FSWatcher | null = null;
+
   /**监听文件*/
   watch = () => {
     const watchDirs = this.config.watchDirs || [];
