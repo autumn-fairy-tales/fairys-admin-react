@@ -259,7 +259,7 @@ export class ReactRoutesPlugin {
       .toUpperCase();
 
     /**是否是布局文件*/
-    const isLayout = link.endsWith('.layout.tsx') || link.endsWith('.layout.jsx') || link.endsWith('.layout.js');
+    const isLayout = link.endsWith('layout.tsx') || link.endsWith('layout.jsx') || link.endsWith('layout.js');
 
     this.routes.set(link, {
       path: '/' + _routePath,

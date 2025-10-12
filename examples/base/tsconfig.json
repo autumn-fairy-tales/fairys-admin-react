@@ -21,7 +21,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@@/*": ["./src/.fairys/*"],
-      "@fairys:routes": ["./src/.fairys/routes"]
+      "@fairys:routes": ["./src/.fairys/routes"],
+      "@@routes": ["./src/.fairys/routes"]
     }
   },
   "include": ["src"]
