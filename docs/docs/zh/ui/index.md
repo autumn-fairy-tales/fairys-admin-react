@@ -1,4 +1,7 @@
-# 组件
+---
+title: 组件 Overview
+overview: true
+---
 
 ## 安装
 
@@ -6,7 +9,7 @@
 npm install @fairys/admin-tools-react # yarn add @fairys/admin-tools-react # pnpm add @fairys/admin-tools-react
 ```
 
-## 基础组件
+<!-- ## 基础组件
 
 ## 头像
 
@@ -22,4 +25,4 @@ npm install @fairys/admin-tools-react # yarn add @fairys/admin-tools-react # pnp
 
 ## 设置
 
-## 状态
+## 状态 -->
