@@ -47,6 +47,8 @@ export type NotificationDataState = {
   __defaultValue?: string;
   /**显示数量*/
   count?: number;
+  /**是否显示更多弹窗*/
+  visibleMoreModal?: boolean;
 };
 
 export class NotificationDataInstance {
@@ -56,6 +58,7 @@ export class NotificationDataInstance {
     title: '通知',
     isShowIcon: true,
     count: 0,
+    visibleMoreModal: false,
   });
   ctor = (options: { tabItems?: NotificationTabItemType[]; title?: string; isShowIcon?: boolean }) => {
     const { tabItems, title, isShowIcon } = options;
@@ -99,8 +102,14 @@ export class NotificationDataInstance {
 
   /**点击查看全部(外部挂载事件)*/
   onClickMore?: (activeKey: string) => void;
+
+  /**关闭更多弹窗*/
+  closeMoreModal = () => {
+    this.state.visibleMoreModal = false;
+  };
   /**点击查看全部*/
   _onClickMore = () => {
+    this.state.visibleMoreModal = true;
     this.onClickMore?.(this.state.activeKey);
   };
 

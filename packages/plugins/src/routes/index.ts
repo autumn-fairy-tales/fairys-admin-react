@@ -11,10 +11,10 @@ export const RsbuildReactRoutesPlugin = (options: ReactRoutesPluginOptions = {})
       routesPlugin.context = api.context.rootPath;
 
       api.modifyBundlerChain((chain) => {
-        // 只在开发环境和生产环境监听路由文件变化，预览环境不监听
-        routesPlugin.watch();
         chain.resolve.alias.set('@fairys:routes', './src/.fairys/routes');
         chain.resolve.alias.set('@@routes', './src/.fairys/routes');
+        // 只在开发环境和生产环境监听路由文件变化，预览环境不监听
+        routesPlugin.watch();
       });
       api.onCloseBuild(() => {
         routesPlugin.closeWatch();
