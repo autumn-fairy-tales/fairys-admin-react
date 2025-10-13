@@ -3,5 +3,15 @@
     "text": "指南",
     "link": "/guide/",
     "activeMatch": "/guide/"
+  },
+  {
+    "text": "插件",
+    "link": "/plugin/",
+    "activeMatch": "/plugin/"
+  },
+  {
+    "text": "UI",
+    "link": "/ui/",
+    "activeMatch": "/ui/"
   }
 ]

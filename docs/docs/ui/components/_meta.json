@@ -1,0 +1,22 @@
+[
+  "index",
+  "breadcrumb",
+  "button",
+  "disclosure",
+  "enter-loading",
+  "error-page",
+  "full-screen",
+  "keep-alive",
+  "login",
+  "main-page",
+  "menu-item-base",
+  "modal-base",
+  "notification",
+  "popover-base",
+  "popover-menu",
+  "root",
+  "select",
+  "switch",
+  "tabs",
+  "watermark"
+]
