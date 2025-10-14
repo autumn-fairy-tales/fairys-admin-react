@@ -1,5 +1,6 @@
 [
   "index",
+  "layout",
   "avatar",
   "breadcrumb",
   "context",
@@ -7,7 +8,6 @@
   "main-menu",
   "menu",
   "setting",
-  "layout",
   {
     "type": "dir",
     "name": "components",
