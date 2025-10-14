@@ -9,6 +9,7 @@ export default defineConfig({
   title: 'Fairys Admin',
   icon: '/logo.png',
   globalStyles: path.join(__dirname, 'styles/index.css'),
+  ssg: false,
   logo: {
     light: '/logo.png',
     dark: '/logo.png',
