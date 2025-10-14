@@ -3,6 +3,7 @@ import type { MotionProps } from 'framer-motion';
 import { useAnimationStatus } from '../utils';
 
 interface FairysDisclosureItemProps extends MotionProps {
+  /**是否展开*/
   open?: boolean;
   className?: string;
 }

@@ -1,1 +1,40 @@
 # Loading加载
+
+
+## 引入
+
+```ts
+import { FairysEnterLoading } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { FairysEnterLoading } from '@fairys/admin-tools-react';
+import React from 'react';
+
+const Demo = () => {
+  return (<div style={{ position: "relative" , width: "100%", height: "300px" }}>
+    <FairysEnterLoading loading={true} className="relative" />
+  </div>);
+};
+export default Demo;
+
+```
+
+## 组件参数
+
+```ts
+import type { MotionProps } from 'framer-motion';
+export interface FairysEnterLoadingProps extends MotionProps {
+  /**加载标题*/
+  title?: string;
+  /**加载提示*/
+  tips?: string;
+  /**是否加载中*/
+  loading?: boolean;
+  className?: string;
+}
+
+```
+

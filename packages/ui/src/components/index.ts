@@ -13,3 +13,4 @@ export * from './main-page';
 export * from './login';
 export * from './watermark';
 export * from './keep-alive';
+export * from './tabs';

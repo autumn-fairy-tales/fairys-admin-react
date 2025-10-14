@@ -1,9 +1,11 @@
 import clsx from 'clsx';
 import { forwardRef, useMemo, Ref } from 'react';
 
-interface FairysButtonBaseProps
+export interface FairysButtonBaseProps
   extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  /**是否为背景按钮*/
   isBg?: boolean;
+  /**是否为边框按钮*/
   bordered?: boolean;
 }
 

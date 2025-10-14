@@ -1,1 +1,53 @@
 # 选择器
+
+
+## 引入
+
+```ts
+import { FairysSelectBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { Fragment, useState } from 'react';
+import { FairysSelectBase } from '@fairys/admin-tools-react';
+
+export const Demo = () => {
+  const [value, setValue] = useState('main_sub_left');
+ 
+  return (<FairysSelectBase
+      value={value}
+      onChange={setValue}
+      items={[
+        { title: '主子菜单侧边', value: 'main_sub_left' },
+        { title: '主菜单左侧+移入显示子菜单', value: 'main_left' },
+        { title: '主菜单顶部+移入显示子菜单', value: 'main_top_header' },
+        { title: '主菜单顶部+子菜单侧边', value: 'main_top_sub_left_header' },
+        { title: '主子菜单合并侧边展示', value: 'left' },
+        { title: '主子菜单合并侧边展示+顶部信息', value: 'left_header' },
+        { title: '移动', value: 'mobile' },
+      ]}
+   />);
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+import { FairysPopoverMenuItemType } from 'components/popover-menu';
+export interface FairysSelectBaseProps {
+  // 选择器选项
+  items?: FairysPopoverMenuItemType[];
+  // 选择器值
+  value?: string | string[];
+  // 选择器值改变回调
+  onChange?: (value: string | string[]) => void;
+  // 是否禁用
+  disabled?: boolean;
+  // 是否多选
+  multiple?: boolean;
+}
+```
+

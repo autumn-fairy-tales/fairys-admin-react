@@ -3,8 +3,11 @@ import { Fragment, useEffect, useMemo, useRef } from 'react';
 import hotkeys from 'hotkeys-js';
 
 interface FairysFullScreenProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**是否全屏*/
   open?: boolean;
+  /**全屏内容*/
   children?: React.ReactNode;
+  /**关闭全屏回调*/
   onClose?: () => void;
 }
 

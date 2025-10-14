@@ -1,1 +1,39 @@
 # 根组件
+
+## 引入
+
+```ts
+import { FairysRoot } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx
+import { Fragment, useMemo } from 'react';
+import { FairysRoot ,routerDataInstance} from '@fairys/admin-tools-react';
+export const Login = () => {
+  // 生成路由
+  useMemo(() =>  routerDataInstance.createHashRouter([]), []);
+
+  return <FairysRoot isOutletKeepAlive={false} router={routerDataInstance.router} keepAlive={true} />;
+};
+export default Login;
+```
+
+## 组件参数
+
+```ts
+import { DataRouter } from 'react-router';
+
+export interface FairysRootProps {
+  children?: React.ReactNode;
+  /**启用缓存*/
+  keepAlive?: boolean;
+  /**路由*/
+  router?: DataRouter;
+  /**是否是Outlet组件启用缓存*/
+  isOutletKeepAlive?: boolean;
+}
+
+```
+

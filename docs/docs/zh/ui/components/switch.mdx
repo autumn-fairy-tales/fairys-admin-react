@@ -1,1 +1,39 @@
 # 开关
+
+
+## 引入
+
+```ts
+import { FairysSwitchBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { Fragment, useState } from 'react';
+import { FairysSwitchBase } from '@fairys/admin-tools-react';
+
+export const Demo = () => {
+  const [value, setValue] = useState(false);
+  return (<FairysSwitchBase
+      value={value}
+      onChange={setValue}
+   />);
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+export interface FairysSwitchBaseProps {
+  // 开关值
+  value?: boolean;
+  // 开关值改变回调
+  onChange?: (value: boolean) => void;
+  // 是否禁用
+  disabled?: boolean;
+}
+
+```
+

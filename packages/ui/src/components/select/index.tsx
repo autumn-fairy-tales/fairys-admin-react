@@ -2,10 +2,15 @@ import clsx from 'clsx';
 import { useMemo, useState } from 'react';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 export interface FairysSelectBaseProps {
+  // 选择器选项
   items?: FairysPopoverMenuItemType[];
+  // 选择器值
   value?: string | string[];
+  // 选择器值改变回调
   onChange?: (value: string | string[]) => void;
+  // 是否禁用
   disabled?: boolean;
+  // 是否多选
   multiple?: boolean;
 }
 

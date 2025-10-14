@@ -1,1 +1,44 @@
 # 折叠面板
+
+
+## 引入
+
+```ts
+import { FairysDisclosureItem } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { FairysDisclosureItem } from '@fairys/admin-tools-react';
+import React from 'react';
+
+const Demo = () => {
+  return (
+   <div>
+      <FairysDisclosureItem open={true} className="w-full">
+        折叠面板内容
+      </FairysDisclosureItem>
+      <FairysDisclosureItem open={false} className="w-full">
+        隐藏折叠面板内容2
+      </FairysDisclosureItem>
+   </div>
+  );
+};
+export default Demo;
+
+```
+
+## 组件参数
+
+```ts
+import type { MotionProps } from 'framer-motion';
+
+interface FairysDisclosureItemProps extends MotionProps {
+  /**是否展开*/
+  open?: boolean;
+  className?: string;
+}
+
+```
+

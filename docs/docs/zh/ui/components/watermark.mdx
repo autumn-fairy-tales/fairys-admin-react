@@ -1,1 +1,60 @@
 # 水印
+
+## 引入
+
+```ts
+import { FairysWatermarkBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { FairysTabs } from '@fairys/admin-tools-react';
+
+export const Demo = () => {
+  return (<FairysWatermarkBase content="水印内容">
+    <div style={{ width: '100%', height: '300px' }}></div>
+  </FairysWatermarkBase>);
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+
+export interface FairysWatermarkProps
+  extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
+  /**内容*/
+  content?: string | string[];
+  /**
+   * 水印的宽度
+   */
+  width?: number;
+  /**
+   * 水印的高度
+   */
+  height?: number;
+  /**
+   * 水印的图片
+   */
+  image?: string;
+  /**
+   * 水印的旋转角度
+   */
+  rotate?: number;
+  gap?: [number, number];
+  offset?: [number, number];
+  zIndex?: number;
+  font?: {
+    color?: CanvasFillStrokeStyles['fillStyle'];
+    darkColor?: CanvasFillStrokeStyles['fillStyle'];
+    fontSize?: number | string;
+    fontWeight?: 'normal' | 'light' | 'weight' | number;
+    fontStyle?: 'none' | 'normal' | 'italic' | 'oblique';
+    fontFamily?: string;
+    textAlign?: CanvasTextAlign;
+  };
+}
+```
+

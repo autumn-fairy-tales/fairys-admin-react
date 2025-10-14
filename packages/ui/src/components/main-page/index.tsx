@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import { forwardRef, Ref, useMemo } from 'react';
 
-interface FairysMainPageBaseProps
+export interface FairysMainPageBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {}
 
 export const FairysMainPageSearch = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {

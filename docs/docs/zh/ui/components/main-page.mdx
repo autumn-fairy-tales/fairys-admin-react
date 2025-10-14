@@ -1,1 +1,40 @@
 # 主页面布局
+
+## 引入
+
+```ts
+import { FairysMainPage, FairysMainPageSearch, FairysMainPageBody, FairysMainPageFooter } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { FairysMainPage, FairysMainPageSearch, FairysMainPageBody, FairysMainPageFooter } from '@fairys/admin-tools-react';
+
+export const Login = () => {
+ 
+  return (
+    <FairysMainPage>
+      <FairysMainPageSearch>
+        <div>搜索框</div>
+      </FairysMainPageSearch>
+      <FairysMainPageBody>
+        <div>主体内容</div>
+      </FairysMainPageBody>
+      <FairysMainPageFooter>
+        <div>页脚内容</div>
+      </FairysMainPageFooter>
+    </FairysMainPage>
+  );
+};
+export default Login;
+```
+
+## 组件参数
+
+```ts
+export interface FairysMainPageBaseProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> { }
+
+```
+

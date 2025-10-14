@@ -4,8 +4,11 @@ import { motion, MotionProps } from 'framer-motion';
 import { useAnimationStatus } from './../utils';
 
 export interface FairysEnterLoadingProps extends MotionProps {
+  /**加载标题*/
   title?: string;
+  /**加载提示*/
   tips?: string;
+  /**是否加载中*/
   loading?: boolean;
   className?: string;
 }

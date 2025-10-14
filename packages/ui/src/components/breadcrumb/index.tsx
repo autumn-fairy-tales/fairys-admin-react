@@ -6,10 +6,15 @@ export interface FairysBreadcrumbBaseItemType extends MenuItemType {}
 
 export interface FairysBreadcrumbBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**面包屑项集合*/
   items?: FairysBreadcrumbBaseItemType[];
+  /**分隔符，可选值为'bg'（背景颜色）或'slash'（斜杠）*/
   separate?: 'bg' | 'slash';
+  /**面包屑项类名*/
   itemClassName?: string;
+  /**面包屑项样式*/
   itemStyle?: React.CSSProperties;
+  /**是否第一个面包屑项不添加padding*/
   isFristNoPadding?: boolean;
 }
 

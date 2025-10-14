@@ -1,1 +1,60 @@
 # 标签页
+
+## 引入
+
+```ts
+import { FairysTabs } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { Fragment, useState } from 'react';
+import { FairysTabs } from '@fairys/admin-tools-react';
+
+export const Demo = () => {
+  const [value, setValue] = useState("1");
+  return (<FairysTabs
+      activeKey={value}
+      onChange={setValue}
+      items={[
+        {
+          key: "1",
+          title: "选项卡1",
+        },
+        {
+          key: "2",
+          title: "选项卡2",
+        },
+        {
+          key: "3",
+          title: "选项卡3",
+        },
+        {
+          key: "4",
+          title: "选项卡4",
+        },
+        {
+          key: "5",
+          title: "选项卡5",
+        },
+      ]}
+   />);
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+import { FairysTabsItemType } from '@fairys/admin-tools-react';
+export interface FairysTabsProps {
+  // 选项卡列表
+  items: FairysTabsItemType[];
+  // 当前选中的选项卡key
+  activeKey?: string;
+  // 选项卡选中回调
+  onChange?: (key: string, item: FairysTabsItemType) => void;
+}
+```
+

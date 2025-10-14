@@ -1,1 +1,45 @@
 # 按钮
+
+## 引入
+
+```ts
+import { FairysButtonBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { FairysButtonBase } from '@fairys/admin-tools-react';
+import React from 'react';
+
+const Demo = () => {
+  return (
+   <div>
+    <FairysButtonBase isBg={true} bordered={true}>
+      按钮
+    </FairysButtonBase>
+    <FairysButtonBase bordered={true}>
+      按钮
+    </FairysButtonBase>
+     <FairysButtonBase>
+      按钮
+    </FairysButtonBase>
+   </div>
+  );
+};
+export default Demo;
+
+```
+
+## 组件参数
+
+```ts
+interface FairysButtonBaseProps
+  extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
+  /**是否为背景按钮*/
+  isBg?: boolean;
+  /**是否为边框按钮*/
+  bordered?: boolean;
+}
+```
+

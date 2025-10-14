@@ -29,7 +29,7 @@ body,
     transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
   }
   .dark #root {
-    color: var(--fairys-color-gray-400) !important;
+    color: var(--fairys-color-gray-200) !important;
   }
   .ka-wrapper,
   .ka-content {
