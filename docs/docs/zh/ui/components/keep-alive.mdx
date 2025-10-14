@@ -19,10 +19,10 @@ import { KeepAliveBaseHOC } from '@fairys/admin-tools-react';
 ```tsx
 import { FairysFullScreen ,FairysButtonBase } from '@fairys/admin-tools-react';
 import React,{ useState } from 'react';
-import { FairysButtonBase } from '@fairys/admin-tools-react';
 
 const Demo = () => {
   const [open,setOpen] = useState(false)
+  console.log('KeepAliveBaseHOC');
   return (<div style={{ position: "relative" , width: "100%", height: "300px" }}>
     <FairysButtonBase onClick={() => setOpen(true)}>
       打开全屏

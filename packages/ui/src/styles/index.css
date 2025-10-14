@@ -6,8 +6,11 @@ body,
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+html,
+body {
   font-size: 14px;
-  color: black;
 }
 
 @import 'tailwindcss' prefix(fairys);
@@ -28,9 +31,7 @@ body,
     transition-timing-function: var(--tw-ease, var(--fairys-default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
   }
-  .dark #root {
-    color: var(--fairys-color-gray-200) !important;
-  }
+
   .ka-wrapper,
   .ka-content {
     width: 100%;
