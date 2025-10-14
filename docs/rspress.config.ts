@@ -1,5 +1,5 @@
 import * as path from 'node:path';
-import { defineConfig } from 'rspress/config';
+import { defineConfig } from '@rspress/core';
 import { pluginPreview } from '@rspress/plugin-preview';
 
 export default defineConfig({
@@ -41,7 +41,6 @@ export default defineConfig({
       },
     ],
   },
-
   plugins: [pluginPreview({ defaultRenderMode: 'pure' }) as any],
   // builderConfig: {
   //   html: {

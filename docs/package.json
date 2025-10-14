@@ -13,8 +13,15 @@
     "@fairys/admin-tools-react": "^0.0.7"
   },
   "devDependencies": {
-    "@rspress/plugin-preview": "~1.45.6",
+    "@rspress/plugin-preview": "~2.0.0-beta.34",
     "@types/node": "^24.3.0",
-    "rspress": "^1.45.6"
+    "@rspress/core": "^2.0.0-beta.34",
+    "@unhead/react": "2.0.19"
+  },
+  "overrides": {
+    "@unhead/react": "2.0.19"
+  },
+  "resolutions": {
+    "@unhead/react": "2.0.19"
   }
 }
