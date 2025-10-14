@@ -9,7 +9,7 @@ import type {
 } from 'react-router';
 import { createBrowserRouter, createMemoryRouter, createHashRouter } from 'react-router';
 
-class RouterDataInstance {
+export class RouterDataInstance {
   router: DataRouter | undefined = undefined;
   /**从root挂载的数据*/
   __navigate: NavigateFunction;

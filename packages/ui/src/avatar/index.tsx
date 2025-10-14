@@ -8,7 +8,15 @@ import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover
 import { appPluginDataInstance } from 'context/app-plugins-data';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**
+   * @description 头像放置位置
+   * @default "header"
+   */
   mode?: 'sider' | 'header';
+  /**
+   * @description 名称显示
+   * @default "node"
+   */
   nameMode?: 'node' | 'show';
 }
 
@@ -16,7 +24,7 @@ const baseClassName =
   'fairys:flex fairys:transition-all fairys:duration-300 fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-700 fairys:rounded-md fairys:cursor-pointer';
 
 export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElement>) => {
-  const { mode, nameMode, className, ...rest } = props;
+  const { mode = 'header', nameMode, className, ...rest } = props;
   const [accountState] = useAccountData();
   const userName = accountState.userName || 'fairys';
   const userEmail = accountState.userEmail || '未绑定邮箱';

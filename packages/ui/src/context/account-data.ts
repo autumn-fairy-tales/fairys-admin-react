@@ -1,6 +1,6 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 
-interface AccountDataState {
+export interface AccountDataState {
   /**用户名*/
   userName?: string;
   /**用户头像*/
@@ -11,6 +11,7 @@ interface AccountDataState {
   userPhone?: string;
   /**用户角色*/
   userRole?: string;
+  // 其他自定义信息
   info?: Record<string, any>;
   /**默认引用值*/
   __defaultValue?: string;

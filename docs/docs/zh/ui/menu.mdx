@@ -1,1 +1,64 @@
 # 子菜单
+
+:::tip layout内置组件
+
+项目子菜单组件，用于显示项目的子菜单。
+
+:::
+
+**引入**
+
+```ts
+import { Menu } from '@fairys/admin-tools-react';
+```
+
+
+## Menu 组件参数
+
+不通过外层传递，内置取值`menuDataInstance`状态数据中的`menuItems`值。
+
+## SubMenu 组件参数
+
+```ts
+export interface MenuItemProps {
+  /**
+   * 子菜单项
+   */
+  item: MenuItemType;
+  /**
+   * 子菜单层级
+   */
+  level?: number;
+  /**
+   * 是否为主菜单
+   */
+  isMain?: boolean;
+}
+```
+
+## MainMenuItem 和 MenuItem 组件参数
+
+```ts
+export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**
+   * 菜单项
+   */
+  item: MenuItemType;
+  /**
+   * 菜单层级
+   */
+  level?: number;
+  /**
+   * 是否为子菜单
+   */
+  isSubMenu?: boolean;
+  /**
+   * 是否展开
+   */
+  isExpand?: boolean;
+  /**
+   * 是否禁用
+   */
+  disabled?: boolean;
+}
+```

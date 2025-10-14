@@ -4,9 +4,13 @@ import clsx from 'clsx';
 import { Fragment, useMemo } from 'react';
 
 export interface LogoProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**logo 模式，open 为打开状态，close 为关闭状态*/
   mode: 'open' | 'close';
+  /**logo 大小*/
   logoSize?: number;
+  /**是否仅显示项目名称*/
   isOnlyName?: boolean;
+  /**是否为顶部导航栏*/
   isHeader?: boolean;
 }
 

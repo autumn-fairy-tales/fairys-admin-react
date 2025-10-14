@@ -17,7 +17,7 @@ export interface TabBarInstanceState {
   __defaultValue?: string;
 }
 
-class TabBarInstance {
+export class TabBarInstance {
   state = proxy<TabBarInstanceState>({
     tabBarItems: [],
     dropDownTabBarItems: [],
@@ -148,7 +148,7 @@ export const useTabBar = () => {
   return [state, tabBarInstance, state.__defaultValue] as [TabBarInstanceState, TabBarInstance, string | undefined];
 };
 
-class TabItemInstance {
+export class TabItemInstance {
   /**节点*/
   dom = createRef<HTMLDivElement>();
   /**tab项数据*/
@@ -167,7 +167,7 @@ class TabItemInstance {
 
 export const useTabItemInstance = () => useRef(new TabItemInstance()).current;
 
-class TabInstance {
+export class TabInstance {
   /**节点*/
   dom = createRef<HTMLDivElement>();
   tabBarItems: TabItemInstance[] = [];

@@ -1,1 +1,70 @@
 # 头像
+
+:::tip layout内置组件
+
+用于显示当前登录用户的头像、名称、邮箱等信息。
+
+:::
+
+**引入**
+
+```ts
+import { Avatar } from '@fairys/admin-tools-react';
+```
+
+## 组件参数
+
+```ts
+export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**
+   * @description 头像放置位置
+   * @default "header"
+   */
+  mode?: 'sider' | 'header';
+  /**
+   * @description 名称显示
+   * @default "node"
+   */
+  nameMode?: 'node' | 'show';
+}
+
+```
+
+## 用户信息配置
+
+用户名称、邮箱、用户头像等信息 来自 `accountDataInstance` 设置的状态值。具体如下：
+
+- `userName`：用户名称，默认值为 `fairys`。
+- `userEmail`：用户邮箱，默认值为 `未绑定邮箱`。
+- `userAvatar`：用户头像，默认值为 `settingInstance.state.logo`。
+
+## 操作菜单
+
+点击头像后，会弹出下拉菜单，用于展示用户信息和操作。菜单包含以下内容：
+
+- 用户名称
+- 用户邮箱
+- 用户头像
+- 主页
+- 偏好设置
+- 退出登录
+
+可以通过 `appPluginDataInstance` 来添加自定义的菜单项(⚠️在加载布局组件之前调用)。具体步骤如下：
+
+```ts
+import { FairysPopoverMenuItemType } from 'components/popover-menu';
+// 在 appPluginDataInstance 中添加自定义的菜单项
+const menus:FairysPopoverMenuItemType[] =[
+  { title: '测试', icon: 'ant-design:question-circle-outlined' },
+  { title: '测试2', icon: 'ant-design:question-circle-outlined' },
+]
+
+appPluginDataInstance.addPlugin({
+  'avatar-menus': {
+    menus,
+    /**重写菜单项*/
+    // override: (menus2: FairysPopoverMenuItemType[]) => [...menus2, ...menus],
+  },
+});
+
+```

@@ -8,10 +8,25 @@ import { Icon, IconProps } from '@iconify/react';
 import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
 import { useSetting } from 'context/setting';
 export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**
+   * 菜单项
+   */
   item: MenuItemType;
+  /**
+   * 菜单层级
+   */
   level?: number;
+  /**
+   * 是否为子菜单
+   */
   isSubMenu?: boolean;
+  /**
+   * 是否展开
+   */
   isExpand?: boolean;
+  /**
+   * 是否禁用
+   */
   disabled?: boolean;
 }
 

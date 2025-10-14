@@ -1,16 +1,16 @@
 [
   "index",
+  "avatar",
+  "breadcrumb",
+  "context",
+  "logo",
+  "main-menu",
+  "menu",
+  "setting",
+  "layout",
   {
     "type": "dir",
     "name": "components",
     "label": "基础组件"
-  },
-  "avatar",
-  "breadcrumb",
-  "context",
-  "layout",
-  "logo",
-  "main-menu",
-  "menu",
-  "setting"
+  }
 ]

@@ -1,7 +1,7 @@
 import { proxy, useSnapshot } from 'valtio';
 import { appDataInstance } from './index';
 
-interface AuthDataState {
+export interface AuthDataState {
   /**
    * NoAuth 没权限
    * Auth 有权限，已进入页面

@@ -7,8 +7,17 @@ import { FairysDisclosureItem } from 'components/disclosure';
 import { FairysPopoverBase } from 'components/popover-base';
 
 export interface MenuItemProps {
+  /**
+   * 子菜单项
+   */
   item: MenuItemType;
+  /**
+   * 子菜单层级
+   */
   level?: number;
+  /**
+   * 是否为主菜单
+   */
   isMain?: boolean;
 }
 

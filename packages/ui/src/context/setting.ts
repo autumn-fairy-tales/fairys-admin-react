@@ -83,7 +83,7 @@ export interface SettingInstanceState {
   __defaultValue?: string;
 }
 
-class SettingInstance {
+export class SettingInstance {
   static localStorageKey = 'fairys_setting_state';
 
   state = proxy<SettingInstanceState>({
