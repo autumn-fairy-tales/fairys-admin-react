@@ -38,16 +38,49 @@ export interface FairysWatermarkProps
    * 水印的旋转角度
    */
   rotate?: number;
+  /**
+   * 水印的间距
+   */
   gap?: [number, number];
+  /**
+   * 水印的偏移量
+   */
   offset?: [number, number];
+  /**
+   * 水印的 z-index
+   */
   zIndex?: number;
+  /**
+   * 水印的字体
+   */
   font?: {
+    /**
+     * 水印的字体颜色
+     */
     color?: CanvasFillStrokeStyles['fillStyle'];
+    /**
+     * 水印的字体颜色（暗黑模式）
+     */
     darkColor?: CanvasFillStrokeStyles['fillStyle'];
+    /**
+     * 水印的字体大小
+     */
     fontSize?: number | string;
+    /**
+     * 水印的字体粗细
+     */
     fontWeight?: 'normal' | 'light' | 'weight' | number;
+    /**
+     * 水印的字体样式
+     */
     fontStyle?: 'none' | 'normal' | 'italic' | 'oblique';
+    /**
+     * 水印的字体家族
+     */
     fontFamily?: string;
+    /**
+     * 水印的文本对齐方式
+     */
     textAlign?: CanvasTextAlign;
   };
 }
