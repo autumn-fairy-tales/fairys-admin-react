@@ -321,6 +321,11 @@ export class ReactRoutesPlugin {
 
   apply(compiler: Compiler) {
     this.context = compiler.context;
+    compiler.options.resolve.alias = {
+      ...compiler.options.resolve.alias,
+      '@fairys:routes': path.resolve(this.context, 'src/.fairys/routes'),
+      '@@': path.resolve(this.context, 'src/.fairys'),
+    };
     compiler.hooks.afterPlugins.tap('FairysVirtualReactRoutesPlugin', () => {
       this.watch();
     });

@@ -12,7 +12,7 @@ export const RsbuildReactRoutesPlugin = (options: ReactRoutesPluginOptions = {})
 
       api.modifyBundlerChain((chain) => {
         chain.resolve.alias.set('@fairys:routes', './src/.fairys/routes');
-        chain.resolve.alias.set('@@routes', './src/.fairys/routes');
+        chain.resolve.alias.set('@@', './src/.fairys');
         // 只在开发环境和生产环境监听路由文件变化，预览环境不监听
         routesPlugin.watch();
       });
