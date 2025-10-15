@@ -122,7 +122,7 @@ export const MenuSearch = () => {
     <Fragment>
       <FairysButtonBase
         bordered
-        className="fairys_admin_tool_bar_menu_search fairys:px-4 fairys:flex fairys:flex-row fairys:gap-x-2 fairys:w-[130px]"
+        className="fairys_admin_tool_bar_menu_search fairys:px-4 fairys:flex fairys:flex-row fairys:gap-x-4 fairys:w-[150px]"
         onClick={() => setOpen(true)}
       >
         <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[18px] fairys:text-gray-600 fairys:dark:text-gray-200 fairys:transition-all fairys:duration-300" />
