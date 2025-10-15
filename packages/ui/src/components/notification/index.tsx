@@ -5,6 +5,7 @@ import clsx from 'clsx';
 
 export interface FairysNotificationItemProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**通知项数据*/
   item?: NotificationItemType;
   /**是否显示图标
    * @default true

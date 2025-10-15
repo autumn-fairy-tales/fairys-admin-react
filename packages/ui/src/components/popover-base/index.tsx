@@ -27,7 +27,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { variantsBase, transitionBase } from './utils';
 import clsx from 'clsx';
 
-interface FairysPopoverComponentBaseProps {
+export interface FairysPopoverComponentBaseProps {
   /**弹框渲染内容*/
   content?: ReactNode;
   /**按钮内容*/

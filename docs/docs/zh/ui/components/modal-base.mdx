@@ -1,1 +1,80 @@
 # 弹窗基础
+
+## 引入
+
+```ts
+import { FairysModalBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { useState } from "react"
+import { FairysModalBase ,FairysButtonBase} from '@fairys/admin-tools-react';
+
+export const Demo = () => {
+  const [visible, setVisible] = useState(false);
+  const [mode, setMode] = useState(null);
+  return (
+    <div>
+      <FairysButtonBase onClick={() => { setMode('drawer');setVisible(true);  }}>抽屉模式</FairysButtonBase>
+      <FairysButtonBase onClick={() => { setMode('modal');setVisible(true);  }}>弹窗模式</FairysButtonBase>
+      <FairysModalBase
+        open={visible}
+        onClose={() => setVisible(false)}
+        mode={mode}
+      >
+        <div>弹窗内容</div>
+      </FairysModalBase>
+    </div>
+  );
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+
+export interface FairysModalBaseProps {
+  /**显示隐藏*/
+  open?: boolean;
+  /**标题 */
+  title?: React.ReactNode;
+  /**底部内容*/
+  footer?: React.ReactNode;
+  /**额外内容 */
+  extra?: React.ReactNode;
+  /**关闭回调 */
+  onClose?: () => void;
+  /**内容类名 */
+  className?: string;
+  /**头部类名 */
+  headerClassName?: string;
+  /**标题类名 */
+  titleClassName?: string;
+  /**主体类名 */
+  bodyClassName?: string;
+  /**底部类名 */
+  footerClassName?: string;
+  /**样式 */
+  style?: React.CSSProperties;
+  /**头部样式 */
+  headerStyle?: React.CSSProperties;
+  /**标题样式 */
+  titleStyle?: React.CSSProperties;
+  /**主体样式 */
+  bodyStyle?: React.CSSProperties;
+  /**底部样式 */
+  footerStyle?: React.CSSProperties;
+  children?: React.ReactNode;
+  /**模式 */
+  mode?: 'modal' | 'drawer';
+  /**是否全屏*/
+  isFullScreen?: boolean;
+  /**点击 overlay 关闭弹窗 */
+  outsidePressClose?: boolean;
+}
+
+```
+

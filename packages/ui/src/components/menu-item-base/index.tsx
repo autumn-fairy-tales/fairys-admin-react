@@ -4,14 +4,23 @@ import { IconProps, Icon } from '@iconify/react';
 
 export interface FairysMenuItemBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**图标名*/
   icon?: string;
+  /**图标属性*/
   iconProps?: IconProps;
+  /**额外内容*/
   extra?: React.ReactNode;
+  /**关闭项事件*/
   onCloseItem?: React.MouseEventHandler<HTMLSpanElement>;
+  /**是否显示关闭项*/
   isShowClose?: boolean;
+  /**是否禁用*/
   disabled?: boolean;
+  /**是否激活*/
   isActive?: boolean;
+  /**是否边框*/
   bordered?: boolean;
+  /**是否文本省略号*/
   isTextEllipsis?: boolean;
 }
 

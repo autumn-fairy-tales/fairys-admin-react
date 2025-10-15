@@ -14,3 +14,6 @@ export * from './login';
 export * from './watermark';
 export * from './keep-alive';
 export * from './tabs';
+export * from './menu-item-base';
+export * from './notification';
+export * from './popover-base';

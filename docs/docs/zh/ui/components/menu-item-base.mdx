@@ -1,1 +1,86 @@
 # 菜单基础项
+
+## 引入
+
+```ts
+import { FairysMenuItemBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { FairysMenuItemBase } from '@fairys/admin-tools-react';
+
+const items = [
+  {
+    path: "1",
+    icon: 'ant-design:home-outlined',
+    title: 'React',
+  },
+  {
+    path: "2",
+    icon: 'ant-design:setting-outlined',
+    title: 'TypeScript',
+  },
+  {
+    path: "3",
+    icon: 'ant-design:setting-outlined',
+    title: 'Vue',
+  },
+  {
+    path: "4",
+    icon: 'ant-design:setting-outlined',
+    title: 'Angular',
+  },
+]
+
+export const Demo = () => {
+  return (
+    <div>
+      {items.map((item) => (
+        <FairysMenuItemBase
+          key={item.path}
+          icon={item.icon}
+          onClick={() => {
+            console.log(item);
+          }}
+          onCloseItem={() => {
+            console.log(item);
+          }}
+        >
+          {item.title}
+        </FairysMenuItemBase>
+      ))}
+    </div>
+  );
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+export interface FairysMenuItemBaseProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  /**图标名*/
+  icon?: string;
+  /**图标属性*/
+  iconProps?: IconProps;
+  /**额外内容*/
+  extra?: React.ReactNode;
+  /**关闭项事件*/
+  onCloseItem?: React.MouseEventHandler<HTMLSpanElement>;
+  /**是否显示关闭项*/
+  isShowClose?: boolean;
+  /**是否禁用*/
+  disabled?: boolean;
+  /**是否激活*/
+  isActive?: boolean;
+  /**是否边框*/
+  bordered?: boolean;
+  /**是否文本省略号*/
+  isTextEllipsis?: boolean;
+}
+
+```
+

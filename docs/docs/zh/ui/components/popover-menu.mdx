@@ -1,1 +1,126 @@
 # 弹出层菜单
+
+## 引入
+
+```ts
+import { FairysPopoverMenu } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { useState } from "react"
+import { FairysPopoverMenu ,FairysButtonBase } from '@fairys/admin-tools-react';
+
+const items = [
+    { icon: 'ri:refresh-line', title: '重新加载',},
+    { icon: 'ri:close-line', title: '关闭标签'},
+    { isDivider: true },
+    { icon: 'ant-design:expand-outlined', title: '最大化' },
+    { icon: 'ant-design:credit-card-outlined', title: '新窗口打开' },
+    { isDivider: true },
+    { icon: 'mdi:close', title: '关闭其他标签', },
+    { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签',},
+    { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签',  },
+];
+
+export const Demo = () => {
+  return (
+    <div>
+      <FairysPopoverMenu
+        placement="right-start"
+        items={items}
+        onClickItem={(item) => console.log(item)}
+      >
+        <FairysButtonBase>
+          按钮
+        </FairysButtonBase>
+      </FairysPopoverMenu>
+    </div>
+  );
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+import { Placement } from '@floating-ui/react';
+import { IconProps } from '@iconify/react';
+
+export interface FairysPopoverMenuItemType {
+  /**图标*/
+  icon?: string;
+  /**图标属性*/
+  iconProps?: IconProps;
+  /**标题*/
+  title?: string;
+  /**是否禁用*/
+  disabled?: boolean;
+  /**分割线*/
+  isDivider?: boolean;
+  /**是否显示*/
+  visible?: boolean;
+  /**自定义内容*/
+  children?: React.ReactNode;
+  /**点击当前项*/
+  onClick?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
+  /**删除按钮事件*/
+  onClose?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
+  /**value值*/
+  value?: string;
+  /**子项*/
+  items?: FairysPopoverMenuItemType[];
+  /**是否显示关闭按钮
+   * @default true
+   */
+  isShowClose?: boolean;
+  /**是否点击关闭
+   * @default true
+   */
+  isClickClose?: boolean;
+  /**自定义类名*/
+  className?: string;
+  /**自定义弹出层类名*/
+  popoverClassName?: string;
+  /**自定义运动类名*/
+  motionClassName?: string;
+  [key: string]: any;
+}
+
+export interface FairysPopoverMenuProps {
+  /**是否禁用*/
+  disabled?: boolean;
+  /**单选或多选*/
+  mode?: 'single' | 'multiple';
+  /**点击当前项*/
+  onClickItem?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
+  /**关闭当前项*/
+  onCloseItem?: (item: FairysPopoverMenuItemType, event: React.MouseEvent) => void;
+  /**渲染数据*/
+  items: FairysPopoverMenuItemType[];
+  /**
+   * 是否隐藏关闭按钮
+   * @default true
+   */
+  isHideClose?: boolean;
+  /**当使用这个时items每一项必须需要value值*/
+  value?: string | string[];
+  /**实例*/
+  instance?: FairysPopoverMenuInstance;
+  children?: React.ReactNode;
+  /**打开关闭回调*/
+  onOpenChange?: (open: boolean) => void;
+  /**事件名称*/
+  eventName?: 'click' | 'mousedown' | 'contextMenu';
+  /**外部类名*/
+  className?: string;
+  /**运动类名*/
+  motionClassName?: string;
+  /**位置*/
+  placement?: Placement;
+}
+
+```
+
+

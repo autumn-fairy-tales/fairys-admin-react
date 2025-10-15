@@ -34,14 +34,20 @@ export interface FairysModalBaseProps {
   bodyClassName?: string;
   /**底部类名 */
   footerClassName?: string;
+  /**样式 */
   style?: React.CSSProperties;
+  /**头部样式 */
   headerStyle?: React.CSSProperties;
+  /**标题样式 */
   titleStyle?: React.CSSProperties;
+  /**主体样式 */
   bodyStyle?: React.CSSProperties;
+  /**底部样式 */
   footerStyle?: React.CSSProperties;
   children?: React.ReactNode;
+  /**模式 */
   mode?: 'modal' | 'drawer';
-  // 是否全屏
+  /**是否全屏*/
   isFullScreen?: boolean;
   /**点击 overlay 关闭弹窗 */
   outsidePressClose?: boolean;

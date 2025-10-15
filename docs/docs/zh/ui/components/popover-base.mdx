@@ -1,1 +1,57 @@
 # 弹出层基础
+
+## 引入
+
+```ts
+import { FairysPopoverBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { useState } from "react"
+import { FairysPopoverBase ,FairysButtonBase } from '@fairys/admin-tools-react';
+
+export const Demo = () => {
+  return (
+    <div>
+      <FairysPopoverBase content={<div>弹出层内容</div>} placement="bottom-end">
+        <FairysButtonBase>
+          弹出层按钮
+        </FairysButtonBase>
+      </FairysPopoverBase> 
+    </div>
+  );
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+import { Placement } from '@floating-ui/react';
+interface FairysPopoverComponentBaseProps {
+  /**弹框渲染内容*/
+  content?: ReactNode;
+  /**按钮内容*/
+  children?: ReactNode;
+  /**更新弹框状态*/
+  onOpenChange?: (open: boolean) => void;
+  /**弹框动画类名*/
+  motionClassName?: string;
+  /**弹框类名*/
+  className?: string;
+  /**触发事件*/
+  eventName?: 'click' | 'mousedown' | 'contextMenu' | 'hover';
+  /**是否禁用*/
+  disabled?: boolean;
+  /**弹框位置*/
+  placement?: Placement;
+  /**不设置最小宽度*/
+  isNotMinWidth?: boolean;
+}
+export interface FairysPopoverBaseProps extends FairysPopoverComponentBaseProps { }
+
+```
+
+

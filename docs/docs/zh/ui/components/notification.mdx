@@ -1,1 +1,74 @@
 # 通知
+
+## 引入
+
+```ts
+import { FairysNotificationListBase } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview
+import { useState } from "react"
+import { FairysNotificationListBase } from '@fairys/admin-tools-react';
+
+const items = [
+  {
+    path: "1",
+    icon: 'ant-design:home-outlined',
+    title: 'React',
+  },
+  {
+    path: "2",
+    icon: 'ant-design:setting-outlined',
+    title: 'TypeScript',
+  },
+  {
+    path: "3",
+    icon: 'ant-design:setting-outlined',
+    title: 'Vue',
+  },
+  {
+    path: "4",
+    icon: 'ant-design:setting-outlined',
+    title: 'Angular',
+  },
+]
+
+export const Demo = () => {
+  const [visible, setVisible] = useState(false);
+  const [mode, setMode] = useState(null);
+  return (
+    <div>
+      <FairysNotificationListBase
+        onClickItem={(item) => {
+          console.log(item);
+        }}
+        isShowIcon
+        items={items}
+      />
+    </div>
+  );
+};
+export default Demo;
+```
+
+## 组件参数
+
+```ts
+import type { NotificationItemType } from '@fairys/admin-tools-react';
+
+export interface FairysNotificationListBaseProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  items?: NotificationItemType[];
+  /**是否显示图标
+   * @default true
+   */
+  isShowIcon?: boolean;
+  /**点击数据*/
+  onClickItem?: (item: NotificationItemType) => void;
+}
+
+```
+
+
