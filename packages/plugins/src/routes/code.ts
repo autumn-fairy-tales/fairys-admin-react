@@ -1,5 +1,9 @@
 import type { RouteItem } from './plugin';
 
+export const pathTransformation = (str: string) => {
+  return str.replace(/\\/g, '/');
+};
+
 export const convertIdOrNameOne = (value: string) => {
   return `fairys_admin_keep_alive_${value}`;
 };

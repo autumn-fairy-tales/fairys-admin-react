@@ -10,6 +10,7 @@ import {
   keepAliveBasePathLazyCode,
   layoutCode,
   lazyCode,
+  pathTransformation,
 } from './code';
 
 export interface WatchDirsItem {
@@ -272,13 +273,15 @@ export class ReactRoutesPlugin {
 
   /**新增路由*/
   #addPath = (link: string) => {
-    this.#createRoute(link);
+    const _link = pathTransformation(link);
+    this.#createRoute(_link);
     this.#createVirtualFile();
   };
 
   /**删除路由*/
   #removePath = (link: string) => {
-    this.routes.delete(link);
+    const _link = pathTransformation(link);
+    this.routes.delete(_link);
     this.#createVirtualFile();
   };
 
