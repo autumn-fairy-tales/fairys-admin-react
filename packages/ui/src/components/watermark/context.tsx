@@ -1,6 +1,7 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import { DEFAULT_GAP_X, DEFAULT_GAP_Y, FontGap, prepareCanvas, getRotatePos, toList } from './utls';
 import { createContext, createRef, useContext, useRef } from 'react';
+import { DarkModeWatchInstance } from 'context/dark-mode';
 
 export interface FairysWatermarkState {
   /**
@@ -14,12 +15,27 @@ export interface FairysWatermarkState {
   darkDataURL: string;
   darkFinalWidth: number;
   darkFinalHeight: number;
-
+  /**
+   * 是否是暗黑模式
+   */
+  darkMode: boolean;
   __defaultValue?: string;
 }
 
 export interface FairysWatermarkProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
+  /**
+   * 监听暗黑模式变化的方式
+   * - prefers-color-scheme: 监听系统暗黑模式变化
+   * - html: 监听html元素的 class 变化
+   * - body: 监听body元素的 class 变化
+   * - string: 监听指定ID标签的 class 变化
+   *
+   * @default html
+   * */
+  watchDarkMode: 'html' | 'body' | 'prefers-color-scheme' | string;
+  /*** 水印实例*/
+  fairysWatermark?: FairysWatermarkInstance;
   /**内容*/
   content?: string | string[];
   /**
@@ -84,10 +100,11 @@ export interface FairysWatermarkProps
     textAlign?: CanvasTextAlign;
   };
 }
+
 /**
  * 水印实例
  */
-export class FairysWatermarkInstance {
+export class FairysWatermarkInstance extends DarkModeWatchInstance {
   public dom = createRef<HTMLDivElement>();
   /**
    * 水印的上下文
@@ -106,14 +123,17 @@ export class FairysWatermarkInstance {
    */
   public image?: string;
 
-  // public color?: CanvasFillStrokeStyles['fillStyle'];
-
   public rotate?: number = -22;
   public gap?: [number, number] = [DEFAULT_GAP_X, DEFAULT_GAP_Y];
   public offset?: [number, number];
   public zIndex?: number;
   public font?: FairysWatermarkProps['font'];
   public _ctx?: CanvasRenderingContext2D;
+
+  /**更新是否暗黑模式*/
+  public onUpdateDark: (darkMode: boolean) => void = (darkMode) => {
+    this.state.darkMode = darkMode;
+  };
 
   state = proxy<FairysWatermarkState>({
     dataURL: '',
@@ -123,6 +143,7 @@ export class FairysWatermarkInstance {
     darkFinalWidth: 0,
     darkFinalHeight: 0,
     markStyle: {},
+    darkMode: false,
   });
 
   /**
@@ -160,7 +181,6 @@ export class FairysWatermarkInstance {
     this.state.markStyle = mergedMarkStyle;
     return mergedMarkStyle;
   };
-
   /**
    * 获取水印的大小
    */
@@ -180,7 +200,6 @@ export class FairysWatermarkInstance {
     }
     return [this.width ?? defaultWidth, this.height ?? defaultHeight] as const;
   };
-
   /**
    * 获取水印的剪辑区域
    */
@@ -334,7 +353,19 @@ export class FairysWatermarkInstance {
 }
 
 export const FairysWatermarkContext = createContext<FairysWatermarkInstance>(new FairysWatermarkInstance());
-export const useFairysWatermark = () => useRef<FairysWatermarkInstance>(new FairysWatermarkInstance()).current;
+
+export const useFairysWatermark = (fairysWatermark?: FairysWatermarkInstance) => {
+  const instance = useRef<FairysWatermarkInstance>();
+  if (!instance.current) {
+    if (fairysWatermark) {
+      instance.current = fairysWatermark;
+    } else {
+      instance.current = new FairysWatermarkInstance();
+    }
+  }
+  return instance.current;
+};
+
 export const useFairysWatermarkContext = () => {
   const instance = useContext(FairysWatermarkContext);
   const state = useSnapshot(instance.state);
