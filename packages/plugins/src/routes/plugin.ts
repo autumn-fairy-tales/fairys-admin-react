@@ -255,7 +255,7 @@ export class ReactRoutesPlugin {
     /**组件名称*/
     const componentName = link
       .replace(/\.(tsx|jsx|js)$/, '')
-      .split(path.sep)
+      .split('/')
       .join('_')
       .toUpperCase();
 
