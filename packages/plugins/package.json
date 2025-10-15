@@ -3,7 +3,7 @@
   "author": "SunLxy <1011771396@qq.com>",
   "description": "插件库",
   "homepage": "https://github.com/autumn-fairy-tales/fairys-admin-react",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "main": "esm/index.js",
   "types": "esm/index.d.ts",
   "module": "esm/index.js",
@@ -20,12 +20,12 @@
     "esm"
   ],
   "dependencies": {
-    "glob": "~11.0.3",
     "chokidar": "~4.0.3",
-    "fs-extra": "~11.3.1"
+    "fs-extra": "~11.3.1",
+    "glob": "~11.0.3"
   },
   "devDependencies": {
-    "@types/fs-extra": "~11.0.4",
-    "@rsbuild/core": "~1.5.12"
+    "@rsbuild/core": "~1.5.12",
+    "@types/fs-extra": "~11.0.4"
   }
 }
