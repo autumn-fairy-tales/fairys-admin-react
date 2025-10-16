@@ -25,6 +25,16 @@ export default Demo;
 
 export interface FairysWatermarkProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'content'> {
+    /**
+   * 监听暗黑模式变化
+   * - html: 监听 html 元素的 class 变化
+   * - body: 监听 body 元素的 class 变化
+   * - prefers-color-scheme: 监听系统主题变化
+   * - string: 监听指定ID标签的 class 变化
+   *
+   * @default html
+   * */
+  watchDarkMode?: 'html' | 'body' | 'prefers-color-scheme' | string;
   /**内容*/
   content?: string | string[];
   /**
