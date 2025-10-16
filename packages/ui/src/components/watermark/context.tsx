@@ -33,7 +33,7 @@ export interface FairysWatermarkProps
    *
    * @default html
    * */
-  watchDarkMode: 'html' | 'body' | 'prefers-color-scheme' | string;
+  watchDarkMode?: 'html' | 'body' | 'prefers-color-scheme' | string;
   /*** 水印实例*/
   fairysWatermark?: FairysWatermarkInstance;
   /**内容*/
