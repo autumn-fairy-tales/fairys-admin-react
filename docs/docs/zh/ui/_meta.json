@@ -1,13 +1,14 @@
 [
   "index",
   "layout",
+  "context",
+  "setting",
   "avatar",
   "breadcrumb",
-  "context",
+  "dark",
   "logo",
   "main-menu",
   "menu",
-  "setting",
   {
     "type": "dir",
     "name": "components",
