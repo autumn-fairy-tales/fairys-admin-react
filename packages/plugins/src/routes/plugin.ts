@@ -12,72 +12,9 @@ import {
   lazyCode,
   pathTransformation,
 } from './code';
-
-export interface WatchDirsItem {
-  /**
-   * @description 监听目录
-   * @default "src/pages"
-   */
-  dir: string;
-  /**
-   * @description 路由前缀
-   * @default "/"
-   */
-  routePrefix?: string;
-}
-
-export interface ReactRoutesPluginOptions {
-  /**
-   * @description 加载类型
-   * @default "layout_default_lazy"
-   *
-   * @choices ["lazy", "default", "layout_default_lazy"]
-   *
-   * "lazy": 异步加载
-   *
-   * "default": 同步加载
-   *
-   * "layout_default_lazy": 布局默认加载没有其他子路由时异步加载
-   */
-  loadType?: 'lazy' | 'default' | 'layout_default_lazy';
-
-  /**
-   * @description 监听目录
-   * @default ["src/pages"]
-   */
-  watchDirs?: WatchDirsItem[];
-  /**
-   * @description 是否根据目录结构生成树路由
-   */
-  isTreeRoute?: boolean;
-
-  /**
-   * @description 保持路由组件的 HOC 函数
-   */
-  keepAliveBasePath?: string;
-}
-export interface RouteItem {
-  /**
-   * @description 路由路径
-   */
-  path: string;
-  /**
-   * @description 组件路径
-   */
-  component: string;
-  /**
-   * @description 组件名称
-   */
-  componentName: string;
-  /**
-   * @description 路由前缀
-   */
-  routePrefix?: string;
-  /**
-   * @description 是否是布局文件
-   */
-  isLayout?: boolean;
-}
+import type { ReactRoutesPluginOptions, RouteItem } from './interface';
+import { TreeRoutes } from './tree';
+export * from './interface';
 
 export class ReactRoutesPlugin {
   /**
@@ -88,11 +25,14 @@ export class ReactRoutesPlugin {
    * @description 路由列表
    */
   routes: Map<string, RouteItem> = new Map([]);
-
   /**
    * @description 插件上下文地址
    */
   context: string = '';
+  /**
+   * @description 树路由列表
+   */
+  treeRoutes: TreeRoutes = new TreeRoutes();
 
   static convertIdOrNameOne = (value: string) => {
     return `fairys_admin_keep_alive_${value}`;
@@ -110,6 +50,11 @@ export class ReactRoutesPlugin {
       dir: item.dir.replace(/^\//, '').replace(/\/$/, ''),
       routePrefix: item.routePrefix?.replace(/^\//, '').replace(/\/$/, '') || '/',
     }));
+    this.treeRoutes = new TreeRoutes();
+    this.treeRoutes.watchDirs = this.config.watchDirs;
+    this.treeRoutes.keepAliveBasePath = this.config.keepAliveBasePath;
+    this.treeRoutes.loadType = this.config.loadType;
+    this.treeRoutes.isTs = this.#isTsConfigFile();
   }
 
   /**
@@ -118,13 +63,15 @@ export class ReactRoutesPlugin {
    * @returns 是否是路由文件
    */
   #isRouteFile(f: string) {
-    return (
-      f === 'page.tsx' ||
-      f === 'page.jsx' ||
-      f === 'page.js' ||
-      f === 'layout.tsx' ||
-      f === 'layout.jsx' ||
-      f === 'layout.js'
+    /**
+     * 判断文件
+     * 1. page.{js,tsx,jsx}
+     * 2. layout.{js,tsx,jsx}
+     * 3. [x].page.{js,tsx,jsx}
+     * 4. 特殊页面 404/403/500/*.{js,tsx,jsx}
+     */
+    return /^(?:(?:.+\/)?(?:page|layout)\.(?:js|tsx|jsx)|(?:.+\/)?\[[^\]]*\]\.page\.(?:js|tsx|jsx)|(?:.+\/)?(404|403|500|\*)\.(?:js|tsx|jsx))$/.test(
+      f,
     );
   }
 
@@ -206,6 +153,7 @@ export class ReactRoutesPlugin {
         }
       }
       if (layout) {
+        importString += `import ${layout.componentName} from '${layout.component}';\n`;
         _route = layoutCode(layout, _route);
       }
       routes += _route;
@@ -217,13 +165,16 @@ export class ReactRoutesPlugin {
     return `${importString}\nconst routes = [\n${routes}];\nexport default routes;`;
   };
 
-  /**生成树路由*/
-  #createTreeRoute = () => {};
-
   /**生成虚拟路由文件*/
   #createVirtualFile = () => {
-    // 路由列表
-    const _routeS = this.#createFlatRoute();
+    /**路由*/
+    let _routeS = '';
+    if (this.config.isTreeRoute) {
+      this.treeRoutes.isTs = this.#isTsConfigFile();
+      _routeS = this.treeRoutes.toString();
+    } else {
+      _routeS = this.#createFlatRoute();
+    }
     let _filePath = path.resolve(this.context, 'src/.fairys/routes.ts');
     if (!this.#isTsConfigFile()) {
       _filePath = path.resolve(this.context, 'src/.fairys/routes.js');
@@ -245,8 +196,11 @@ export class ReactRoutesPlugin {
       };
     }
     // 路由地址
-    const routePath = link.replace(dirItem.dir, dirItem.routePrefix || '/').replace(/\/page\.(tsx|jsx|js)$/, '');
-    const _routePath = routePath.replace(/^\//, '').replace(/^\//, '');
+    const routePath = link
+      .replace(dirItem.dir, dirItem.routePrefix || '/')
+      .replace(/\/page\.(tsx|jsx|js)$/, '')
+      .replace(/\.page\.(tsx|jsx|js)$/, '');
+    const _routePath = routePath.replace(/^\//, '').replace(/^\//, '').replace(/\[/g, ':').replace(/\]/g, '');
     // 组件地址
     const componentPath = link
       .replace(/^\//, '')
@@ -255,6 +209,7 @@ export class ReactRoutesPlugin {
     /**组件名称*/
     const componentName = link
       .replace(/\.(tsx|jsx|js)$/, '')
+      .replace(/\./, '_')
       .split('/')
       .join('_')
       .toUpperCase();
@@ -265,7 +220,7 @@ export class ReactRoutesPlugin {
     this.routes.set(link, {
       path: '/' + _routePath,
       component: componentPath,
-      componentName,
+      componentName: `FAIRYS_${componentName}`,
       routePrefix: dirItem.routePrefix,
       isLayout,
     });
@@ -274,14 +229,22 @@ export class ReactRoutesPlugin {
   /**新增路由*/
   #addPath = (link: string) => {
     const _link = pathTransformation(link);
-    this.#createRoute(_link);
+    if (this.config.isTreeRoute) {
+      this.treeRoutes.add(_link);
+    } else {
+      this.#createRoute(_link);
+    }
     this.#createVirtualFile();
   };
 
   /**删除路由*/
   #removePath = (link: string) => {
     const _link = pathTransformation(link);
-    this.routes.delete(_link);
+    if (this.config.isTreeRoute) {
+      this.treeRoutes.remove(_link);
+    } else {
+      this.routes.delete(_link);
+    }
     this.#createVirtualFile();
   };
 

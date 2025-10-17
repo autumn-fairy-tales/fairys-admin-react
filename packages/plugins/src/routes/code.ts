@@ -29,9 +29,7 @@ export const keepAliveBasePathLazyCode = (element: RouteItem, isTs: boolean) => 
     path: '${element.path}',
     lazy: async () => {
       const data${isTs ? ' :any' : ''} = await import('${element.component}');
-      return { ...data, Component: KeepAliveBaseHOC(data.Component || data.element, '${convertIdOrNameOne(
-        element.path,
-      )}') }
+      return { ...data, Component: KeepAliveBaseHOC(data.Component, '${convertIdOrNameOne(element.path)}') }
     }
   },
 `;

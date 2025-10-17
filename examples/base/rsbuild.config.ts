@@ -18,6 +18,7 @@ export default defineConfig({
     pluginReact(),
     RsbuildReactRoutesPlugin({
       loadType: 'lazy',
+      isTreeRoute: true,
       keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',
     }),
   ],
