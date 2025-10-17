@@ -179,10 +179,6 @@ export class ReactRoutesPlugin {
     FS.writeFileSync(_filePath, this.routeFileContent, 'utf-8');
   };
 
-  /**
-   * @description 路由文件定时器
-   */
-  #timer?: NodeJS.Timeout;
   /**生成虚拟路由文件*/
   #createVirtualFile = () => {
     /**路由*/
@@ -194,11 +190,7 @@ export class ReactRoutesPlugin {
       _routeS = this.#createFlatRoute();
     }
     this.routeFileContent = _routeS;
-
-    clearTimeout(this.#timer);
-    this.#timer = setTimeout(() => {
-      this.#createRouteFile();
-    }, 300);
+    this.#createRouteFile();
   };
 
   /**创建路由*/

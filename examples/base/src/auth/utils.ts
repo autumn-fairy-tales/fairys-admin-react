@@ -2,7 +2,7 @@ const requestAuth = (): Promise<boolean> => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve(true);
-    }, 1000);
+    }, 3000);
   });
 };
 
