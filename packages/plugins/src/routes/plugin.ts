@@ -30,6 +30,10 @@ export class ReactRoutesPlugin {
    */
   context: string = '';
   /**
+   * @description 路由文件内容
+   */
+  routeFileContent: string = 'const routes = [];\nexport default routes;';
+  /**
    * @description 树路由列表
    */
   treeRoutes: TreeRoutes = new TreeRoutes();
@@ -165,6 +169,20 @@ export class ReactRoutesPlugin {
     return `${importString}\nconst routes = [\n${routes}];\nexport default routes;`;
   };
 
+  /**创建路由文件*/
+  #createRouteFile = () => {
+    let _filePath = path.resolve(this.context, 'src/.fairys/routes.ts');
+    if (!this.#isTsConfigFile()) {
+      _filePath = path.resolve(this.context, 'src/.fairys/routes.js');
+    }
+    FS.ensureFileSync(_filePath);
+    FS.writeFileSync(_filePath, this.routeFileContent, 'utf-8');
+  };
+
+  /**
+   * @description 路由文件定时器
+   */
+  #timer?: NodeJS.Timeout;
   /**生成虚拟路由文件*/
   #createVirtualFile = () => {
     /**路由*/
@@ -175,12 +193,12 @@ export class ReactRoutesPlugin {
     } else {
       _routeS = this.#createFlatRoute();
     }
-    let _filePath = path.resolve(this.context, 'src/.fairys/routes.ts');
-    if (!this.#isTsConfigFile()) {
-      _filePath = path.resolve(this.context, 'src/.fairys/routes.js');
-    }
-    FS.ensureFileSync(_filePath);
-    FS.writeFileSync(_filePath, _routeS, 'utf-8');
+    this.routeFileContent = _routeS;
+
+    clearTimeout(this.#timer);
+    this.#timer = setTimeout(() => {
+      this.#createRouteFile();
+    }, 300);
   };
 
   /**创建路由*/
@@ -253,6 +271,8 @@ export class ReactRoutesPlugin {
 
   /**监听文件*/
   watch = () => {
+    /**创建空路由文件*/
+    this.#createRouteFile();
     const watchDirs = this.config.watchDirs || [];
     const watchDirsPaths = watchDirs.map((item) => {
       const _filePath = path.resolve(this.context, item.dir);
