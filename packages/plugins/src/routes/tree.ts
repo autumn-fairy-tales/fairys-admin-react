@@ -168,14 +168,14 @@ export class DirsTree {
     const lg = this.children.length;
     const _level = this.layout ? level + 1 : level;
     const _indent = '\t'.repeat(_level);
-    const _indent2 = '\t'.repeat(_level + 2);
+
     if (lg) {
       const child = this.children.sort((a, b) => {
         return a.routePath.localeCompare(b.routePath);
       });
       for (let index = 0; index < lg; index++) {
         const element = child[index];
-        const result = element.stringify(_level + 1);
+        const result = element.stringify(_level + 2);
         routeString += result.routeString;
         importString += result.importString;
       }
@@ -185,18 +185,16 @@ export class DirsTree {
         /**使用缓存页面*/
         if (this.#rootTree?.isKeepAliveBasePath) {
           return {
-            routeString: `${_indent}{\n${_indent}\t"path": "${
-              this.#routePath
-            }",\n${_indent}\t"Component": KeepAliveBaseHOC(${this.#componentName}, '${convertIdOrNameOne(
-              this.#routePath,
-            )}'),\n${_indent}},\n`,
+            routeString: `${_indent}{ "path": "${this.#routePath}", "Component": KeepAliveBaseHOC(${
+              this.#componentName
+            }, "${convertIdOrNameOne(this.#routePath)}") },\n`,
             importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
           };
         }
         return {
-          routeString: `${_indent}{\n${_indent}\t"index": true,\n${_indent}\t"Component": ${
+          routeString: `${_indent}{ "index": true, "path": "${this.#routePath}", "Component": ${
             this.#componentName
-          },\n${_indent}},\n`,
+          } },\n`,
           importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
         };
       }
@@ -205,40 +203,32 @@ export class DirsTree {
         // 保持路由组件的 HOC 函数
         if (this.#rootTree?.isKeepAliveBasePath) {
           return {
-            routeString: `${_indent}{\n${_indent}\t"path": "${
-              this.#routePath
-            }",\n${_indent}\t"lazy": async ()=>{\n${_indent2}const data${
-              this.#rootTree.isTs ? ' : any' : ''
-            } = await import('${
+            routeString: `${_indent}{ "path": "${this.#routePath}", "lazy": async ()=>{ const data${
+              this.#rootTree.isTs ? ': any' : ''
+            } = await import("${
               this.#componentPath
-            }');\n${_indent2}return { ...data, Component: KeepAliveBaseHOC(data.Component, '${convertIdOrNameOne(
+            }"); return { ...data, Component: KeepAliveBaseHOC(data.Component, '${convertIdOrNameOne(
               this.#routePath,
-            )}') }  },\n${_indent}},\n`,
+            )}') } } },\n`,
             importString: ``,
           };
         }
         return {
-          routeString: `${_indent}{\n${_indent}\t"path": "${this.#routePath}",\n${_indent}\t"lazy": () => import('${
-            this.#componentPath
-          }'),,\n${_indent}},\n`,
+          routeString: `${_indent}{ "path": "${this.#routePath}", "lazy": () => import('${this.#componentPath}') },\n`,
           importString: ``,
         };
       }
       /**使用缓存页面*/
       if (this.#rootTree?.isKeepAliveBasePath) {
         return {
-          routeString: `${_indent}{\n${_indent}\t"path": "${
-            this.#routePath
-          }",\n${_indent}\t"Component": KeepAliveBaseHOC(${this.#componentName}, '${convertIdOrNameOne(
-            this.#routePath,
-          )}'),\n${_indent}},\n`,
+          routeString: `${_indent}{ "path": "${this.#routePath}", "Component": KeepAliveBaseHOC(${
+            this.#componentName
+          }, "${convertIdOrNameOne(this.#routePath)}") },\n`,
           importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
         };
       }
       return {
-        routeString: `${_indent}{\n${_indent}\t"path": "${this.#routePath}",\n${_indent}\t"Component": ${
-          this.#componentName
-        },\n${_indent}},\n`,
+        routeString: `${_indent}{ "path": "${this.#routePath}", "Component": ${this.#componentName} },\n`,
         importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
       };
     }
@@ -257,9 +247,9 @@ export class DirsTree {
       }
       importString += `import ${this.#componentName} from '${this.#componentPath}';\n`;
       return {
-        routeString: `${_indent}{\n${_indent}\t"path": "${this.#routePath}", \n${_indent}\t"Component": ${
+        routeString: `${_indent}{ "path": "${this.#routePath}", "Component": ${
           this.#componentName
-        }, \n${_indent}\t"children": [\n\t${routeString}\n${_indent}], \n${_indent}},\n`,
+        }, "children": [\n${routeString.replace(/,\n$/, '\n')}] },\n`,
         importString,
       };
     }
@@ -270,9 +260,10 @@ export class DirsTree {
       };
     }
     return {
-      routeString: `${_indent}{\n${_indent}\t"path": "${
-        this.#routePath
-      }",\n${_indent}\t"children": [\n\t${routeString}\n${_indent}], \n${_indent}},\n`,
+      routeString: `${_indent}{ "path": "${this.#routePath}", "children": [\n${routeString.replace(
+        /,\n$/,
+        '\n',
+      )}] },\n`,
       importString,
     };
   };
@@ -412,8 +403,11 @@ export class TreeRoutes {
       routeString += result.routeString;
     }
     if (this.isTs) {
-      return `${importString}\nconst routes: RouteObject[] = [\n${routeString}\n];\nexport default routes;`;
+      return `${importString}\nconst routes: RouteObject[] = [\n${routeString.replace(
+        /,\n$/,
+        '\n',
+      )}];\nexport default routes;`;
     }
-    return `${importString}\nconst routes = [\n${routeString}\n];\nexport default routes;`;
+    return `${importString}\nconst routes = [\n${routeString.replace(/,\n$/, '\n')}];\nexport default routes;`;
   };
 }
