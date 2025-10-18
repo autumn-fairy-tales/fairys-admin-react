@@ -52,8 +52,13 @@ export class ReactRoutesPlugin {
     }
     this.config.watchDirs = [...this.config.watchDirs].map((item) => ({
       dir: item.dir.replace(/^\//, '').replace(/\/$/, ''),
-      routePrefix: item.routePrefix?.replace(/^\//, '').replace(/\/$/, '') || '/',
+      routePrefix: '/' + (item.routePrefix.replace(/^\//, '').replace(/\/$/, '') || ''),
     }));
+    const findx = this.config.watchDirs.find((item) => item.dir === 'src/pages');
+    const findx2 = this.config.watchDirs.find((item) => item.routePrefix === '/');
+    if (!findx && !findx2) {
+      this.config.watchDirs.push({ dir: 'src/pages', routePrefix: '/' });
+    }
     this.treeRoutes = new TreeRoutes();
     this.treeRoutes.watchDirs = this.config.watchDirs;
     this.treeRoutes.keepAliveBasePath = this.config.keepAliveBasePath;
@@ -90,8 +95,11 @@ export class ReactRoutesPlugin {
     // 通过 routePrefix 进行分组
     // 在每一组，区分布局和页面
     const routeGroups = new Map<string, { layout?: RouteItem; pages: RouteItem[] }>();
+    const list = [...this.routes.values()].sort((a, b) => {
+      return a?.path?.localeCompare(b.path || '') || 0;
+    });
     // 遍历路由列表，进行分组
-    for (const route of this.routes.values()) {
+    for (const route of list) {
       const routePrefix = route.routePrefix || '/';
       if (!routeGroups.has(routePrefix)) {
         routeGroups.set(routePrefix, { layout: undefined, pages: [] });
@@ -111,8 +119,9 @@ export class ReactRoutesPlugin {
     const routeGroups = this.#groupRouteLayout();
     let importString = '';
     const list = [...routeGroups.values()].sort((a, b) => {
-      return a.layout?.path?.localeCompare(b.layout?.path || '') || 0;
+      return a.layout?.routePrefix?.localeCompare(b.layout?.routePrefix || '') || 0;
     });
+
     let routes: string = '';
     const isTs = this.#isTsConfigFile();
     if (isTs) {
@@ -209,8 +218,11 @@ export class ReactRoutesPlugin {
     const routePath = link
       .replace(dirItem.dir, dirItem.routePrefix || '/')
       .replace(/\/page\.(tsx|jsx|js)$/, '')
-      .replace(/\.page\.(tsx|jsx|js)$/, '');
+      .replace(/\.page\.(tsx|jsx|js)$/, '')
+      .replace(/\.(tsx|jsx|js)$/, '');
+
     const _routePath = routePath.replace(/^\//, '').replace(/^\//, '').replace(/\[/g, ':').replace(/\]/g, '');
+
     // 组件地址
     const componentPath = link
       .replace(/^\//, '')

@@ -45,6 +45,7 @@ export class DirsTree {
       .replace(/\[/g, ':')
       .replace(/\]/g, '')
       .replace(/\.(tsx|jsx|js)$/, '');
+
     const _componentPath = path.join(this.#rootTree?.dir || 'src/pages', _link);
     // 组件地址
     const componentPath = _componentPath
@@ -347,12 +348,9 @@ export class TreeRoutes {
     // console.log('link', link)
     /**创建路由项*/
     const dirItem = this.#getWatchDirsItem(link);
-    const _link = link
-      .replace(dirItem.dir, dirItem.routePrefix || '/')
-      .replace(/^\/\//, '')
-      .replace(/^\//, '');
-    // console.log('_link', _link)
+    const _link = link.replace(dirItem.dir, '/').replace(/^\/\//, '').replace(/^\//, '');
     const finx = this.routes.find((it) => it.dir === dirItem.dir);
+
     if (finx) {
       finx.addChild(_link);
     } else {

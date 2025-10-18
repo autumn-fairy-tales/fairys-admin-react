@@ -8,7 +8,7 @@ export interface WatchDirsItem {
    * @description 路由前缀
    * @default "/"
    */
-  routePrefix?: string;
+  routePrefix: string;
 }
 
 export interface ReactRoutesPluginOptions {

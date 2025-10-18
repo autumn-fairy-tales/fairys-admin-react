@@ -1,9 +1,9 @@
 import type { RouteObject } from 'react-router';
-import Home from './pages/page';
+// import Home from './pages/page';
 // import List from './pages/list/page';
 // import Detail from './pages/detail/page';
 // import About from './pages/about/page';
-import { Layout } from '@fairys/admin-tools-react';
+// import { Layout } from '@fairys/admin-tools-react';
 // import routevirtual from '@virtual:fairys/routes';
 // @ts-ignore
 // import routevirtual from '@/fairys-routes';
