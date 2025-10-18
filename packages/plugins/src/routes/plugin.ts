@@ -149,7 +149,7 @@ export class ReactRoutesPlugin {
             _route = indexCode(element) + _route;
           }
         } else {
-          if (this.config.loadType === 'lazy') {
+          if (this.config.loadType === 'lazy' && !/(404|403|500|\*)$/.test(element.path)) {
             if (this.config.keepAliveBasePath) {
               _route += keepAliveBasePathLazyCode(element, isTs);
             } else {
