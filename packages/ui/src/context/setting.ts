@@ -129,6 +129,13 @@ export class SettingInstance {
     }
   }
 
+  /**初始化配置
+   * @deprecated 请使用 `ctor` 方法
+   */
+  initSetting = (state: SettingInstanceState = {}) => {
+    this.ctor(state);
+  };
+
   /**初始配置*/
   ctor = (state: SettingInstanceState = {}) => {
     const _newState: SettingInstanceState = {
