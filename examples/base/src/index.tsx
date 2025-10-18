@@ -25,6 +25,8 @@ authDataInstance.onLogout = () => {
   console.log('onLogout');
   localStorage.removeItem('token');
 };
+
+// ========================知设置==开始=======================================
 notificationDataInstance.ctor({
   tabItems: [
     {
@@ -41,6 +43,26 @@ notificationDataInstance.ctor({
     },
   ],
 });
+
+notificationDataInstance.updatedToType('unread', [
+  {
+    icon: 'ant-design:unordered-list',
+    id: '1',
+    title: '未读',
+    date: '2023-01-01',
+    type: 'info',
+  },
+]);
+
+notificationDataInstance.updatedToType('read', [
+  {
+    icon: 'ant-design:unordered-list',
+    id: '1',
+    title: '已读',
+    date: '2023-01-01',
+    type: 'info',
+  },
+]);
 
 notificationDataInstance.updatedToType('all', [
   {
@@ -59,7 +81,6 @@ notificationDataInstance.updatedToType('all', [
     type: 'success',
   },
 ]);
-
 /**点击数据*/
 notificationDataInstance.onClickItem = (item) => {
   console.log(item);
@@ -72,6 +93,8 @@ notificationDataInstance.onClickMore = (activeKey) => {
 notificationDataInstance.onUpdateActiveKey = (key) => {
   console.log(key);
 };
+
+// ========================通知设置==结束=======================================
 
 appPluginDataInstance.addPlugin({
   'avatar-menus': {

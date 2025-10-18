@@ -4,7 +4,7 @@ import { proxy, ref, useSnapshot } from 'valtio';
 export interface NotificationTabItemType {
   /**tab标题*/
   title: string;
-  /**tab键*/
+  /**tab键(分类类型)*/
   key: string;
   /**图标*/
   icon?: string;

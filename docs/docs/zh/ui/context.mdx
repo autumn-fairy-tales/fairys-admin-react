@@ -530,6 +530,34 @@ export declare class MotionAnimationInstance {
 }
 ```
 
+**示例**
+
+```ts
+import { motionAnimationInstance } from '@fairys/admin-tools-react';
+
+motionAnimationInstance.expands([
+  {
+    name: '3D翻转',
+    config: {
+      initial: { rotateY: 90, opacity: 0 },
+      animate: { rotateY: 0, opacity: 1 },
+      exit: { rotateY: -90, opacity: 0 },
+      transition: { duration: 0.6 },
+      style: { transformStyle: 'preserve-3d' },
+    },
+  },
+  {
+    name: '缩放',
+    config: {
+      initial: { scale: 0.8, opacity: 0 },
+      animate: { scale: 1, opacity: 1 },
+      exit: { scale: 1.2, opacity: 0 },
+      transition: { duration: 0.5 },
+    },
+  },
+])
+
+```
 ## notificationDataInstance 通知数据
 
 :::tip
@@ -571,7 +599,7 @@ export type NotificationDataState = {
 export interface NotificationTabItemType {
     /**tab标题*/
     title: string;
-    /**tab键*/
+    /**tab键(分类类型)*/
     key: string;
     /**图标*/
     icon?: string;
@@ -640,6 +668,119 @@ export class NotificationDataInstance {
 ```ts
 export const useNotificationData: () => [NotificationDataState, NotificationDataInstance, NotificationDataState["__defaultValue"]];
 ```
+
+**通知分类使用**
+
+```ts
+import { notificationDataInstance } from '@fairys/admin-tools-react';
+
+notificationDataInstance.ctor({
+  tabItems: [
+    {
+      title: '全部',
+      key: 'all',
+    },
+    {
+      title: '未读',
+      key: 'unread',
+    },
+    {
+      title: '已读',
+      key: 'read',
+    },
+  ],
+});
+
+notificationDataInstance.updatedToType('unread', [
+  {
+    icon: 'ant-design:unordered-list',
+    id: '1',
+    title: '未读',
+    date: '2023-01-01',
+    type: 'info',
+  },
+]);
+
+notificationDataInstance.updatedToType('read', [
+  {
+    icon: 'ant-design:unordered-list',
+    id: '1',
+    title: '已读',
+    date: '2023-01-01',
+    type: 'info',
+  },
+]);
+
+notificationDataInstance.updatedToType('all', [
+  {
+    icon: 'ant-design:unordered-list',
+    id: '1',
+    title:
+      '通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1',
+    date: '2023-01-01',
+    type: 'info',
+  },
+  {
+    icon: 'ant-design:unordered-list',
+    id: '2',
+    title: '通知2',
+    date: '2023-01-02',
+    type: 'success',
+  },
+]);
+/**点击数据*/
+notificationDataInstance.onClickItem = (item) => {
+  console.log(item);
+};
+/**点击查看全部*/
+notificationDataInstance.onClickMore = (activeKey) => {
+  console.log(activeKey);
+};
+/**更新值 tabs 选项key（外部挂载事件）*/
+notificationDataInstance.onUpdateActiveKey = (key) => {
+  console.log(key);
+};
+
+```
+
+**通知无分类使用**
+
+```ts
+import { notificationDataInstance } from '@fairys/admin-tools-react';
+
+notificationDataInstance.updateDataList([
+  {
+    icon: 'ant-design:unordered-list',
+    id: '1',
+    title:
+      '通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1通知1',
+    date: '2023-01-01',
+    type: 'info',
+  },
+  {
+    icon: 'ant-design:unordered-list',
+    id: '2',
+    title: '通知2',
+    date: '2023-01-02',
+    type: 'success',
+  },
+]);
+
+/**点击数据*/
+notificationDataInstance.onClickItem = (item) => {
+  console.log(item);
+};
+/**点击查看全部*/
+notificationDataInstance.onClickMore = (activeKey) => {
+  console.log(activeKey);
+};
+/**更新值 tabs 选项key（外部挂载事件）*/
+notificationDataInstance.onUpdateActiveKey = (key) => {
+  console.log(key);
+};
+
+```
+
 
 ## settingInstance 设置数据
 
