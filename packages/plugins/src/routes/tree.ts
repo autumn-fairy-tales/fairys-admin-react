@@ -1,9 +1,6 @@
 import path from 'path';
 import { WatchDirsItem } from './interface';
-
-export const convertIdOrNameOne = (value: string) => {
-  return `fairys_admin_keep_alive_${value}`;
-};
+import { convertIdOrNameOne } from './code';
 
 export class DirsTree {
   /**目录*/

@@ -38,10 +38,6 @@ export class ReactRoutesPlugin {
    */
   treeRoutes: TreeRoutes = new TreeRoutes();
 
-  static convertIdOrNameOne = (value: string) => {
-    return `fairys_admin_keep_alive_${value}`;
-  };
-
   constructor(options: ReactRoutesPluginOptions = {}) {
     this.config = {
       loadType: 'layout_default_lazy',
