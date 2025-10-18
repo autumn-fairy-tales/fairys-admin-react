@@ -4,10 +4,80 @@
 
 项目设置组件，用于显示项目的设置选项。
 
+- 主题风格
+- 主题颜色
+- 布局模式
+- 页面切换模式
+
 :::
 
 **引入**
 
 ```ts
 import { SettingDrawer } from '@fairys/admin-tools-react';
+```
+
+## 主题风格
+
+- 亮色
+- 暗色
+- 自动
+
+## 主题颜色
+
+通过颜色选择器选择主题颜色。
+
+## 布局模式
+
+- 主子菜单侧边
+- 主菜单左侧+移入显示子菜单
+- 主菜单顶部+移入显示子菜单
+- 主菜单顶部+子菜单侧边
+- 主子菜单合并侧边展示
+- 主子菜单合并侧边展示+顶部信息
+- 移动
+
+## 页面切换模式
+
+默认选择动画列表（默认：滑动）
+
+- 无动画
+- 淡入淡出
+- 滑动
+- 3D翻转
+- 缩放
+
+扩展动画选项配置，通过`motionAnimationInstance`配置。
+
+:::warning
+
+在设置值时，需要在渲染`Layout`和`FairysRoot`组件之前调用
+
+:::
+
+```ts
+import { motionAnimationInstance } from '@fairys/admin-tools-react';
+
+motionAnimationInstance.expands([
+  {
+    name: '3D翻转',
+    config: {
+      initial: { rotateY: 90, opacity: 0 },
+      animate: { rotateY: 0, opacity: 1 },
+      exit: { rotateY: -90, opacity: 0 },
+      transition: { duration: 0.6 },
+      style: { transformStyle: 'preserve-3d' },
+    },
+  },
+  {
+    name: '缩放',
+    config: {
+      initial: { scale: 0.8, opacity: 0 },
+      animate: { scale: 1, opacity: 1 },
+      exit: { scale: 1.2, opacity: 0 },
+      transition: { duration: 0.5 },
+    },
+  },
+])
+
 ```

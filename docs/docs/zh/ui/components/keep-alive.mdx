@@ -22,7 +22,6 @@ import React,{ useState } from 'react';
 
 const Demo = () => {
   const [open,setOpen] = useState(false)
-  console.log('KeepAliveBaseHOC');
   return (<div style={{ position: "relative" , width: "100%", height: "300px" }}>
     <FairysButtonBase onClick={() => setOpen(true)}>
       打开全屏
@@ -40,13 +39,7 @@ export default KeepAliveBaseHOC(Demo,'keep-alive-demo');
 ## 组件参数
 
 ```ts
-interface FairysFullScreenProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  /**是否全屏*/
-  open?: boolean;
-  /**全屏内容*/
-  children?: React.ReactNode;
-  /**关闭全屏回调*/
-  onClose?: () => void;
-}
+import { FC } from 'react';
+export declare const KeepAliveBaseHOC: (Component: FC, id: string) => FC;
 ```
 

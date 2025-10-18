@@ -1,11 +1,10 @@
 # 状态实例
 
-:::tip 内置状态实例
+:::warning 内置状态实例
 
 在设置初始状态时，需要在渲染`Layout`和`FairysRoot`组件之前调用
 
 :::
-
 
 ## accountDataInstance 账号信息
 
@@ -14,8 +13,6 @@
 用于存储当前登录用户的账号信息，包括用户名、用户头像、用户邮箱、用户手机号、用户角色等。
 
 :::
-
-
 
 **引入**
 
@@ -60,137 +57,6 @@ export class AccountDataInstance {
 
 ```ts
 export  const useAccountData: () => [AccountDataState, AccountDataInstance, AccountDataState["__defaultValue"]];
-```
-
-## aliveControllerBaseInstance 页面缓存
-
-:::tip
-
-用于缓存当前页面的组件实例。
-
-:::
-
-
-**引入**
-
-```ts
-import { aliveControllerBaseInstance } from '@fairys/admin-tools-react';
-```
-
-**实体类**
-
-```ts
-import type { AliveController } from 'react-activation';
-export class AliveControllerBase {
-    aliveController: AliveController;
-    /**转换路由值列表*/
-    static convertIdOrNameList: (value: string[]) => string[];
-    /**清空缓存*/
-    clear: () => void;
-    /**删除缓存*/
-    drop: (name: string) => void;
-    /**删除缓存ById*/
-    dropById: (id: string) => void;
-    /**删除缓存Scope*/
-    dropScope: (name: string) => void;
-    /**删除缓存ScopeByIds*/
-    dropScopeByIds: (ids: string[]) => void;
-    /**刷新缓存*/
-    refresh: (name: string) => void;
-    /**刷新缓存ById*/
-    refreshById: (id: string) => void;
-    /**刷新缓存Scope*/
-    refreshScope: (name: string) => void;
-    /**刷新缓存ScopeByIds*/ 
-    refreshScopeByIds: (ids: string[]) => void;
-    /**获取缓存节点*/
-    getCachingNodes: () => import("react-activation").CachingNode[];
-}
-```
-
-## appDataInstance 应用数据
-
-:::tip
-
-用于存储当前应用的全局数据，包括路由信息、设置信息、菜单信息、标签栏信息、账号信息、运动动画信息、应用插件信息、通知信息、收藏信息等。
-
-:::
-
-
-**引入**
-
-```ts
-import { appDataInstance } from '@fairys/admin-tools-react';
-```
-
-**实体类**
-
-```ts
-import { AliveControllerBase } from './alive-controller';
-import { AuthDataInstance } from './auth-data';
-import { FavoritesDataInstance } from './favorites-data';
-declare class AppDataInstance {
-    static router: import("./router-data").RouterDataInstance;
-    static setting: import("./setting").SettingInstance;
-    static menu: import("./menu-data").MenuDataInstance;
-    static tabBar: import("./tab-bar").TabBarInstance;
-    static account: import("./account-data").AccountDataInstance;
-    static motionAnimation: import("./motion-animation").MotionAnimationInstance;
-    static appPlugin: import("./app-plugins-data").AppPluginDataInstance;
-    static notification: import("./notification-data").NotificationDataInstance;
-    static favoritesDataInstance: FavoritesDataInstance;
-    /**挂载的AliveController*/
-    aliveController: AliveControllerBase;
-    authDataInstance: AuthDataInstance;
-    /**清空tab项*/
-    clear: () => void;
-}
-```
-
-## appPluginDataInstance 应用插件数据
-
-:::tip
-
-用于存储当前应用的插件数据，包括工具条右侧插件、头像菜单插件等。
-
-:::
-
-
-**引入**
-
-```ts
-import { appPluginDataInstance } from '@fairys/admin-tools-react';
-```
-
-**实体类**
-
-```ts
-import { FairysPopoverMenuItemType } from '../components/popover-menu';
-export type AppPluginType = {
-    /**工具条右侧插件*/
-    'toolBar-right'?: {
-        /**渲染组件*/
-        render?: React.ReactNode;
-        /**渲染重写函数*/
-        override?: (menus: React.ReactNode[]) => React.ReactNode;
-    };
-    /**头像菜单插件*/
-    'avatar-menus'?: {
-        /**添加菜单项*/
-        menus?: FairysPopoverMenuItemType[];
-        /**重写菜单项*/
-        override?: (menus: FairysPopoverMenuItemType[]) => FairysPopoverMenuItemType[];
-    };
-};
-
-export class AppPluginDataInstance {
-    /**插件组件*/
-    appPlugins: AppPluginType;
-    /**添加插件*/
-    addPlugin: (plugin: AppPluginType) => void;
-    /**清空数据*/
-    clear: () => void;
-}
 ```
 
 ## authDataInstance 认证数据
@@ -262,53 +128,50 @@ export declare class AuthDataInstance {
 export  const useAuthDataInstance: () => [AuthDataState, AuthDataInstance, AuthDataState["__defaultValue"]];
 ```
 
-## favoritesDataInstance 收藏数据
+## aliveControllerBaseInstance 页面缓存
 
 :::tip
 
-用于存储当前应用的收藏数据，包括收藏的菜单项。
+用于缓存当前页面的组件实例。
 
 :::
+
 
 **引入**
 
 ```ts
-import { favoritesDataInstance } from '@fairys/admin-tools-react';
-```
-
-**状态值**
-
-```ts
-import { MenuItemType } from './menu-data';
-export type FavoritesDataState = {
-    /**列表数据*/
-    dataList?: MenuItemType[];
-    /**默认引用值*/
-    __defaultValue?: string;
-};
+import { aliveControllerBaseInstance } from '@fairys/admin-tools-react';
 ```
 
 **实体类**
 
 ```ts
-import { MenuItemType } from './menu-data';
-export declare class FavoritesDataInstance {
-    static localStorageKey: string;
-    state: FavoritesDataState;
-    constructor();
-    /**添加*/
-    addItem: (item: MenuItemType) => void;
-    /**移除*/
-    removeItem: (item: MenuItemType) => void;
-    /**清空数据*/
+import type { AliveController } from 'react-activation';
+export class AliveControllerBase {
+    aliveController: AliveController;
+    /**转换路由值列表*/
+    static convertIdOrNameList: (value: string[]) => string[];
+    /**清空缓存*/
     clear: () => void;
+    /**删除缓存*/
+    drop: (name: string) => void;
+    /**删除缓存ById*/
+    dropById: (id: string) => void;
+    /**删除缓存Scope*/
+    dropScope: (name: string) => void;
+    /**删除缓存ScopeByIds*/
+    dropScopeByIds: (ids: string[]) => void;
+    /**刷新缓存*/
+    refresh: (name: string) => void;
+    /**刷新缓存ById*/
+    refreshById: (id: string) => void;
+    /**刷新缓存Scope*/
+    refreshScope: (name: string) => void;
+    /**刷新缓存ScopeByIds*/ 
+    refreshScopeByIds: (ids: string[]) => void;
+    /**获取缓存节点*/
+    getCachingNodes: () => import("react-activation").CachingNode[];
 }
-```
-
-**hooks**
-
-```ts
-export  const useFavoritesData: () => [FavoritesDataState, FavoritesDataInstance, FavoritesDataState["__defaultValue"]];
 ```
 
 ## menuDataInstance 菜单数据
@@ -427,6 +290,199 @@ export class MenuDataInstance {
 
 ```ts
 export const useMenuData: () => [MenuDataInstanceState, MenuDataInstance, string | undefined];
+```
+
+## routerDataInstance 路由数据
+
+:::tip
+
+用于存储当前应用的路由数据，包括路由配置、路由跳转方法等。
+
+:::
+
+**引入**
+
+```ts
+import { routerDataInstance } from '@fairys/admin-tools-react';
+```
+
+**实体类**
+
+```ts
+import type { DataRouter, NavigateFunction, To, NavigateOptions, RouteObject, DOMRouterOpts, MemoryRouterOpts } from 'react-router';
+export class RouterDataInstance {
+    router: DataRouter | undefined;
+    /**从root挂载的数据*/
+    __navigate: NavigateFunction;
+    /**跳转前回调*/
+    onNavigateBefore: (to: To, next: (to?: To, options?: NavigateOptions) => void) => Promise<boolean>;
+    /**内置跳转方法*/
+    navigate: (to: To | number, options?: NavigateOptions) => Promise<void>;
+    createBrowserRouter: (routes: RouteObject[], opts?: DOMRouterOpts) => DataRouter;
+    createMemoryRouter: (routes: RouteObject[], opts?: MemoryRouterOpts) => DataRouter;
+    createHashRouter: (routes: RouteObject[], opts?: DOMRouterOpts) => DataRouter;
+    /**清空tab项*/
+    clear: () => void;
+}
+```
+
+## favoritesDataInstance 收藏数据
+
+:::tip
+
+用于存储当前应用的收藏数据，包括收藏的菜单项。
+
+:::
+
+**引入**
+
+```ts
+import { favoritesDataInstance } from '@fairys/admin-tools-react';
+```
+
+**状态值**
+
+```ts
+import { MenuItemType } from './menu-data';
+export type FavoritesDataState = {
+    /**列表数据*/
+    dataList?: MenuItemType[];
+    /**默认引用值*/
+    __defaultValue?: string;
+};
+```
+
+**实体类**
+
+```ts
+import { MenuItemType } from './menu-data';
+export declare class FavoritesDataInstance {
+    static localStorageKey: string;
+    state: FavoritesDataState;
+    constructor();
+    /**添加*/
+    addItem: (item: MenuItemType) => void;
+    /**移除*/
+    removeItem: (item: MenuItemType) => void;
+    /**清空数据*/
+    clear: () => void;
+}
+```
+
+**hooks**
+
+```ts
+export  const useFavoritesData: () => [FavoritesDataState, FavoritesDataInstance, FavoritesDataState["__defaultValue"]];
+```
+
+## tabBarInstance 页面标签栏
+
+:::tip
+
+用于存储当前应用的页面标签栏数据，包括标签栏项集合、右侧选择的标签栏项集合、页面是否全屏等。
+
+:::
+
+**引入**
+
+```ts
+import { tabBarInstance } from '@fairys/admin-tools-react';
+```
+
+**状态值**
+
+```ts
+import type { MenuItemType } from './menu-data';
+export interface TabBarItemType extends MenuItemType {
+}
+export interface TabBarInstanceState {
+    /**tab项集合*/
+    tabBarItems: TabBarItemType[];
+    /**右侧选择的tab项集合,不在可视区域的数据*/
+    dropDownTabBarItems: TabBarItemType[];
+    /**页面是否全屏*/
+    pageFullScreen?: boolean;
+    /**默认引用值*/
+    __defaultValue?: string;
+}
+```
+
+**实体类**
+
+```ts
+export class TabBarInstance {
+    state: TabBarInstanceState;
+    /**初始化渲染菜单数据*/
+    ctor: (tabBarItems: MenuItemType[]) => void;
+    /**添加tab项*/
+    addItem: (item: TabBarItemType) => void;
+    /**根据path添加tab项*/
+    add: (path: string) => void;
+    /**删除tab项*/
+    remove: (path: string, isActive: boolean) => void;
+    /**设置页面是否全屏*/
+    onToggleFullScreen: () => void;
+    /**关闭其他标签*/
+    removeOther: (current: number, isActive: boolean) => void;
+    /**移除左侧*/
+    removeLeft: (current: number, isActive: boolean) => void;
+    /**移除右侧*/
+    removeRight: (current: number, isActive: boolean) => void;
+    /**清空tab项*/
+    clear: () => void;
+}
+```
+
+**hooks**
+
+```ts
+export const useTabBar: () => [TabBarInstanceState, TabBarInstance, string | undefined];
+```
+
+## appPluginDataInstance 应用插件数据
+
+:::tip
+
+用于存储当前应用的插件数据，包括工具条右侧插件、头像菜单插件等。
+
+:::
+
+
+**引入**
+
+```ts
+import { appPluginDataInstance } from '@fairys/admin-tools-react';
+```
+
+**实体类**
+
+```ts
+import { FairysPopoverMenuItemType } from '../components/popover-menu';
+export type AppPluginType = {
+    /**工具条右侧插件*/
+    'toolBar-right'?: {
+        /**渲染组件*/
+        render?: React.ReactNode;
+        /**渲染重写函数*/
+        override?: (menus: React.ReactNode[]) => React.ReactNode;
+    };
+    /**头像菜单插件*/
+    'avatar-menus'?: {
+        /**添加菜单项*/
+        menus?: FairysPopoverMenuItemType[];
+        /**重写菜单项*/
+        override?: (menus: FairysPopoverMenuItemType[]) => FairysPopoverMenuItemType[];
+    };
+};
+
+export class AppPluginDataInstance {
+    /**插件组件*/
+    appPlugins: AppPluginType;
+    /**添加插件*/
+    addPlugin: (plugin: AppPluginType) => void;
+    /**清空数据*/
+    clear: () => void;
+}
 ```
 
 ## motionAnimationInstance 页面动画
@@ -585,40 +641,6 @@ export class NotificationDataInstance {
 export const useNotificationData: () => [NotificationDataState, NotificationDataInstance, NotificationDataState["__defaultValue"]];
 ```
 
-## routerDataInstance 路由数据
-
-:::tip
-
-用于存储当前应用的路由数据，包括路由配置、路由跳转方法等。
-
-:::
-
-**引入**
-
-```ts
-import { routerDataInstance } from '@fairys/admin-tools-react';
-```
-
-**实体类**
-
-```ts
-import type { DataRouter, NavigateFunction, To, NavigateOptions, RouteObject, DOMRouterOpts, MemoryRouterOpts } from 'react-router';
-export class RouterDataInstance {
-    router: DataRouter | undefined;
-    /**从root挂载的数据*/
-    __navigate: NavigateFunction;
-    /**跳转前回调*/
-    onNavigateBefore: (to: To, next: (to?: To, options?: NavigateOptions) => void) => Promise<boolean>;
-    /**内置跳转方法*/
-    navigate: (to: To | number, options?: NavigateOptions) => Promise<void>;
-    createBrowserRouter: (routes: RouteObject[], opts?: DOMRouterOpts) => DataRouter;
-    createMemoryRouter: (routes: RouteObject[], opts?: MemoryRouterOpts) => DataRouter;
-    createHashRouter: (routes: RouteObject[], opts?: DOMRouterOpts) => DataRouter;
-    /**清空tab项*/
-    clear: () => void;
-}
-```
-
 ## settingInstance 设置数据
 
 :::tip
@@ -712,7 +734,6 @@ export interface SettingInstanceState {
 **实体类**
 
 ```ts
-
 export declare class SettingInstance {
     static localStorageKey: string;
     state: SettingInstanceState;
@@ -761,66 +782,40 @@ export declare class SettingInstance {
 export const useSetting: () => [SettingInstanceState, SettingInstance, string | undefined];
 ```
 
-## tabBarInstance 页面标签栏
+## appDataInstance 应用数据
 
 :::tip
 
-用于存储当前应用的页面标签栏数据，包括标签栏项集合、右侧选择的标签栏项集合、页面是否全屏等。
+用于存储当前应用的全局数据，包括路由信息、设置信息、菜单信息、标签栏信息、账号信息、运动动画信息、应用插件信息、通知信息、收藏信息等。
 
 :::
 
 **引入**
 
 ```ts
-import { tabBarInstance } from '@fairys/admin-tools-react';
-```
-
-**状态值**
-
-```ts
-import type { MenuItemType } from './menu-data';
-export interface TabBarItemType extends MenuItemType {
-}
-export interface TabBarInstanceState {
-    /**tab项集合*/
-    tabBarItems: TabBarItemType[];
-    /**右侧选择的tab项集合,不在可视区域的数据*/
-    dropDownTabBarItems: TabBarItemType[];
-    /**页面是否全屏*/
-    pageFullScreen?: boolean;
-    /**默认引用值*/
-    __defaultValue?: string;
-}
+import { appDataInstance } from '@fairys/admin-tools-react';
 ```
 
 **实体类**
 
 ```ts
-export class TabBarInstance {
-    state: TabBarInstanceState;
-    /**初始化渲染菜单数据*/
-    ctor: (tabBarItems: MenuItemType[]) => void;
-    /**添加tab项*/
-    addItem: (item: TabBarItemType) => void;
-    /**根据path添加tab项*/
-    add: (path: string) => void;
-    /**删除tab项*/
-    remove: (path: string, isActive: boolean) => void;
-    /**设置页面是否全屏*/
-    onToggleFullScreen: () => void;
-    /**关闭其他标签*/
-    removeOther: (current: number, isActive: boolean) => void;
-    /**移除左侧*/
-    removeLeft: (current: number, isActive: boolean) => void;
-    /**移除右侧*/
-    removeRight: (current: number, isActive: boolean) => void;
+import { AliveControllerBase } from './alive-controller';
+import { AuthDataInstance } from './auth-data';
+import { FavoritesDataInstance } from './favorites-data';
+declare class AppDataInstance {
+    static router: import("./router-data").RouterDataInstance;
+    static setting: import("./setting").SettingInstance;
+    static menu: import("./menu-data").MenuDataInstance;
+    static tabBar: import("./tab-bar").TabBarInstance;
+    static account: import("./account-data").AccountDataInstance;
+    static motionAnimation: import("./motion-animation").MotionAnimationInstance;
+    static appPlugin: import("./app-plugins-data").AppPluginDataInstance;
+    static notification: import("./notification-data").NotificationDataInstance;
+    static favoritesDataInstance: FavoritesDataInstance;
+    /**挂载的AliveController*/
+    aliveController: AliveControllerBase;
+    authDataInstance: AuthDataInstance;
     /**清空tab项*/
     clear: () => void;
 }
-```
-
-**hooks**
-
-```ts
-export const useTabBar: () => [TabBarInstanceState, TabBarInstance, string | undefined];
 ```
