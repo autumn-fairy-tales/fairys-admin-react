@@ -11,7 +11,7 @@ import { useDarkModeWatchInstance , darkModeWatchInstance} from '@fairys/admin-t
 ## 示例
 
 ```tsx preview
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { darkModeWatchInstance , useDarkModeWatchInstance} from '@fairys/admin-tools-react';
 
 const Demo = ()=> {

@@ -9,3 +9,4 @@ export * from './account-data';
 export * from './alive-controller';
 export * from './notification-data';
 export * from './app-data';
+export * from './dark-mode';
