@@ -13,7 +13,6 @@ import { menuItems } from '../menu';
 import { routes } from '../routes';
 import { Login } from './login';
 import { onGetAuth } from './utils';
-import './tree';
 
 export const AuthRoot = () => {
   useMemo(() => {
