@@ -75,14 +75,134 @@ export default Login;
 
 ## 组件参数
 
+**表单实例**
+
 ```ts
-interface FairysFullScreenProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
-  /**是否全屏*/
-  open?: boolean;
-  /**全屏内容*/
-  children?: React.ReactNode;
-  /**关闭全屏回调*/
-  onClose?: () => void;
+export type FairysRuleItemType = (value: any, formData: any) => Promise<React.ReactNode> | React.ReactNode;
+interface FairysLoginPageFormState {
+    /**所有表单项值*/
+    formData: Record<string, any>;
+    /**所有表单项错误信息*/
+    errors: Record<string, React.ReactNode>;
 }
+declare class FairysLoginPageFormItemInstance {
+    /**表单项名称*/
+    name: string;
+    /**表单项值*/
+    value: any;
+    /**表单项错误信息*/
+    errors: React.ReactNode;
+}
+export interface UseFairysLoginPageFormItemInstanceProps {
+    /**表单项名称*/
+    name: string;
+    /**表单项值属性名*/
+    valuePropName?: string;
+    /**表单项值格式化函数*/
+    formatValue?: (value: any, form: FairysLoginPageFormInstance, event: any) => any;
+}
+export declare const useFairysLoginPageFormItemInstance: (props: UseFairysLoginPageFormItemInstanceProps) => {
+    value: any;
+    errors: string | number | boolean | {
+        readonly type: string | ((props: any, deprecatedLegacyContext?: any) => import("react").ReactNode) | {};
+        readonly props: any;
+        readonly key: string | null;
+    } | {
+        readonly [Symbol.iterator]: () => Iterator<import("react").ReactNode, any, any>;
+    } | {
+        readonly children: string | number | boolean | {
+            readonly type: string | ((props: any, deprecatedLegacyContext?: any) => import("react").ReactNode) | {};
+            readonly props: any;
+            readonly key: string | null;
+        } | {
+            readonly [Symbol.iterator]: () => Iterator<import("react").ReactNode, any, any>;
+        } | /*elided*/ any;
+        readonly type: string | ((props: any, deprecatedLegacyContext?: any) => import("react").ReactNode) | {};
+        readonly props: any;
+        readonly key: string | null;
+    };
+    itemInstance: FairysLoginPageFormItemInstance;
+    formInstance: FairysLoginPageFormInstance;
+    onChange: (event: any) => void;
+};
+export declare class FairysLoginPageFormInstance {
+    /**所有表单项值*/
+    state: FairysLoginPageFormState;
+    /**所有表单项*/
+    items: Map<string, FairysLoginPageFormItemInstance>;
+    /**验证规则*/
+    rules: Record<string, FairysRuleItemType>;
+    register: (name: string, item: FairysLoginPageFormItemInstance) => () => void;
+    /**更新表单值*/
+    updatedFormData: (value: Record<string, any>, isValidate?: boolean) => void;
+    /**更新错误信息*/
+    updatedErrors: (value: Record<string, React.ReactNode>) => void;
+    /**验证表单*/
+    validate: (keys?: string[], isReturn?: boolean) => Promise<{
+        value: {
+            readonly [x: string]: any;
+        };
+        errors: Record<string, import("react").ReactNode>;
+    }>;
+    /**值更新*/
+    onValueChange: (name: string, value: any) => void;
+}
+export declare const useFairysLoginPageFormInstance: (form?: FairysLoginPageFormInstance) => FairysLoginPageFormInstance;
+export declare const FairysLoginPageFormInstanceContext: import("react").Context<FairysLoginPageFormInstance>;
+export declare const useFairysLoginPageFormInstanceContext: () => FairysLoginPageFormInstance;
 ```
 
+**表单项**
+
+```ts
+import { UseFairysLoginPageFormItemInstanceProps } from './instance';
+export interface FairysLoginPageFormItemInputProps extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+    /**错误边框位置*/
+    errorBorderd?: 'bottom' | 'none' | 'all';
+    /**是否存在验证不通过信息*/
+    'data-is-error'?: boolean;
+}
+export declare const FairysLoginPageFormItemInput: (props: FairysLoginPageFormItemInputProps) => import("react/jsx-runtime").JSX.Element;
+export interface FairysLoginPageFormItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, UseFairysLoginPageFormItemInstanceProps {
+    /**标签*/
+    label?: React.ReactNode;
+    /**是否必填*/
+    required?: boolean;
+    /**显示错误信息*/
+    isShowErrorMessage?: boolean;
+    /**布局*/
+    layout?: 'vertical' | 'horizontal';
+    /**标签类名*/
+    labelClassName?: string;
+}
+export declare const FairysLoginPageFormItem: (props: FairysLoginPageFormItemProps) => import("react/jsx-runtime").JSX.Element;
+```
+
+**表单**
+
+```ts
+import { FairysLoginPageFormInstance } from './instance';
+interface FairysLoginPageProps extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'title'> {
+  /**登录页标题*/
+    title?: React.ReactNode;
+    /**登录页表单实例*/
+    form?: FairysLoginPageFormInstance;
+    /**登录页表单验证规则*/
+    rules?: FairysLoginPageFormInstance['rules'];
+    // 登录页表单主体类名
+    bodyClassName?: string;
+    // 登录页主体类名
+    mainClassName?: string;
+    // 登录页标题类名
+    titleClassName?: string;
+}
+export declare const FairysLoginPage: {
+    (props: FairysLoginPageProps): import("react/jsx-runtime").JSX.Element;
+    useForm: (form?: FairysLoginPageFormInstance) => FairysLoginPageFormInstance;
+    useFormInstance: () => FairysLoginPageFormInstance;
+    FormItem: (props: import("./form.item").FairysLoginPageFormItemProps) => import("react/jsx-runtime").JSX.Element;
+    FormItemInput: (props: import("./form.item").FairysLoginPageFormItemInputProps) => import("react/jsx-runtime").JSX.Element;
+};
+export {};
+
+```

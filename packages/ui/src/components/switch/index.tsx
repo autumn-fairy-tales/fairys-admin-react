@@ -1,11 +1,11 @@
 import { motion } from 'framer-motion';
 
 export interface FairysSwitchBaseProps {
-  // 开关值
+  /**开关值*/
   value?: boolean;
-  // 开关值改变回调
+  /**开关值改变回调*/
   onChange?: (value: boolean) => void;
-  // 是否禁用
+  /**是否禁用*/
   disabled?: boolean;
 }
 

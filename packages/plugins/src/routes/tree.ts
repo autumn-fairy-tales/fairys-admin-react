@@ -295,7 +295,7 @@ export class RootTree extends DirsTree {
    * @description 保持路由组件的 HOC 函数
    */
   public isKeepAliveBasePath?: boolean;
-  // 是否是 ts 文件
+  /**是否是 ts 文件*/
   public isTs?: boolean;
 }
 
@@ -322,11 +322,11 @@ export class TreeRoutes {
    * @description 保持路由组件的 HOC 函数
    */
   keepAliveBasePath?: string;
-  // 是否是 ts 文件
+  /**是否是 ts 文件*/
   isTs?: boolean;
-  // 路由树
+  /**路由树*/
   routes: RootTree[] = [];
-  // 获取监听目录项
+  /**获取监听目录项*/
   #getWatchDirsItem = (link: string) => {
     let dirItem = this.watchDirs?.find((item) => {
       return link.startsWith(item.dir + '/');
@@ -340,7 +340,7 @@ export class TreeRoutes {
     return dirItem;
   };
 
-  // 添加路由项
+  /**添加路由项*/
   add = (link: string) => {
     // console.log('link', link)
     /**创建路由项*/
@@ -362,7 +362,7 @@ export class TreeRoutes {
     }
   };
 
-  // 删除路由项
+  /**删除路由项*/
   remove = (link: string) => {
     /**创建路由项*/
     const dirItem = this.#getWatchDirsItem(link);

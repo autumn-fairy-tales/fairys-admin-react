@@ -80,13 +80,13 @@ export class ReactRoutesPlugin {
     );
   }
 
-  // 是否是 tsconfig.json 文件
+  /**是否是 tsconfig.json 文件*/
   #isTsConfigFile() {
     const _filePath = path.resolve(this.context, 'tsconfig.json');
     return FS.existsSync(_filePath);
   }
 
-  // 对数据进行分组，布局和页面两个部分
+  /**对数据进行分组，布局和页面两个部分*/
   #groupRouteLayout = () => {
     // 通过 routePrefix 进行分组
     // 在每一组，区分布局和页面

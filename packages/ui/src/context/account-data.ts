@@ -11,7 +11,7 @@ export interface AccountDataState {
   userPhone?: string;
   /**用户角色*/
   userRole?: string;
-  // 其他自定义信息
+  /**其他自定义信息*/
   info?: Record<string, any>;
   /**默认引用值*/
   __defaultValue?: string;

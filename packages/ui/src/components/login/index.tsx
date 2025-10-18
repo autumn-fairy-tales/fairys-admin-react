@@ -10,11 +10,17 @@ import { FairysLoginPageFormItem, FairysLoginPageFormItemInput } from './form.it
 
 interface FairysLoginPageProps
   extends Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>, 'title'> {
+  /**登录页标题*/
   title?: React.ReactNode;
+  /**登录页表单实例*/
   form?: FairysLoginPageFormInstance;
+  /**登录页表单验证规则*/
   rules?: FairysLoginPageFormInstance['rules'];
+  /**登录页表单主体类名*/
   bodyClassName?: string;
+  /**登录页主体类名*/
   mainClassName?: string;
+  /**登录页标题类名*/
   titleClassName?: string;
 }
 

@@ -11,16 +11,16 @@ import { motion } from 'framer-motion';
 export * from './context';
 
 export interface FairysTabsItemProps {
-  // 选项卡项
+  /**选项卡项*/
   item: FairysTabsItemType;
 }
 
 export interface FairysTabsProps {
-  // 选项卡列表
+  /**选项卡列表*/
   items: FairysTabsItemType[];
-  // 当前选中的选项卡key
+  /**当前选中的选项卡key*/
   activeKey?: string;
-  // 选项卡选中回调
+  /**选项卡选中回调*/
   onChange?: (key: string, item: FairysTabsItemType) => void;
 }
 

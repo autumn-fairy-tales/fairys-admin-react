@@ -4,6 +4,7 @@ import { useFairysLoginPageFormItemInstance, UseFairysLoginPageFormItemInstanceP
 
 export interface FairysLoginPageFormItemInputProps
   extends React.DetailedHTMLProps<React.InputHTMLAttributes<HTMLInputElement>, HTMLInputElement> {
+  /**错误边框位置*/
   errorBorderd?: 'bottom' | 'none' | 'all';
   /**是否存在验证不通过信息*/
   'data-is-error'?: boolean;
@@ -26,11 +27,15 @@ export const FairysLoginPageFormItemInput = (props: FairysLoginPageFormItemInput
 export interface FairysLoginPageFormItemProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement>,
     UseFairysLoginPageFormItemInstanceProps {
+  /**标签*/
   label?: React.ReactNode;
+  /**是否必填*/
   required?: boolean;
   /**显示错误信息*/
   isShowErrorMessage?: boolean;
+  /**布局*/
   layout?: 'vertical' | 'horizontal';
+  /**标签类名*/
   labelClassName?: string;
 }
 

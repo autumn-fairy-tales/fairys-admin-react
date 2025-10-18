@@ -4,19 +4,27 @@ import { proxy, ref, useSnapshot, snapshot } from 'valtio';
 export type FairysRuleItemType = (value: any, formData: any) => Promise<React.ReactNode> | React.ReactNode;
 
 interface FairysLoginPageFormState {
+  /**所有表单项值*/
   formData: Record<string, any>;
+  /**所有表单项错误信息*/
   errors: Record<string, React.ReactNode>;
 }
 
 class FairysLoginPageFormItemInstance {
+  /**表单项名称*/
   name: string;
+  /**表单项值*/
   value: any;
+  /**表单项错误信息*/
   errors: React.ReactNode;
 }
 
 export interface UseFairysLoginPageFormItemInstanceProps {
+  /**表单项名称*/
   name: string;
+  /**表单项值属性名*/
   valuePropName?: string;
+  /**表单项值格式化函数*/
   formatValue?: (value: any, form: FairysLoginPageFormInstance, event: any) => any;
 }
 
@@ -62,7 +70,7 @@ export class FairysLoginPageFormInstance {
   items: Map<string, FairysLoginPageFormItemInstance> = new Map([]);
   /**验证规则*/
   rules: Record<string, FairysRuleItemType> = {};
-  // 注册表单项
+  /**注册表单项*/
   register = (name: string, item: FairysLoginPageFormItemInstance) => {
     this.items.set(name, item);
     return () => {
