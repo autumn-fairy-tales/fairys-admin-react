@@ -99,7 +99,7 @@ export class DirsTree {
       const element = _list[index];
       const result = this.#replacePath(element);
       importString += `import ${result.componentName} from '${result.componentPath}';\n`;
-      routeString += `${_indent}{\n${_indent}\t"path": '${result.routePath}',\n${_indent}\t"Component": ${result.componentName},\n${_indent}},\n`;
+      routeString += `${_indent}{ "path": '${result.routePath}', "Component": ${result.componentName} },\n`;
     }
     return {
       importString,
