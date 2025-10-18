@@ -130,7 +130,7 @@ export class SettingInstance {
   }
 
   /**初始配置*/
-  initSetting = (state: SettingInstanceState) => {
+  ctor = (state: SettingInstanceState = {}) => {
     const _newState: SettingInstanceState = {
       layoutMode: 'main_top_sub_left_header',
       ...state,

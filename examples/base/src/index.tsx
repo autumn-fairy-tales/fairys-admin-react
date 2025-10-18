@@ -14,7 +14,7 @@ import './index.css';
 // import routesData from '@virtual:fairys/routes';
 // console.log('routesData', routesData);
 
-settingInstance.initSetting({
+settingInstance.ctor({
   logo: logo,
   projectName: 'Fairys Admin',
   themeColor: '#af52de',
