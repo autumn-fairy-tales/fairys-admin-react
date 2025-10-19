@@ -1,5 +1,4 @@
 import { FairysMainPage } from '@fairys/admin-tools-react';
-import { KeepAlive } from 'react-activation';
 
 const MainIndex = () => {
   return <FairysMainPage>lazy load</FairysMainPage>;

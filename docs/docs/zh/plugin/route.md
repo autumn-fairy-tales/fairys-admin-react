@@ -2,6 +2,20 @@
 
 通过目录结构生成路由配置
 
+:::tip 
+
+在项目中引入路由数据，例如：
+
+```ts
+import routes from '@fairys:routes';
+// 或
+import routes from '@@/routes';
+// 或
+import routes from '@/.fairys/routes';
+```
+
+:::
+
 ## rsbuild配置
 
 ```ts
@@ -40,6 +54,7 @@ export default defineConfig({
 {
   "compilerOptions": {
     "paths": {
+      "@/*": ["./src/*"],
       "@@/*": ["./src/.fairys/*"],
       "@fairys:routes": ["./src/.fairys/routes"]
     }

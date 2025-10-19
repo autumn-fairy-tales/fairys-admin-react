@@ -1,0 +1,285 @@
+# 介绍
+
+:::tip
+
+通过`Layout`组件，实现项目整体页面布局。
+
+使开发者专注于业务逻辑的实现。
+
+:::
+
+## 整体项目代码
+
+**项目入口**
+
+```tsx title="src/index.tsx"
+
+import ReactDOM from 'react-dom/client';
+
+import {
+  settingInstance,
+  authDataInstance,
+  appPluginDataInstance,
+  notificationDataInstance,
+  FairysWatermarkBase,
+} from '@fairys/admin-tools-react';
+
+import { AuthRoot } from './auth';
+
+settingInstance.ctor({
+  projectName: 'Fairys Admin',
+  themeColor: '#af52de',
+});
+
+const rootEl = document.getElementById('root');
+if (rootEl) {
+  const root = ReactDOM.createRoot(rootEl);
+  root.render(
+    <FairysWatermarkBase zIndex={99} className="h-full w-full" content={['Fairys', 'Happy Working']}>
+      <AuthRoot />
+    </FairysWatermarkBase>,
+  );
+}
+
+```
+
+**权限入口代码**
+
+```tsx title="src/auth/index.tsx"
+import { useEffect, useMemo } from 'react';
+import {
+  menuDataInstance,
+  routerDataInstance,
+  accountDataInstance,
+  FairysRoot,
+  useAuthDataInstance,
+  authDataInstance,
+  loadingFadeOut,
+  FairysEnterLoading,
+} from '@fairys/admin-tools-react';
+
+import { Login } from './login';
+import { onGetAuth } from './utils';
+import type { MenuItemType } from '@fairys/admin-tools-react';
+import type { RouteObject } from 'react-router';
+import { Layout } from '@fairys/admin-tools-react';
+import Home from '@/pages/page';
+
+// 菜单数据
+export const menuItems: MenuItemType[] = [
+  {
+    title: '主菜单',
+    path: 'main-menu',
+    isMain: true,
+    icon: 'ant-design:home-outlined',
+    items: [
+      {
+        title: '首页',
+        path: '/',
+        icon: 'ant-design:home-outlined',
+        isTabFixed: true,
+      },
+      {
+        title: '异步',
+        path: '/lazy',
+        icon: 'ant-design:home-outlined',
+      },
+      {
+        title: '详情',
+        path: '/detail',
+        icon: 'ant-design:info-circle-outlined',
+      },
+    ],
+  },
+];
+
+// 路由数据
+export const routes: RouteObject[] = [
+  {
+    path: '/',
+    Component: Layout,
+    children: [
+      {
+        index: true,
+        path: '/',
+        Component: Home,
+      },
+      {
+        path: '/list',
+        // Component: List,
+        lazy: () => import('@/pages/list/page'),
+      },
+      {
+        path: '/detail',
+        // Component: Detail,
+        lazy: () => import('@/pages/detail/page'),
+      },
+      {
+        path: '/about',
+        // Component: About,
+        lazy: () => import('@/pages/about/page'),
+      },
+      {
+        path: '/lazy',
+        lazy: () => import('@/pages/lazy/page'),
+      },
+      {
+        path: '*',
+        element: <div>404</div>
+      }
+    ]
+  }
+];
+
+export const AuthRoot = () => {
+  useMemo(() => {
+    const token = localStorage.getItem('token');
+    // if (!token) {
+    loadingFadeOut();
+    // }
+    authDataInstance.updatedStatus(token ? 'RequestAuth' : 'Login');
+  }, []);
+  const [authState] = useAuthDataInstance();
+  const status = authState.status;
+
+  const onAuth = () => {
+    authDataInstance.updatedStatus('RequestAuth');
+    onGetAuth().then(() => {
+      localStorage.setItem('token', '123');
+      menuDataInstance.ctor(menuItems);
+      accountDataInstance.updated({
+        userName: 'fairys',
+        userAvatar: 'https://gravatar.com/userimage/233185585/f004e2e1534508a34caef161ef76d9f2.jpeg?size=256',
+      });
+      // 可以对 routes 进行处理
+      routerDataInstance.createHashRouter(routes);
+      // 如果获取权限成功则设置状态为 auth
+      authDataInstance.updatedStatus('Auth');
+      /**移除页面加载动画*/
+      loadingFadeOut();
+    });
+  };
+  // 如果初始时Loading,则获取权限
+  useEffect(() => {
+    if (status === 'RequestAuth') {
+      onAuth();
+    }
+  }, []);
+  if (status === 'Login') {
+    return <Login onLogin={onAuth} />;
+  } else if (status === 'RequestAuth') {
+    return <FairysEnterLoading loading />;
+  }
+  if (status === 'NoAuth') {
+    return <div>NoAuth</div>;
+  }
+  return <FairysRoot isOutletKeepAlive={false} router={routerDataInstance.router} keepAlive={true} />;
+};
+
+```
+
+**登录入口代码**
+
+```tsx title="src/auth/login.tsx"
+
+import { Fragment, useState } from 'react';
+import { onLogin } from './utils';
+import { FairysEnterLoading } from '@fairys/admin-tools-react';
+import { FairysLoginPage } from '@fairys/admin-tools-react';
+
+interface LoginProps {
+  onLogin: () => void;
+}
+
+const rules = {
+  username: (value: string) => {
+    if (!value) {
+      return '用户名不能为空';
+    }
+    return '';
+  },
+  password: (value: string) => {
+    if (!value) {
+      return '密码不能为空';
+    }
+    return '';
+  },
+};
+
+export const Login = (props: LoginProps) => {
+  const [loading, setLoading] = useState(false);
+  const formInstance = FairysLoginPage.useForm();
+  const onLoginClick = () => {
+    formInstance
+      .validate()
+      .then((values) => {
+        setLoading(true);
+        onLogin()
+          .then(() => {
+            console.log('登录成功');
+            props.onLogin();
+          })
+          .finally(() => {
+            setLoading(false);
+          });
+        console.log(values);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  return (
+    <Fragment>
+      <FairysLoginPage
+        mainClassName="bg-white dark:bg-gray-900 px-[50px] py-[50px]"
+        title="登录"
+        form={formInstance}
+        rules={rules}
+      >
+        <FairysLoginPage.FormItem name="username" label="用户名" required>
+          <FairysLoginPage.FormItemInput placeholder="请输入用户名" />
+        </FairysLoginPage.FormItem>
+        <FairysLoginPage.FormItem name="password" label="密码" required>
+          <FairysLoginPage.FormItemInput placeholder="请输入密码" type="password" />
+        </FairysLoginPage.FormItem>
+        <button
+          onClick={onLoginClick}
+          className="bg-(--fairys-theme-color)/90 rounded-sm text-white py-[9px] mt-[20px] hover:bg-(--fairys-theme-color) cursor-pointer transition-all duration-300"
+          type="button"
+        >
+          登录
+        </button>
+      </FairysLoginPage>
+      <FairysEnterLoading loading={loading} tips="登录中" />
+    </Fragment>
+  );
+};
+
+```
+
+**接口请求代码**
+
+```tsx title="src/auth/utils.tsx"
+
+const requestAuth = (): Promise<boolean> => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 3000);
+  });
+};
+
+export const onLogin = () => {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve(true);
+    }, 5000);
+  });
+};
+
+export const onGetAuth = () => {
+  return requestAuth();
+};
+
+```

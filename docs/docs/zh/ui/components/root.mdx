@@ -1,9 +1,11 @@
 # 根组件
 
+FairysRoot 是 Fairys 框架的根组件，用于挂载页面缓存实例和处理路由导航。
+
 ## 引入
 
 ```ts
-import { FairysRoot } from '@fairys/admin-tools-react';
+import { FairysRoot ,useFairysRootContext ,useFairysRoot, FairysRootContext} from '@fairys/admin-tools-react';
 ```
 
 ## 组件示例
@@ -11,6 +13,7 @@ import { FairysRoot } from '@fairys/admin-tools-react';
 ```tsx
 import { Fragment, useMemo } from 'react';
 import { FairysRoot ,routerDataInstance} from '@fairys/admin-tools-react';
+
 export const Login = () => {
   // 生成路由
   useMemo(() =>  routerDataInstance.createHashRouter([]), []);
