@@ -8,6 +8,103 @@
 
 :::
 
+## 项目目录结构
+
+```dir
+
+.
+├── package.json
+├── public
+│   └── logo.png
+├── README.md
+├── rsbuild.config.ts
+├── src
+│   ├── assets
+│   │   └── logo.png
+│   ├── auth
+│   │   ├── index.tsx
+│   │   ├── login.tsx
+│   │   └── utils.ts
+│   ├── docs
+│   │   ├── 404.tsx
+│   │   ├── about
+│   │   │   └── page.tsx
+│   │   ├── detail
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   └── page.tsx
+│   ├── env.d.ts
+│   ├── index.css
+│   ├── index.tsx
+│   ├── menu.ts
+│   ├── pages
+│   │   ├── *.tsx
+│   │   ├── 404.tsx
+│   │   ├── about
+│   │   │   └── page.tsx
+│   │   ├── detail
+│   │   │   └── page.tsx
+│   │   ├── home
+│   │   │   ├── aaa
+│   │   │   │   └── page.tsx
+│   │   │   ├── aaa copy
+│   │   │   │   └── page.tsx
+│   │   │   ├── dd
+│   │   │   │   └── page.tsx
+│   │   │   └── page.tsx
+│   │   ├── layout.tsx
+│   │   ├── lazy
+│   │   │   └── page.tsx
+│   │   ├── list
+│   │   │   └── page.tsx
+│   │   ├── page.tsx
+│   │   └── test
+│   │       └── page.tsx
+│   └── routes.tsx
+└── tsconfig.json
+
+```
+
+## rsbuild.config.ts 配置
+
+```ts title="rsbuild.config.ts"
+
+import { defineConfig } from '@rsbuild/core';
+import { pluginReact } from '@rsbuild/plugin-react';
+import tailwindcss from '@tailwindcss/postcss';
+import { getLoadingHtmlTags, RsbuildReactRoutesPlugin } from '@fairys/admin-tools-react-plugins';
+
+export default defineConfig({
+  output: {
+    assetPrefix: '/fairys-admin-react/',
+  },
+  server: {
+    base: '/fairys-admin-react/',
+  },
+  html: {
+    title: 'Fairys Admin React',
+    favicon: './public/logo.png',
+    tags: getLoadingHtmlTags('Fairys'),
+  },
+  plugins: [
+    pluginReact(),
+    RsbuildReactRoutesPlugin({
+      loadType: 'lazy',
+      // isTreeRoute: true,
+      watchDirs: [{ dir: 'src/docs', routePrefix: '/docs' }],
+      keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',
+    }),
+  ],
+  tools: {
+    postcss: (_, { addPlugins }) => {
+      addPlugins([tailwindcss()]);
+    },
+  },
+});
+
+```
+
+
 ## 整体项目代码
 
 **项目入口**
