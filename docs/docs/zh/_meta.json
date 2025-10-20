@@ -5,6 +5,11 @@
     "activeMatch": "/guide/"
   },
   {
+    "text": "状态实例",
+    "link": "/context/",
+    "activeMatch": "/context/"
+  },
+  {
     "text": "插件",
     "link": "/plugin/",
     "activeMatch": "/plugin/"

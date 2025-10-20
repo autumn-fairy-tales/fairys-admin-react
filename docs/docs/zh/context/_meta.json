@@ -1,0 +1,15 @@
+[
+  "index",
+  "accountDataInstance",
+  "authDataInstance",
+  "aliveControllerBaseInstance",
+  "menuDataInstance",
+  "routerDataInstance",
+  "favoritesDataInstance",
+  "tabBarInstance",
+  "appPluginDataInstance",
+  "motionAnimationInstance",
+  "notificationDataInstance",
+  "settingInstance",
+  "appDataInstance"
+]
