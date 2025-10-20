@@ -17,7 +17,7 @@ export const ErrorPage403 = (props: ErrorPageProps) => {
   };
 
   return (
-    <div className="fairys:w-full fairys:h-full fairys:flex fairys:flex-col fairys:items-center fairys:justify-center">
+    <div className="fairys:w-full fairys:h-full fairys:flex fairys:flex-col fairys:items-center fairys:justify-center  fairys:gap-4">
       <div>
         <svg width="251" height="294">
           <title>无权限</title>
