@@ -18,7 +18,7 @@ export class RouterDataInstance {
 
   /**内置跳转方法*/
   navigate = async (to: To | number, options?: NavigateOptions) => {
-    const navigate = this.__navigate || this.router.navigate;
+    const navigate = this.__navigate || this.router?.navigate;
     if (!navigate) {
       console.warn('请先初始化路由');
       return Promise.resolve();

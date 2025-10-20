@@ -1,1 +1,64 @@
 # 错误页面
+
+
+
+## 引入
+
+```ts
+import { ErrorPage403, ErrorPage404, ErrorPage500 } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx preview title="错误页面403"
+import { ErrorPage403 } from '@fairys/admin-tools-react';
+
+const Demo = () => {
+
+  return (
+   <div style={{ height: '500px' }} >
+      <ErrorPage403 />
+   </div>
+  );
+};
+export default Demo;
+```
+
+```tsx preview title="错误页面404"
+import {  ErrorPage404 } from '@fairys/admin-tools-react';
+
+const Demo = () => {
+
+  return (
+   <div style={{ height: '500px' }} >
+      <ErrorPage404 />
+   </div>
+  );
+};
+export default Demo;
+```
+
+```tsx preview title="错误页面500"
+import { ErrorPage500 } from '@fairys/admin-tools-react';
+
+const Demo = () => {
+
+  return (
+   <div style={{ height: '500px' }} >
+      <ErrorPage500 />
+   </div>
+  );
+};
+export default Demo;
+```
+
+
+## 组件参数
+
+```ts
+export interface ErrorPageProps {
+  /**返回首页回调，默认跳转 '/' 地址*/
+  onBackHome?: () => void;
+}
+```
+

@@ -10,23 +10,24 @@ import { FairysDisclosureItem } from '@fairys/admin-tools-react';
 ## 组件示例
 
 ```tsx preview
-import { FairysDisclosureItem } from '@fairys/admin-tools-react';
-import React from 'react';
+import { FairysDisclosureItem , FairysButtonBase } from '@fairys/admin-tools-react';
+import React,{ useState } from 'react';
 
 const Demo = () => {
+  const [open, setOpen] = useState(true);
+
   return (
    <div>
-      <FairysDisclosureItem open={true} className="w-full">
+    <FairysButtonBase onClick={() => setOpen(!open)}>
+      {open ? '关闭' : '展开'}
+    </FairysButtonBase>
+      <FairysDisclosureItem open={open} className="w-full">
         折叠面板内容
-      </FairysDisclosureItem>
-      <FairysDisclosureItem open={false} className="w-full">
-        隐藏折叠面板内容2
       </FairysDisclosureItem>
    </div>
   );
 };
 export default Demo;
-
 ```
 
 ## 组件参数
