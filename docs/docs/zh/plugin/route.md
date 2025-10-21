@@ -48,8 +48,10 @@ export default defineConfig({
 
 ```
 
-注意：
-- 在使用ts项目时，需要在`tsconfig.json`中添加如下配置：
+:::tip 注意
+
+在使用ts项目时，需要在`tsconfig.json`中添加如下配置：
+
 ```json
 {
   "compilerOptions": {
@@ -61,6 +63,7 @@ export default defineConfig({
   },
 }
 ```
+:::
 
 ## 配置项
 
