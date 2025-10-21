@@ -27,8 +27,8 @@ jobs:
       run: |
           cd ./examples/template/ 
           zip -r template.zip . -x "node_modules/*" "dist/*" "src/.fairys/*" ".DS_Store"
-          mv template.zip ../../docs/docs/public/
-          ls ../../docs/docs/public/
+          mv template.zip ../../docs/doc_build/
+          ls ../../docs/doc_build/
 
     - name: Create Doc
       uses: peaceiris/actions-gh-pages@v4
