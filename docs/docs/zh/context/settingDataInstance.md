@@ -34,63 +34,46 @@ import { settingDataInstance , useSettingDataInstance } from '@fairys/admin-tool
  */
 export type LayoutMode = 'main_sub_left' | 'main_left' | 'main_top_header' | 'main_top_sub_left_header' | 'left' | 'left_header' | 'mobile';
 export interface SettingDataInstanceState {
-    /**是否打开偏好设置*/
-    open?: boolean;
-    /**logo加载地址*/
-    logo?: string;
-    /**项目名*/
-    projectName?: string;
-    /**颜色主题风格*/
-    theme?: 'dark' | 'light';
-    /**自动监听系统的明暗色系*/
-    autoListenSystemTheme?: boolean;
-    /**主题颜色*/
-    themeColor?: string;
-    /**导航栏模式*/
-    layoutMode?: LayoutMode;
-    /**旧的导航栏模式,(用于切换mobile布局时，切换回旧的布局模式)*/
-    _oldLayoutMode?: LayoutMode;
-    /**暗黑导航栏*/
-    darkMenu?: boolean;
-    /**侧边栏模式*/
-    sideMenuMode?: 'open' | 'close';
-    /**页面切换动画*/
-    pageTransitionMode?: '无动画' | '滑动' | '缩放消退' | '闪现' | '淡入淡出' | string;
-    /**标签栏*/
-    /**是否启用标签栏*/
-    enableTabBar?: boolean;
-    /**是否显示图标*/
-    tabBarShowIcon?: boolean;
-    /**标签页双击执行动作*/
-    tabBarDoubleClickAction?: '';
-    /**工具栏*/
-    /**是否启用工具栏*/
-    enableToolBar?: boolean;
-    /**是否启用收藏夹*/
-    enableToolBarFavorites?: boolean;
-    /**收藏夹最多可存储多少个*/
-    favoritesMaxLength?: number;
-    /**面包屑导航*/
-    enableToolBarBreadcrumb?: boolean;
-    /**导航搜索*/
-    enableToolBarSearch?: boolean;
-    /**通知中心*/
-    enableToolBarNotification?: boolean;
-    /**全屏*/
-    enableToolBarFullScreen?: boolean;
-    isFullScreen?: boolean;
-    /**页面刷新*/
-    enableToolBarRefresh?: boolean;
-    /**是否启用页面水印*/
-    enableWatermark?: boolean;
-    /**
-     * 判断屏幕宽度是否是移动端布局
-     * @default 1024
-     */
-    maxWidthScreen?: number;
-    isMobile?: boolean;
-    /**只是默认值，不使用*/
-    __defaultValue?: string;
+     /**是否打开偏好设置*/
+  open?: boolean;
+  /**logo加载地址*/
+  logo?: string;
+  /**项目名*/
+  projectName?: string;
+  /**颜色主题风格*/
+  theme?: 'dark' | 'light';
+  /**自动监听系统的明暗色系*/
+  autoListenSystemTheme?: boolean;
+  /**主题颜色*/
+  themeColor?: string;
+  /**导航栏模式*/
+  layoutMode?: LayoutMode;
+  /**旧的导航栏模式,(用于切换mobile布局时，切换回旧的布局模式)*/
+  _oldLayoutMode?: LayoutMode;
+  /**暗黑导航栏*/
+  darkMenu?: boolean;
+  /**侧边栏模式*/
+  sideMenuMode?: 'open' | 'close';
+  /**页面切换动画*/
+  pageTransitionMode?: '无动画' | '滑动' | '缩放消退' | '闪现' | '淡入淡出' | string;
+  /**是否启用收藏夹*/
+  enableToolBarFavorites?: boolean;
+  /**收藏夹最多可存储多少个*/
+  favoritesMaxLength?: number;
+  /**通知中心*/
+  enableToolBarNotification?: boolean;
+  /**全屏*/
+  enableToolBarFullScreen?: boolean;
+  isFullScreen?: boolean;
+  /**页面刷新*/
+  enableToolBarRefresh?: boolean;
+  /**
+   * 判断屏幕宽度是否是移动端布局
+   * @default 1024
+   */
+  maxWidthScreen?: number;
+  /**是否移动布局*/
+  isMobile?: boolean;
 }
 ```
 

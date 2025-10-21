@@ -22,7 +22,7 @@ import { motionAnimationDataInstance } from '@fairys/admin-tools-react';
 
 ```ts
 import type { MotionNodeAnimationOptions } from 'framer-motion';
-interface MotionAnimationDataInstanceState {
+export interface MotionAnimationDataInstanceState {
     name: string;
     config: MotionNodeAnimationOptions & {
         style?: React.CSSProperties;

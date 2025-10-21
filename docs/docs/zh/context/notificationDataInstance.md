@@ -28,8 +28,6 @@ export type NotificationDataInstanceState = {
      * @default true
      */
     isShowIcon?: boolean;
-    /**默认引用值*/
-    __defaultValue?: string;
     /**显示数量*/
     count?: number;
     /**是否显示更多弹窗*/

@@ -34,8 +34,6 @@ export interface MenuDataInstanceState {
   mainExpandItem?: MenuItemType;
   /**搜索菜单*/
   searchMenuItems?: MenuItemType[];
-  /**默认引用值*/
-  __defaultValue?: string;
 }
 
 export interface MenuItemType {
