@@ -48,14 +48,23 @@ export class AliveControllerDataInstance {
 ```ts
 import { aliveControllerDataInstance } from '@fairys/admin-tools-react';
 
+// 刷新缓存Scope
 aliveControllerDataInstance.refreshScope('scope1');
+// 删除缓存Scope    
 aliveControllerDataInstance.dropScope('scope1');
+// 获取缓存节点
 aliveControllerDataInstance.getCachingNodes();
+// 刷新缓存ScopeByIds
 aliveControllerDataInstance.refreshScopeByIds(['id1', 'id2']);
+// 删除缓存ScopeByIds
 aliveControllerDataInstance.dropScopeByIds(['id1', 'id2']);
+// 刷新缓存ById
 aliveControllerDataInstance.refreshById('id1');
+// 删除缓存ById
 aliveControllerDataInstance.dropById('id1');
+// 刷新缓存ByName
 aliveControllerDataInstance.refresh('name1');
+// 删除缓存ByName
 aliveControllerDataInstance.drop('name1');
 
 ```
