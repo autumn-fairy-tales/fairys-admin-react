@@ -16,7 +16,7 @@ import { favoritesDataInstance , useFavoritesDataInstance } from '@fairys/admin-
 
 ```ts
 import { MenuItemType } from './menu-data';
-export type FavoritesDataState = {
+export type FavoritesDataInstanceState = {
     /**列表数据*/
     dataList?: MenuItemType[];
 };
@@ -28,7 +28,7 @@ export type FavoritesDataState = {
 import { MenuItemType } from './menu-data';
 export declare class FavoritesDataInstance {
     static localStorageKey: string;
-    state: FavoritesDataState;
+    state: FavoritesDataInstanceState;
     /**添加*/
     addItem: (item: MenuItemType) => void;
     /**移除*/
@@ -41,7 +41,7 @@ export declare class FavoritesDataInstance {
 ## hooks
 
 ```ts
-export  const useFavoritesDataInstance: () => [FavoritesDataState, FavoritesDataInstance, FavoritesDataState["__defaultValue"]];
+export  const useFavoritesDataInstance: () => [FavoritesDataInstanceState, FavoritesDataInstance, FavoritesDataInstanceState["__defaultValue"]];
 ```
 
 ## 示例

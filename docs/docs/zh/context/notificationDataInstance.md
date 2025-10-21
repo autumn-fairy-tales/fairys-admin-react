@@ -16,7 +16,7 @@ import { notificationDataInstance } from '@fairys/admin-tools-react';
 
 ```ts
 import { IconProps } from '@iconify/react';
-export type NotificationDataState = {
+export type NotificationDataInstanceState = {
     /**通知tab列表*/
     tabItems?: NotificationTabItemType[];
     activeKey?: string;
@@ -70,7 +70,7 @@ export interface NotificationItemType {
 
 ```ts
 export class NotificationDataInstance {
-    state: NotificationDataState;
+    state: NotificationDataInstanceState;
     ctor: (options: {
         tabItems?: NotificationTabItemType[];
         title?: string;
@@ -106,7 +106,7 @@ export class NotificationDataInstance {
 ## hooks
 
 ```ts
-export const useNotificationDatainstance: () => [NotificationDataState, NotificationDataInstance, NotificationDataState["__defaultValue"]];
+export const useNotificationDatainstance: () => [NotificationDataInstanceState, NotificationDataInstance, NotificationDataInstanceState["__defaultValue"]];
 ```
 
 ## 示例

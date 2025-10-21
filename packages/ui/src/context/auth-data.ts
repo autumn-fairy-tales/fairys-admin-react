@@ -1,7 +1,7 @@
 import { proxy, useSnapshot } from 'valtio';
 import { appDataInstance } from './index';
 
-export interface AuthDataState {
+export interface AuthDataInstanceState {
   /**
    * NoAuth 没权限
    * Auth 有权限，已进入页面
@@ -23,13 +23,13 @@ export class AuthDataInstance {
   constructor() {
     appDataInstance.authDataInstance = this;
   }
-  state = proxy<AuthDataState>({
+  state = proxy<AuthDataInstanceState>({
     status: 'Login',
     menusPermissions: [],
     btnsPermissions: [],
     ignorePermissions: [],
   });
-  updatedStatus = (status: AuthDataState['status']) => {
+  updatedStatus = (status: AuthDataInstanceState['status']) => {
     this.state.status = status;
   };
   /**退出登录(需要外部赋值)*/
@@ -86,8 +86,8 @@ export const authDataInstance = new AuthDataInstance();
 export const useAuthDataInstance = () => {
   const state = useSnapshot(authDataInstance.state);
   return [state, authDataInstance, state.__defaultValue] as [
-    AuthDataState,
+    AuthDataInstanceState,
     AuthDataInstance,
-    AuthDataState['__defaultValue'],
+    AuthDataInstanceState['__defaultValue'],
   ];
 };

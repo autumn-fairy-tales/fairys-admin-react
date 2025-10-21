@@ -1,7 +1,7 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import { MenuItemType } from './menu-data';
 import { settingDataInstance } from './setting';
-export type FavoritesDataState = {
+export type FavoritesDataInstanceState = {
   /**列表数据*/
   dataList?: MenuItemType[];
   /**默认引用值*/
@@ -11,7 +11,7 @@ export type FavoritesDataState = {
 export class FavoritesDataInstance {
   static localStorageKey = 'fairys-favorites-data';
 
-  state = proxy<FavoritesDataState>({
+  state = proxy<FavoritesDataInstanceState>({
     dataList: ref([]),
   });
 
@@ -58,8 +58,8 @@ export const favoritesDataInstance = new FavoritesDataInstance();
 export const useFavoritesDataInstance = () => {
   const state = useSnapshot(favoritesDataInstance.state);
   return [state, favoritesDataInstance, state.__defaultValue] as [
-    FavoritesDataState,
+    FavoritesDataInstanceState,
     FavoritesDataInstance,
-    FavoritesDataState['__defaultValue'],
+    FavoritesDataInstanceState['__defaultValue'],
   ];
 };

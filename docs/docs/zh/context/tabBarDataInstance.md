@@ -18,7 +18,7 @@ import { tabBarDataInstance } from '@fairys/admin-tools-react';
 import type { MenuItemType } from './menu-data';
 export interface TabBarItemType extends MenuItemType {
 }
-export interface TabBarInstanceState {
+export interface TabBarDataInstanceState {
     /**tab项集合*/
     tabBarItems: TabBarItemType[];
     /**右侧选择的tab项集合,不在可视区域的数据*/
@@ -38,7 +38,7 @@ export interface TabBarInstanceState {
 
 ```ts
 export class TabBarDataInstance {
-    state: TabBarInstanceState;
+    state: TabBarDataInstanceState;
     /**初始化渲染菜单数据*/
     ctor: (tabBarItems: MenuItemType[]) => void;
     /**添加tab项*/
@@ -63,7 +63,7 @@ export class TabBarDataInstance {
 ## hooks
 
 ```ts
-export const useTabBarDataInstance: () => [TabBarInstanceState, TabBarDataInstance, string | undefined];
+export const useTabBarDataInstance: () => [TabBarDataInstanceState, TabBarDataInstance, string | undefined];
 ```
 
 ## 示例

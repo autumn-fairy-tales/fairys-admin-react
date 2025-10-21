@@ -1,6 +1,6 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 
-export interface AccountDataState {
+export interface AccountDataInstanceState {
   /**用户名*/
   userName?: string;
   /**用户头像*/
@@ -18,11 +18,11 @@ export interface AccountDataState {
 }
 
 export class AccountDataInstance {
-  state = proxy<AccountDataState>({
+  state = proxy<AccountDataInstanceState>({
     userName: 'fairys',
   });
   /**更新数据信息*/
-  updated = (state: AccountDataState) => {
+  updated = (state: AccountDataInstanceState) => {
     for (const key in state) {
       const element = state[key];
       if (key === 'info') {
@@ -49,8 +49,8 @@ export const accountDataInstance = new AccountDataInstance();
 export const useAccountDataInstance = () => {
   const state = useSnapshot(accountDataInstance.state);
   return [state, accountDataInstance, state.__defaultValue] as [
-    AccountDataState,
+    AccountDataInstanceState,
     AccountDataInstance,
-    AccountDataState['__defaultValue'],
+    AccountDataInstanceState['__defaultValue'],
   ];
 };

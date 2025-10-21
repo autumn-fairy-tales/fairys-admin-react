@@ -23,7 +23,7 @@ import { authDataInstance , useAuthDataInstance } from '@fairys/admin-tools-reac
 ## 状态值
 
 ```ts
-export interface AuthDataState {
+export interface AuthDataInstanceState {
     /**
      * NoAuth 没权限
      * Auth 有权限，已进入页面
@@ -44,8 +44,8 @@ export interface AuthDataState {
 
 ```ts
 export declare class AuthDataInstance {
-    state: AuthDataState;
-    updatedStatus: (status: AuthDataState["status"]) => void;
+    state: AuthDataInstanceState;
+    updatedStatus: (status: AuthDataInstanceState["status"]) => void;
     /**退出登录(需要外部赋值)*/
     onLogout: () => void;
     /**内部退出登录*/
@@ -69,7 +69,7 @@ export declare class AuthDataInstance {
 ## hooks
 
 ```ts
-export  const useAuthDataInstance: () => [AuthDataState, AuthDataInstance, AuthDataState["__defaultValue"]];
+export  const useAuthDataInstance: () => [AuthDataInstanceState, AuthDataInstance, AuthDataInstanceState["__defaultValue"]];
 ```
 
 ## 示例

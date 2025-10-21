@@ -31,7 +31,7 @@ export interface NotificationItemType {
   [s: string]: any;
 }
 
-export type NotificationDataState = {
+export type NotificationDataInstanceState = {
   /**通知tab列表*/
   tabItems?: NotificationTabItemType[];
   activeKey?: string;
@@ -52,7 +52,7 @@ export type NotificationDataState = {
 };
 
 export class NotificationDataInstance {
-  state = proxy<NotificationDataState>({
+  state = proxy<NotificationDataInstanceState>({
     tabItems: [],
     dataList: [],
     title: '通知',
@@ -129,8 +129,8 @@ export const notificationDataInstance = new NotificationDataInstance();
 export const useNotificationDatainstance = () => {
   const state = useSnapshot(notificationDataInstance.state);
   return [state, notificationDataInstance, state.__defaultValue] as [
-    NotificationDataState,
+    NotificationDataInstanceState,
     NotificationDataInstance,
-    NotificationDataState['__defaultValue'],
+    NotificationDataInstanceState['__defaultValue'],
   ];
 };

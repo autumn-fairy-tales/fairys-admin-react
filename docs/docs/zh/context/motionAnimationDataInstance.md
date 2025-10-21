@@ -22,7 +22,7 @@ import { motionAnimationDataInstance } from '@fairys/admin-tools-react';
 
 ```ts
 import type { MotionNodeAnimationOptions } from 'framer-motion';
-interface MotionAnimationState {
+interface MotionAnimationDataInstanceState {
     name: string;
     config: MotionNodeAnimationOptions & {
         style?: React.CSSProperties;
@@ -38,9 +38,9 @@ interface MotionAnimationState {
 import type { MotionNodeAnimationOptions } from 'framer-motion';
 /**页面动画配置*/
 export declare class MotionAnimationDataInstance {
-    state: MotionAnimationState[];
+    state: MotionAnimationDataInstanceState[];
     /**扩展动画*/
-    expands: (list: MotionAnimationState[]) => void;
+    expands: (list: MotionAnimationDataInstanceState[]) => void;
     /**获取配置*/
     getAnimationConfig: (name: string) => MotionNodeAnimationOptions & {
         style?: React.CSSProperties;

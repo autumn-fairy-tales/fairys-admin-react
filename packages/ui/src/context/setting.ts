@@ -22,7 +22,7 @@ export type LayoutMode =
   | 'left_header'
   | 'mobile';
 
-export interface SettingInstanceState {
+export interface SettingDataInstanceState {
   /**是否打开偏好设置*/
   open?: boolean;
   /**logo加载地址*/
@@ -86,7 +86,7 @@ export interface SettingInstanceState {
 export class SettingDataInstance {
   static localStorageKey = 'fairys_setting_state';
 
-  state = proxy<SettingInstanceState>({
+  state = proxy<SettingDataInstanceState>({
     open: false,
     /**布局模式*/
     layoutMode: 'main_top_sub_left_header',
@@ -132,13 +132,13 @@ export class SettingDataInstance {
   /**初始化配置
    * @deprecated 请使用 `ctor` 方法
    */
-  initSetting = (state: SettingInstanceState = {}) => {
+  initSetting = (state: SettingDataInstanceState = {}) => {
     this.ctor(state);
   };
 
   /**初始配置*/
-  ctor = (state: SettingInstanceState = {}) => {
-    const _newState: SettingInstanceState = {
+  ctor = (state: SettingDataInstanceState = {}) => {
+    const _newState: SettingDataInstanceState = {
       layoutMode: 'main_top_sub_left_header',
       ...state,
       ...this.state,
@@ -229,9 +229,9 @@ export class SettingDataInstance {
   // ================================================================================================
 
   /**更新配置*/
-  updated = (state: SettingInstanceState) => {
+  updated = (state: SettingDataInstanceState) => {
     /**只做更改值存储，其他的默认值不做处理*/
-    let _state: Partial<SettingInstanceState> = {};
+    let _state: Partial<SettingDataInstanceState> = {};
     try {
       _state = JSON.parse(localStorage.getItem(SettingDataInstance.localStorageKey) || '{}');
     } catch (error) {
@@ -331,7 +331,7 @@ export const settingDataInstance = new SettingDataInstance();
 export const useSettingDataInstance = () => {
   const state = useSnapshot(settingDataInstance.state);
   return [state, settingDataInstance, state.__defaultValue] as [
-    SettingInstanceState,
+    SettingDataInstanceState,
     SettingDataInstance,
     string | undefined,
   ];

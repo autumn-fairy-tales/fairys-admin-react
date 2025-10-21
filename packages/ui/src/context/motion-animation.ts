@@ -1,6 +1,6 @@
 import type { MotionNodeAnimationOptions } from 'framer-motion';
 
-interface MotionAnimationState {
+export interface MotionAnimationDataInstanceState {
   name: string;
   config: MotionNodeAnimationOptions & {
     style?: React.CSSProperties;
@@ -10,7 +10,7 @@ interface MotionAnimationState {
 
 /**页面动画配置*/
 export class MotionAnimationDataInstance {
-  state: MotionAnimationState[] = [
+  state: MotionAnimationDataInstanceState[] = [
     {
       name: '无动画',
       config: {},
@@ -57,7 +57,7 @@ export class MotionAnimationDataInstance {
   ];
 
   /**扩展动画*/
-  expands = (list: MotionAnimationState[]) => {
+  expands = (list: MotionAnimationDataInstanceState[]) => {
     //去重处理
     const _newState = this.state.filter((it) => {
       return !list.some((t) => t.name === it.name);

@@ -22,7 +22,7 @@ import { appPluginDataInstance } from '@fairys/admin-tools-react';
 
 ```ts
 import { FairysPopoverMenuItemType } from '@fairys/admin-tools-react';
-export type AppPluginType = {
+export type AppPluginDataInstanceType = {
     /**工具条右侧插件*/
     'toolBar-right'?: {
         /**渲染组件*/
@@ -41,9 +41,9 @@ export type AppPluginType = {
 
 export class AppPluginDataInstance {
     /**插件组件*/
-    appPlugins: AppPluginType;
+    appPlugins: AppPluginDataInstanceType;
     /**添加插件*/
-    addPlugin: (plugin: AppPluginType) => void;
+    addPlugin: (plugin: AppPluginDataInstanceType) => void;
     /**清空数据*/
     clear: () => void;
 }

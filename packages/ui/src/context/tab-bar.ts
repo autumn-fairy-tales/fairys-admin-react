@@ -6,7 +6,7 @@ import { createContext, createRef, useContext, useRef } from 'react';
 import { routerDataInstance } from './router-data';
 
 export interface TabBarItemType extends MenuItemType {}
-export interface TabBarInstanceState {
+export interface TabBarDataInstanceState {
   /**tab项集合*/
   tabBarItems: TabBarItemType[];
   /**右侧选择的tab项集合,不在可视区域的数据*/
@@ -18,7 +18,7 @@ export interface TabBarInstanceState {
 }
 
 export class TabBarDataInstance {
-  state = proxy<TabBarInstanceState>({
+  state = proxy<TabBarDataInstanceState>({
     tabBarItems: [],
     dropDownTabBarItems: [],
     pageFullScreen: false,
@@ -146,7 +146,7 @@ export const tabBarDataInstance = new TabBarDataInstance();
 export const useTabBarDataInstance = () => {
   const state = useSnapshot(tabBarDataInstance.state);
   return [state, tabBarDataInstance, state.__defaultValue] as [
-    TabBarInstanceState,
+    TabBarDataInstanceState,
     TabBarDataInstance,
     string | undefined,
   ];

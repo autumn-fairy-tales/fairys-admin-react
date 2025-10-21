@@ -21,7 +21,7 @@ import { accountDataInstance , useAccountDataInstance } from '@fairys/admin-tool
 ## 状态值
 
 ```ts
-interface AccountDataState {
+interface AccountDataInstanceState {
   /**用户名*/
   userName?: string;
   /**用户头像*/
@@ -41,9 +41,9 @@ interface AccountDataState {
 
 ```ts
 export class AccountDataInstance {
-    state: AccountDataState;
+    state: AccountDataInstanceState;
     /**更新数据信息*/
-    updated: (state: AccountDataState) => void;
+    updated: (state: AccountDataInstanceState) => void;
     /**清空账户数据*/
     clear: () => void;
 }
@@ -52,7 +52,7 @@ export class AccountDataInstance {
 ## hooks
 
 ```ts
-export  const useAccountDataInstance: () => [AccountDataState, AccountDataInstance, AccountDataState["__defaultValue"]];
+export  const useAccountDataInstance: () => [AccountDataInstanceState, AccountDataInstance, AccountDataInstanceState["__defaultValue"]];
 ```
 
 ## 示例

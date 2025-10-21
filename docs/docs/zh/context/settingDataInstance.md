@@ -33,7 +33,7 @@ import { settingDataInstance , useSettingDataInstance } from '@fairys/admin-tool
  * 9. mobile:移动端布局,不进行区分主子菜单，使用弹框展示，布局使用 `left` 布局
  */
 export type LayoutMode = 'main_sub_left' | 'main_left' | 'main_top_header' | 'main_top_sub_left_header' | 'left' | 'left_header' | 'mobile';
-export interface SettingInstanceState {
+export interface SettingDataInstanceState {
     /**是否打开偏好设置*/
     open?: boolean;
     /**logo加载地址*/
@@ -99,10 +99,10 @@ export interface SettingInstanceState {
 ```ts
 export declare class SettingDataInstance {
     static localStorageKey: string;
-    state: SettingInstanceState;
+    state: SettingDataInstanceState;
     constructor();
     /**初始配置*/
-    ctor: (state: SettingInstanceState) => void;
+    ctor: (state: SettingDataInstanceState) => void;
     /**监听系统主题变化*/
     mediaQueryList: MediaQueryList | null;
     /**更新文档和body的主题*/
@@ -118,7 +118,7 @@ export declare class SettingDataInstance {
     /**更新主题颜色*/
     updatedThemeColor: (themeColor: string) => void;
     /**更新配置*/
-    updated: (state: SettingInstanceState) => void;
+    updated: (state: SettingDataInstanceState) => void;
     /**判断是否主子菜单模板*/
     isMainSubMenuMode: () => boolean;
     /**切换打开偏好设置*/
@@ -142,7 +142,7 @@ export declare class SettingDataInstance {
 ## hooks
 
 ```ts
-export const useSettingDataInstance: () => [SettingInstanceState, SettingDataInstance, string | undefined];
+export const useSettingDataInstance: () => [SettingDataInstanceState, SettingDataInstance, string | undefined];
 ```
 
 ## 示例
