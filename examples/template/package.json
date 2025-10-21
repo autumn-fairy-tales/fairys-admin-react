@@ -1,0 +1,29 @@
+{
+  "name": "template",
+  "version": "1.0.0",
+  "homepage": "https://github.com/autumn-fairy-tales/fairys-admin-react",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "rsbuild build",
+    "dev": "rsbuild dev --open",
+    "preview": "rsbuild preview"
+  },
+  "dependencies": {
+    "@fairys/admin-tools-react": "^1.0.0",
+    "react": "~18.3.1",
+    "react-dom": "~18.3.1",
+    "react-router": "~7.8.0",
+    "react-router-dom": "~7.8.0"
+  },
+  "devDependencies": {
+    "@fairys/admin-tools-react-plugins": "^1.0.0",
+    "@iconify/json": "~2.2.367",
+    "@iconify/tailwind4": "~1.0.6",
+    "@rsbuild/core": "~1.5.12",
+    "@rsbuild/plugin-react": "~1.4.0",
+    "@types/react": "~18.3.18",
+    "@types/react-dom": "~18.3.5",
+    "typescript": "~5.9.2"
+  }
+}

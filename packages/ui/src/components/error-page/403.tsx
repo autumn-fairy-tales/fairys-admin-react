@@ -4,9 +4,11 @@ import { routerDataInstance } from 'context/router-data';
 export interface ErrorPageProps {
   /**返回首页回调，默认跳转 '/' 地址*/
   onBackHome?: () => void;
+  /**自定义按钮文本*/
+  btnText?: React.ReactNode;
 }
 export const ErrorPage403 = (props: ErrorPageProps) => {
-  const { onBackHome } = props;
+  const { onBackHome, btnText = '返回首页' } = props;
 
   const onClick = () => {
     if (typeof onBackHome === 'function') {
@@ -284,7 +286,7 @@ export const ErrorPage403 = (props: ErrorPageProps) => {
       <div className="fairys:text-xl fairys:font-medium">403</div>
       <div className="fairys:text-xl fairys:font-medium">抱歉，您无权访问此页面。</div>
       <FairysButtonBase bordered onClick={onClick}>
-        返回首页
+        {btnText}
       </FairysButtonBase>
     </div>
   );

@@ -27,8 +27,13 @@ jobs:
       uses: peaceiris/actions-gh-pages@v4
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
-        # publish_dir: ./examples/base/dist
         publish_dir: ./docs/doc_build
+
+    - name: Create ZIP
+      run: |
+          cd ./examples/template/ 
+          zip -r template.zip . -x "node_modules/*" "dist/*" "src/.fairys/*" ".DS_Store"
+          mv template.zip ../../docs/doc_build/ 
 
     - name: Create Tag
       id: create_tag
