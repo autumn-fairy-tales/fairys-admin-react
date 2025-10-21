@@ -148,8 +148,8 @@ export class SettingDataInstance {
   ctor = (state: SettingDataInstanceState = {}) => {
     const _newState: SettingDataInstanceState = {
       layoutMode: 'main_top_sub_left_header',
-      ...state,
       ...this.state,
+      ...state,
     };
     if (_newState) {
       _newState._oldLayoutMode = _newState.layoutMode;
