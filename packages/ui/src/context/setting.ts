@@ -1,4 +1,5 @@
 import { proxy, useSnapshot } from 'valtio';
+import { isBrowser } from 'utils';
 
 /**
  * 1. main_sub_left:左侧主菜单 + 子菜单 + 无头部信息
@@ -114,7 +115,8 @@ export class SettingDataInstance {
     isMobile: false,
   });
 
-  constructor() {
+  /**浏览器端初始化*/
+  _browserConstructor = () => {
     const state = localStorage.getItem(SettingDataInstance.localStorageKey);
     if (state) {
       try {
@@ -126,6 +128,12 @@ export class SettingDataInstance {
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  constructor() {
+    if (isBrowser) {
+      this._browserConstructor();
     }
   }
 

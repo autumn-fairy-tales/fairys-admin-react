@@ -3,13 +3,15 @@ import { defineConfig } from 'rspress/config';
 import { pluginPreview } from '@rspress/plugin-preview';
 
 export default defineConfig({
+  route: {
+    cleanUrls: true,
+  },
   lang: 'zh',
   base: process.env.NODE_ENV === 'production' ? '/fairys-admin-react/' : '/',
   root: path.join(__dirname, 'docs'),
   title: 'Fairys Admin',
   icon: '/logo.png',
   globalStyles: path.join(__dirname, 'styles/index.css'),
-  ssg: false,
   logo: {
     light: '/logo.png',
     dark: '/logo.png',
@@ -41,29 +43,5 @@ export default defineConfig({
       },
     ],
   },
-
   plugins: [pluginPreview({ defaultRenderMode: 'pure' }) as any],
-  // builderConfig: {
-  //   html: {
-  //     tags: [
-  //       {
-  //         tag: 'script',
-  //         head: true,
-  //         append: false,
-  //         attrs: {
-  //           src: 'https://fastly.jsdelivr.net/npm/live2d-widgets@0/autoload.js',
-  //         },
-  //       },
-  //       {
-  //         tag: 'style',
-  //         children: `
-  //         #waifu{ z-index:999999  }
-  //         #waifu-toggle{ z-index:999999;position:absolute; }
-  //         `,
-  //         head: true,
-  //         append: false,
-  //       },
-  //     ],
-  //   },
-  // },
 });

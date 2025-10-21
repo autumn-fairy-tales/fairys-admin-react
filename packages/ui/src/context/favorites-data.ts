@@ -1,6 +1,7 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import { MenuItemType } from './menu-data';
 import { settingDataInstance } from './setting';
+import { isBrowser } from 'utils';
 export type FavoritesDataInstanceState = {
   /**列表数据*/
   dataList?: MenuItemType[];
@@ -14,8 +15,8 @@ export class FavoritesDataInstance {
   state = proxy<FavoritesDataInstanceState>({
     dataList: ref([]),
   });
-
-  constructor() {
+  /**浏览器端初始化*/
+  _browserConstructor = () => {
     const state = localStorage.getItem(FavoritesDataInstance.localStorageKey);
     if (state) {
       try {
@@ -24,6 +25,12 @@ export class FavoritesDataInstance {
       } catch (error) {
         console.log(error);
       }
+    }
+  };
+
+  constructor() {
+    if (isBrowser) {
+      this._browserConstructor();
     }
   }
 

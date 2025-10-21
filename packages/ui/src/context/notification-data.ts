@@ -60,6 +60,7 @@ export class NotificationDataInstance {
     count: 0,
     visibleMoreModal: false,
   });
+
   ctor = (options: { tabItems?: NotificationTabItemType[]; title?: string; isShowIcon?: boolean }) => {
     const { tabItems, title, isShowIcon } = options;
     this.state.tabItems = ref(tabItems || []);
