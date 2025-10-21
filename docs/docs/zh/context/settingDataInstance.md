@@ -1,4 +1,4 @@
-# settingInstance 设置数据
+# settingDataInstance 设置数据
 
 :::tip 提示
 
@@ -15,7 +15,7 @@
 ## 引入
 
 ```ts
-import { settingInstance } from '@fairys/admin-tools-react';
+import { settingDataInstance , useSettingDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 状态值
@@ -97,7 +97,7 @@ export interface SettingInstanceState {
 ## 实体类
 
 ```ts
-export declare class SettingInstance {
+export declare class SettingDataInstance {
     static localStorageKey: string;
     state: SettingInstanceState;
     constructor();
@@ -142,5 +142,16 @@ export declare class SettingInstance {
 ## hooks
 
 ```ts
-export const useSetting: () => [SettingInstanceState, SettingInstance, string | undefined];
+export const useSettingDataInstance: () => [SettingInstanceState, SettingDataInstance, string | undefined];
+```
+
+## 示例
+
+```ts title='初始属性值'
+import { settingDataInstance } from '@fairys/admin-tools-react';
+// 设置项目名
+settingDataInstance.updated({ 
+  projectName: 'Fairys Admin',
+  themeColor: '#af52de',
+});
 ```

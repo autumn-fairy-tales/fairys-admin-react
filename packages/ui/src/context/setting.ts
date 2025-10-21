@@ -83,7 +83,7 @@ export interface SettingInstanceState {
   __defaultValue?: string;
 }
 
-export class SettingInstance {
+export class SettingDataInstance {
   static localStorageKey = 'fairys_setting_state';
 
   state = proxy<SettingInstanceState>({
@@ -115,7 +115,7 @@ export class SettingInstance {
   });
 
   constructor() {
-    const state = localStorage.getItem(SettingInstance.localStorageKey);
+    const state = localStorage.getItem(SettingDataInstance.localStorageKey);
     if (state) {
       try {
         const newState = JSON.parse(state);
@@ -233,7 +233,7 @@ export class SettingInstance {
     /**只做更改值存储，其他的默认值不做处理*/
     let _state: Partial<SettingInstanceState> = {};
     try {
-      _state = JSON.parse(localStorage.getItem(SettingInstance.localStorageKey) || '{}');
+      _state = JSON.parse(localStorage.getItem(SettingDataInstance.localStorageKey) || '{}');
     } catch (error) {
       console.log(error);
     }
@@ -251,7 +251,7 @@ export class SettingInstance {
         this.setDocumentAndBodyTheme();
       }
     }
-    localStorage.setItem(SettingInstance.localStorageKey, JSON.stringify(_state));
+    localStorage.setItem(SettingDataInstance.localStorageKey, JSON.stringify(_state));
   };
   /**判断是否主子菜单模板*/
   isMainSubMenuMode = () => {
@@ -326,9 +326,13 @@ export class SettingInstance {
   clear = () => {};
 }
 
-export const settingInstance = new SettingInstance();
+export const settingDataInstance = new SettingDataInstance();
 
-export const useSetting = () => {
-  const state = useSnapshot(settingInstance.state);
-  return [state, settingInstance, state.__defaultValue] as [SettingInstanceState, SettingInstance, string | undefined];
+export const useSettingDataInstance = () => {
+  const state = useSnapshot(settingDataInstance.state);
+  return [state, settingDataInstance, state.__defaultValue] as [
+    SettingInstanceState,
+    SettingDataInstance,
+    string | undefined,
+  ];
 };

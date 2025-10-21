@@ -1,4 +1,4 @@
-# aliveControllerBaseInstance 页面缓存
+# aliveControllerDataInstance 页面缓存
 
 :::tip 提示
 
@@ -9,14 +9,14 @@
 ## 引入
 
 ```ts
-import { aliveControllerBaseInstance } from '@fairys/admin-tools-react';
+import { aliveControllerDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 实体类
 
 ```ts
 import type { AliveController } from 'react-activation';
-export class AliveControllerBase {
+export class AliveControllerDataInstance {
     aliveController: AliveController;
     /**转换路由值列表*/
     static convertIdOrNameList: (value: string[]) => string[];
@@ -41,4 +41,21 @@ export class AliveControllerBase {
     /**获取缓存节点*/
     getCachingNodes: () => import("react-activation").CachingNode[];
 }
+```
+
+## 示例
+
+```ts
+import { aliveControllerDataInstance } from '@fairys/admin-tools-react';
+
+aliveControllerDataInstance.refreshScope('scope1');
+aliveControllerDataInstance.dropScope('scope1');
+aliveControllerDataInstance.getCachingNodes();
+aliveControllerDataInstance.refreshScopeByIds(['id1', 'id2']);
+aliveControllerDataInstance.dropScopeByIds(['id1', 'id2']);
+aliveControllerDataInstance.refreshById('id1');
+aliveControllerDataInstance.dropById('id1');
+aliveControllerDataInstance.refresh('name1');
+aliveControllerDataInstance.drop('name1');
+
 ```

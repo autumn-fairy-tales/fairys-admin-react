@@ -10,6 +10,8 @@
 
 请在渲染`Layout`和`FairysRoot`组件之前，调用`createBrowserRouter`或`createMemoryRouter`或`createHashRouter`方法初始化路由
 
+在项目中跳转时，建议使用`navigate`方法，而不是直接调用`router`的`useNavigate`方法，因为`navigate`方法会触发`onNavigateBefore`回调，而直接调用`router`的`useNavigate`方法不会触发回调。
+
 :::
 
 ## 引入
@@ -34,4 +36,32 @@ export class RouterDataInstance {
     /**清空tab项*/
     clear: () => void;
 }
+```
+
+## 示例
+
+```ts title='初始化路由'
+import { routerDataInstance } from '@fairys/admin-tools-react';
+// 初始化路由
+routerDataInstance.createBrowserRouter([
+    {
+        path: '/',
+        element: <div>home</div>,
+    },
+]);
+```
+
+```ts title='路由跳转'
+import { routerDataInstance } from '@fairys/admin-tools-react';
+// 路由跳转
+routerDataInstance.navigate('/');
+```
+
+```ts title='路由跳转前判断方法挂载'
+import { routerDataInstance } from '@fairys/admin-tools-react';
+// 路由跳转前判断方法挂载
+routerDataInstance.onNavigateBefore = (to, next) => {
+    console.log(to);
+    next();
+};
 ```

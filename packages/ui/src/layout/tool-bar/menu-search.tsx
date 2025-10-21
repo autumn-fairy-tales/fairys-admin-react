@@ -2,7 +2,7 @@ import { FairysModalBase } from 'components/modal-base';
 import { FairysButtonBase } from 'components/button';
 import { Fragment } from 'react/jsx-runtime';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
+import { useMenuDataInstance, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon, IconProps } from '@iconify/react';
 import { FairysBreadcrumbBase } from 'components/breadcrumb';
 import { useNavigate } from 'react-router';
@@ -55,7 +55,7 @@ const SearchItem = (props: SearchItemProps) => {
 };
 
 const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
-  const [state, menuDataInstance] = useMenuData();
+  const [state, menuDataInstance] = useMenuDataInstance();
   const timer = useRef<NodeJS.Timeout>();
   const searchMenuItems = state.searchMenuItems || [];
 

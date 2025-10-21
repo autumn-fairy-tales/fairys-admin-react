@@ -1,9 +1,9 @@
-import { LayoutMode, useSetting } from 'context/setting';
+import { LayoutMode, useSettingDataInstance } from 'context/setting';
 import { FairysSelectBase } from 'components/select';
 import { LayoutItem } from './base';
 
 export const SettingLayoutMode = () => {
-  const [state, settingInstance] = useSetting();
+  const [state, settingDataInstance] = useSettingDataInstance();
   return (
     <LayoutItem label="布局模式">
       <FairysSelectBase
@@ -17,7 +17,7 @@ export const SettingLayoutMode = () => {
           { title: '主子菜单合并侧边展示+顶部信息', value: 'left_header' },
           { title: '移动', value: 'mobile' },
         ]}
-        onChange={(value: LayoutMode) => settingInstance.updated({ layoutMode: value })}
+        onChange={(value: LayoutMode) => settingDataInstance.updated({ layoutMode: value })}
       />
     </LayoutItem>
   );

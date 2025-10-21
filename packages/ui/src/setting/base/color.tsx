@@ -1,4 +1,4 @@
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { LayoutItem } from './base';
 import { FairysPopoverBase } from 'components/popover-base';
 import { getHexadecimalColor } from 'utils/getHexadecimalColor';
@@ -6,7 +6,7 @@ import { useMemo } from 'react';
 import Sketch from '@uiw/react-color-sketch';
 
 export const SettingColor = () => {
-  const [state, settingInstance] = useSetting();
+  const [state, settingDataInstance] = useSettingDataInstance();
   const themeColor = useMemo(() => getHexadecimalColor(state.themeColor), [state.themeColor]);
 
   return (
@@ -17,7 +17,7 @@ export const SettingColor = () => {
             color={themeColor}
             disableAlpha
             onChange={(color) => {
-              settingInstance.updatedThemeColor(color.hex);
+              settingDataInstance.updatedThemeColor(color.hex);
             }}
           />
         }

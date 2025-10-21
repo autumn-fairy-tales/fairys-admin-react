@@ -2,14 +2,14 @@
   "index",
   "accountDataInstance",
   "authDataInstance",
-  "aliveControllerBaseInstance",
+  "aliveControllerDataInstance",
   "menuDataInstance",
   "routerDataInstance",
   "favoritesDataInstance",
-  "tabBarInstance",
+  "tabBarDataInstance",
   "appPluginDataInstance",
-  "motionAnimationInstance",
+  "motionAnimationDataInstance",
   "notificationDataInstance",
-  "settingInstance",
+  "settingDataInstance",
   "appDataInstance"
 ]

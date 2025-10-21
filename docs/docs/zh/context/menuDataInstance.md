@@ -119,5 +119,19 @@ export class MenuDataInstance {
 ## hooks
 
 ```ts
-export const useMenuData: () => [MenuDataInstanceState, MenuDataInstance, string | undefined];
+export const useMenuDataInstance: () => [MenuDataInstanceState, MenuDataInstance, string | undefined];
+```
+
+## 示例
+
+```ts title='设置菜单所有数据'
+import { menuDataInstance } from '@fairys/admin-tools-react';
+// 设置菜单所有数据
+menuDataInstance.ctor([
+    {
+        title: '首页',
+        path: '/home',
+        icon: 'ant-design:home-outlined',
+    },
+]);
 ```

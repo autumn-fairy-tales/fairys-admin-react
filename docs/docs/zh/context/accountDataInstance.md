@@ -15,7 +15,7 @@
 ## 引入
 
 ```ts
-import { accountDataInstance } from '@fairys/admin-tools-react';
+import { accountDataInstance , useAccountDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 状态值
@@ -34,8 +34,6 @@ interface AccountDataState {
   userRole?: string;
   /**其他自定义信息*/
   info?: Record<string, any>;
-  /**默认引用值*/
-  __defaultValue?: string;
 }
 ```
 
@@ -54,5 +52,51 @@ export class AccountDataInstance {
 ## hooks
 
 ```ts
-export  const useAccountData: () => [AccountDataState, AccountDataInstance, AccountDataState["__defaultValue"]];
+export  const useAccountDataInstance: () => [AccountDataState, AccountDataInstance, AccountDataState["__defaultValue"]];
+```
+
+## 示例
+
+```ts title='使用 accountDataInstance 更新账户数据'
+import { accountDataInstance } from '@fairys/admin-tools-react';
+
+accountDataInstance.updated({
+  userName: '张三',
+  userAvatar: 'https://example.com/avatar.jpg',
+  userEmail: 'zhangsan@example.com',
+  userPhone: '13800000000',
+  userRole: 'admin',
+});
+
+```
+
+```ts title='使用 useAccountDataInstance 获取账户数据'
+import { useAccountDataInstance } from '@fairys/admin-tools-react';
+import { useEffect } from 'react';
+
+const Demo = ()=>{
+  const [accountData, accountDataInstance] = useAccountDataInstance();
+
+  useEffect(()=>{
+    accountDataInstance.updated({
+      userName: '李四',
+      userAvatar: 'https://example.com/avatar.jpg',
+      userEmail: 'lisi@example.com',
+      userPhone: '13800000000',
+      userRole: 'user',
+    });
+  },[accountData])
+
+  return (
+    <div>
+      <p>用户名：{accountData.userName}</p>
+      <p>用户头像：{accountData.userAvatar}</p>
+      <p>用户邮箱：{accountData.userEmail}</p>
+      <p>用户手机号：{accountData.userPhone}</p>
+      <p>用户角色：{accountData.userRole}</p>
+    </div>
+  );
+}
+export default Demo;
+
 ```

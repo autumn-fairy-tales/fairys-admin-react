@@ -1,12 +1,12 @@
 import { Fragment, useEffect, useMemo, forwardRef, Ref, useImperativeHandle } from 'react';
 import type { MenuItemType } from 'context/menu-data';
-import { tabBarInstance } from 'context/tab-bar';
+import { tabBarDataInstance } from 'context/tab-bar';
 import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from 'context/menu-data';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
 import { Icon, IconProps } from '@iconify/react';
 import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**
    * 菜单项
@@ -100,7 +100,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   menuItemInstance.isSubMenu = isSubMenu;
   menuItemInstance.isActive = !!match;
   const sideMenuMode = menuState.menuModeExpandCollapse;
-  const [settingState] = useSetting();
+  const [settingState] = useSettingDataInstance();
   const sideMenuMode2 = settingState.sideMenuMode;
 
   const isActive = useMemo(() => {
@@ -170,7 +170,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
         }
       }
       navigate(item.path);
-      tabBarInstance.addItem(item);
+      tabBarDataInstance.addItem(item);
       menuDataInstance.updateMainExpandItem(undefined);
       tree.events.emit('click');
     }

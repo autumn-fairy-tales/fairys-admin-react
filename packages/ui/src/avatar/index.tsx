@@ -1,6 +1,6 @@
-import { useAccountData } from 'context/account-data';
+import { useAccountDataInstance } from 'context/account-data';
 import { authDataInstance } from 'context/auth-data';
-import { settingInstance } from 'context/setting';
+import { settingDataInstance } from 'context/setting';
 import { forwardRef, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
@@ -25,14 +25,14 @@ const baseClassName =
 
 export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElement>) => {
   const { mode = 'header', nameMode, className, ...rest } = props;
-  const [accountState] = useAccountData();
+  const [accountState] = useAccountDataInstance();
   const userName = accountState.userName || 'fairys';
   const userEmail = accountState.userEmail || '未绑定邮箱';
   const navigate = useNavigate();
   const plugin = appPluginDataInstance.appPlugins?.['avatar-menus'];
 
   const avatarRender = useMemo(() => {
-    const avatar = accountState.userAvatar || settingInstance.state.logo;
+    const avatar = accountState.userAvatar || settingDataInstance.state.logo;
     if (avatar) {
       return (
         <img
@@ -103,7 +103,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
     if (item.title === '主页') {
       navigate('/');
     } else if (item.title === '偏好设置') {
-      settingInstance.onToggleOpen();
+      settingDataInstance.onToggleOpen();
     } else if (item.title === '退出登录') {
       authDataInstance._onLogout?.();
     }

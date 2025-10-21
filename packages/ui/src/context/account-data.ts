@@ -46,7 +46,7 @@ export class AccountDataInstance {
 
 export const accountDataInstance = new AccountDataInstance();
 
-export const useAccountData = () => {
+export const useAccountDataInstance = () => {
   const state = useSnapshot(accountDataInstance.state);
   return [state, accountDataInstance, state.__defaultValue] as [
     AccountDataState,

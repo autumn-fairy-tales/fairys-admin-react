@@ -1,6 +1,6 @@
 import { Menu } from 'menu';
 import { MainMenu } from 'main-menu';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { Fragment, memo, useMemo } from 'react';
 import clsx from 'clsx';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
@@ -10,7 +10,7 @@ import { Logo } from 'logo';
 import { FairysPopoverBase } from 'components/popover-base';
 
 const LayoutSiderMainMenu = () => {
-  const [state] = useSetting();
+  const [state] = useSettingDataInstance();
   const layoutMode = state.layoutMode;
 
   const isShow = useMemo(() => {
@@ -28,7 +28,7 @@ const LayoutSiderMainMenu = () => {
 };
 
 const LayoutSubSider = () => {
-  const [state, settingInstance] = useSetting();
+  const [state, settingDataInstance] = useSettingDataInstance();
   const sideMenuMode = state.sideMenuMode;
   const layoutMode = state.layoutMode;
   const bodyClassName = useMemo(() => {
@@ -84,7 +84,7 @@ const LayoutSubSider = () => {
             title={sideMenuMode === 'close' ? '打开菜单' : '关闭菜单'}
             isBg
             onClick={() => {
-              settingInstance.updated({ sideMenuMode: sideMenuMode === 'close' ? 'open' : 'close' });
+              settingDataInstance.updated({ sideMenuMode: sideMenuMode === 'close' ? 'open' : 'close' });
             }}
           >
             <span className={iconClassName} />
@@ -97,7 +97,7 @@ const LayoutSubSider = () => {
 };
 
 export const LayoutSider = memo(() => {
-  const [state] = useSetting();
+  const [state] = useSettingDataInstance();
   const layoutMode = state.layoutMode;
   const darkMode = state.darkMenu;
   const theme = state.theme;

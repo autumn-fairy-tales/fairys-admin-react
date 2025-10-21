@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useMemo } from 'react';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import clsx from 'clsx';
 import { LayoutContent } from './content';
 import { LayoutHeader } from './header';
@@ -10,7 +10,7 @@ import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { SettingDrawer } from 'setting';
 
 export const Layout = () => {
-  const [state, settingInstance] = useSetting();
+  const [state, settingDataInstance] = useSettingDataInstance();
   /**
    * 1. main_sub_left:左侧主菜单 + 子菜单 + 无头部信息
    * 2. main_left:左侧主菜单 + 移入子菜单展示 + 无头部信息
@@ -35,7 +35,7 @@ export const Layout = () => {
     }
   }, [location.pathname, sideMenuMode]);
 
-  useEffect(settingInstance.autoListenScreen, []);
+  useEffect(settingDataInstance.autoListenScreen, []);
 
   const isShowHeader = useMemo(() => {
     return ['main_top_header', 'main_top_sub_left_header', 'left_header', 'mobile'].includes(`${layoutMode}`);

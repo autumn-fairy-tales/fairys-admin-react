@@ -9,7 +9,7 @@
 ## 引入
 
 ```ts
-import { favoritesDataInstance } from '@fairys/admin-tools-react';
+import { favoritesDataInstance , useFavoritesDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 状态值
@@ -19,8 +19,6 @@ import { MenuItemType } from './menu-data';
 export type FavoritesDataState = {
     /**列表数据*/
     dataList?: MenuItemType[];
-    /**默认引用值*/
-    __defaultValue?: string;
 };
 ```
 
@@ -31,7 +29,6 @@ import { MenuItemType } from './menu-data';
 export declare class FavoritesDataInstance {
     static localStorageKey: string;
     state: FavoritesDataState;
-    constructor();
     /**添加*/
     addItem: (item: MenuItemType) => void;
     /**移除*/
@@ -44,5 +41,27 @@ export declare class FavoritesDataInstance {
 ## hooks
 
 ```ts
-export  const useFavoritesData: () => [FavoritesDataState, FavoritesDataInstance, FavoritesDataState["__defaultValue"]];
+export  const useFavoritesDataInstance: () => [FavoritesDataState, FavoritesDataInstance, FavoritesDataState["__defaultValue"]];
+```
+
+## 示例
+
+```ts title='添加收藏项'
+import { favoritesDataInstance } from '@fairys/admin-tools-react';
+// 添加收藏项
+favoritesDataInstance.addItem({
+    title: '首页2',
+    path: '/main-menu2/home',
+    icon: 'ant-design:home-outlined',
+});
+```
+
+```ts title='移除收藏项'
+import { favoritesDataInstance } from '@fairys/admin-tools-react';
+// 移除收藏项
+favoritesDataInstance.removeItem({
+    title: '首页2',
+    path: '/main-menu2/home',
+    icon: 'ant-design:home-outlined',
+});
 ```

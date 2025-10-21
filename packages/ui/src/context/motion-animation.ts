@@ -9,7 +9,7 @@ interface MotionAnimationState {
 }
 
 /**页面动画配置*/
-export class MotionAnimationInstance {
+export class MotionAnimationDataInstance {
   state: MotionAnimationState[] = [
     {
       name: '无动画',
@@ -72,4 +72,4 @@ export class MotionAnimationInstance {
   };
 }
 
-export const motionAnimationInstance = new MotionAnimationInstance();
+export const motionAnimationDataInstance = new MotionAnimationDataInstance();

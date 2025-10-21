@@ -1,7 +1,7 @@
 import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
-import { settingInstance } from './setting';
-import { tabBarInstance } from './tab-bar';
+import { settingDataInstance } from './setting';
+import { tabBarDataInstance } from './tab-bar';
 import { IconProps } from '@iconify/react';
 export interface MenuItemType {
   /**标题*/
@@ -133,7 +133,7 @@ export class MenuDataInstance {
     this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain));
     const fixedItems = this._flatMenuItems.filter((it) => it.isTabFixed && !it.isMain);
     if (fixedItems.length) {
-      tabBarInstance.ctor(fixedItems);
+      tabBarDataInstance.ctor(fixedItems);
     }
   };
 
@@ -220,7 +220,7 @@ export class MenuDataInstance {
 
   /**更新子菜单显示,和主菜单选中项*/
   updateChildMenus = (path: string) => {
-    const isMainSubMenuMode = settingInstance.isMainSubMenuMode();
+    const isMainSubMenuMode = settingDataInstance.isMainSubMenuMode();
     if (isMainSubMenuMode) {
       const mainMenuItemSelected = this.state.mainMenuItemSelected;
       const parentItems = this._parentMenuItemMap.get(path);
@@ -261,7 +261,7 @@ export class MenuDataInstance {
 /**菜单数据使用实例*/
 export const menuDataInstance = new MenuDataInstance();
 
-export const useMenuData = () => {
+export const useMenuDataInstance = () => {
   const state = useSnapshot(menuDataInstance.state);
   return [state, menuDataInstance, state.__defaultValue] as [
     MenuDataInstanceState,

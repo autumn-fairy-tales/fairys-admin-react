@@ -15,21 +15,21 @@ import { appDataInstance } from '@fairys/admin-tools-react';
 ## 实体类
 
 ```ts
-import { AliveControllerBase } from './alive-controller';
+import { AliveControllerDataInstance } from './alive-controller';
 import { AuthDataInstance } from './auth-data';
 import { FavoritesDataInstance } from './favorites-data';
 declare class AppDataInstance {
     static router: import("./router-data").RouterDataInstance;
-    static setting: import("./setting").SettingInstance;
+    static setting: import("./setting").SettingDataInstance;
     static menu: import("./menu-data").MenuDataInstance;
-    static tabBar: import("./tab-bar").TabBarInstance;
+    static tabBar: import("./tab-bar").TabBarDataInstance;
     static account: import("./account-data").AccountDataInstance;
-    static motionAnimation: import("./motion-animation").MotionAnimationInstance;
+    static motionAnimation: import("./motion-animation").MotionAnimationDataInstance;
     static appPlugin: import("./app-plugins-data").AppPluginDataInstance;
     static notification: import("./notification-data").NotificationDataInstance;
     static favoritesDataInstance: FavoritesDataInstance;
     /**挂载的AliveController*/
-    aliveController: AliveControllerBase;
+    aliveController: AliveControllerDataInstance;
     authDataInstance: AuthDataInstance;
     /**清空tab项*/
     clear: () => void;

@@ -1,12 +1,12 @@
 import { FairysNotificationListBase } from 'components/notification';
 import { FairysTabs } from 'components/tabs';
-import { useNotificationData } from 'context/notification-data';
+import { useNotificationDatainstance } from 'context/notification-data';
 import { Fragment } from 'react/jsx-runtime';
 import { FairysButtonBase } from 'components/button';
 import { FairysPopoverBase } from 'components/popover-base';
 
 export const Notification = () => {
-  const [state, notificationDataInstance] = useNotificationData();
+  const [state, notificationDataInstance] = useNotificationDatainstance();
   const title = state.title;
   const isTabs = !!(state.tabItems || []).length;
   const activeKey = state.activeKey;
@@ -57,7 +57,7 @@ export const Notification = () => {
 };
 
 export const NotificationBtn = () => {
-  const [state] = useNotificationData();
+  const [state] = useNotificationDatainstance();
   const count = state.count;
   return (
     <FairysPopoverBase placement="bottom" content={<Notification />}>

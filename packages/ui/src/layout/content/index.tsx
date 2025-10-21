@@ -6,11 +6,11 @@ import { useFairysRootContext } from 'components/root';
 import { Fragment, memo } from 'react';
 import { useMemo } from 'react';
 import { FairysFullScreen } from 'components/full-screen';
-import { useTabBar } from 'context/tab-bar';
-import { AliveControllerBase } from 'context/alive-controller';
+import { useTabBarDataInstance } from 'context/tab-bar';
+import { AliveControllerDataInstance } from 'context/alive-controller';
 import { motion, AnimatePresence } from 'framer-motion';
-import { useSetting } from 'context/setting';
-import { motionAnimationInstance } from 'context/motion-animation';
+import { useSettingDataInstance } from 'context/setting';
+import { motionAnimationDataInstance } from 'context/motion-animation';
 
 interface MotionAnimationProps {
   children: React.ReactNode;
@@ -21,10 +21,10 @@ interface MotionAnimationProps {
 const MotionAnimation = (props: MotionAnimationProps) => {
   const { children, className = '' } = props;
   const location = useLocation();
-  const [setting] = useSetting();
+  const [setting] = useSettingDataInstance();
   const pageTransitionMode = setting.pageTransitionMode;
   const config = useMemo(() => {
-    return motionAnimationInstance.getAnimationConfig(pageTransitionMode);
+    return motionAnimationDataInstance.getAnimationConfig(pageTransitionMode);
   }, [pageTransitionMode]);
   return (
     <AnimatePresence mode="wait">
@@ -42,7 +42,7 @@ const MotionAnimation = (props: MotionAnimationProps) => {
 const KeepAliveContent = () => {
   const location = useLocation();
   const id = useMemo(() => {
-    return AliveControllerBase.convertIdOrNameOne(location.pathname);
+    return AliveControllerDataInstance.convertIdOrNameOne(location.pathname);
   }, [location.pathname]);
   const outlet = useOutlet();
   //嵌套多个 MotionAnimation ，为了解决页面刷新时，动画不生效的问题
@@ -57,7 +57,7 @@ const KeepAliveContent = () => {
 
 const OutletContentContext = () => {
   const fairysRootClass = useFairysRootContext();
-  const [state, tabBarInstance] = useTabBar();
+  const [state, tabBarDataInstance] = useTabBarDataInstance();
   const pageFullScreen = state.pageFullScreen;
 
   const render = useMemo(() => {
@@ -74,7 +74,7 @@ const OutletContentContext = () => {
       <FairysFullScreen
         className="fairys_admin_main_content_body_full_screen"
         open={pageFullScreen}
-        onClose={tabBarInstance.onToggleFullScreen}
+        onClose={tabBarDataInstance.onToggleFullScreen}
       >
         {render}
       </FairysFullScreen>

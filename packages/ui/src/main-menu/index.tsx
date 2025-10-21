@@ -4,9 +4,9 @@
 
 import clsx from 'clsx';
 import { useMemo, Fragment, useCallback } from 'react';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { useLocation } from 'react-router';
-import { useMenuData, MenuItemType, menuDataInstance } from 'context/menu-data';
+import { useMenuDataInstance, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { Icon, IconProps } from '@iconify/react';
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
@@ -26,10 +26,10 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const { item, layoutMode } = props;
   const _className = item.className;
   const location = useLocation();
-  const [state, menuInstance] = useMenuData();
+  const [state, menuInstance] = useMenuDataInstance();
   const mainMenuItemSelected = state.mainMenuItemSelected;
   const isActive = mainMenuItemSelected === item.path;
-  const [settingState] = useSetting();
+  const [settingState] = useSettingDataInstance();
   const layoutModeState = settingState.layoutMode;
   const iconProps = item.iconProps as IconProps;
 
@@ -120,7 +120,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
 const MainMenuItems = (props: MainMenuProps) => {
   const { layoutMode } = props;
-  const [state] = useMenuData();
+  const [state] = useMenuDataInstance();
   const mainMenuItems = state.mainMenuItems || [];
 
   const menuRender = useMemo(() => {
@@ -132,7 +132,7 @@ const MainMenuItems = (props: MainMenuProps) => {
 
 export const MainMenu = (props: MainMenuProps) => {
   const { layoutMode } = props;
-  const [settingState] = useSetting();
+  const [settingState] = useSettingDataInstance();
   const layoutModeState = settingState.layoutMode;
   const mainMenuClassName = useMemo(() => {
     return clsx(

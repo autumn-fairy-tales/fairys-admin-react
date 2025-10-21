@@ -1,8 +1,8 @@
 import { Fragment, useEffect, useMemo } from 'react';
-import { useMenuData, MenuInstanceContext, useMenuInstance, MenuItemType } from 'context/menu-data';
+import { useMenuDataInstance, MenuInstanceContext, useMenuInstance, MenuItemType } from 'context/menu-data';
 import { SubMenu } from './sub-menu';
 import { MenuItem } from './menu-item';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { FairysPopoverBaseFloatingTreeParent } from 'components/popover-base';
 
 const createChildMenu = (item: MenuItemType, level?: number) => {
@@ -18,10 +18,10 @@ const createChildMenus = (childMenuItems: MenuItemType[], level?: number) => {
 };
 
 export const Menu = () => {
-  const [state, menuDataInstance] = useMenuData();
+  const [state, menuDataInstance] = useMenuDataInstance();
   const menuItems = state.menuItems;
   const menuInstance = useMenuInstance();
-  const [settingState] = useSetting();
+  const [settingState] = useSettingDataInstance();
   const sideMenuMode = settingState.sideMenuMode;
   const layoutMode = settingState.layoutMode;
 

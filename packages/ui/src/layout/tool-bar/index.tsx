@@ -1,5 +1,5 @@
 import { Breadcrumb } from 'breadcrumb';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { Fragment, useMemo, useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 import { FairysButtonBase } from 'components/button';
@@ -11,14 +11,14 @@ import { NotificationBtn } from './notification';
 import { FavoritesBtn } from './favorites';
 
 const MenuDarkLight = () => {
-  const [state, settingInstance] = useSetting();
+  const [state, settingDataInstance] = useSettingDataInstance();
   const theme = state.theme;
 
   const onToggleTheme = () => {
-    settingInstance.updated({
+    settingDataInstance.updated({
       theme: theme === 'dark' ? 'light' : 'dark',
     });
-    settingInstance.onToggleAutoListenSystemTheme(false);
+    settingDataInstance.onToggleAutoListenSystemTheme(false);
   };
 
   const className = useMemo(() => {
@@ -36,10 +36,10 @@ const MenuDarkLight = () => {
 };
 
 const FairysFullScreen = () => {
-  const [state, settingInstance] = useSetting();
+  const [state, settingDataInstance] = useSettingDataInstance();
   const isFullScreen = state.isFullScreen;
 
-  useEffect(settingInstance.addEventListenerFullscreenChange, []);
+  useEffect(settingDataInstance.addEventListenerFullscreenChange, []);
 
   const className = useMemo(() => {
     return clsx('fairys:size-[18px]', {
@@ -49,7 +49,7 @@ const FairysFullScreen = () => {
   }, [isFullScreen]);
 
   return (
-    <FairysButtonBase className="fairys_admin_tool_bar_full_screen" onClick={settingInstance.onToggleFullScreen}>
+    <FairysButtonBase className="fairys_admin_tool_bar_full_screen" onClick={settingDataInstance.onToggleFullScreen}>
       <span className={className} />
     </FairysButtonBase>
   );
@@ -88,7 +88,7 @@ const Reload = () => {
 
 export const ToolBar = () => {
   const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
-  const [state] = useSetting();
+  const [state] = useSettingDataInstance();
   const enableToolBarFavorites = state.enableToolBarFavorites;
   const enableToolBarNotification = state.enableToolBarNotification;
   const enableToolBarFullScreen = state.enableToolBarFullScreen;

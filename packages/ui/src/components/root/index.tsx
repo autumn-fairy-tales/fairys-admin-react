@@ -1,7 +1,7 @@
 import { AliveScope, useAliveController } from 'react-activation';
 import { Fragment, createContext, useContext, useMemo, useRef } from 'react';
 import { appDataInstance } from 'context/app-data';
-import { aliveControllerBaseInstance } from 'context/alive-controller';
+import { aliveControllerDataInstance } from 'context/alive-controller';
 import { DataRouter, RouterProvider } from 'react-router';
 import { routerDataInstance } from 'context';
 
@@ -38,8 +38,8 @@ export const useFairysRootContext = () => useContext(FairysRootContext);
 /**空标签进行挂载 aliveController*/
 export const FairysRootAliveController = () => {
   const aliveController = useAliveController();
-  aliveControllerBaseInstance.aliveController = aliveController;
-  appDataInstance.aliveController = aliveControllerBaseInstance;
+  aliveControllerDataInstance.aliveController = aliveController;
+  appDataInstance.aliveController = aliveControllerDataInstance;
   // 空标签进行挂载数据
   return <Fragment />;
 };

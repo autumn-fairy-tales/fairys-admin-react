@@ -1,4 +1,4 @@
-# tabBarInstance 页面标签栏
+# tabBarDataInstance 页面标签栏
 
 :::tip 提示
 
@@ -9,7 +9,7 @@
 ## 引入
 
 ```ts
-import { tabBarInstance } from '@fairys/admin-tools-react';
+import { tabBarDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 状态值
@@ -25,15 +25,19 @@ export interface TabBarInstanceState {
     dropDownTabBarItems: TabBarItemType[];
     /**页面是否全屏*/
     pageFullScreen?: boolean;
-    /**默认引用值*/
-    __defaultValue?: string;
 }
 ```
 
 ## 实体类
 
+:::warning 注意
+
+在调用`menuDataInstance`的`ctor`方法初始化菜单，会自动调用`tabBarDataInstance`的`ctor`方法初始化标签栏项集合。
+
+:::
+
 ```ts
-export class TabBarInstance {
+export class TabBarDataInstance {
     state: TabBarInstanceState;
     /**初始化渲染菜单数据*/
     ctor: (tabBarItems: MenuItemType[]) => void;
@@ -59,5 +63,29 @@ export class TabBarInstance {
 ## hooks
 
 ```ts
-export const useTabBar: () => [TabBarInstanceState, TabBarInstance, string | undefined];
+export const useTabBarDataInstance: () => [TabBarInstanceState, TabBarDataInstance, string | undefined];
+```
+
+## 示例
+
+```ts title='tab项操作'
+import { tabBarDataInstance } from '@fairys/admin-tools-react';
+// 添加tab项
+tabBarDataInstance.addItem({
+    path: '/',
+    name: '首页',
+});
+
+// 删除tab项
+tabBarDataInstance.remove('/');
+
+// 关闭其他标签
+tabBarDataInstance.removeOther(0, true);
+
+// 关闭左侧标签
+tabBarDataInstance.removeLeft(0, true);
+
+// 关闭右侧标签
+tabBarDataInstance.removeRight(0, true);
+
 ```

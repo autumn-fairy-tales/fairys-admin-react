@@ -1,4 +1,4 @@
-# motionAnimationInstance 页面动画
+# motionAnimationDataInstance 页面动画
 
 :::tip 提示
 
@@ -15,7 +15,7 @@
 ## 引入
 
 ```ts
-import { motionAnimationInstance } from '@fairys/admin-tools-react';
+import { motionAnimationDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 配置
@@ -37,7 +37,7 @@ interface MotionAnimationState {
 ```ts
 import type { MotionNodeAnimationOptions } from 'framer-motion';
 /**页面动画配置*/
-export declare class MotionAnimationInstance {
+export declare class MotionAnimationDataInstance {
     state: MotionAnimationState[];
     /**扩展动画*/
     expands: (list: MotionAnimationState[]) => void;
@@ -51,10 +51,10 @@ export declare class MotionAnimationInstance {
 
 ## 示例
 
-```ts
-import { motionAnimationInstance } from '@fairys/admin-tools-react';
+```ts title='扩展动画'
+import { motionAnimationDataInstance } from '@fairys/admin-tools-react';
 
-motionAnimationInstance.expands([
+motionAnimationDataInstance.expands([
   {
     name: '3D翻转',
     config: {

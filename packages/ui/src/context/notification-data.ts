@@ -126,7 +126,7 @@ export class NotificationDataInstance {
 /**消息通知*/
 export const notificationDataInstance = new NotificationDataInstance();
 
-export const useNotificationData = () => {
+export const useNotificationDatainstance = () => {
   const state = useSnapshot(notificationDataInstance.state);
   return [state, notificationDataInstance, state.__defaultValue] as [
     NotificationDataState,

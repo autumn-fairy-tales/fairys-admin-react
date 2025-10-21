@@ -1,7 +1,7 @@
 import {
-  useTabBar,
+  useTabBarDataInstance,
   TabBarItemType,
-  tabBarInstance,
+  tabBarDataInstance,
   TabInstanceContext,
   useTabInstance,
   useTabInstanceContext,
@@ -37,7 +37,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   tabItemInstance.isActive = !!match;
   const fairysRootClass = useFairysRootContext();
 
-  const [state] = useTabBar();
+  const [state] = useTabBarDataInstance();
   const tabBarItems = state.tabBarItems;
 
   const isCloseIconShow = useMemo(() => {
@@ -68,14 +68,14 @@ const TabBarItem = (props: TabBarItemProps) => {
     e.preventDefault();
     if (!match) {
       navigate(item.path);
-      tabBarInstance.addItem(item);
+      tabBarDataInstance.addItem(item);
     }
   };
 
   const onClose = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    tabBarInstance.remove(item.path, tabItemInstance.isActive);
+    tabBarDataInstance.remove(item.path, tabItemInstance.isActive);
   };
 
   useEffect(() => {
@@ -119,15 +119,15 @@ const TabBarItem = (props: TabBarItemProps) => {
       if (item.title === '重新加载') {
         appDataInstance.aliveController?.refreshScope?.(currentPath);
       } else if (item.title === '关闭标签') {
-        tabBarInstance.remove(currentPath, tabItemInstance.isActive);
+        tabBarDataInstance.remove(currentPath, tabItemInstance.isActive);
       } else if (item.title === '关闭其他标签') {
-        tabBarInstance.removeOther(currentIndex, tabItemInstance.isActive);
+        tabBarDataInstance.removeOther(currentIndex, tabItemInstance.isActive);
       } else if (item.title === '关闭左侧标签') {
-        tabBarInstance.removeLeft(currentIndex, tabItemInstance.isActive);
+        tabBarDataInstance.removeLeft(currentIndex, tabItemInstance.isActive);
       } else if (item.title === '关闭右侧标签') {
-        tabBarInstance.removeRight(currentIndex, tabItemInstance.isActive);
+        tabBarDataInstance.removeRight(currentIndex, tabItemInstance.isActive);
       } else if (item.title === '最大化') {
-        tabBarInstance.onToggleFullScreen();
+        tabBarDataInstance.onToggleFullScreen();
       } else if (item.title === '新窗口打开') {
         const href = window.location.href.replace(location.pathname, currentPath);
         window.open(href, '_blank');
@@ -160,7 +160,7 @@ const TabBarItem = (props: TabBarItemProps) => {
 };
 
 export const TabBar = () => {
-  const [state] = useTabBar();
+  const [state] = useTabBarDataInstance();
   const tabBarItems = state.tabBarItems;
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
@@ -171,7 +171,7 @@ export const TabBar = () => {
   const location = useLocation();
 
   useEffect(() => {
-    tabBarInstance.add(location.pathname);
+    tabBarDataInstance.add(location.pathname);
   }, [location.pathname]);
 
   const render = useMemo(() => {

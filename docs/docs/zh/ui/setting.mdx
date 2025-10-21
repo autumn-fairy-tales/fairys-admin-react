@@ -47,7 +47,7 @@ import { SettingDrawer } from '@fairys/admin-tools-react';
 - 3D翻转
 - 缩放
 
-扩展动画选项配置，通过`motionAnimationInstance`配置。
+扩展动画选项配置，通过`motionAnimationDataInstance`配置。
 
 :::warning
 
@@ -56,9 +56,9 @@ import { SettingDrawer } from '@fairys/admin-tools-react';
 :::
 
 ```ts
-import { motionAnimationInstance } from '@fairys/admin-tools-react';
+import { motionAnimationDataInstance } from '@fairys/admin-tools-react';
 
-motionAnimationInstance.expands([
+motionAnimationDataInstance.expands([
   {
     name: '3D翻转',
     config: {

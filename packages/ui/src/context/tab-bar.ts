@@ -17,7 +17,7 @@ export interface TabBarInstanceState {
   __defaultValue?: string;
 }
 
-export class TabBarInstance {
+export class TabBarDataInstance {
   state = proxy<TabBarInstanceState>({
     tabBarItems: [],
     dropDownTabBarItems: [],
@@ -141,11 +141,15 @@ export class TabBarInstance {
   };
 }
 
-export const tabBarInstance = new TabBarInstance();
+export const tabBarDataInstance = new TabBarDataInstance();
 
-export const useTabBar = () => {
-  const state = useSnapshot(tabBarInstance.state);
-  return [state, tabBarInstance, state.__defaultValue] as [TabBarInstanceState, TabBarInstance, string | undefined];
+export const useTabBarDataInstance = () => {
+  const state = useSnapshot(tabBarDataInstance.state);
+  return [state, tabBarDataInstance, state.__defaultValue] as [
+    TabBarInstanceState,
+    TabBarDataInstance,
+    string | undefined,
+  ];
 };
 
 export class TabItemInstance {
@@ -199,7 +203,7 @@ export class TabInstance {
         }
       }
       const _li = dropDownTabBarItems.map((it) => ({ ...it, isShowClose: it.isTabFixed === true ? false : true }));
-      tabBarInstance.state.dropDownTabBarItems = ref(_li);
+      tabBarDataInstance.state.dropDownTabBarItems = ref(_li);
       clearTimeout(this.timer);
     }, 500);
   };

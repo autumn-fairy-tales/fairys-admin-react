@@ -1,6 +1,6 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import { MenuItemType } from './menu-data';
-import { settingInstance } from './setting';
+import { settingDataInstance } from './setting';
 export type FavoritesDataState = {
   /**列表数据*/
   dataList?: MenuItemType[];
@@ -33,7 +33,7 @@ export class FavoritesDataInstance {
     if (fix) {
       return;
     }
-    const maxLength = settingInstance.state.favoritesMaxLength || 20;
+    const maxLength = settingDataInstance.state.favoritesMaxLength || 20;
     const maxData = [item, ...(this.state.dataList || [])].slice(0, maxLength);
     this.state.dataList = ref(maxData);
     try {
@@ -55,7 +55,7 @@ export class FavoritesDataInstance {
 /**收藏*/
 export const favoritesDataInstance = new FavoritesDataInstance();
 
-export const useFavoritesData = () => {
+export const useFavoritesDataInstance = () => {
   const state = useSnapshot(favoritesDataInstance.state);
   return [state, favoritesDataInstance, state.__defaultValue] as [
     FavoritesDataState,

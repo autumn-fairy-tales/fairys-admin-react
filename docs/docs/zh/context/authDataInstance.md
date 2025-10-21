@@ -17,7 +17,7 @@
 ## 引入
 
 ```ts
-import { authDataInstance } from '@fairys/admin-tools-react';
+import { authDataInstance , useAuthDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 状态值
@@ -37,8 +37,6 @@ export interface AuthDataState {
     btnsPermissions: string[];
     /**忽略权限(忽略权限不会进行权限判断，不分按钮还是菜单,在判断时始终为true)*/
     ignorePermissions: string[];
-    /**默认引用值*/
-    __defaultValue?: string;
 }
 ```
 
@@ -46,7 +44,6 @@ export interface AuthDataState {
 
 ```ts
 export declare class AuthDataInstance {
-    constructor();
     state: AuthDataState;
     updatedStatus: (status: AuthDataState["status"]) => void;
     /**退出登录(需要外部赋值)*/
@@ -73,4 +70,52 @@ export declare class AuthDataInstance {
 
 ```ts
 export  const useAuthDataInstance: () => [AuthDataState, AuthDataInstance, AuthDataState["__defaultValue"]];
+```
+
+## 示例
+
+```ts title='认证数据示例'
+import { authDataInstance } from '@fairys/admin-tools-react';
+
+// 设置菜单权限
+authDataInstance.setMenusPermissions(['/home', '/user']);
+// 设置按钮权限
+authDataInstance.setBtnsPermissions(['/home/btn1', '/user/btn2']);
+// 设置忽略权限
+authDataInstance.setIgnorePermissions(['/ignore']);
+
+// 判断菜单权限
+authDataInstance.isMenuAuth('/home'); // true
+authDataInstance.isMenuAuth('/user'); // true
+authDataInstance.isMenuAuth('/ignore'); // true
+authDataInstance.isMenuAuth('/about'); // false
+
+// 判断按钮权限
+authDataInstance.isBtnAuth('/user/btn2'); // true
+authDataInstance.isBtnAuth('/ignore/btn1'); // false
+
+```
+
+```ts title='退出登录方法回调'
+import { authDataInstance } from '@fairys/admin-tools-react';
+
+// 设置退出登录回调
+authDataInstance.onLogout = () => {
+    // 退出登录逻辑
+};
+
+```
+
+```ts title='认证状态更新'
+import { authDataInstance } from '@fairys/admin-tools-react';
+
+// 更新认证状态为 Login === 加载登录页面
+authDataInstance.updatedStatus('Login');
+// 更新认证状态为 Auth  === 登录完成，进入项目页面
+authDataInstance.updatedStatus('Auth');
+// 更新认证状态为 RequestAuth === 加载中权限中
+authDataInstance.updatedStatus('RequestAuth');
+// 更新认证状态为 NoAuth === 没有权限，不可进入项目页面
+authDataInstance.updatedStatus('NoAuth');
+
 ```

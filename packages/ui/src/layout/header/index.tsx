@@ -1,10 +1,10 @@
 import { MainMenu } from 'main-menu';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { memo, useMemo } from 'react';
 import clsx from 'clsx';
 export const LayoutHeader = memo(() => {
-  const [state] = useSetting();
+  const [state] = useSettingDataInstance();
   const theme = state.theme;
 
   const headerCls = useMemo(() => {

@@ -1,13 +1,13 @@
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { FairysSelectBase } from 'components/select';
 import { LayoutItem } from './base';
-import { motionAnimationInstance } from 'context/motion-animation';
+import { motionAnimationDataInstance } from 'context/motion-animation';
 import { useMemo } from 'react';
 
 export const SettingPageTransitionMode = () => {
-  const [state, settingInstance] = useSetting();
+  const [state, settingDataInstance] = useSettingDataInstance();
   const items = useMemo(() => {
-    return (motionAnimationInstance.state || []).map((item) => {
+    return (motionAnimationDataInstance.state || []).map((item) => {
       return { title: item.name, value: item.name };
     });
   }, []);
@@ -16,7 +16,7 @@ export const SettingPageTransitionMode = () => {
       <FairysSelectBase
         value={state.pageTransitionMode}
         items={items}
-        onChange={(value: string) => settingInstance.updated({ pageTransitionMode: value })}
+        onChange={(value: string) => settingDataInstance.updated({ pageTransitionMode: value })}
       />
     </LayoutItem>
   );

@@ -106,7 +106,7 @@ export class NotificationDataInstance {
 ## hooks
 
 ```ts
-export const useNotificationData: () => [NotificationDataState, NotificationDataInstance, NotificationDataState["__defaultValue"]];
+export const useNotificationDatainstance: () => [NotificationDataState, NotificationDataInstance, NotificationDataState["__defaultValue"]];
 ```
 
 ## 示例
@@ -121,9 +121,7 @@ export const useNotificationData: () => [NotificationDataState, NotificationData
 
 :::
 
-**通知分类使用**
-
-```ts
+```ts title='通知分类使用'
 import { notificationDataInstance } from '@fairys/admin-tools-react';
 
 notificationDataInstance.ctor({
@@ -195,9 +193,7 @@ notificationDataInstance.onUpdateActiveKey = (key) => {
 
 ```
 
-**通知无分类使用**
-
-```ts
+```ts title='通知无分类使用'
 import { notificationDataInstance } from '@fairys/admin-tools-react';
 
 notificationDataInstance.updateDataList([

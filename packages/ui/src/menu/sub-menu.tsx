@@ -1,8 +1,8 @@
 import { useMemo, useState } from 'react';
 import type { MenuItemType } from 'context/menu-data';
-import { useMenuData } from 'context/menu-data';
+import { useMenuDataInstance } from 'context/menu-data';
 import { MenuItem, MainMenuItem } from './menu-item';
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { FairysDisclosureItem } from 'components/disclosure';
 import { FairysPopoverBase } from 'components/popover-base';
 
@@ -28,10 +28,10 @@ const popoverChildClassName =
 
 export const SubMenu = (props: MenuItemProps) => {
   const { item, level = 0, isMain = false } = props;
-  const [state] = useMenuData();
+  const [state] = useMenuDataInstance();
   const expandItems = state.expandItems;
   const mainExpandItem = state.mainExpandItem;
-  const [settingState] = useSetting();
+  const [settingState] = useSettingDataInstance();
   const sideMenuMode = settingState.sideMenuMode;
   const [isOpen, setIsOpen] = useState(false);
   const isExpand = useMemo(() => {

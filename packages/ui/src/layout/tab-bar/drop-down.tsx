@@ -1,10 +1,10 @@
 import { Fragment, useMemo } from 'react';
-import { useTabBar, tabBarInstance } from 'context/tab-bar';
+import { useTabBarDataInstance, tabBarDataInstance } from 'context/tab-bar';
 import { useNavigate, matchPath, useLocation } from 'react-router';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 
 const PopoverButton = () => {
-  const [state] = useTabBar();
+  const [state] = useTabBarDataInstance();
   const navigate = useNavigate();
   const list = state.dropDownTabBarItems as FairysPopoverMenuItemType[];
   const location = useLocation();
@@ -19,7 +19,7 @@ const PopoverButton = () => {
     e.stopPropagation();
     e.preventDefault();
     const match = matchPath(item.path, location.pathname);
-    tabBarInstance.remove(item.path, !!match);
+    tabBarDataInstance.remove(item.path, !!match);
   };
 
   return (
@@ -32,7 +32,7 @@ const PopoverButton = () => {
 };
 
 export const DropDownTabBarItems = () => {
-  const [state] = useTabBar();
+  const [state] = useTabBarDataInstance();
   const list = state.dropDownTabBarItems;
   const isEmpty = list.length === 0;
 

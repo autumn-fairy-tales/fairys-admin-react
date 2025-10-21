@@ -1,4 +1,4 @@
-import { useSetting } from 'context/setting';
+import { useSettingDataInstance } from 'context/setting';
 import { useNavigate } from 'react-router';
 import clsx from 'clsx';
 import { Fragment, useMemo } from 'react';
@@ -18,7 +18,7 @@ export const Logo = (props: LogoProps) => {
   const { mode, className, logoSize = 32, isOnlyName = false, isHeader = false, ...rest } = props;
 
   const navigate = useNavigate();
-  const [state] = useSetting();
+  const [state] = useSettingDataInstance();
 
   const onClickHome = () => {
     navigate('/');
