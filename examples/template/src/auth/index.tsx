@@ -2,38 +2,30 @@ import { useEffect, useMemo } from 'react';
 import {
   menuDataInstance,
   routerDataInstance,
-  accountDataInstance,
   FairysRoot,
   useAuthDataInstance,
   authDataInstance,
   loadingFadeOut,
   FairysEnterLoading,
-  ErrorPage403,
 } from '@fairys/admin-tools-react';
 import { menuItems } from '../menu';
 import { routes } from '../routes';
 import { Login } from './login';
-import { onGetAuth } from './utils';
+import { onGetAuth } from './server';
 
 export const AuthRoot = () => {
   useMemo(() => {
     const token = localStorage.getItem('token');
-    // if (!token) {
-    loadingFadeOut();
-    // }
+    if (!token) {
+      loadingFadeOut();
+    }
     authDataInstance.updatedStatus(token ? 'RequestAuth' : 'Login');
   }, []);
-
   const [authState] = useAuthDataInstance();
   const status = authState.status;
 
   const onSetInfo = () => {
-    localStorage.setItem('token', '123');
     menuDataInstance.ctor(menuItems);
-    accountDataInstance.updated({
-      userName: 'fairys',
-      userAvatar: 'https://gravatar.com/userimage/233185585/f004e2e1534508a34caef161ef76d9f2.jpeg?size=256',
-    });
     // 可以对 routes 进行处理
     routerDataInstance.createHashRouter(routes);
     // 如果获取权限成功则设置状态为 auth
@@ -45,6 +37,7 @@ export const AuthRoot = () => {
   const onAuth = () => {
     authDataInstance.updatedStatus('Loading');
     onGetAuth().then(() => {
+      /**移除页面加载动画*/
       onSetInfo();
     });
   };
@@ -54,20 +47,14 @@ export const AuthRoot = () => {
       onAuth();
     }
   }, []);
+
   if (status === 'Login') {
     return <Login onLogin={onSetInfo} />;
   } else if (status === 'RequestAuth' || status === 'Loading') {
     return <FairysEnterLoading loading />;
   }
   if (status === 'NoAuth') {
-    return (
-      <ErrorPage403
-        btnText="重新登录"
-        onBackHome={() => {
-          authDataInstance.updatedStatus('Login');
-        }}
-      />
-    );
+    return <div>NoAuth</div>;
   }
   return <FairysRoot isOutletKeepAlive={false} router={routerDataInstance.router} keepAlive={true} />;
 };

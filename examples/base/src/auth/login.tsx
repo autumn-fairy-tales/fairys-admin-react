@@ -1,11 +1,7 @@
 import { Fragment, useState } from 'react';
-import { onLogin } from './utils';
-import { FairysEnterLoading } from '@fairys/admin-tools-react';
+import { onLogin } from './server';
+import { accountDataInstance, FairysEnterLoading } from '@fairys/admin-tools-react';
 import { FairysLoginPage } from '@fairys/admin-tools-react';
-
-interface LoginProps {
-  onLogin: () => void;
-}
 
 const rules = {
   username: (value: string) => {
@@ -21,6 +17,9 @@ const rules = {
     return '';
   },
 };
+interface LoginProps {
+  onLogin: () => void;
+}
 
 export const Login = (props: LoginProps) => {
   const [loading, setLoading] = useState(false);
@@ -30,15 +29,21 @@ export const Login = (props: LoginProps) => {
       .validate()
       .then((values) => {
         setLoading(true);
-        onLogin()
-          .then(() => {
-            console.log('登录成功');
-            props.onLogin();
+        onLogin(values.value)
+          .then((res) => {
+            if (res.code === 200) {
+              console.log('登录成功', res);
+              localStorage.setItem('token', res.data.token || '');
+              accountDataInstance.updated({
+                userName: res.data.userName || '',
+                userAvatar: res.data.userAvatar || '',
+              });
+              props.onLogin();
+            }
           })
           .finally(() => {
             setLoading(false);
           });
-        console.log(values);
       })
       .catch((err) => {
         console.log(err);

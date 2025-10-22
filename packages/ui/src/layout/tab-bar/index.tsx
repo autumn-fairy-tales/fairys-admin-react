@@ -15,6 +15,7 @@ import { DropDownTabBarItems } from './drop-down';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 import { useFairysRootContext } from 'components/root';
 import { appDataInstance } from 'context/app-data';
+import { favoritesDataInstance, useFavoritesDataInstance } from 'context/favorites-data';
 
 interface TabBarItemProps {
   item: TabBarItemType;
@@ -36,6 +37,8 @@ const TabBarItem = (props: TabBarItemProps) => {
   const rowItemData = item;
   tabItemInstance.isActive = !!match;
   const fairysRootClass = useFairysRootContext();
+  const [favoritesData] = useFavoritesDataInstance();
+  const isFavorites = useMemo(() => favoritesDataInstance.isFavorites(item), [favoritesData.dataList, item]);
 
   const [state] = useTabBarDataInstance();
   const tabBarItems = state.tabBarItems;
@@ -100,7 +103,7 @@ const TabBarItem = (props: TabBarItemProps) => {
     );
   }, [match]);
 
-  const items = useMemo(() => {
+  const items: FairysPopoverMenuItemType[] = useMemo(() => {
     return [
       { icon: 'ri:refresh-line', title: '重新加载', visible: !!fairysRootClass.keepAlive },
       { icon: 'ri:close-line', title: '关闭标签', disabled: count === 1 || isTabFixed },
@@ -111,8 +114,10 @@ const TabBarItem = (props: TabBarItemProps) => {
       { icon: 'mdi:close', title: '关闭其他标签', disabled: count === 1 },
       { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签', disabled: currentIndex === 0 },
       { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签', disabled: currentIndex === count - 1 },
+      { isDivider: true },
+      { icon: 'ant-design:star-outlined', title: '收藏', iconProps: isFavorites ? { color: 'red' } : {} },
     ];
-  }, [currentIndex, count, isTabFixed]);
+  }, [currentIndex, count, isTabFixed, isFavorites]);
 
   const onMenuItemClick = useCallback(
     (item: FairysPopoverMenuItemType) => {
@@ -131,6 +136,8 @@ const TabBarItem = (props: TabBarItemProps) => {
       } else if (item.title === '新窗口打开') {
         const href = window.location.href.replace(location.pathname, currentPath);
         window.open(href, '_blank');
+      } else if (item.title === '收藏') {
+        favoritesDataInstance.addItem(rowItemData);
       }
     },
     [currentIndex, currentPath, rowItemData],

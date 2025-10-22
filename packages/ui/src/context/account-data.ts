@@ -1,3 +1,4 @@
+import { isBrowser } from 'utils';
 import { proxy, ref, useSnapshot } from 'valtio';
 
 export interface AccountDataInstanceState {
@@ -11,6 +12,8 @@ export interface AccountDataInstanceState {
   userPhone?: string;
   /**用户角色*/
   userRole?: string;
+  /**用户ID*/
+  userId?: string;
   /**其他自定义信息*/
   info?: Record<string, any>;
   /**默认引用值*/
@@ -18,9 +21,36 @@ export interface AccountDataInstanceState {
 }
 
 export class AccountDataInstance {
+  static localStorageKey = 'fairys-account-data';
+
   state = proxy<AccountDataInstanceState>({
     userName: 'fairys',
   });
+
+  /**浏览器端初始化*/
+  _browserConstructor = () => {
+    const state = localStorage.getItem(AccountDataInstance.localStorageKey);
+    if (state) {
+      try {
+        const newState = JSON.parse(state);
+        if (newState) {
+          for (const key in newState) {
+            const element = newState[key];
+            this.state[key] = element;
+          }
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
+  constructor() {
+    if (isBrowser) {
+      this._browserConstructor();
+    }
+  }
+
   /**更新数据信息*/
   updated = (state: AccountDataInstanceState) => {
     for (const key in state) {
@@ -32,6 +62,8 @@ export class AccountDataInstance {
         this.state[key] = element;
       }
     }
+    // 保存到本地存储
+    localStorage.setItem(AccountDataInstance.localStorageKey, JSON.stringify(this.state));
   };
   /**清空账户数据*/
   clear = () => {
@@ -41,6 +73,8 @@ export class AccountDataInstance {
         this.state[key] = 'fairys';
       }
     }
+    // 清空本地存储
+    localStorage.removeItem(AccountDataInstance.localStorageKey);
   };
 }
 

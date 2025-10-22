@@ -7,7 +7,7 @@ export interface FairysPopoverMenuItemType {
   /**图标*/
   icon?: string;
   /**图标属性*/
-  iconProps?: IconProps;
+  iconProps?: Omit<IconProps, 'icon'>;
   /**标题*/
   title?: string;
   /**是否禁用*/

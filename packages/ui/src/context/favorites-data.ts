@@ -2,6 +2,8 @@ import { proxy, ref, useSnapshot } from 'valtio';
 import { MenuItemType } from './menu-data';
 import { settingDataInstance } from './setting';
 import { isBrowser } from 'utils';
+import { accountDataInstance } from './account-data';
+
 export type FavoritesDataInstanceState = {
   /**列表数据*/
   dataList?: MenuItemType[];
@@ -15,9 +17,14 @@ export class FavoritesDataInstance {
   state = proxy<FavoritesDataInstanceState>({
     dataList: ref([]),
   });
+
+  #getLocalStorageKey = () => {
+    return `${accountDataInstance.state.userId}-${FavoritesDataInstance.localStorageKey}`;
+  };
+
   /**浏览器端初始化*/
   _browserConstructor = () => {
-    const state = localStorage.getItem(FavoritesDataInstance.localStorageKey);
+    const state = localStorage.getItem(this.#getLocalStorageKey());
     if (state) {
       try {
         const newState = JSON.parse(state);
@@ -44,7 +51,7 @@ export class FavoritesDataInstance {
     const maxData = [item, ...(this.state.dataList || [])].slice(0, maxLength);
     this.state.dataList = ref(maxData);
     try {
-      localStorage.setItem(FavoritesDataInstance.localStorageKey, JSON.stringify(maxData));
+      localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify(maxData));
     } catch (error) {
       console.log('添加收藏本地存储', error);
     }
@@ -53,6 +60,26 @@ export class FavoritesDataInstance {
   /**移除*/
   removeItem = (item: MenuItemType) => {
     this.state.dataList = ref((this.state.dataList || []).filter((i) => i.path !== item.path));
+    try {
+      localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify(this.state.dataList));
+    } catch (error) {
+      console.log('移除收藏本地存储', error);
+    }
+  };
+
+  /**是否收藏*/
+  isFavorites = (item: MenuItemType) => {
+    return !!(this.state.dataList || []).find((i) => i.path === item.path);
+  };
+
+  /**清空所有数据*/
+  clearAll = () => {
+    this.state.dataList = ref([]);
+    try {
+      localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify(this.state.dataList));
+    } catch (error) {
+      console.log('清空收藏本地存储', error);
+    }
   };
 
   /**清空数据*/

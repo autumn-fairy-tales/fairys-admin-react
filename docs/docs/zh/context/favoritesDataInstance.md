@@ -33,6 +33,10 @@ export declare class FavoritesDataInstance {
     addItem: (item: MenuItemType) => void;
     /**移除*/
     removeItem: (item: MenuItemType) => void;
+    /**是否收藏*/
+    isFavorites: (item: MenuItemType) => boolean;
+    /**清空所有数据*/
+    clearAll: () => void;
     /**清空数据*/
     clear: () => void;
 }

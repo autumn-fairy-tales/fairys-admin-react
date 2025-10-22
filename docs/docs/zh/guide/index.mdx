@@ -73,6 +73,7 @@ import { defineConfig } from '@rsbuild/core';
 import { pluginReact } from '@rsbuild/plugin-react';
 import tailwindcss from '@tailwindcss/postcss';
 import { getLoadingHtmlTags, RsbuildReactRoutesPlugin } from '@fairys/admin-tools-react-plugins';
+import { pluginMockServer } from 'rspack-plugin-mock/rsbuild'
 
 export default defineConfig({
   output: {
@@ -80,6 +81,10 @@ export default defineConfig({
   },
   server: {
     base: '/fairys-admin-react/',
+    // The plugin will read the `proxy` option from the `server`
+    proxy: {
+      '/api': 'http://example.com',
+    },
   },
   html: {
     title: 'Fairys Admin React',
@@ -87,6 +92,7 @@ export default defineConfig({
     tags: getLoadingHtmlTags('Fairys'),
   },
   plugins: [
+    pluginMockServer(),
     pluginReact(),
     RsbuildReactRoutesPlugin({
       loadType: 'lazy',
@@ -103,6 +109,10 @@ export default defineConfig({
 });
 
 ```
+
+## mock 配置
+
+使用[`rspack-plugin-mock`](https://github.com/pengzhanbo/rspack-plugin-mock)插件配置mock数据。
 
 
 ## 整体项目代码
@@ -230,32 +240,33 @@ export const routes: RouteObject[] = [
   }
 ];
 
+
 export const AuthRoot = () => {
   useMemo(() => {
     const token = localStorage.getItem('token');
-    // if (!token) {
-    loadingFadeOut();
-    // }
+    if (!token) {
+      loadingFadeOut();
+    }
     authDataInstance.updatedStatus(token ? 'RequestAuth' : 'Login');
   }, []);
   const [authState] = useAuthDataInstance();
   const status = authState.status;
 
+  const onSetInfo = () => {
+    menuDataInstance.ctor(menuItems);
+    // 可以对 routes 进行处理
+    routerDataInstance.createHashRouter(routes);
+    // 如果获取权限成功则设置状态为 auth
+    authDataInstance.updatedStatus('Auth');
+    /**移除页面加载动画*/
+    loadingFadeOut();
+  };
+
   const onAuth = () => {
-    authDataInstance.updatedStatus('RequestAuth');
+    authDataInstance.updatedStatus('Loading');
     onGetAuth().then(() => {
-      localStorage.setItem('token', '123');
-      menuDataInstance.ctor(menuItems);
-      accountDataInstance.updated({
-        userName: 'fairys',
-        userAvatar: 'https://gravatar.com/userimage/233185585/f004e2e1534508a34caef161ef76d9f2.jpeg?size=256',
-      });
-      // 可以对 routes 进行处理
-      routerDataInstance.createHashRouter(routes);
-      // 如果获取权限成功则设置状态为 auth
-      authDataInstance.updatedStatus('Auth');
       /**移除页面加载动画*/
-      loadingFadeOut();
+      onSetInfo();
     });
   };
   // 如果初始时Loading,则获取权限
@@ -264,9 +275,10 @@ export const AuthRoot = () => {
       onAuth();
     }
   }, []);
+
   if (status === 'Login') {
-    return <Login onLogin={onAuth} />;
-  } else if (status === 'RequestAuth') {
+    return <Login onLogin={onSetInfo} />;
+  } else if (status === 'RequestAuth' || status === 'Loading') {
     return <FairysEnterLoading loading />;
   }
   if (status === 'NoAuth') {
@@ -282,13 +294,9 @@ export const AuthRoot = () => {
 ```tsx title="src/auth/login.tsx"
 
 import { Fragment, useState } from 'react';
-import { onLogin } from './utils';
-import { FairysEnterLoading } from '@fairys/admin-tools-react';
+import { onLogin } from './server';
+import { accountDataInstance, FairysEnterLoading } from '@fairys/admin-tools-react';
 import { FairysLoginPage } from '@fairys/admin-tools-react';
-
-interface LoginProps {
-  onLogin: () => void;
-}
 
 const rules = {
   username: (value: string) => {
@@ -304,6 +312,9 @@ const rules = {
     return '';
   },
 };
+interface LoginProps {
+  onLogin: () => void;
+}
 
 export const Login = (props: LoginProps) => {
   const [loading, setLoading] = useState(false);
@@ -313,15 +324,21 @@ export const Login = (props: LoginProps) => {
       .validate()
       .then((values) => {
         setLoading(true);
-        onLogin()
-          .then(() => {
-            console.log('登录成功');
-            props.onLogin();
+        onLogin(values.value)
+          .then((res) => {
+            if (res.code === 200) {
+              console.log('登录成功', res);
+              localStorage.setItem('token', res.data.token || '');
+              accountDataInstance.updated({
+                userName: res.data.userName || '',
+                userAvatar: res.data.userAvatar || '',
+              });
+              props.onLogin();
+            }
           })
           .finally(() => {
             setLoading(false);
           });
-        console.log(values);
       })
       .catch((err) => {
         console.log(err);
@@ -359,26 +376,61 @@ export const Login = (props: LoginProps) => {
 
 **接口请求代码**
 
-```tsx title="src/auth/utils.tsx"
+```tsx title="src/auth/server.tsx"
 
-const requestAuth = (): Promise<boolean> => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, 3000);
+import axios from 'axios';
+
+const requestAuth = async () => {
+  return axios.post('/api/auth', {}).then((res) => {
+    return res.data;
   });
 };
 
-export const onLogin = () => {
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve(true);
-    }, 5000);
+export const onLogin = async (params: any = {}) => {
+  return axios.post('/api/login', params).then((res) => {
+    return res.data;
   });
 };
 
-export const onGetAuth = () => {
+export const onGetAuth = async () => {
   return requestAuth();
 };
 
+```
+
+```ts title="mock/index.mock.ts"
+
+import { defineMock } from 'rspack-plugin-mock/helper'
+
+export default defineMock([
+  {
+    url: '/api/login',
+    delay: 2000,
+    body: {
+      code: 200,
+      message: 'success',
+      data: {
+        token: '123456',
+        userName: 'fairys',
+        userAvatar: 'https://gravatar.com/userimage/233185585/f004e2e1534508a34caef161ef76d9f2.jpeg?size=256',
+      },
+    },
+  },
+  {
+    url: '/api/auth',
+    delay: 1000,
+    body: {
+      code: 200,
+      message: 'success',
+      data: {
+        /**菜单权限*/
+        menusPermissions: [],
+        /**按钮权限*/
+        btnsPermissions: [],
+        /**忽略权限(忽略权限不会进行权限判断，不分按钮还是菜单,在判断时始终为true)*/
+        ignorePermissions: [],
+      },
+    },
+  }
+])
 ```
