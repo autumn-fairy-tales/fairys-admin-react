@@ -16,12 +16,8 @@ export const RsbuildReactRoutesPlugin = (options: ReactRoutesPluginOptions = {})
         // 只在开发环境和生产环境监听路由文件变化，预览环境不监听
         routesPlugin.watch();
       });
-      api.onCloseBuild(() => {
-        routesPlugin.closeWatch();
-      });
-      api.onCloseDevServer(() => {
-        routesPlugin.closeWatch();
-      });
+      api.onCloseBuild(routesPlugin.closeWatch);
+      api.onCloseDevServer(routesPlugin.closeWatch);
     },
   };
 };
