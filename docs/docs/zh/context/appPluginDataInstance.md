@@ -37,6 +37,11 @@ export type AppPluginDataInstanceType = {
         /**重写菜单项*/
         override?: (menus: FairysPopoverMenuItemType[]) => FairysPopoverMenuItemType[];
     };
+    /**设置抽屉添加其他项*/
+    "setting"?: {
+        /**渲染组件*/
+        render?: React.ReactNode;
+    };
 };
 
 export class AppPluginDataInstance {

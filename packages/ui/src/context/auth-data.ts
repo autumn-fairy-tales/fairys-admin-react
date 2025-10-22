@@ -7,8 +7,9 @@ export interface AuthDataInstanceState {
    * Auth 有权限，已进入页面
    * RequestAuth 加载中权限中
    * Login 进入登录页面
+   * Loading 加载中
    */
-  status: 'NoAuth' | 'Auth' | 'RequestAuth' | 'Login';
+  status: 'NoAuth' | 'Auth' | 'RequestAuth' | 'Login' | 'Loading';
   /**菜单权限*/
   menusPermissions: string[];
   /**按钮权限*/
