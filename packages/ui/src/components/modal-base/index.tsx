@@ -117,7 +117,7 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
                 <div
                   style={headerStyle}
                   className={clsx(
-                    'fairys_admin_modal_base_header fairys:box-border fairys:p-4 fairys:relative fairys:flex fairys:items-center fairys:justify-between fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-700 ',
+                    'fairys_admin_modal_base_header  fairys:p-4 fairys:relative fairys:flex fairys:items-center fairys:justify-between fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-700 ',
                     headerClassName,
                   )}
                 >
@@ -139,14 +139,14 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
 
               <div
                 style={bodyStyle}
-                className={`fairys_admin_modal_base_content fairys:p-4 fairys:box-border fairys:flex-1 fairys:overflow-hidden ${bodyClassName}`}
+                className={`fairys_admin_modal_base_content fairys:p-4  fairys:flex-1 fairys:overflow-hidden ${bodyClassName}`}
               >
                 {children}
               </div>
               {footer ? (
                 <div
                   style={footerStyle}
-                  className={`fairys_admin_modal_base_footer fairys:p-4 fairys:box-border fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-700 ${footerClassName}`}
+                  className={`fairys_admin_modal_base_footer fairys:p-4  fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-700 ${footerClassName}`}
                 >
                   {footer}
                 </div>

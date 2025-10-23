@@ -29,28 +29,28 @@ export const FairysLoginPage = (props: FairysLoginPageProps) => {
 
   const loginPageClassName = useMemo(() => {
     return clsx(
-      'fairys_login_page fairys:w-full fairys:h-full fairys:flex fairys:items-center fairys:justify-center fairys:overflow-auto fairys:box-border',
+      'fairys_login_page fairys:w-full fairys:h-full fairys:flex fairys:items-center fairys:justify-center fairys:overflow-auto ',
       className,
     );
   }, [className]);
 
   const mainClass = useMemo(() => {
     return clsx(
-      'fairys_login_page_content fairys:p-[14px] fairys:flex fairys:flex-col fairys:w-[400px] fairys:h-[400px] fairys:rounded-sm fairys:gap-y-[20px] fairys:box-border  fairys:shadow-xl fairys:inset-shadow-sm ',
+      'fairys_login_page_content fairys:p-[14px] fairys:flex fairys:flex-col fairys:w-[400px] fairys:h-[400px] fairys:rounded-sm fairys:gap-y-[20px]   fairys:shadow-xl fairys:inset-shadow-sm ',
       mainClassName,
     );
   }, [mainClassName]);
 
   const titleClass = useMemo(() => {
     return clsx(
-      'fairys_login_page_content_title fairys:flex fairys:items-center fairys:justify-center fairys:text-[24px] fairys:font-bold fairys:box-border',
+      'fairys_login_page_content_title fairys:flex fairys:items-center fairys:justify-center fairys:text-[24px] fairys:font-bold ',
       titleClassName,
     );
   }, [titleClassName]);
 
   const bodyClass = useMemo(() => {
     return clsx(
-      'fairys_login_page_content_form fairys:flex-1 fairys:flex fairys:flex-col fairys:gap-[20px] fairys:box-border',
+      'fairys_login_page_content_form fairys:flex-1 fairys:flex fairys:flex-col fairys:gap-[20px] ',
       bodyClassName,
     );
   }, [bodyClassName]);

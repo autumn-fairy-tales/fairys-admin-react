@@ -37,8 +37,8 @@ export const Favorites = () => {
   }, [dataList]);
 
   return (
-    <div className="fairys_admin_tool_bar_favorites fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col fairys:box-border">
-      <div className="fairys_admin_tool_bar_favorites_title fairys:relative fairys:flex fairys:items-center fairys:justify-start fairys:p-3 fairys:font-medium fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">
+    <div className="fairys_admin_tool_bar_favorites fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col ">
+      <div className="fairys_admin_tool_bar_favorites_title fairys:relative fairys:flex fairys:items-center fairys:justify-start fairys:p-3 fairys:font-medium fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-600">
         <span>我的收藏夹</span>
         <FairysButtonBase
           className="fairys_admin_tool_bar_favorites_clear_btn fairys:absolute fairys:top-1 fairys:right-1 fairys:text-[12px]"
@@ -49,7 +49,7 @@ export const Favorites = () => {
           <span className="fairys:icon-[ant-design--clear-outlined] fairys:size-[18px]" />
         </FairysButtonBase>
       </div>
-      <div className="fairys_admin_tool_bar_favorites_list fairys:flex-1 fairys:overflow-auto no-scrollbar fairys:box-border">
+      <div className="fairys_admin_tool_bar_favorites_list fairys:flex-1 fairys:overflow-auto no-scrollbar ">
         {isEmpty ? (
           <div className="fairys:py-20 fairys:text-center fairys:text-[14px] fairys:text-gray-400">暂无收藏</div>
         ) : (

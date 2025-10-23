@@ -31,7 +31,7 @@ export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttribu
 }
 
 const menuItemBaseClassName =
-  'fairys_admin_menu_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:h-[36px] fairys:box-border fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400 fairys:px-[14px]';
+  'fairys_admin_menu_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:h-[36px]  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400 fairys:px-[14px]';
 
 const titleClassName =
   'fairys_admin_menu_item_title fairys:flex fairys:flex-1 fairys:items-center fairys:justify-center fairys:overflow-hidden fairys:gap-1';

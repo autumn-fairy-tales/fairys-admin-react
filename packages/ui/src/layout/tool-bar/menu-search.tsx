@@ -41,7 +41,7 @@ const SearchItem = (props: SearchItemProps) => {
   return (
     <div
       onClick={onClick}
-      className="fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm fairys:box-border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:p-[14px] fairys:overflow-auto no-scrollbar"
+      className="fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:border-gray-200 fairys:dark:border-gray-700 fairys:p-[14px] fairys:overflow-auto no-scrollbar"
     >
       <div className="fairys:w-[45px] fairys:min-w-[45px] fairys:flex fairys:items-center fairys:justify-center fairys:icon fairys:transition-all fairys:duration-300">
         <Icon {...iconProps} icon={rowItemData.icon} className={`fairys:size-[20px] ${iconProps?.className || ''}`} />
@@ -68,7 +68,7 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
   };
 
   return (
-    <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:h-full fairys:w-[670px] fairys_max_w_modal fairys:px-5 fairys:py-5 fairys:overflow-hidden fairys:box-border">
+    <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:h-full fairys:w-[670px] fairys_max_w_modal fairys:px-5 fairys:py-5 fairys:overflow-hidden ">
       <div className="fairys:flex fairys:items-center fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:rounded-md ">
         <div className="fairys:pl-4 fairys:flex fairys:items-center fairys:justify-center">
           <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[26px] fairys:text-gray-600 fairys:dark:text-gray-200" />
@@ -76,7 +76,7 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
         <input
           placeholder="搜索菜单"
           onInput={onSearch}
-          className="fairys:flex-1 fairys:px-4 fairys:py-2 fairys:h-[48px] fairys:text-[16px] fairys:border-0 fairys:outline-0 fairys:bg-transparent"
+          className="fairys_input_base fairys:flex-1 fairys:px-4 fairys:py-2 fairys:h-[48px] fairys:text-[16px] fairys:border-0 fairys:outline-0 fairys:bg-transparent"
         />
       </div>
       <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:overflow-auto fairys:flex-1 no-scrollbar">

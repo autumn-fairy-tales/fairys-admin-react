@@ -13,7 +13,9 @@ body {
   font-size: 14px;
 }
 
-@import 'tailwindcss' prefix(fairys);
+@import 'tailwindcss/theme' prefix(fairys);
+@import 'tailwindcss/utilities' prefix(fairys);
+
 @plugin "@iconify/tailwind4";
 
 @theme static {
@@ -38,6 +40,9 @@ body {
     height: 100%;
     overflow: hidden;
   }
+  * {
+    box-sizing: border-box;
+  }
 }
 
 @custom-variant dark (&:where(.dark, .dark *));
@@ -46,6 +51,22 @@ body {
   .no-scrollbar::-webkit-scrollbar {
     width: 0px;
     height: 0px;
+  }
+
+  .fairys_button_base,
+  .fairys_input_base {
+    font: inherit;
+    font-feature-settings: inherit;
+    font-variation-settings: inherit;
+    letter-spacing: inherit;
+    color: inherit;
+    opacity: 1;
+    background-color: transparent;
+    border-radius: 0;
+    box-sizing: border-box;
+    border: 0 solid;
+    margin: 0;
+    padding: 0;
   }
 
   .fairys_max_w_modal {

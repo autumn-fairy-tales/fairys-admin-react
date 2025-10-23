@@ -61,7 +61,7 @@ export const FairysNotificationBaseItem = forwardRef(
     return (
       <div ref={ref} {...rest} className={clxName} onClick={onClickItem}>
         {isShowIcon ? (
-          <div className="fairys_admin_notification_item-icon fairys:shrink-0 fairys:w-[32px] fairys:h-full fairys:min-w-[32px] fairys:flex fairys:justify-center fairys:box-border fairys:pt-1">
+          <div className="fairys_admin_notification_item-icon fairys:shrink-0 fairys:w-[32px] fairys:h-full fairys:min-w-[32px] fairys:flex fairys:justify-center  fairys:pt-1">
             {item?.icon ? (
               <Icon
                 {...iconProps}

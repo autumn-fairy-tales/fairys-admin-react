@@ -35,7 +35,7 @@ export const Logo = (props: LogoProps) => {
 
   const pname = useMemo(() => {
     return clsx(
-      'fairys_admin_logo_name fairys:px-2 fairys:box-border fairys:flex-1 fairys:cursor-pointer fairys:whitespace-nowrap fairys:overflow-hidden fairys:text-ellipsis',
+      'fairys_admin_logo_name fairys:px-2  fairys:flex-1 fairys:cursor-pointer fairys:whitespace-nowrap fairys:overflow-hidden fairys:text-ellipsis',
       {
         'fairys:min-w-[165px]': isHeader,
       },

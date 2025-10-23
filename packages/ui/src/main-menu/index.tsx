@@ -35,7 +35,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
   const className = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu_item fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:box-border fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
+      'fairys_admin_main_menu_item fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm  fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
       _className,
       {
         active: isActive,
@@ -136,7 +136,7 @@ export const MainMenu = (props: MainMenuProps) => {
   const layoutModeState = settingState.layoutMode;
   const mainMenuClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu fairys:flex fairys:box-border fairys:overflow-auto fairys:items-center fairys:justify-between fairys:px-[8px]',
+      'fairys_admin_main_menu fairys:flex  fairys:overflow-auto fairys:items-center fairys:justify-between fairys:px-[8px]',
       {
         'fairys_admin_main_menu_vertical fairys:flex-col fairys:h-full': layoutMode === 'vertical',
         'fairys_admin_main_menu_horizontal fairys:flex-row fairys:overflow-auto fairys:shrink-0':
@@ -147,7 +147,7 @@ export const MainMenu = (props: MainMenuProps) => {
 
   const mainMenuBodyClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu_body fairys:flex-1 fairys:w-full fairys:overflow-hidden fairys:flex fairys:gap-2 fairys:items-center fairys:box-border fairys:py-[8px]',
+      'fairys_admin_main_menu_body fairys:flex-1 fairys:w-full fairys:overflow-hidden fairys:flex fairys:gap-2 fairys:items-center  fairys:py-[8px]',
       {
         'fairys:flex-col ': layoutMode === 'vertical',
         'fairys:flex-row': layoutMode === 'horizontal',

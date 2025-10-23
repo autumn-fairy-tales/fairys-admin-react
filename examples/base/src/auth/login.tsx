@@ -66,7 +66,7 @@ export const Login = (props: LoginProps) => {
         </FairysLoginPage.FormItem>
         <button
           onClick={onLoginClick}
-          className="bg-(--fairys-theme-color)/90 rounded-sm text-white py-[9px] mt-[20px] hover:bg-(--fairys-theme-color) cursor-pointer transition-all duration-300"
+          className="fairys_button_base bg-(--fairys-theme-color)/90 rounded-sm text-white py-[9px] mt-[20px] hover:bg-(--fairys-theme-color) cursor-pointer transition-all duration-300"
           type="button"
         >
           登录

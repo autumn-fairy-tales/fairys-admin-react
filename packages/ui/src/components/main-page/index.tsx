@@ -7,7 +7,7 @@ export interface FairysMainPageBaseProps
 export const FairysMainPageSearch = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
-    return clsx('fairys_admin_main_page_search fairys:w-full fairys:box-border', className);
+    return clsx('fairys_admin_main_page_search fairys:w-full ', className);
   }, [className]);
 
   return (
@@ -21,7 +21,7 @@ export const FairysMainPageBody = forwardRef((props: FairysMainPageBaseProps, re
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx(
-      'fairys_admin_main_page_body fairys:w-full fairys:box-border fairys:flex-1 fairys:flex fairys:flex-col fairys:overflow-auto',
+      'fairys_admin_main_page_body fairys:w-full  fairys:flex-1 fairys:flex fairys:flex-col fairys:overflow-auto',
       className,
     );
   }, [className]);
@@ -36,7 +36,7 @@ export const FairysMainPageBody = forwardRef((props: FairysMainPageBaseProps, re
 export const FairysMainPageFooter = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
-    return clsx('fairys_admin_main_page_footer fairys:box-border fairys:w-full', className);
+    return clsx('fairys_admin_main_page_footer  fairys:w-full', className);
   }, [className]);
 
   return (
@@ -51,14 +51,14 @@ export const FairysMainPage = forwardRef(
     const { className, children, bodyClassName, ...rest } = props;
     const clx = useMemo(() => {
       return clsx(
-        'fairys_admin_main_page fairys:p-[14px] fairys:box-border fairys:h-full fairys:w-full fairys:bg-stone-100 fairys:dark:bg-gray-950',
+        'fairys_admin_main_page fairys:p-[14px]  fairys:h-full fairys:w-full fairys:bg-stone-100 fairys:dark:bg-gray-950',
         className,
       );
     }, [className]);
 
     const mainBodyCls = useMemo(() => {
       return clsx(
-        'fairys_admin_main_page_main fairys:p-[14px] fairys:flex fairys:flex-col fairys:box-border fairys:h-full fairys:w-full fairys:bg-white fairys:dark:bg-gray-900 fairys:rounded-sm',
+        'fairys_admin_main_page_main fairys:p-[14px] fairys:flex fairys:flex-col  fairys:h-full fairys:w-full fairys:bg-white fairys:dark:bg-gray-900 fairys:rounded-sm',
         bodyClassName,
       );
     }, [bodyClassName]);

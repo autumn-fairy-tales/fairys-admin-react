@@ -56,11 +56,11 @@ const LayoutSubSider = () => {
   const headerRender = useMemo(() => {
     if (layoutMode === 'main_sub_left' || layoutMode === 'left')
       return (
-        <div className="fairys:box-border fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">
+        <div className=" fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">
           <Logo
             isOnlyName={layoutMode === 'main_sub_left'}
             logoSize={32}
-            className="fairys:mx-[8px] fairys:my-[8px] fairys:box-border"
+            className="fairys:mx-[8px] fairys:my-[8px] "
             mode={sideMenuMode === 'open' ? 'open' : 'close'}
           />
         </div>
@@ -78,7 +78,7 @@ const LayoutSubSider = () => {
         <div
           className={`fairys:flex ${sideMenuMode === 'close' ? 'fairys:justify-center' : 'fairys:justify-end'} ${
             layoutMode === 'left' ? ' fairys:mt-[8px]' : 'fairys:my-[8px]'
-          } fairys:items-center fairys:box-border fairys:mx-[8px] fairys:cursor-pointer`}
+          } fairys:items-center  fairys:mx-[8px] fairys:cursor-pointer`}
         >
           <FairysButtonBase
             title={sideMenuMode === 'close' ? '打开菜单' : '关闭菜单'}

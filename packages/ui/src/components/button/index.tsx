@@ -13,7 +13,7 @@ export const FairysButtonBase = forwardRef((props: FairysButtonBaseProps, ref: R
   const { className, isBg, bordered = false, ...rest } = props;
   const baseClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_button_base ',
+      'fairys_button_base fairys_admin_button_base',
       [
         'fairys:outline-0',
         'fairys:flex fairys:items-center fairys:justify-center fairys:min-w-[36px] fairys:min-h-[36px] fairys:rounded-sm fairys:cursor-pointer fairys:px-2 fairys:py-1',

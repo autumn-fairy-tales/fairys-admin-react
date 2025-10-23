@@ -23,7 +23,7 @@ export const FairysBreadcrumbBase = (props: FairysBreadcrumbBaseProps) => {
 
   const baseClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_breadcrumb fairys:relative fairys:flex fairys:items-center fairys:min-h-[36px] fairys:py-[8px] fairys:box-border',
+      'fairys_admin_breadcrumb fairys:relative fairys:flex fairys:items-center fairys:min-h-[36px] fairys:py-[8px] ',
       className,
       {
         [separate]: !!separate,
