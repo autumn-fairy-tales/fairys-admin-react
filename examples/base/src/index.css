@@ -1,8 +1,8 @@
 @import '@fairys/admin-tools-react/lib/styles/index.css';
 
-@import 'tailwindcss/theme';
-@import 'tailwindcss/utilities';
-/* @import 'tailwindcss'; */
+/* @import 'tailwindcss/theme'; */
+/* @import 'tailwindcss/utilities'; */
+@import 'tailwindcss';
 @plugin "@iconify/tailwind4";
 
 @custom-variant dark (&:where(.dark, .dark *));
