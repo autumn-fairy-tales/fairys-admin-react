@@ -61,6 +61,12 @@ export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, re
     });
   }, [isTextEllipsis]);
 
+  const onCloseClick = (e: React.MouseEvent<HTMLSpanElement>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onCloseItem?.(e);
+  };
+
   return (
     <div ref={ref} {...rest} className={clx} title={typeof children === 'string' ? children : undefined}>
       <div className="fairys:flex fairys:items-center fairys:flex-1 fairys:overflow-hidden">
@@ -78,7 +84,7 @@ export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, re
         {isShowClose ? (
           <span
             className="fairys:icon-[ant-design--close-outlined] fairys:ml-2 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white fairys:dark:text-gray-500 fairys:transition-all fairys:duration-300"
-            onClick={onCloseItem}
+            onClick={onCloseClick}
           />
         ) : (
           <Fragment />
