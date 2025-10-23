@@ -6,10 +6,10 @@ import { pluginMockServer } from 'rspack-plugin-mock/rsbuild';
 
 export default defineConfig({
   output: {
-    assetPrefix: '/fairys-admin-react/',
+    assetPrefix: '/fairys-admin-react/example/',
   },
   server: {
-    base: '/fairys-admin-react/',
+    base: '/fairys-admin-react/example/',
     // The plugin will read the `proxy` option from the `server`
     proxy: {
       '/api': 'http://example.com',
