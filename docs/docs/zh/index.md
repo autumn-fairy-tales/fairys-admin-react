@@ -14,7 +14,7 @@ hero:
       link: https://github.com/autumn-fairy-tales/fairys-admin-react
     - theme: alt
       text: 预览
-      link: https://github.com/autumn-fairy-tales/fairys-admin-react/example
+      link: https://autumn-fairy-tales.github.io/fairys-admin-react/example
   image:
     src: /logo.png
     alt: Logo
