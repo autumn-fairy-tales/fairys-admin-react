@@ -86,6 +86,10 @@ body {
     transition: background-color 0.3s ease-in-out;
   }
 
+  .fairys_admin_tab_bar .fairys_admin_tab_bar_item:not(:first-child):where(.dark, .dark *):before {
+    background-color: var(--fairys-color-gray-600);
+  }
+
   .fairys_admin_tab_bar .fairys_admin_tab_bar_item.active::before,
   .fairys_admin_tab_bar .fairys_admin_tab_bar_item.active + .fairys_admin_tab_bar_item::before {
     background-color: transparent !important;
