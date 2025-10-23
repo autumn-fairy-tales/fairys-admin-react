@@ -55,6 +55,12 @@ const KeepAliveContent = () => {
   );
 };
 
+// 为了解决动画问题
+const KeepAliveContent2 = () => {
+  const outlet = useOutlet();
+  return <MotionAnimation>{outlet}</MotionAnimation>;
+};
+
 const OutletContentContext = () => {
   const fairysRootClass = useFairysRootContext();
   const [state, tabBarDataInstance] = useTabBarDataInstance();
@@ -62,11 +68,7 @@ const OutletContentContext = () => {
 
   const render = useMemo(() => {
     if (fairysRootClass.keepAlive && fairysRootClass.isOutletKeepAlive) return <KeepAliveContent />;
-    return (
-      <MotionAnimation>
-        <Outlet />
-      </MotionAnimation>
-    );
+    return <KeepAliveContent2 />;
   }, [fairysRootClass.keepAlive]);
 
   return (
