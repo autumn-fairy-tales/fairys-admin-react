@@ -39,6 +39,10 @@ export interface ReactRoutesPluginOptions {
    * @description 保持路由组件的 HOC 函数
    */
   keepAliveBasePath?: string;
+  /**
+   * @description 自定义 HydrateFallback 组件
+   */
+  hydrateFallback?: string;
 }
 export interface RouteItem {
   /**

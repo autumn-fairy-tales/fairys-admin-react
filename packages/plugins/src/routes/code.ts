@@ -12,6 +12,7 @@ export const keepAliveBasePathIndexCode = (element: RouteItem) => `
   {
     index: true,
     path: '${element.path}', 
+    HydrateFallback,
     Component: KeepAliveBaseHOC(${element.componentName}, '${convertIdOrNameOne(element.path)}')
   },
 `;
@@ -20,6 +21,7 @@ export const indexCode = (element: RouteItem) => `
   {
     index: true,
     path: '${element.path}', 
+    HydrateFallback,
     Component: ${element.componentName}
   },
 `;
@@ -27,6 +29,7 @@ export const indexCode = (element: RouteItem) => `
 export const keepAliveBasePathLazyCode = (element: RouteItem, isTs: boolean) => `
   {
     path: '${element.path}',
+    HydrateFallback,
     lazy: async () => {
       const data${isTs ? ' :any' : ''} = await import('${element.component}');
       return { ...data, Component: KeepAliveBaseHOC(data.Component, '${convertIdOrNameOne(element.path)}') }
@@ -37,6 +40,7 @@ export const keepAliveBasePathLazyCode = (element: RouteItem, isTs: boolean) => 
 export const lazyCode = (element: RouteItem) => `
   {
     path: '${element.path}',
+    HydrateFallback,
     lazy: () => import('${element.component}'),
   },
 `;
@@ -44,12 +48,14 @@ export const lazyCode = (element: RouteItem) => `
 export const keepAliveBasePathCode = (element: RouteItem) => `
   {
     path: '${element.path}',
+    HydrateFallback,
     Component: KeepAliveBaseHOC(${element.componentName}, '${convertIdOrNameOne(element.path)}')
   },
 `;
 export const defaultCode = (element: RouteItem) => `
   {
     path: '${element.path}',
+    HydrateFallback,
     Component: ${element.componentName}
   },
 `;
@@ -57,8 +63,15 @@ export const layoutCode = (element: RouteItem, _route: string) => `
   {
     path: '${element.routePrefix}', 
     Component: ${element.componentName}, 
+    HydrateFallback,
     children: [
       ${_route}
     ]
   },
+`;
+
+export const HydrateFallbackCode = `
+function HydrateFallback() {
+  return <p> Loading </p>;
+}
 `;

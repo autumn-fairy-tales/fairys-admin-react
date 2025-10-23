@@ -4,6 +4,7 @@ import path from 'path';
 import FS from 'fs-extra';
 import {
   defaultCode,
+  HydrateFallbackCode,
   indexCode,
   keepAliveBasePathCode,
   keepAliveBasePathIndexCode,
@@ -59,6 +60,7 @@ export class ReactRoutesPlugin {
     this.treeRoutes.watchDirs = this.config.watchDirs;
     this.treeRoutes.keepAliveBasePath = this.config.keepAliveBasePath;
     this.treeRoutes.loadType = this.config.loadType;
+    this.treeRoutes.hydrateFallback = this.config.hydrateFallback;
     this.treeRoutes.isTs = this.#isTsConfigFile();
   }
 
@@ -168,6 +170,11 @@ export class ReactRoutesPlugin {
       routes += _route;
     }
 
+    if (this.config.hydrateFallback) {
+      importString += `import HydrateFallback from '${this.config.hydrateFallback}';\n`;
+    } else {
+      importString += '\n' + HydrateFallbackCode;
+    }
     if (isTs) {
       return `${importString}\nconst routes: RouteObject[] = [\n${routes}];\nexport default routes;`;
     }
@@ -176,9 +183,9 @@ export class ReactRoutesPlugin {
 
   /**创建路由文件*/
   #createRouteFile = () => {
-    let _filePath = path.resolve(this.context, 'src/.fairys/routes.ts');
+    let _filePath = path.resolve(this.context, 'src/.fairys/routes.tsx');
     if (!this.#isTsConfigFile()) {
-      _filePath = path.resolve(this.context, 'src/.fairys/routes.js');
+      _filePath = path.resolve(this.context, 'src/.fairys/routes.jsx');
     }
     FS.ensureFileSync(_filePath);
     FS.writeFileSync(_filePath, this.routeFileContent, 'utf-8');

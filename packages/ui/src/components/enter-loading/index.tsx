@@ -46,3 +46,4 @@ export const FairysEnterLoading = forwardRef((props: FairysEnterLoadingProps, re
     <Fragment />
   );
 });
+export default FairysEnterLoading;

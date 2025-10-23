@@ -1,6 +1,6 @@
 import path from 'path';
 import { WatchDirsItem } from './interface';
-import { convertIdOrNameOne } from './code';
+import { convertIdOrNameOne, HydrateFallbackCode } from './code';
 
 export class DirsTree {
   /**目录*/
@@ -184,14 +184,14 @@ export class DirsTree {
         /**使用缓存页面*/
         if (this.#rootTree?.isKeepAliveBasePath) {
           return {
-            routeString: `${_indent}{ "path": "${this.#routePath}", "Component": KeepAliveBaseHOC(${
+            routeString: `${_indent}{ "path": "${this.#routePath}", HydrateFallback , "Component": KeepAliveBaseHOC(${
               this.#componentName
             }, "${convertIdOrNameOne(this.#routePath)}") },\n`,
             importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
           };
         }
         return {
-          routeString: `${_indent}{ "index": true, "path": "${this.#routePath}", "Component": ${
+          routeString: `${_indent}{ "index": true, HydrateFallback , "path": "${this.#routePath}", "Component": ${
             this.#componentName
           } },\n`,
           importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
@@ -206,28 +206,32 @@ export class DirsTree {
               this.#rootTree.isTs ? ': any' : ''
             } = await import("${
               this.#componentPath
-            }"); return { ...data, Component: KeepAliveBaseHOC(data.Component, '${convertIdOrNameOne(
+            }"); return { HydrateFallback , ...data, Component: KeepAliveBaseHOC(data.Component, '${convertIdOrNameOne(
               this.#routePath,
             )}') } } },\n`,
             importString: ``,
           };
         }
         return {
-          routeString: `${_indent}{ "path": "${this.#routePath}", "lazy": () => import('${this.#componentPath}') },\n`,
+          routeString: `${_indent}{ "path": "${this.#routePath}", HydrateFallback , "lazy": () => import('${
+            this.#componentPath
+          }') },\n`,
           importString: ``,
         };
       }
       /**使用缓存页面*/
       if (this.#rootTree?.isKeepAliveBasePath) {
         return {
-          routeString: `${_indent}{ "path": "${this.#routePath}", "Component": KeepAliveBaseHOC(${
+          routeString: `${_indent}{ "path": "${this.#routePath}", HydrateFallback , "Component": KeepAliveBaseHOC(${
             this.#componentName
           }, "${convertIdOrNameOne(this.#routePath)}") },\n`,
           importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
         };
       }
       return {
-        routeString: `${_indent}{ "path": "${this.#routePath}", "Component": ${this.#componentName} },\n`,
+        routeString: `${_indent}{ "path": "${this.#routePath}", HydrateFallback , "Component": ${
+          this.#componentName
+        } },\n`,
         importString: `import ${this.#componentName} from '${this.#componentPath}';\n`,
       };
     }
@@ -246,7 +250,7 @@ export class DirsTree {
       }
       importString += `import ${this.#componentName} from '${this.#componentPath}';\n`;
       return {
-        routeString: `${_indent}{ "path": "${this.#routePath}", "Component": ${
+        routeString: `${_indent}{ "path": "${this.#routePath}", HydrateFallback , "Component": ${
           this.#componentName
         }, "children": [\n${routeString.replace(/,\n$/, '\n')}] },\n`,
         importString,
@@ -259,7 +263,7 @@ export class DirsTree {
       };
     }
     return {
-      routeString: `${_indent}{ "path": "${this.#routePath}", "children": [\n${routeString.replace(
+      routeString: `${_indent}{ "path": "${this.#routePath}", HydrateFallback ,"children": [\n${routeString.replace(
         /,\n$/,
         '\n',
       )}] },\n`,
@@ -323,6 +327,10 @@ export class TreeRoutes {
    * @description 保持路由组件的 HOC 函数
    */
   keepAliveBasePath?: string;
+  /**
+   * @description 自定义 HydrateFallback 组件
+   */
+  hydrateFallback?: string;
   /**是否是 ts 文件*/
   isTs?: boolean;
   /**路由树*/
@@ -387,6 +395,7 @@ export class TreeRoutes {
     if (this.keepAliveBasePath) {
       importString += `import KeepAliveBaseHOC from '${this.keepAliveBasePath}';\n`;
     }
+
     const routes = this.routes.sort((a, b) => {
       return (a.routePrefix || '/').localeCompare(b.routePrefix || '/');
     });
@@ -398,6 +407,14 @@ export class TreeRoutes {
       importString += result.importString;
       routeString += result.routeString;
     }
+
+    if (this.hydrateFallback) {
+      importString += `import HydrateFallback from '${this.hydrateFallback}';\n`;
+    } else {
+      // HydrateFallbackCode
+      importString += '\n' + HydrateFallbackCode;
+    }
+
     if (this.isTs) {
       return `${importString}\nconst routes: RouteObject[] = [\n${routeString.replace(
         /,\n$/,
