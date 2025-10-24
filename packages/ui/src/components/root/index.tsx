@@ -1,9 +1,10 @@
 import { AliveScope, useAliveController } from 'react-activation';
-import { Fragment, createContext, useContext, useMemo, useRef } from 'react';
+import { Fragment, createContext, useContext, useMemo, useRef, Suspense } from 'react';
 import { appDataInstance } from 'context/app-data';
 import { aliveControllerDataInstance } from 'context/alive-controller';
 import { DataRouter, RouterProvider } from 'react-router';
 import { routerDataInstance } from 'context';
+import { FairysEnterLoading } from 'components/enter-loading';
 
 export interface FairysRootProps {
   children?: React.ReactNode;
@@ -58,9 +59,13 @@ export const FairysRoot = (props: FairysRootProps) => {
 
   const childElement = useMemo(() => {
     if (router) {
-      return <RouterProvider router={router} />;
+      return (
+        <Suspense fallback={<FairysEnterLoading />}>
+          <RouterProvider router={router} />
+        </Suspense>
+      );
     }
-    return children;
+    return <Suspense fallback={<FairysEnterLoading />}>{children}</Suspense>;
   }, [children, router]);
 
   if (!keepAlive) {

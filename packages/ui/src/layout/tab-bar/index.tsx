@@ -114,8 +114,9 @@ const TabBarItem = (props: TabBarItemProps) => {
       { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签', disabled: currentIndex === 0 },
       { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签', disabled: currentIndex === count - 1 },
       { isDivider: true },
-      { icon: 'ant-design:star-outlined', title: '收藏', iconProps: isFavorites ? { color: 'red' } : {} },
+      { icon: 'ant-design:star-outlined', title: '收藏', iconProps: isFavorites ? { color: '#eb2f96' } : {} },
     ];
+    // <StarTwoTone />
   }, [currentIndex, count, isTabFixed, isFavorites]);
 
   const onMenuItemClick = useCallback(
