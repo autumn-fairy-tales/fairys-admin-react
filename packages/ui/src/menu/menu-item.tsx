@@ -4,9 +4,10 @@ import { tabBarDataInstance } from 'context/tab-bar';
 import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from 'context/menu-data';
 import { useMatch, useNavigate, useLocation } from 'react-router';
 import clsx from 'clsx';
-import { Icon, IconProps } from '@iconify/react';
 import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
 import { useSettingDataInstance } from 'context/setting';
+import { FairysIcon, FairysIconPropsType } from 'components/icon';
+
 export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**
    * 菜单项
@@ -40,7 +41,7 @@ const titleTextClassName =
 
 export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item } = props;
-  const iconProps = item.iconProps as IconProps;
+  const iconProps = item.iconProps as FairysIconPropsType;
   const _className = item.className;
 
   const [menuState] = useMenuInstanceContext();
@@ -73,7 +74,7 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
       <div className={titleClassName} title={item.title}>
         {item.icon ? (
           <span className={'fairys:size-[16px]'}>
-            <Icon {...iconProps} icon={item.icon} className={`fairys:size-[16px]  ${iconProps?.className || ''}`} />
+            <FairysIcon className={`fairys:size-[16px] `} icon={item.icon} iconProps={iconProps} />
           </span>
         ) : (
           <Fragment />
@@ -86,7 +87,7 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
 
 export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { item, level = 0, isSubMenu = false, isExpand = false, ...rest } = props;
-  const iconProps = item.iconProps as IconProps;
+  const iconProps = item.iconProps as FairysIconPropsType;
   const _className = item.className;
 
   const match = useMatch(item.path);
@@ -209,7 +210,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
       <div className={titleClassName} style={titleStyle}>
         {item.icon ? (
           <span className={iconClassName}>
-            <Icon {...iconProps} icon={item.icon} className={iconClassName} />
+            <FairysIcon className={iconClassName} icon={item.icon} iconProps={iconProps} />
           </span>
         ) : (
           <Fragment />

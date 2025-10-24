@@ -3,10 +3,10 @@ import { FairysButtonBase } from 'components/button';
 import { Fragment } from 'react/jsx-runtime';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMenuDataInstance, MenuItemType, menuDataInstance } from 'context/menu-data';
-import { Icon, IconProps } from '@iconify/react';
 import { FairysBreadcrumbBase } from 'components/breadcrumb';
 import { useNavigate } from 'react-router';
 import hotkeys from 'hotkeys-js';
+import { FairysIcon, FairysIconPropsType } from 'components/icon';
 
 interface SearchItemProps {
   rowItemData: MenuItemType;
@@ -16,7 +16,7 @@ interface SearchItemProps {
 const SearchItem = (props: SearchItemProps) => {
   const { rowItemData, onClose } = props;
   const navigate = useNavigate();
-  const iconProps = rowItemData.iconProps as IconProps;
+  const iconProps = rowItemData.iconProps as FairysIconPropsType;
 
   const onClick = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -44,7 +44,7 @@ const SearchItem = (props: SearchItemProps) => {
       className="fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:border-gray-200 fairys:dark:border-gray-700 fairys:p-[14px] fairys:overflow-auto no-scrollbar"
     >
       <div className="fairys:w-[45px] fairys:min-w-[45px] fairys:flex fairys:items-center fairys:justify-center fairys:icon fairys:transition-all fairys:duration-300">
-        <Icon {...iconProps} icon={rowItemData.icon} className={`fairys:size-[20px] ${iconProps?.className || ''}`} />
+        <FairysIcon className="fairys:size-[20px] " icon={rowItemData.icon} iconProps={iconProps} />
       </div>
       <div className="fairys:flex fairys:flex-col fairys:flex-1">
         <div className="fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-300">{rowItemData.title}</div>

@@ -21,6 +21,8 @@ import { menuDataInstance } from '@fairys/admin-tools-react';
 ## 状态值
 
 ```ts
+import type { FairysIconPropsType } from "components/icon"
+
 export interface MenuDataInstanceState {
   /**侧边渲染菜单*/
   menuItems: MenuItemType[];
@@ -44,7 +46,7 @@ export interface MenuItemType {
   /**图标*/
   icon?: string;
   /**图标属性*/
-  iconProps?: IconProps;
+  iconProps?: FairysIconPropsType;
   /**判断是否主子菜单字段，仅在第一层生效*/
   isMain?: boolean;
   /**在left布局中，父级是否显示

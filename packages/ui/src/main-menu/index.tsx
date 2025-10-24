@@ -7,12 +7,12 @@ import { useMemo, Fragment, useCallback } from 'react';
 import { useSettingDataInstance } from 'context/setting';
 import { useLocation } from 'react-router';
 import { useMenuDataInstance, MenuItemType, menuDataInstance } from 'context/menu-data';
-import { Icon, IconProps } from '@iconify/react';
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';
 import { FairysPopoverBaseFloatingTreeParent, FairysPopoverBase } from 'components/popover-base';
 import { LayoutMenuMobile } from 'layout/sider';
+import { FairysIcon, FairysIconPropsType } from 'components/icon';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -31,7 +31,7 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   const isActive = mainMenuItemSelected === item.path;
   const [settingState] = useSettingDataInstance();
   const layoutModeState = settingState.layoutMode;
-  const iconProps = item.iconProps as IconProps;
+  const iconProps = item.iconProps as FairysIconPropsType;
 
   const className = useMemo(() => {
     return clsx(
@@ -76,18 +76,18 @@ const MainMenuItem = (props: MainMenuItemProps) => {
   }, [item, isActive, location, menuDataInstance, menuInstance]);
 
   const iconClassName = useMemo(() => {
-    return clsx('', iconProps?.className, {
+    return clsx('', {
       'fairys:size-[20px]': layoutMode === 'horizontal',
       'fairys:size-[26px]': layoutMode === 'vertical',
     });
-  }, [layoutMode, iconProps?.className]);
+  }, [layoutMode]);
 
   const render = useMemo(() => {
     return (
       <div className={className} onClick={onClickMainMenuItem} title={item.title}>
         {item.icon ? (
           <span className={iconClassName}>
-            <Icon {...iconProps} icon={item.icon} className={iconClassName} />
+            <FairysIcon className={iconClassName} icon={item.icon} iconProps={iconProps} />
           </span>
         ) : (
           <Fragment />

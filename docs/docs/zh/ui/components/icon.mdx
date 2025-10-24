@@ -1,0 +1,53 @@
+# 图标
+
+## 引入
+
+```ts
+import { FairysIcon } from '@fairys/admin-tools-react';
+```
+
+## 组件示例
+
+```tsx
+import { FairysIcon } from '@fairys/admin-tools-react';
+
+const Demo = () => {
+  return (<div>
+    {/* 使用 @iconify/react 的 Icon 加载图标 */}
+    <FairysIcon icon='ri:refresh-line' />
+    {/* 自定义 图标，使用 className 值 */}
+    <FairysIcon icon='fairys:icon-[ri--refresh-line]' iconProps={{ isClassName:true }}  />
+  </div>);
+};
+export default Demo;
+
+```
+
+## 组件参数
+
+```ts
+import { Icon, IconProps } from '@iconify/react';
+import { Fragment } from 'react';
+
+export type FairysIconPropsType = Omit<IconProps, 'icon'> & {
+  /** icon 使用className类名
+   * @default false
+   */
+  isClassName?: false
+} | ({
+  /** icon 使用className类名
+   * @default false
+   */
+  isClassName: true
+} & Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>, "ref">)
+
+export interface FairysIconProps {
+  /**图标*/
+  icon?: string;
+  /**图标属性*/
+  iconProps?: FairysIconPropsType
+  className?: string
+}
+
+```
+

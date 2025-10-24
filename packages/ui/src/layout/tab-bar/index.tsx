@@ -10,12 +10,12 @@ import {
 import clsx from 'clsx';
 import { Fragment, useCallback, useEffect, useMemo } from 'react';
 import { useMatch, useNavigate, useLocation } from 'react-router';
-import { Icon, IconProps } from '@iconify/react';
 import { DropDownTabBarItems } from './drop-down';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 import { useFairysRootContext } from 'components/root';
 import { appDataInstance } from 'context/app-data';
 import { favoritesDataInstance, useFavoritesDataInstance } from 'context/favorites-data';
+import { FairysIcon, FairysIconPropsType } from 'components/icon';
 
 interface TabBarItemProps {
   item: TabBarItemType;
@@ -25,7 +25,7 @@ interface TabBarItemProps {
 
 const TabBarItem = (props: TabBarItemProps) => {
   const { item, currentIndex, count } = props;
-  const iconProps = item.iconProps as IconProps;
+  const iconProps = item.iconProps as FairysIconPropsType;
   const className = item.className;
   const isTabFixed = item.isTabFixed;
   const tabInstance = useTabInstanceContext();
@@ -104,19 +104,47 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const items: FairysPopoverMenuItemType[] = useMemo(() => {
     return [
-      { icon: 'ri:refresh-line', title: '重新加载', visible: !!fairysRootClass.keepAlive },
-      { icon: 'ri:close-line', title: '关闭标签', disabled: count === 1 || isTabFixed },
+      {
+        icon: 'fairys:icon-[ri--refresh-line]',
+        title: '重新加载',
+        visible: !!fairysRootClass.keepAlive,
+        iconProps: { isClassName: true },
+      },
+      {
+        icon: 'fairys:icon-[ri--close-line]',
+        title: '关闭标签',
+        disabled: count === 1 || isTabFixed,
+        iconProps: { isClassName: true },
+      },
       { isDivider: true },
-      { icon: 'ant-design:expand-outlined', title: '最大化' },
-      { icon: 'ant-design:credit-card-outlined', title: '新窗口打开' },
+      { icon: 'fairys:icon-[ant-design--expand-outlined]', title: '最大化', iconProps: { isClassName: true } },
+      { icon: 'fairys:icon-[ant-design--credit-card-outlined]', title: '新窗口打开', iconProps: { isClassName: true } },
       { isDivider: true },
-      { icon: 'mdi:close', title: '关闭其他标签', disabled: count === 1 },
-      { icon: 'mdi:arrow-expand-left', title: '关闭左侧标签', disabled: currentIndex === 0 },
-      { icon: 'mdi:arrow-expand-right', title: '关闭右侧标签', disabled: currentIndex === count - 1 },
+      {
+        icon: 'fairys:icon-[mdi--close]',
+        title: '关闭其他标签',
+        disabled: count === 1,
+        iconProps: { isClassName: true },
+      },
+      {
+        icon: 'fairys:icon-[mdi--arrow-expand-left]',
+        title: '关闭左侧标签',
+        disabled: currentIndex === 0,
+        iconProps: { isClassName: true },
+      },
+      {
+        icon: 'fairys:icon-[mdi--arrow-expand-right]',
+        title: '关闭右侧标签',
+        disabled: currentIndex === count - 1,
+        iconProps: { isClassName: true },
+      },
       { isDivider: true },
-      { icon: 'ant-design:star-outlined', title: '收藏', iconProps: isFavorites ? { color: '#eb2f96' } : {} },
-    ];
-    // <StarTwoTone />
+      {
+        icon: 'fairys:icon-[material-symbols--family-star]',
+        title: '收藏',
+        iconProps: { isClassName: true, className: isFavorites ? 'fairys:text-[#eb2f96]' : '' },
+      },
+    ] as FairysPopoverMenuItemType[];
   }, [currentIndex, count, isTabFixed, isFavorites]);
 
   const onMenuItemClick = useCallback(
@@ -154,7 +182,7 @@ const TabBarItem = (props: TabBarItemProps) => {
       <div className={itemClassName} onClick={onClick}>
         {item.icon ? (
           <span className="fairys:size-[16px] fairys:mr-1">
-            <Icon {...iconProps} icon={item.icon} className={`fairys:size-[16px] ${iconProps?.className || ''}`} />
+            <FairysIcon className="fairys:size-[16px] " icon={item.icon} iconProps={iconProps} />
           </span>
         ) : (
           <Fragment />

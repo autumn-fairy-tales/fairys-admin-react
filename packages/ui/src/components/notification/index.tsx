@@ -1,7 +1,7 @@
 import type { NotificationItemType } from 'context/notification-data';
 import { ForwardedRef, forwardRef, Fragment, useMemo, useRef, createContext, useContext } from 'react';
-import { Icon, IconProps } from '@iconify/react';
 import clsx from 'clsx';
+import { FairysIcon, FairysIconPropsType } from 'components/icon';
 
 export interface FairysNotificationItemProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -40,7 +40,7 @@ export const FairysNotificationBaseItem = forwardRef(
   (props: FairysNotificationItemProps, ref: ForwardedRef<HTMLDivElement>) => {
     const { item, className, isShowIcon = true, ...rest } = props;
     const notification = useFairysNotificationBaseContext();
-    const iconProps = item.iconProps || ({} as IconProps);
+    const iconProps = item.iconProps || ({} as FairysIconPropsType);
 
     const clxName = useMemo(() => {
       return clsx(
@@ -62,15 +62,7 @@ export const FairysNotificationBaseItem = forwardRef(
       <div ref={ref} {...rest} className={clxName} onClick={onClickItem}>
         {isShowIcon ? (
           <div className="fairys_admin_notification_item-icon fairys:shrink-0 fairys:w-[32px] fairys:h-full fairys:min-w-[32px] fairys:flex fairys:justify-center  fairys:pt-1">
-            {item?.icon ? (
-              <Icon
-                {...iconProps}
-                icon={item.icon}
-                className={`fairys:w-[16px] fairys:h-[16px] ${iconProps?.className || ''}`}
-              />
-            ) : (
-              <Fragment />
-            )}
+            <FairysIcon className="fairys:w-[16px] fairys:h-[16px] " icon={item.icon} iconProps={iconProps} />
           </div>
         ) : (
           <Fragment />

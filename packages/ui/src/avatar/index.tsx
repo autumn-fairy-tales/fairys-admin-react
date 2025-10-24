@@ -78,11 +78,13 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
       },
       {
         title: '主页',
-        icon: 'ant-design:home-outlined',
+        icon: 'fairys:icon-[ant-design--home-outlined]',
+        iconProps: { isClassName: true },
       },
       {
         title: '偏好设置',
-        icon: 'ant-design:setting-outlined',
+        icon: 'fairys:icon-[ant-design--setting-outlined]',
+        iconProps: { isClassName: true },
       },
       ...(plugin?.menus || []),
       {
@@ -90,7 +92,8 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
       },
       {
         title: '退出登录',
-        icon: 'ant-design:logout-outlined',
+        icon: 'fairys:icon-[ant-design--logout-outlined]',
+        iconProps: { isClassName: true },
       },
     ].filter(Boolean);
     if (plugin?.override) {

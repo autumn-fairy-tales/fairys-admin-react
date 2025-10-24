@@ -3,11 +3,25 @@ import { IconProps } from '@iconify/react';
 import { useRef, createContext, useContext } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 
+export type FairysPopoverMenuItemIconPropsType =
+  | (Omit<IconProps, 'icon'> & {
+      /** icon 使用className类名
+       * @default false
+       */
+      isClassName?: false;
+    })
+  | ({
+      /** icon 使用className类名
+       * @default false
+       */
+      isClassName: true;
+    } & Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>, 'ref'>);
+
 export interface FairysPopoverMenuItemType {
   /**图标*/
   icon?: string;
   /**图标属性*/
-  iconProps?: Omit<IconProps, 'icon'>;
+  iconProps?: FairysPopoverMenuItemIconPropsType;
   /**标题*/
   title?: string;
   /**是否禁用*/

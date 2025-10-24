@@ -5,11 +5,13 @@ import {
   useFairysPopoverMenuContext,
   FairysPopoverMenuContext,
   useFairysPopoverMenuInstance,
+  FairysPopoverMenuItemIconPropsType,
 } from './context';
 import { useFloatingTree } from '@floating-ui/react';
-import { Icon, IconProps } from '@iconify/react';
 import clsx from 'clsx';
 import { FairysPopoverBase } from 'components/popover-base';
+import { FairysIcon } from 'components/icon';
+
 export * from './context';
 
 interface FairysMenuItemProps {
@@ -26,7 +28,7 @@ const popoverMenuItemBaseClsActive = `active fairys:bg-(--fairys-theme-color)! f
 const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { rowItemData, isSubMenuItem = false } = props;
   const { isShowClose = true, className } = rowItemData;
-  const iconProps = rowItemData.iconProps || ({} as IconProps);
+  const iconProps = rowItemData.iconProps || ({} as FairysPopoverMenuItemIconPropsType);
 
   const tree = useFloatingTree();
   const [state, popoverMenuInstance] = useFairysPopoverMenuContext();
@@ -75,11 +77,7 @@ const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivE
       <div className="fairys:flex fairys:items-center fairys:flex-1">
         {rowItemData.icon ? (
           <span className="fairys:size-[16px] fairys:mr-2">
-            <Icon
-              {...iconProps}
-              icon={rowItemData.icon}
-              className={`fairys:size-[16px] ${iconProps?.className || ''}`}
-            />
+            <FairysIcon className="fairys:size-[16px]" icon={rowItemData.icon} iconProps={iconProps} />
           </span>
         ) : (
           <Fragment />

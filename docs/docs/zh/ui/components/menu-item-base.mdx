@@ -60,12 +60,13 @@ export default Demo;
 ## 组件参数
 
 ```ts
+import type { FairysIconPropsType } from "components/icon"
 export interface FairysMenuItemBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**图标名*/
   icon?: string;
   /**图标属性*/
-  iconProps?: IconProps;
+  iconProps?: FairysIconPropsType;
   /**额外内容*/
   extra?: React.ReactNode;
   /**关闭项事件*/

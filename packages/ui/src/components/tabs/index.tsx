@@ -5,9 +5,9 @@ import {
   useFairysTabsInstanceContext,
   FairysTabsItemType,
 } from './context';
-import { Icon, IconProps } from '@iconify/react';
 import clsx from 'clsx';
 import { motion } from 'framer-motion';
+import { FairysIcon, FairysIconPropsType } from 'components/icon';
 export * from './context';
 
 export interface FairysTabsItemProps {
@@ -29,7 +29,7 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
   const disabled = item.disabled;
   const [state, instance] = useFairysTabsInstanceContext();
   const selected = state.activeKey === item.key;
-  const iconProps = item.iconProps as IconProps;
+  const iconProps = item.iconProps as FairysIconPropsType;
 
   const clsName = useMemo(() => {
     return clsx(
@@ -75,11 +75,7 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
       <div className="fairys_admin_tabs-item-content fairys:relative fairys:w-full fairys:h-full fairys:flex fairys:flex-row fairys:items-center fairys:justify-center fairys:gap-2">
         {item?.icon ? (
           <div className="fairys_admin_tabs-item-icon fairys:w-[26px] fairys:h-[26px] fairys:min-w-[26px] fairys:flex fairys:justify-center fairys:items-center">
-            <Icon
-              {...iconProps}
-              icon={item.icon}
-              className={`fairys:w-[16px] fairys:h-[16px] ${iconProps?.className || ''}`}
-            />
+            <FairysIcon className="fairys:w-[16px] fairys:h-[16px] " icon={item.icon} iconProps={iconProps} />
           </div>
         ) : (
           <Fragment />

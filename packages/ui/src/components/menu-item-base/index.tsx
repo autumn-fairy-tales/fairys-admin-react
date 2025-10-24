@@ -1,13 +1,13 @@
 import { forwardRef, Ref, useMemo, Fragment } from 'react';
 import clsx from 'clsx';
-import { IconProps, Icon } from '@iconify/react';
+import { FairysIcon, FairysIconPropsType } from 'components/icon';
 
 export interface FairysMenuItemBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**图标名*/
   icon?: string;
   /**图标属性*/
-  iconProps?: IconProps;
+  iconProps?: FairysIconPropsType;
   /**额外内容*/
   extra?: React.ReactNode;
   /**关闭项事件*/
@@ -72,7 +72,7 @@ export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, re
       <div className="fairys:flex fairys:items-center fairys:flex-1 fairys:overflow-hidden">
         {icon ? (
           <span className="fairys:size-[16px] fairys:mr-2">
-            <Icon {...iconProps} icon={icon} className={`fairys:size-[16px] ${iconProps?.className || ''}`} />
+            <FairysIcon className="fairys:size-[16px]" icon={icon} iconProps={iconProps} />
           </span>
         ) : (
           <Fragment />

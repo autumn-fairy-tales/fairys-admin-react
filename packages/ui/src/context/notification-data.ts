@@ -1,6 +1,5 @@
-import { IconProps } from '@iconify/react';
 import { proxy, ref, useSnapshot } from 'valtio';
-
+import type { FairysIconPropsType } from 'components/icon';
 export interface NotificationTabItemType {
   /**tab标题*/
   title: string;
@@ -9,7 +8,7 @@ export interface NotificationTabItemType {
   /**图标*/
   icon?: string;
   /**图标属性*/
-  iconProps?: IconProps;
+  iconProps?: FairysIconPropsType;
   [s: string]: any;
 }
 
@@ -27,7 +26,7 @@ export interface NotificationItemType {
   /**图标*/
   icon?: string;
   /**图标属性*/
-  iconProps?: IconProps;
+  iconProps?: FairysIconPropsType;
   [s: string]: any;
 }
 

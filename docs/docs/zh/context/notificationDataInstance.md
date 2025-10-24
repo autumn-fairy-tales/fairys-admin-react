@@ -15,7 +15,7 @@ import { notificationDataInstance } from '@fairys/admin-tools-react';
 ## 状态值
 
 ```ts
-import { IconProps } from '@iconify/react';
+import type { FairysIconPropsType } from "components/icon"
 export type NotificationDataInstanceState = {
     /**通知tab列表*/
     tabItems?: NotificationTabItemType[];
@@ -42,7 +42,7 @@ export interface NotificationTabItemType {
     /**图标*/
     icon?: string;
     /**图标属性*/
-    iconProps?: IconProps;
+    iconProps?: FairysIconPropsType;
     [s: string]: any;
 }
 export interface NotificationItemType {
@@ -59,7 +59,7 @@ export interface NotificationItemType {
     /**图标*/
     icon?: string;
     /**图标属性*/
-    iconProps?: IconProps;
+    iconProps?: FairysIconPropsType;
     [s: string]: any;
 }
 ```

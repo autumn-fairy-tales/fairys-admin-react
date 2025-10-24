@@ -2,7 +2,7 @@ import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
 import { settingDataInstance } from './setting';
 import { tabBarDataInstance } from './tab-bar';
-import { IconProps } from '@iconify/react';
+import type { FairysIconPropsType } from 'components/icon';
 export interface MenuItemType {
   /**标题*/
   title: string;
@@ -11,7 +11,7 @@ export interface MenuItemType {
   /**图标*/
   icon?: string;
   /**图标属性*/
-  iconProps?: IconProps;
+  iconProps?: FairysIconPropsType;
   /**判断是否主子菜单字段，仅在第一层生效*/
   isMain?: boolean;
   /**在left布局中，父级是否显示
