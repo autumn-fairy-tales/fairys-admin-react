@@ -49,7 +49,7 @@ body {
 
 @layer components {
   /* 关注图标 */
-  .fairys\:icon-[material-symbols--family-star] {
+  .fairys\:icon-\[material-symbols--family-star\] {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -64,7 +64,7 @@ body {
   }
 
   /* 重新加载 */
-  .fairys\:icon-[ri--refresh-line] {
+  .fairys\:icon-\[ri--refresh-line\] {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -79,7 +79,7 @@ body {
   }
 
   /* 关闭标签 */
-  .fairys\:icon-[ri-close-line] {
+  .fairys\:icon-\[ri-close-line\] {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -94,7 +94,7 @@ body {
   }
 
   /* 最大化 */
-  .fairys\:icon-[ant-design--expand-outlined] {
+  .fairys\:icon-\[ant-design--expand-outlined\] {
     display: inline-block;
     width: 1024px;
     height: 1024px;
@@ -109,7 +109,7 @@ body {
   }
 
   /* 新窗口打开 */
-  .fairys\:icon-[ant-design--credit-card-outlined] {
+  .fairys\:icon-\[ant-design--credit-card-outlined\] {
     display: inline-block;
     width: 1024px;
     height: 1024px;
@@ -123,7 +123,7 @@ body {
     mask-size: 100% 100%;
   }
 
-  .fairys\:icon-[mdi--close] {
+  .fairys\:icon-\[mdi--close\] {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -137,7 +137,7 @@ body {
     mask-size: 100% 100%;
   }
 
-  .fairys\:icon-[mdi--arrow-expand-left] {
+  .fairys\:icon-\[mdi--arrow-expand-left\] {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -151,7 +151,7 @@ body {
     mask-size: 100% 100%;
   }
 
-  .fairys\:icon-[mdi--arrow-expand-right] {
+  .fairys\:icon-\[mdi--arrow-expand-right\] {
     display: inline-block;
     width: 24px;
     height: 24px;
@@ -165,7 +165,7 @@ body {
     mask-size: 100% 100%;
   }
 
-  .fairys\:icon-[ant-design--home-outlined] {
+  .fairys\:icon-\[ant-design--home-outlined\] {
     display: inline-block;
     width: 1024px;
     height: 1024px;
@@ -179,7 +179,7 @@ body {
     mask-size: 100% 100%;
   }
 
-  .fairys\:icon-[ant-design--setting-outlined] {
+  .fairys\:icon-\[ant-design--setting-outlined\] {
     display: inline-block;
     width: 1024px;
     height: 1024px;
@@ -193,7 +193,7 @@ body {
     mask-size: 100% 100%;
   }
 
-  .fairys\:icon-[ant-design--logout-outlined] {
+  .fairys\:icon-\[ant-design--logout-outlined\] {
     display: inline-block;
     width: 1024px;
     height: 1024px;
