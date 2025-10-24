@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { Fragment, useMemo, useState } from 'react';
 import type { MenuItemType } from 'context/menu-data';
 import { useMenuDataInstance } from 'context/menu-data';
 import { MenuItem, MainMenuItem } from './menu-item';
@@ -53,6 +53,11 @@ export const SubMenu = (props: MenuItemProps) => {
   if (sideMenuMode !== 'close') {
     return (
       <div className={subMenuClassName}>
+        {isMain ? (
+          <div className="fairys:w-full fairys:h-[1px] fairys:bg-gray-200 fairys:dark:bg-gray-600" />
+        ) : (
+          <Fragment />
+        )}
         {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isExpand} />}
         <FairysDisclosureItem open={isMain ? true : isExpand} className={childClassName}>
           {child}
@@ -70,6 +75,11 @@ export const SubMenu = (props: MenuItemProps) => {
         placement="right-start"
         isNotMinWidth
       >
+        {isMain ? (
+          <div className="fairys:w-full fairys:h-[1px] fairys:bg-gray-200 fairys:dark:bg-gray-600" />
+        ) : (
+          <Fragment />
+        )}
         {isMain ? <MainMenuItem item={item} /> : <MenuItem item={item} level={level} isSubMenu isExpand={isOpen} />}
       </FairysPopoverBase>
     </div>

@@ -74,7 +74,7 @@ const LayoutSubSider = () => {
       <div className="fairys_admin_layout_sider_menu fairys:flex-1 fairys:overflow-hidden">
         <Menu />
       </div>
-      <div className="fairys:flex fairys:flex-col fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800 ">
+      <div className="fairys:flex fairys:flex-col fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800">
         <div
           className={`fairys:flex ${sideMenuMode === 'close' ? 'fairys:justify-center' : 'fairys:justify-end'} ${
             layoutMode === 'left' ? ' fairys:mt-[8px]' : 'fairys:my-[8px]'

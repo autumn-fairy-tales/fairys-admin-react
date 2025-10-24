@@ -54,7 +54,7 @@ export const MainMenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivEl
   }, [location.pathname, sideMenuMode]);
 
   const className = useMemo(() => {
-    return clsx(menuItemBaseClassName, _className, ['fairys:text-gray-400', 'fairys:dark:text-gray-600'], {
+    return clsx(menuItemBaseClassName, _className, ['fairys:dark:text-400'], {
       'fairys:bg-(--fairys-theme-color)': !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
     });
