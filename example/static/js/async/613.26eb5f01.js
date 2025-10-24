@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkexample=self.webpackChunkexample||[]).push([["613"],{7100:function(e,l,a){a.r(l),a.d(l,{Component:()=>s,default:()=>t});var n=a(1085),p=a(6612);let s=()=>(0,n.jsx)(p.$J,{children:"lazy load"}),t=s}}]);
