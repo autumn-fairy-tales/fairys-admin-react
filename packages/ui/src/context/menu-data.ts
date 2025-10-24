@@ -220,17 +220,14 @@ export class MenuDataInstance {
 
   /**更新子菜单显示,和主菜单选中项*/
   updateChildMenus = (path: string) => {
-    const isMainSubMenuMode = settingDataInstance.isMainSubMenuMode();
-    if (isMainSubMenuMode) {
-      const mainMenuItemSelected = this.state.mainMenuItemSelected;
-      const parentItems = this._parentMenuItemMap.get(path);
-      const currentMainMenuItemPath = parentItems?.[0]?.path;
-      if (currentMainMenuItemPath && currentMainMenuItemPath !== mainMenuItemSelected) {
-        this.state.mainMenuItemSelected = currentMainMenuItemPath;
-        const _item = this.state.mainMenuItems.find((ite) => ite.path === currentMainMenuItemPath);
-        if (_item) {
-          this.state.menuItems = ref(_item.items);
-        }
+    const mainMenuItemSelected = this.state.mainMenuItemSelected;
+    const parentItems = this._parentMenuItemMap.get(path);
+    const currentMainMenuItemPath = parentItems?.[0]?.path;
+    if (currentMainMenuItemPath && currentMainMenuItemPath !== mainMenuItemSelected) {
+      this.state.mainMenuItemSelected = currentMainMenuItemPath;
+      const _item = this.state.mainMenuItems.find((ite) => ite.path === currentMainMenuItemPath);
+      if (_item) {
+        this.state.menuItems = ref(_item.items);
       }
     }
   };

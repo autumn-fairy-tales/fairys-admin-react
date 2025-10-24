@@ -102,8 +102,6 @@ export declare class SettingDataInstance {
     updatedThemeColor: (themeColor: string) => void;
     /**更新配置*/
     updated: (state: SettingDataInstanceState) => void;
-    /**判断是否主子菜单模板*/
-    isMainSubMenuMode: () => boolean;
     /**切换打开偏好设置*/
     onToggleOpen: () => void;
     /**全屏监听*/

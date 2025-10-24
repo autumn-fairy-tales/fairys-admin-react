@@ -261,15 +261,7 @@ export class SettingDataInstance {
     }
     localStorage.setItem(SettingDataInstance.localStorageKey, JSON.stringify(_state));
   };
-  /**判断是否主子菜单模板*/
-  isMainSubMenuMode = () => {
-    return (
-      this.state.layoutMode === 'main_sub_left' ||
-      this.state.layoutMode === 'main_left' ||
-      this.state.layoutMode === 'main_top_header' ||
-      this.state.layoutMode === 'main_top_sub_left_header'
-    );
-  };
+
   /**切换打开偏好设置*/
   onToggleOpen = () => {
     this.updated({ open: !this.state.open });
