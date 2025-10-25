@@ -8,6 +8,10 @@ export type AppPluginDataInstanceType = {
     /**渲染重写函数*/
     override?: (menus: React.ReactNode[]) => React.ReactNode;
   };
+  'toolBar-middle'?: {
+    /**渲染组件*/
+    render?: React.ReactNode;
+  };
   /**头像菜单插件*/
   'avatar-menus'?: {
     /**添加菜单项*/
@@ -17,6 +21,11 @@ export type AppPluginDataInstanceType = {
   };
   /**设置抽屉添加其他项*/
   setting?: {
+    /**渲染组件*/
+    render?: React.ReactNode;
+  };
+  /**头部渲染*/
+  header?: {
     /**渲染组件*/
     render?: React.ReactNode;
   };

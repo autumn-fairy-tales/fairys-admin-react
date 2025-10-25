@@ -13,6 +13,7 @@ import { Logo } from 'logo';
 import { FairysPopoverBaseFloatingTreeParent, FairysPopoverBase } from 'components/popover-base';
 import { LayoutMenuMobile } from 'layout/sider';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
+import { appPluginDataInstance } from 'context';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -134,6 +135,8 @@ export const MainMenu = (props: MainMenuProps) => {
   const { layoutMode } = props;
   const [settingState] = useSettingDataInstance();
   const layoutModeState = settingState.layoutMode;
+  const header = appPluginDataInstance.appPlugins?.header;
+
   const mainMenuClassName = useMemo(() => {
     return clsx(
       'fairys_admin_main_menu fairys:flex  fairys:overflow-auto fairys:items-center fairys:justify-between fairys:px-[8px]',
@@ -179,6 +182,7 @@ export const MainMenu = (props: MainMenuProps) => {
           </div>
         )}
       </div>
+      {layoutMode === 'horizontal' && header?.render ? header?.render : <Fragment />}
       <div className="fairys_admin_main_menu_extra">
         <Avatar mode={layoutMode === 'horizontal' ? 'header' : 'sider'} />
       </div>

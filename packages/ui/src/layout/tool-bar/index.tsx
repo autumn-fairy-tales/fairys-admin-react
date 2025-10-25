@@ -88,6 +88,8 @@ const Reload = () => {
 
 export const ToolBar = () => {
   const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
+  const middle = appPluginDataInstance.appPlugins?.['toolBar-middle'];
+
   const [state] = useSettingDataInstance();
   const enableToolBarFavorites = state.enableToolBarFavorites;
   const enableToolBarNotification = state.enableToolBarNotification;
@@ -123,7 +125,9 @@ export const ToolBar = () => {
       <div className="fairys_admin_tool_bar_left">
         <Breadcrumb />
       </div>
-      <div className="fairys_admin_tool_bar_body fairys:overflow-auto fairys:flex fairys:flex-row fairys:flex-1"></div>
+      <div className="fairys_admin_tool_bar_body fairys:overflow-auto fairys:flex fairys:flex-row fairys:flex-1">
+        {middle?.render || <Fragment />}
+      </div>
       <div className="fairys_admin_tool_bar_right fairys:flex fairys:items-center fairys:gap-2 fairys:dark:text-gray-200 fairys:pr-[2px]">
         {rightRender}
       </div>

@@ -23,25 +23,34 @@ import { appPluginDataInstance } from '@fairys/admin-tools-react';
 ```ts
 import { FairysPopoverMenuItemType } from '@fairys/admin-tools-react';
 export type AppPluginDataInstanceType = {
-    /**工具条右侧插件*/
-    'toolBar-right'?: {
-        /**渲染组件*/
-        render?: React.ReactNode;
-        /**渲染重写函数*/
-        override?: (menus: React.ReactNode[]) => React.ReactNode;
-    };
-    /**头像菜单插件*/
-    'avatar-menus'?: {
-        /**添加菜单项*/
-        menus?: FairysPopoverMenuItemType[];
-        /**重写菜单项*/
-        override?: (menus: FairysPopoverMenuItemType[]) => FairysPopoverMenuItemType[];
-    };
-    /**设置抽屉添加其他项*/
-    "setting"?: {
-        /**渲染组件*/
-        render?: React.ReactNode;
-    };
+  /**工具条右侧插件*/
+  'toolBar-right'?: {
+    /**渲染组件*/
+    render?: React.ReactNode;
+    /**渲染重写函数*/
+    override?: (menus: React.ReactNode[]) => React.ReactNode;
+  };
+  'toolBar-middle'?: {
+    /**渲染组件*/
+    render?: React.ReactNode;
+  };
+  /**头像菜单插件*/
+  'avatar-menus'?: {
+    /**添加菜单项*/
+    menus?: FairysPopoverMenuItemType[];
+    /**重写菜单项*/
+    override?: (menus: FairysPopoverMenuItemType[]) => FairysPopoverMenuItemType[];
+  };
+  /**设置抽屉添加其他项*/
+  setting?: {
+    /**渲染组件*/
+    render?: React.ReactNode;
+  };
+  /**头部渲染*/
+  header?: {
+    /**渲染组件*/
+    render?: React.ReactNode;
+  }
 };
 
 export class AppPluginDataInstance {

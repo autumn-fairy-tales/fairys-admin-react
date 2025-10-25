@@ -103,6 +103,12 @@ appPluginDataInstance.addPlugin({
       { title: '测试2', icon: 'ant-design:question-circle-outlined' },
     ],
   },
+  header: {
+    render: <div className="px-4">自定义渲染 Fairys Admin</div>,
+  },
+  'toolBar-middle': {
+    render: <div className="px-4">自定义渲染 Fairys Admin</div>,
+  },
 });
 // /**临时加载菜单数据*/
 // menuDataInstance.ctor(menuItems);
