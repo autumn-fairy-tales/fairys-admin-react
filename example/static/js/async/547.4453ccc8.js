@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkexample=self.webpackChunkexample||[]).push([["547"],{1822:function(e,n,r){r.r(n),r.d(n,{Component:()=>l,default:()=>o});var s=r(1085),a=r(8637);let l=()=>(0,s.jsxs)(a.$J,{children:[(0,s.jsx)("input",{className:"fairys_input_base outline-none border border-gray-300 rounded-sm min-h-[32px] box-border p-2",placeholder:"请输入"}),"List"]}),o=l}}]);
