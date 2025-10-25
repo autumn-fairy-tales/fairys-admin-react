@@ -1,5 +1,4 @@
 import { FairysMainPage } from '@fairys/admin-tools-react';
-import { KeepAlive } from 'react-activation';
 
 const MainIndex = () => {
   return (
@@ -13,12 +12,4 @@ const MainIndex = () => {
   );
 };
 export const Component = MainIndex;
-// export const Component = () => {
-//   const id = 'fairys_admin_keep_alive_/detail'
-//   return (
-//     <KeepAlive name={id} id={id} cacheKey={id} key={id}>
-//       <MainIndex />
-//     </KeepAlive>
-//   );
-// };
 export default Component;

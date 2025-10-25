@@ -58,6 +58,7 @@ export class DirsTree {
       .filter((item) => item)
       .join('_')
       .replace(/\*/g, '__')
+      .replace(/[\s\t\r\n\f]/g, '___')
       .toUpperCase();
 
     let routePath = path.join(this.#rootTree?.routePrefix || '/', _routePath);

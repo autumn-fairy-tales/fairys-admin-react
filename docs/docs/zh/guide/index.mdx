@@ -112,6 +112,16 @@ export default defineConfig({
 
 ```
 
+:::tip 注意
+
+`keepAliveBasePath` 配置不可和 `FairysRoot` 组件中的 `isOutletKeepAlive` 配置同时开启。
+
+当配置 `keepAliveBasePath` 时，`FairysRoot` 组件中的 `isOutletKeepAlive` 设置为 `false`, 控制台会报错。
+
+:::
+
+
+
 ## mock 配置
 
 使用[`rspack-plugin-mock`](https://github.com/pengzhanbo/rspack-plugin-mock)插件配置mock数据。

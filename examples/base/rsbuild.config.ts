@@ -24,7 +24,7 @@ export default defineConfig({
     pluginMockServer(),
     pluginReact(),
     RsbuildReactRoutesPlugin({
-      loadType: 'lazy',
+      // loadType: 'lazy',
       // isTreeRoute: true,
       watchDirs: [{ dir: 'src/docs', routePrefix: '/docs' }],
       keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',

@@ -238,6 +238,7 @@ export class ReactRoutesPlugin {
       .split('/')
       .join('_')
       .replace(/\*/g, '__')
+      .replace(/[\s\t\r\n\f]/g, '___')
       .toUpperCase();
     /**是否是布局文件*/
     const isLayout = link.endsWith('layout.tsx') || link.endsWith('layout.jsx') || link.endsWith('layout.js');

@@ -85,12 +85,4 @@ const MainIndex = () => {
   );
 };
 export const Component = MainIndex;
-// export const Component = () => {
-//   const id = 'fairys_admin_keep_alive_/'
-//   return (
-//     <KeepAlive name={id} id={id} cacheKey={id} key={id}>
-//       <MainIndex />
-//     </KeepAlive>
-//   );
-// };
 export default Component;
