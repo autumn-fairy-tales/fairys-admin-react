@@ -126,3 +126,14 @@ function HydrateFallback() {
 }
 ```
 :::
+
+
+:::warning 注意
+
+当`loadType = lazy`时，如果需要开启页面缓存，建议同时配置`keepAliveBasePath`值。否则页面缓存第一次打开不生效，需要再次打开才生效。
+
+`keepAliveBasePath` 配置不可和 `FairysRoot` 组件中的 `isOutletKeepAlive` 配置同时开启。
+
+当配置 `keepAliveBasePath` 时，`FairysRoot` 组件中的 `isOutletKeepAlive` 设置为 `false`, 否则控制台会报错。
+
+:::

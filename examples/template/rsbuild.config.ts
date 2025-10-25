@@ -24,7 +24,6 @@ export default defineConfig({
     pluginMockServer(),
     pluginReact(),
     RsbuildReactRoutesPlugin({
-      loadType: 'lazy',
       watchDirs: [{ dir: 'src/docs', routePrefix: '/docs' }],
     }),
   ],
