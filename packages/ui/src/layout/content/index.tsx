@@ -1,4 +1,4 @@
-import { Outlet, useLocation, useNavigation, useOutlet } from 'react-router';
+import { useLocation, useOutlet } from 'react-router';
 import { TabBar } from 'layout/tab-bar';
 import { ToolBar } from 'layout/tool-bar';
 import { KeepAlive } from 'react-activation';
@@ -58,7 +58,8 @@ const KeepAliveContent = () => {
 // 为了解决动画问题
 const KeepAliveContent2 = () => {
   const outlet = useOutlet();
-  return <MotionAnimation>{outlet}</MotionAnimation>;
+  const location = useLocation();
+  return <MotionAnimation key={location.pathname}>{outlet}</MotionAnimation>;
 };
 
 const OutletContentContext = () => {
