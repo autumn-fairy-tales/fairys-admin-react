@@ -26,7 +26,6 @@ export default defineConfig({
     RsbuildReactRoutesPlugin({
       loadType: 'lazy',
       watchDirs: [{ dir: 'src/docs', routePrefix: '/docs' }],
-      keepAliveBasePath: '@fairys/admin-tools-react/lib/components/keep-alive',
     }),
   ],
   tools: {
