@@ -8,6 +8,7 @@ import { Avatar } from 'avatar';
 import { FairysButtonBase } from 'components/button';
 import { Logo } from 'logo';
 import { FairysPopoverBase } from 'components/popover-base';
+import { appPluginDataInstance } from 'context';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSettingDataInstance();
@@ -29,6 +30,9 @@ const LayoutSiderMainMenu = () => {
 
 const LayoutSubSider = () => {
   const [state, settingDataInstance] = useSettingDataInstance();
+  const childMenuBottom = appPluginDataInstance.appPlugins['child-menu-bottom'];
+  const mainMenuBottom = appPluginDataInstance.appPlugins['main-menu-bottom'];
+
   const sideMenuMode = state.sideMenuMode;
   const layoutMode = state.layoutMode;
   const bodyClassName = useMemo(() => {
@@ -42,7 +46,13 @@ const LayoutSubSider = () => {
   }, [sideMenuMode]);
 
   const avatarRender = useMemo(() => {
-    if (layoutMode === 'left') return <Avatar mode="sider" nameMode={sideMenuMode === 'open' ? 'show' : 'node'} />;
+    if (layoutMode === 'left')
+      return (
+        <Fragment>
+          {mainMenuBottom?.render || <Fragment />}
+          <Avatar mode="sider" nameMode={sideMenuMode === 'open' ? 'show' : 'node'} />
+        </Fragment>
+      );
     return <Fragment />;
   }, [sideMenuMode]);
 
@@ -75,6 +85,7 @@ const LayoutSubSider = () => {
         <Menu />
       </div>
       <div className="fairys:flex fairys:flex-col fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800">
+        {childMenuBottom?.['top-render'] || <Fragment />}
         <div
           className={`fairys:flex ${sideMenuMode === 'close' ? 'fairys:justify-center' : 'fairys:justify-end'} ${
             layoutMode === 'left' ? ' fairys:mt-[8px]' : 'fairys:my-[8px]'
@@ -90,6 +101,7 @@ const LayoutSubSider = () => {
             <span className={iconClassName} />
           </FairysButtonBase>
         </div>
+        {childMenuBottom?.['bottom-render'] || <Fragment />}
         {avatarRender}
       </div>
     </div>

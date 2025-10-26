@@ -29,6 +29,17 @@ export type AppPluginDataInstanceType = {
     /**渲染组件*/
     render?: React.ReactNode;
   };
+  /**子菜单底部切换展开折叠按钮位置上下渲染*/
+  'child-menu-bottom'?: {
+    /**渲染组件*/
+    'top-render'?: React.ReactNode;
+    'bottom-render'?: React.ReactNode;
+  };
+  /**主菜单底部渲染*/
+  'main-menu-bottom'?: {
+    /**渲染组件*/
+    render?: React.ReactNode;
+  };
 };
 
 export class AppPluginDataInstance {

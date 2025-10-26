@@ -23,7 +23,7 @@ import { appPluginDataInstance } from '@fairys/admin-tools-react';
 ```ts
 import { FairysPopoverMenuItemType } from '@fairys/admin-tools-react';
 export type AppPluginDataInstanceType = {
-  /**工具条右侧插件*/
+ /**工具条右侧插件*/
   'toolBar-right'?: {
     /**渲染组件*/
     render?: React.ReactNode;
@@ -42,15 +42,26 @@ export type AppPluginDataInstanceType = {
     override?: (menus: FairysPopoverMenuItemType[]) => FairysPopoverMenuItemType[];
   };
   /**设置抽屉添加其他项*/
-  setting?: {
+  "setting"?: {
     /**渲染组件*/
     render?: React.ReactNode;
   };
   /**头部渲染*/
-  header?: {
+  "header"?: {
     /**渲染组件*/
     render?: React.ReactNode;
-  }
+  };
+  /**子菜单底部切换展开折叠按钮位置上下渲染*/
+  "child-menu-bottom"?: {
+    /**渲染组件*/
+    "top-render"?: React.ReactNode;
+    "bottom-render"?: React.ReactNode;
+  };
+  /**主菜单底部渲染*/
+  "main-menu-bottom"?: {
+    /**渲染组件*/
+    "render"?: React.ReactNode;
+  };
 };
 
 export class AppPluginDataInstance {

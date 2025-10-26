@@ -136,6 +136,7 @@ export const MainMenu = (props: MainMenuProps) => {
   const [settingState] = useSettingDataInstance();
   const layoutModeState = settingState.layoutMode;
   const header = appPluginDataInstance.appPlugins?.header;
+  const mainMenuBottom = appPluginDataInstance.appPlugins?.['main-menu-bottom'];
 
   const mainMenuClassName = useMemo(() => {
     return clsx(
@@ -158,12 +159,16 @@ export const MainMenu = (props: MainMenuProps) => {
     );
   }, [layoutMode]);
 
-  const bodyMenusClassName = useMemo(() => {
-    return clsx('fairys_admin_main_menu_body_menus fairys:flex', {
-      'fairys:flex-col fairys:gap-y-2 fairys:w-full': layoutMode === 'vertical',
+  const bodyMenusClassNameBase = useMemo(() => {
+    return clsx('fairys:flex', {
+      'fairys:flex-col fairys:gap-y-2 fairys:w-full fairys:items-center': layoutMode === 'vertical',
       'fairys:flex-row fairys:flex-1 fairys:gap-x-2': layoutMode === 'horizontal',
     });
   }, [layoutMode]);
+
+  const bodyMenusClassName = useMemo(() => {
+    return clsx('fairys_admin_main_menu_body_menus', bodyMenusClassNameBase);
+  }, [bodyMenusClassNameBase]);
 
   return (
     <div className={mainMenuClassName}>
@@ -182,6 +187,7 @@ export const MainMenu = (props: MainMenuProps) => {
           </div>
         )}
       </div>
+      <div className="fairys_admin_main_menu_body_menus_bottom">{mainMenuBottom?.render || <Fragment />}</div>
       {layoutMode === 'horizontal' && header?.render ? header?.render : <Fragment />}
       <div className="fairys_admin_main_menu_extra">
         <Avatar mode={layoutMode === 'horizontal' ? 'header' : 'sider'} />

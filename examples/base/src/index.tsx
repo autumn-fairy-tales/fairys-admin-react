@@ -109,6 +109,13 @@ appPluginDataInstance.addPlugin({
   'toolBar-middle': {
     render: <div className="px-4">自定义渲染 Fairys Admin</div>,
   },
+  'main-menu-bottom': {
+    render: <div className="px-4">主菜单底部</div>,
+  },
+  'child-menu-bottom': {
+    'top-render': <div className="px-4">子菜单底部1</div>,
+    'bottom-render': <div className="px-4">子菜单底部2</div>,
+  },
 });
 // /**临时加载菜单数据*/
 // menuDataInstance.ctor(menuItems);
