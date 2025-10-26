@@ -143,6 +143,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         icon: 'fairys:icon-[material-symbols--family-star]',
         title: '收藏',
         iconProps: { isClassName: true, className: isFavorites ? 'fairys:text-[#eb2f96]' : '' },
+        isClickClose: false,
       },
     ] as FairysPopoverMenuItemType[];
   }, [currentIndex, count, isTabFixed, isFavorites]);
@@ -165,7 +166,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         const href = window.location.href.replace(location.pathname, currentPath);
         window.open(href, '_blank');
       } else if (item.title === '收藏') {
-        favoritesDataInstance.addItem(rowItemData);
+        favoritesDataInstance.onToggleFavorites(rowItemData);
       }
     },
     [currentIndex, currentPath, rowItemData],

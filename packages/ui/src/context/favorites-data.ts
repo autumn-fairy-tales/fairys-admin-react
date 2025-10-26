@@ -30,7 +30,9 @@ export class FavoritesDataInstance {
       const state = localStorage.getItem(this.#getLocalStorageKey());
       if (state) {
         const newState = JSON.parse(state);
-        this.state.dataList = ref(newState || []);
+        if (Array.isArray(newState)) {
+          this.state.dataList = ref(newState || []);
+        }
       }
     } catch (error) {
       console.log(error);
@@ -61,6 +63,16 @@ export class FavoritesDataInstance {
       localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify(this.state.dataList));
     } catch (error) {
       console.log('移除收藏本地存储', error);
+    }
+  };
+
+  /**切换收藏*/
+  onToggleFavorites = (item: MenuItemType) => {
+    const fix = this.dataList.find((i) => i.path === item.path);
+    if (fix) {
+      this.removeItem(item);
+    } else {
+      this.addItem(item);
     }
   };
 
