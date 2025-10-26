@@ -22,33 +22,30 @@ export class FavoritesDataInstance {
     return `${accountDataInstance.state.userId}-${FavoritesDataInstance.localStorageKey}`;
   };
 
-  /**浏览器端初始化*/
-  _browserConstructor = () => {
-    const state = localStorage.getItem(this.#getLocalStorageKey());
-    if (state) {
-      try {
+  get dataList() {
+    if ((this.state.dataList || []).length) {
+      return this.state.dataList;
+    }
+    try {
+      const state = localStorage.getItem(this.#getLocalStorageKey());
+      if (state) {
         const newState = JSON.parse(state);
         this.state.dataList = ref(newState || []);
-      } catch (error) {
-        console.log(error);
       }
+    } catch (error) {
+      console.log(error);
     }
-  };
-
-  constructor() {
-    if (isBrowser) {
-      this._browserConstructor();
-    }
+    return [];
   }
 
   /**添加*/
   addItem = (item: MenuItemType) => {
-    const fix = (this.state.dataList || []).find((i) => i.path === item.path);
+    const fix = this.dataList.find((i) => i.path === item.path);
     if (fix) {
       return;
     }
     const maxLength = settingDataInstance.state.favoritesMaxLength || 20;
-    const maxData = [item, ...(this.state.dataList || [])].slice(0, maxLength);
+    const maxData = [item, ...(this.dataList || [])].slice(0, maxLength);
     this.state.dataList = ref(maxData);
     try {
       localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify(maxData));
@@ -59,7 +56,7 @@ export class FavoritesDataInstance {
 
   /**移除*/
   removeItem = (item: MenuItemType) => {
-    this.state.dataList = ref((this.state.dataList || []).filter((i) => i.path !== item.path));
+    this.state.dataList = ref(this.dataList.filter((i) => i.path !== item.path));
     try {
       localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify(this.state.dataList));
     } catch (error) {
@@ -69,21 +66,23 @@ export class FavoritesDataInstance {
 
   /**是否收藏*/
   isFavorites = (item: MenuItemType) => {
-    return !!(this.state.dataList || []).find((i) => i.path === item.path);
+    return !!(this.dataList || []).find((i) => i.path === item.path);
   };
 
   /**清空所有数据*/
   clearAll = () => {
     this.state.dataList = ref([]);
     try {
-      localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify(this.state.dataList));
+      localStorage.setItem(this.#getLocalStorageKey(), JSON.stringify([]));
     } catch (error) {
       console.log('清空收藏本地存储', error);
     }
   };
 
   /**清空数据*/
-  clear = () => {};
+  clear = () => {
+    this.state.dataList = ref([]);
+  };
 }
 
 /**收藏*/
