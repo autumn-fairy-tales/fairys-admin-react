@@ -1,3 +1,5 @@
+import { proxy, ref, useSnapshot } from 'valtio';
+
 import { FairysPopoverMenuItemType } from 'components/popover-menu';
 
 export type AppPluginDataInstanceType = {
@@ -40,17 +42,39 @@ export type AppPluginDataInstanceType = {
     /**渲染组件*/
     render?: React.ReactNode;
   };
+  /**默认引用值*/
+  __defaultValue?: string;
 };
 
 export class AppPluginDataInstance {
   /**插件组件*/
   appPlugins: AppPluginDataInstanceType = {};
+  /**插件组件状态存储*/
+  state = proxy<AppPluginDataInstanceType>({});
   /**添加插件*/
   addPlugin = (plugin: AppPluginDataInstanceType) => {
     this.appPlugins = { ...this.appPlugins, ...plugin };
+    for (const key in this.appPlugins) {
+      this.state[key] = ref(this.appPlugins[key]);
+    }
+  };
+  /**清空某个插件*/
+  clearPlugin = (key: keyof AppPluginDataInstanceType) => {
+    delete this.appPlugins[key];
+    this.state[key] = undefined;
   };
   /**清空数据*/
   clear = () => {};
 }
 /**应用插件,用于添加或重写组件渲染*/
 export const appPluginDataInstance = new AppPluginDataInstance();
+
+/**应用插件数据实例*/
+export const useAppPluginDataInstance = () => {
+  const snapshot = useSnapshot(appPluginDataInstance.state);
+  return [snapshot, appPluginDataInstance, snapshot.__defaultValue] as [
+    AppPluginDataInstanceType,
+    AppPluginDataInstance,
+    string | undefined,
+  ];
+};

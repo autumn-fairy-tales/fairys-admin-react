@@ -5,7 +5,7 @@ import { forwardRef, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
-import { appPluginDataInstance } from 'context/app-plugins-data';
+import { appPluginDataInstance, useAppPluginDataInstance } from 'context/app-plugins-data';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**
@@ -29,7 +29,8 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   const userName = accountState.userName || 'fairys';
   const userEmail = accountState.userEmail || '未绑定邮箱';
   const navigate = useNavigate();
-  const plugin = appPluginDataInstance.appPlugins?.['avatar-menus'];
+  const [snapshot] = useAppPluginDataInstance();
+  const plugin = snapshot?.['avatar-menus'];
 
   const avatarRender = useMemo(() => {
     const avatar = accountState.userAvatar || settingDataInstance.state.logo;

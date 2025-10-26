@@ -13,7 +13,7 @@ import { Logo } from 'logo';
 import { FairysPopoverBaseFloatingTreeParent, FairysPopoverBase } from 'components/popover-base';
 import { LayoutMenuMobile } from 'layout/sider';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
-import { appPluginDataInstance } from 'context';
+import { useAppPluginDataInstance } from 'context';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -135,8 +135,9 @@ export const MainMenu = (props: MainMenuProps) => {
   const { layoutMode } = props;
   const [settingState] = useSettingDataInstance();
   const layoutModeState = settingState.layoutMode;
-  const header = appPluginDataInstance.appPlugins?.header;
-  const mainMenuBottom = appPluginDataInstance.appPlugins?.['main-menu-bottom'];
+  const [snapshot] = useAppPluginDataInstance();
+  const header = snapshot?.header;
+  const mainMenuBottom = snapshot?.['main-menu-bottom'];
 
   const mainMenuClassName = useMemo(() => {
     return clsx(

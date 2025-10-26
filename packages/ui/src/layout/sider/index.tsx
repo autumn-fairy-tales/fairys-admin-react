@@ -8,7 +8,7 @@ import { Avatar } from 'avatar';
 import { FairysButtonBase } from 'components/button';
 import { Logo } from 'logo';
 import { FairysPopoverBase } from 'components/popover-base';
-import { appPluginDataInstance } from 'context';
+import { useAppPluginDataInstance } from 'context';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSettingDataInstance();
@@ -30,8 +30,9 @@ const LayoutSiderMainMenu = () => {
 
 const LayoutSubSider = () => {
   const [state, settingDataInstance] = useSettingDataInstance();
-  const childMenuBottom = appPluginDataInstance.appPlugins['child-menu-bottom'];
-  const mainMenuBottom = appPluginDataInstance.appPlugins['main-menu-bottom'];
+  const [snapshot] = useAppPluginDataInstance();
+  const childMenuBottom = snapshot?.['child-menu-bottom'];
+  const mainMenuBottom = snapshot?.['main-menu-bottom'];
 
   const sideMenuMode = state.sideMenuMode;
   const layoutMode = state.layoutMode;

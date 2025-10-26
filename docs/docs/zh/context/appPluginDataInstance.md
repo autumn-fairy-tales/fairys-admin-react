@@ -8,7 +8,7 @@
 
 :::warning 注意
 
-请在渲染`Layout`和`FairysRoot`组件之前，设置属性值
+建议在渲染`Layout`和`FairysRoot`组件之前，设置属性值
 
 :::
 
@@ -67,11 +67,17 @@ export type AppPluginDataInstanceType = {
 export class AppPluginDataInstance {
     /**插件组件*/
     appPlugins: AppPluginDataInstanceType;
+     /**插件组件状态存储*/
+    state: AppPluginDataInstanceType;
     /**添加插件*/
     addPlugin: (plugin: AppPluginDataInstanceType) => void;
+     /**清空某个插件*/
+    clearPlugin = (key: keyof AppPluginDataInstanceType) => void;
     /**清空数据*/
     clear: () => void;
 }
+/**应用插件数据实例*/
+export const useAppPluginDataInstance: () => [AppPluginDataInstanceType, AppPluginDataInstance, string | undefined];
 ```
 
 ## 示例

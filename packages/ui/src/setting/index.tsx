@@ -6,11 +6,12 @@ import { SettingPageTransitionMode } from './base/page-transition-mode';
 import { SettingColor } from './base/color';
 import hotkeys from 'hotkeys-js';
 import { memo, useEffect } from 'react';
-import { appPluginDataInstance } from 'context/app-plugins-data';
+import { useAppPluginDataInstance } from 'context/app-plugins-data';
 
 export const SettingDrawer = memo(() => {
   const [state, settingDataInstance] = useSettingDataInstance();
-  const settingPlugin = appPluginDataInstance.appPlugins?.['setting'];
+  const [snapshot] = useAppPluginDataInstance();
+  const settingPlugin = snapshot?.['setting'];
 
   useEffect(() => {
     if (state.open) {

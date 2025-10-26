@@ -4,7 +4,7 @@ import { Fragment, useMemo, useEffect, useState, useRef } from 'react';
 import clsx from 'clsx';
 import { FairysButtonBase } from 'components/button';
 import { MenuSearch } from './menu-search';
-import { appPluginDataInstance } from 'context/app-plugins-data';
+import { useAppPluginDataInstance } from 'context/app-plugins-data';
 import { appDataInstance } from 'context/app-data';
 import { useLocation } from 'react-router-dom';
 import { NotificationBtn } from './notification';
@@ -87,8 +87,9 @@ const Reload = () => {
 };
 
 export const ToolBar = () => {
-  const plugin = appPluginDataInstance.appPlugins?.['toolBar-right'];
-  const middle = appPluginDataInstance.appPlugins?.['toolBar-middle'];
+  const [snapshot] = useAppPluginDataInstance();
+  const plugin = snapshot?.['toolBar-right'];
+  const middle = snapshot?.['toolBar-middle'];
 
   const [state] = useSettingDataInstance();
   const enableToolBarFavorites = state.enableToolBarFavorites;
