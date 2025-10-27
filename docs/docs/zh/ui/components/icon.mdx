@@ -3,13 +3,13 @@
 ## 引入
 
 ```ts
-import { FairysIcon } from '@fairys/admin-tools-react';
+import { FairysIcon, fairysIconDataInstance } from '@fairys/admin-tools-react';
 ```
 
 ## 组件示例
 
 ```tsx
-import { FairysIcon } from '@fairys/admin-tools-react';
+import { FairysIcon , fairysIconDataInstance} from '@fairys/admin-tools-react';
 
 const Demo = () => {
   return (<div>
@@ -23,23 +23,45 @@ export default Demo;
 
 ```
 
+## 扩展自定义本地图标
+
+:::tip 
+
+扩展自定义本地图标时，请在渲染`Layout`和`FairysRoot`组件之前，调用`expands`方法，设置本地图标映射关系。
+
+:::
+
+```ts
+fairysIconDataInstance.expands({
+  // @iconify/react 中的icon属性值 ====> 自定义className类名(这个是写入css文件中的图标class名)
+  'ri:sun-line': 'fairys:icon-[ri--sun-line]',
+  'ri:cloud-line': 'fairys:icon-[ri--cloud-line]',
+})
+```
+
 ## 组件参数
 
 ```ts
 import { Icon, IconProps } from '@iconify/react';
 import { Fragment } from 'react';
 
-export type FairysIconPropsType = Omit<IconProps, 'icon'> & {
-  /** icon 使用className类名
-   * @default false
-   */
-  isClassName?: false
-} | ({
-  /** icon 使用className类名
-   * @default false
-   */
-  isClassName: true
-} & Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>, "ref">)
+export type FairysIconPropsType =
+  | (Omit<IconProps, 'icon'> & {
+    /** icon 使用className类名
+     * @default false
+     */
+    isClassName?: false;
+    /**自定义className*/
+    className?: string;
+    /**自定义样式*/
+    style?: React.CSSProperties;
+  })
+  | ({
+    /** icon 使用className类名
+     * @default false
+     */
+    isClassName: true;
+  } & Omit<React.DetailedHTMLProps<React.HTMLAttributes<HTMLSpanElement>, HTMLSpanElement>, 'ref'>);
 
 export interface FairysIconProps {
   /**图标*/
