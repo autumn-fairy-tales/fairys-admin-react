@@ -53,7 +53,7 @@ export const Favorites = () => {
         {isEmpty ? (
           <div className="fairys:py-20 fairys:text-center fairys:text-[14px] fairys:text-gray-400">暂无收藏</div>
         ) : (
-          <div className="fairys_admin_tool_bar_favorites_list_items fairys:grid fairys:grid-cols-2 fairys:p-3">
+          <div className="fairys_admin_tool_bar_favorites_list_items fairys:grid fairys:grid-cols-2 fairys:gap-2 fairys:p-3">
             {itemsRender}
           </div>
         )}
