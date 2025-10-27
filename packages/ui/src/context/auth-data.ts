@@ -41,7 +41,9 @@ export class AuthDataInstance {
       const state = localStorage.getItem(AuthDataInstance.localStorageKeyMenu);
       if (state) {
         const newState = JSON.parse(state);
-        this.state.menusPermissions = ref(newState || []);
+        if (Array.isArray(newState) && newState.length) {
+          this.state.menusPermissions = ref(newState || []);
+        }
       }
     } catch (error) {
       console.log('获取菜单权限本地存储', error);
@@ -57,7 +59,9 @@ export class AuthDataInstance {
       const state = localStorage.getItem(AuthDataInstance.localStorageKeyBtn);
       if (state) {
         const newState = JSON.parse(state);
-        this.state.btnsPermissions = ref(newState || []);
+        if (Array.isArray(newState) && newState.length) {
+          this.state.btnsPermissions = ref(newState || []);
+        }
       }
     } catch (error) {
       console.log('获取按钮权限本地存储', error);
@@ -73,7 +77,9 @@ export class AuthDataInstance {
       const state = localStorage.getItem(AuthDataInstance.localStorageKeyIgnore);
       if (state) {
         const newState = JSON.parse(state);
-        this.state.ignorePermissions = ref(newState || []);
+        if (Array.isArray(newState) && newState.length) {
+          this.state.ignorePermissions = ref(newState || []);
+        }
       }
     } catch (error) {
       console.log('获取忽略权限本地存储', error);

@@ -30,7 +30,7 @@ export class FavoritesDataInstance {
       const state = localStorage.getItem(this.#getLocalStorageKey());
       if (state) {
         const newState = JSON.parse(state);
-        if (Array.isArray(newState)) {
+        if (Array.isArray(newState) && newState.length) {
           this.state.dataList = ref(newState || []);
         }
       }

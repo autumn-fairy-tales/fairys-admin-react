@@ -37,7 +37,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const rowItemData = item;
   tabItemInstance.isActive = !!match;
   const fairysRootClass = useFairysRootContext();
-  const [favoritesData] = useFavoritesDataInstance();
+  const [favoritesData, favoritesDataInstance] = useFavoritesDataInstance();
   const isFavorites = useMemo(() => favoritesDataInstance.isFavorites(item), [favoritesData.dataList, item]);
 
   const [state] = useTabBarDataInstance();

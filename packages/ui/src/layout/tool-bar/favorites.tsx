@@ -2,7 +2,7 @@ import { useFavoritesDataInstance } from 'context/favorites-data';
 import { FairysButtonBase } from 'components/button';
 import { FairysPopoverBase } from 'components/popover-base';
 import { FairysMenuItemBase } from 'components/menu-item-base';
-import { useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 import { tabBarDataInstance } from 'context';
 import { useFloatingTree } from '@floating-ui/react';
 import { useNavigate } from 'react-router';
@@ -13,8 +13,6 @@ export const Favorites = () => {
   const isEmpty = !dataList?.length;
   const tree = useFloatingTree();
   const navigate = useNavigate();
-
-  useEffect(favoritesDataInstance.ctor, []);
 
   const itemsRender = useMemo(() => {
     return dataList?.map((item) => {
