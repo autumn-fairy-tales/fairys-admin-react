@@ -8,36 +8,8 @@ import { useMemo } from 'react';
 import { FairysFullScreen } from 'components/full-screen';
 import { useTabBarDataInstance } from 'context/tab-bar';
 import { AliveControllerDataInstance } from 'context/alive-controller';
-import { motion, AnimatePresence } from 'framer-motion';
-import { useSettingDataInstance } from 'context/setting';
-import { motionAnimationDataInstance } from 'context/motion-animation';
 
-interface MotionAnimationProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-/**包裹动画*/
-const MotionAnimation = (props: MotionAnimationProps) => {
-  const { children, className = '' } = props;
-  const location = useLocation();
-  const [setting] = useSettingDataInstance();
-  const pageTransitionMode = setting.pageTransitionMode;
-  const config = useMemo(() => {
-    return motionAnimationDataInstance.getAnimationConfig(pageTransitionMode);
-  }, [pageTransitionMode]);
-  return (
-    <AnimatePresence mode="wait">
-      <motion.div
-        {...config}
-        className={`fairys_admin_main_content_body_motion fairys:w-full fairys:h-full fairys:overflow-hidden ${className}`}
-        key={location.pathname}
-      >
-        {children}
-      </motion.div>
-    </AnimatePresence>
-  );
-};
+import { FairysMotionAnimation } from 'components/motion-animation';
 
 const KeepAliveContent = () => {
   const location = useLocation();
@@ -47,11 +19,11 @@ const KeepAliveContent = () => {
   const outlet = useOutlet();
   //嵌套多个 MotionAnimation ，为了解决页面刷新时，动画不生效的问题
   return (
-    <MotionAnimation>
+    <FairysMotionAnimation animateKey={location.pathname}>
       <KeepAlive name={id} id={id} cacheKey={id} key={id}>
-        <MotionAnimation>{outlet}</MotionAnimation>
+        <FairysMotionAnimation animateKey={`${id}_motion_${location.pathname}`}>{outlet}</FairysMotionAnimation>
       </KeepAlive>
-    </MotionAnimation>
+    </FairysMotionAnimation>
   );
 };
 
@@ -59,7 +31,7 @@ const KeepAliveContent = () => {
 const KeepAliveContent2 = () => {
   const outlet = useOutlet();
   const location = useLocation();
-  return <MotionAnimation key={location.pathname}>{outlet}</MotionAnimation>;
+  return <FairysMotionAnimation animateKey={location.pathname}>{outlet}</FairysMotionAnimation>;
 };
 
 const OutletContentContext = () => {
