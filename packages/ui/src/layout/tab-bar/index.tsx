@@ -54,7 +54,7 @@ const TabBarItem = (props: TabBarItemProps) => {
       className,
       {
         active: !!match,
-        'fairys:text-gray-200 fairys:hover:text-gray-200': !!match,
+        'fairys:text-white fairys:hover:text-gray-100': !!match,
         'fairys:text-gray-400 fairys:hover:text-gray-500': !match,
         'fairys:dark:hover:text-gray-300': !match,
       },
