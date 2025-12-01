@@ -24,7 +24,7 @@ export const FairysMotionAnimation = (props: FairysMotionAnimationProps) => {
     <AnimatePresence mode={mode}>
       <motion.div
         {...config}
-        className={`fairys_admin_motion_animation fairys:w-full fairys:h-full fairys:overflow-hidden ${className}`}
+        className={`fairys_admin_motion_animation fairys:w-full fairys:h-full fairys:overflow-auto ${className}`}
         key={animateKey}
       >
         {children}
