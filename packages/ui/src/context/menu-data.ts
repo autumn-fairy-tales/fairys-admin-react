@@ -89,7 +89,7 @@ export const compareParentPath = (oldParentItems: MenuItemType[], newParentItems
   const oldLength = oldParentItems.length;
   const newLength = newParentItems.length;
   if (oldLength === newLength || newLength > oldLength) {
-    return oldParentItems;
+    return newParentItems;
   }
   // 如果新的短，则进行判断父级是否相同
   // 新的移除最后一个进行判断是否相同父级
@@ -182,6 +182,8 @@ export class MenuDataInstance {
     if (!finxItem) {
       return;
     }
+    // 还有一种，这个是子菜单，需要展开父级所有菜单
+
     /**只有在未存在展开项时才进行更新(刚进行加载数据)*/
     if (this.state.expandItems.length === 0) {
       const parentItems = this._parentMenuItemMap.get(path) || [];

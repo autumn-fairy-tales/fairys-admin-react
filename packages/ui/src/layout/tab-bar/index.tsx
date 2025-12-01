@@ -14,8 +14,9 @@ import { DropDownTabBarItems } from './drop-down';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 import { useFairysRootContext } from 'components/root';
 import { appDataInstance } from 'context/app-data';
-import { favoritesDataInstance, useFavoritesDataInstance } from 'context/favorites-data';
+import { useFavoritesDataInstance } from 'context/favorites-data';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
+import { motion } from 'framer-motion';
 
 interface TabBarItemProps {
   item: TabBarItemType;
@@ -49,18 +50,13 @@ const TabBarItem = (props: TabBarItemProps) => {
 
   const itemClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:relative fairys:flex fairys:flex-row fairys:items-center fairys:gap-1 fairys:px-[20px] fairys:py-[10px] fairys:cursor-pointer',
+      'fairys_admin_tab_bar_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:relative fairys:flex fairys:flex-row fairys:items-center fairys:gap-1 fairys:px-[20px] fairys:py-[8px] fairys:cursor-pointer',
       className,
       {
         active: !!match,
-        'fairys:text-gray-500 fairys:hover:text-gray-500': !!match,
+        'fairys:text-gray-200 fairys:hover:text-gray-200': !!match,
         'fairys:text-gray-400 fairys:hover:text-gray-500': !match,
-        'fairys:bg-gray-100 fairys:hover:bg-gray-200': !match,
-        'fairys:bg-white fairys:hover:bg-white': !!match,
-        'fairys:dark:text-gray-200 fairys:dark:hover:text-gray-200': !!match,
-        'fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300': !match,
-        'fairys:dark:bg-gray-800 fairys:dark:hover:bg-gray-700': !match,
-        'fairys:dark:bg-gray-600 fairys:dark:hover:bg-gray-600': !!match,
+        'fairys:dark:hover:text-gray-300': !match,
       },
     );
   }, [match, className]);
@@ -93,13 +89,12 @@ const TabBarItem = (props: TabBarItemProps) => {
   }, [match, tabItemInstance.dom]);
 
   const iconClassName = useMemo(() => {
-    return clsx(
-      'fairys:icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white',
-      {
-        'fairys:dark:text-gray-400': !!match,
-        'fairys:dark:text-gray-500': !match,
-      },
-    );
+    return clsx('fairys:icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 ', {
+      'fairys:text-gray-300 fairys:hover:text-white': !!match,
+      'fairys:text-gray-400 fairys:hover:text-gray-600': !match,
+      'fairys:dark:text-gray-400': !!match,
+      'fairys:dark:text-gray-500 fairys:dark:hover:text-gray-300': !match,
+    });
   }, [match]);
 
   const items: FairysPopoverMenuItemType[] = useMemo(() => {
@@ -180,17 +175,30 @@ const TabBarItem = (props: TabBarItemProps) => {
       ref={tabItemInstance.dom}
       eventName="contextMenu"
     >
-      <div className={itemClassName} onClick={onClick}>
-        {item.icon ? (
-          <span className="fairys:size-[16px] fairys:mr-1">
-            <FairysIcon className="fairys:size-[16px] " icon={item.icon} iconProps={iconProps} />
-          </span>
+      <motion.div className={itemClassName} onClick={onClick}>
+        {match ? (
+          <motion.div
+            style={{ width: '100%', height: '100%', position: 'absolute', borderRadius: 2, top: 0, left: 0 }}
+            layoutId="selected"
+            initial={{ backgroundColor: 'var(--fairys-theme-color)' }}
+            animate={{ backgroundColor: 'var(--fairys-theme-color)' }}
+            transition={{ duration: 0.3 }}
+          />
         ) : (
           <Fragment />
         )}
-        <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
-        {isCloseIconShow && !isTabFixed ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
-      </div>
+        <div className="fairys_admin_tabs-item-content fairys:relative fairys:w-full fairys:h-full fairys:flex fairys:flex-row fairys:items-center fairys:justify-center fairys:gap-2">
+          {item.icon ? (
+            <span className="fairys:size-[16px] fairys:mr-1">
+              <FairysIcon className="fairys:size-[16px] " icon={item.icon} iconProps={iconProps} />
+            </span>
+          ) : (
+            <Fragment />
+          )}
+          <div className="fairys_admin_tab_bar_item_title">{item.title}</div>
+          {isCloseIconShow && !isTabFixed ? <span className={iconClassName} onClick={onClose} /> : <Fragment />}
+        </div>
+      </motion.div>
     </FairysPopoverMenu>
   );
 };
@@ -201,7 +209,7 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-gray-300/25 fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800 fairys:dark:bg-gray-800',
+      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-gray-50 fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800 fairys:dark:bg-gray-800',
     );
   }, []);
   const location = useLocation();
