@@ -88,6 +88,10 @@ export interface FairysPopoverMenuProps {
   motionClassName?: string;
   /**位置*/
   placement?: Placement;
+  /**不设置最小宽度*/
+  isNotMinWidth?: boolean;
+  /**是否加透明度*/
+  isOpacity?: boolean;
 }
 
 interface FairysPopoverMenuInstanceState {

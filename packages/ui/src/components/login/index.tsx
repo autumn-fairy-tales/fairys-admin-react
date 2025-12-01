@@ -36,7 +36,7 @@ export const FairysLoginPage = (props: FairysLoginPageProps) => {
 
   const mainClass = useMemo(() => {
     return clsx(
-      'fairys_login_page_content fairys:p-[14px] fairys:flex fairys:flex-col fairys:w-[400px] fairys:h-[400px] fairys:rounded-sm fairys:gap-y-[20px]   fairys:shadow-xl fairys:inset-shadow-sm ',
+      'fairys_login_page_content fairys:box-border fairys:p-[30px] fairys:flex fairys:flex-col fairys:w-[400px] fairys:h-[400px] fairys:rounded-sm fairys:gap-y-[20px] fairys:shadow-xl fairys:inset-shadow-sm ',
       mainClassName,
     );
   }, [mainClassName]);

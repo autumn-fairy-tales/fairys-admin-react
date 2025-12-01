@@ -174,6 +174,7 @@ const TabBarItem = (props: TabBarItemProps) => {
       onClickItem={onMenuItemClick}
       ref={tabItemInstance.dom}
       eventName="contextMenu"
+      isOpacity
     >
       <motion.div className={itemClassName} onClick={onClick}>
         {match ? (

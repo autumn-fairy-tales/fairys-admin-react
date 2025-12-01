@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom/client';
-import { settingDataInstance, authDataInstance, FairysWatermarkBase } from '@fairys/admin-tools-react';
+import { settingDataInstance, authDataInstance } from '@fairys/admin-tools-react';
 import { AuthRoot } from './auth';
 
 import logo from './assets/logo.png';
@@ -21,9 +21,5 @@ authDataInstance.onLogout = () => {
 const rootEl = document.getElementById('root');
 if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
-  root.render(
-    <FairysWatermarkBase zIndex={99} className="h-full w-full" content={['Fairys', 'Happy Working']}>
-      <AuthRoot />
-    </FairysWatermarkBase>,
-  );
+  root.render(<AuthRoot />);
 }

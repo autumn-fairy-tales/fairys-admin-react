@@ -161,6 +161,8 @@ export const FairysPopoverMenu = forwardRef((props: FairysPopoverMenuProps, ref:
     motionClassName = '',
     disabled = false,
     placement,
+    isNotMinWidth = false,
+    isOpacity = false,
   } = props;
   const popoverMenuInstance = useFairysPopoverMenuInstance(instance);
   popoverMenuInstance.items = items;
@@ -188,6 +190,8 @@ export const FairysPopoverMenu = forwardRef((props: FairysPopoverMenuProps, ref:
         disabled={disabled}
         motionClassName={`fairys:py-[6px] ${motionClassName}`}
         placement={placement}
+        isNotMinWidth={isNotMinWidth}
+        isOpacity={isOpacity}
       >
         {children}
       </FairysPopoverBase>

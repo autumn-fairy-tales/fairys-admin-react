@@ -133,9 +133,5 @@ appPluginDataInstance.addPlugin({
 const rootEl = document.getElementById('root');
 if (rootEl) {
   const root = ReactDOM.createRoot(rootEl);
-  root.render(
-    <FairysWatermarkBase zIndex={99} className="h-full w-full" content={['Fairys', 'Happy Working']}>
-      <AuthRoot />
-    </FairysWatermarkBase>,
-  );
+  root.render(<AuthRoot />);
 }

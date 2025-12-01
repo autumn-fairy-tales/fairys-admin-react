@@ -7,6 +7,7 @@ import {
   authDataInstance,
   loadingFadeOut,
   FairysEnterLoading,
+  FairysWatermarkBase,
 } from '@fairys/admin-tools-react';
 import { menuItems } from '../menu';
 import { routes } from '../routes';
@@ -56,5 +57,9 @@ export const AuthRoot = () => {
   if (status === 'NoAuth') {
     return <div>NoAuth</div>;
   }
-  return <FairysRoot router={routerDataInstance.router} keepAlive={true} />;
+  return (
+    <FairysWatermarkBase zIndex={99} className="h-full w-full" content={['Fairys', 'Happy Working']}>
+      <FairysRoot router={routerDataInstance.router} keepAlive={true} />
+    </FairysWatermarkBase>
+  );
 };

@@ -46,6 +46,8 @@ export interface FairysPopoverComponentBaseProps {
   placement?: Placement;
   /**不设置最小宽度*/
   isNotMinWidth?: boolean;
+  /**是否加透明度*/
+  isOpacity?: boolean;
 }
 
 const motionClassNameBase =
@@ -67,6 +69,7 @@ export const FairysPopoverBaseComponent = forwardRef(
       disabled = false,
       placement,
       isNotMinWidth = false,
+      isOpacity = false,
     } = props;
     const [open, setIsOpen] = useState(false);
     const { show, onAnimationComplete } = useAnimationStatus(open);
@@ -172,22 +175,30 @@ export const FairysPopoverBaseComponent = forwardRef(
     const mergeRef = useMergeRefs([refs.setReference, ref]);
 
     const bodyClasName = useMemo(() => {
-      return clsx('fairys_admin_popover-base no-scrollbar', className, [
-        'fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800! fairys:shadow-xl fairys:inset-shadow-sm',
-      ]);
-    }, [className]);
+      return clsx(
+        'fairys_admin_popover-base no-scrollbar',
+        className,
+        'fairys:rounded-sm fairys:shadow-xl fairys:inset-shadow-sm',
+        {
+          'fairys:bg-white fairys:dark:bg-gray-800!': !isOpacity,
+          'fairys:bg-white/75 fairys:dark:bg-gray-800/75!': isOpacity,
+        },
+      );
+    }, [className, isOpacity]);
 
     const motionBodyClasName = useMemo(() => {
       return clsx(
         'fairys_admin_popover-base-motion fairys:overflow-hidden',
         motionClassNameBase,
         motionClassName,
-        ['fairys:rounded-sm fairys:bg-white fairys:dark:bg-gray-800!'],
+        'fairys:rounded-sm',
         {
           'fairys:min-w-[120px]': isNotMinWidth === false,
+          'fairys:bg-white fairys:dark:bg-gray-800!': !isOpacity,
+          'fairys:bg-white/75 fairys:dark:bg-gray-800/75!': isOpacity,
         },
       );
-    }, [motionClassName, isNotMinWidth]);
+    }, [motionClassName, isNotMinWidth, isOpacity]);
     return (
       <FloatingNode id={nodeId}>
         {React.Children.map(children, (child) => {
@@ -250,6 +261,7 @@ export const FairysPopoverBase = forwardRef((props: FairysPopoverBaseProps, ref:
     content,
     placement,
     isNotMinWidth = false,
+    isOpacity = false,
   } = props;
   return (
     <FairysPopoverBaseFloatingTreeParent>
@@ -263,6 +275,7 @@ export const FairysPopoverBase = forwardRef((props: FairysPopoverBaseProps, ref:
         disabled={disabled}
         motionClassName={motionClassName}
         isNotMinWidth={isNotMinWidth}
+        isOpacity={isOpacity}
       >
         {children}
       </FairysPopoverBaseComponent>
