@@ -40,6 +40,7 @@ const TabBarItem = (props: TabBarItemProps) => {
   const fairysRootClass = useFairysRootContext();
   const [favoritesData, favoritesDataInstance] = useFavoritesDataInstance();
   const isFavorites = useMemo(() => favoritesDataInstance.isFavorites(item), [favoritesData.dataList, item]);
+  const location = useLocation();
 
   const [state] = useTabBarDataInstance();
   const tabBarItems = state.tabBarItems;
