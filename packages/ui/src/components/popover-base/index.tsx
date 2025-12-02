@@ -26,6 +26,7 @@ import { useAnimationStatus } from 'components/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { variantsBase, transitionBase } from './utils';
 import clsx from 'clsx';
+import { UtilsColor } from 'utils/utils.color';
 
 export interface FairysPopoverComponentBaseProps {
   /**弹框渲染内容*/
@@ -50,8 +51,7 @@ export interface FairysPopoverComponentBaseProps {
   isOpacity?: boolean;
 }
 
-const motionClassNameBase =
-  'fairys:flex fairys:flex-col fairys:relative fairys:border fairys:border-gray-100 fairys:dark:border-gray-700 fairys:rounded-md fairys:gap-1';
+const motionClassNameBase = `fairys:flex fairys:flex-col fairys:relative fairys:border fairys:rounded-md fairys:gap-1 ${UtilsColor.popoverBorderClassNameBase}`;
 
 function useEmpty() {
   return {};
