@@ -182,7 +182,7 @@ const TabBarItem = (props: TabBarItemProps) => {
         {match ? (
           <motion.div
             style={{ width: '100%', height: '100%', position: 'absolute', borderRadius: 2, top: 0, left: 0 }}
-            layoutId="selected"
+            layoutId="tab-bar-selected"
             initial={{ backgroundColor: 'var(--fairys-theme-color)' }}
             animate={{ backgroundColor: 'var(--fairys-theme-color)' }}
             transition={{ duration: 0.3 }}
@@ -212,7 +212,7 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-gray-50 fairys:px-[8px] fairys:border-b ',
+      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-white fairys:px-[8px] fairys:border-b ',
       UtilsColor.otherBorderClassNameBase,
       'fairys:dark:bg-gray-800',
     );

@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo, forwardRef, Ref, useImperativeHandle } from 'react';
+import { Fragment, useEffect, useMemo, forwardRef, Ref } from 'react';
 import type { MenuItemType } from 'context/menu-data';
 import { tabBarDataInstance } from 'context/tab-bar';
 import { menuDataInstance, useMenuItemInstance, useMenuInstanceContext } from 'context/menu-data';
@@ -7,6 +7,7 @@ import clsx from 'clsx';
 import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
 import { useSettingDataInstance } from 'context/setting';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
+import { motion } from 'framer-motion';
 
 export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**
@@ -32,7 +33,7 @@ export interface MenuItemProps extends React.DetailedHTMLProps<React.HTMLAttribu
 }
 
 const menuItemBaseClassName =
-  'fairys_admin_menu_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:h-[36px]  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400 fairys:px-[14px]';
+  'fairys_admin_menu_item fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer  fairys:dark:text-gray-400 fairys:relative fairys:h-[36px] fairys:gap-1 fairys:px-[14px]';
 
 const titleClassName =
   'fairys_admin_menu_item_title fairys:flex fairys:flex-1 fairys:items-center fairys:justify-center fairys:overflow-hidden fairys:gap-1';
@@ -127,7 +128,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
       fairys_admin_menu_sub_menu: isSubMenu,
       [`data-level=${level}`]: true,
       active: !!isActive,
-      'fairys:bg-(--fairys-theme-color)': !!isActive,
+      // 'fairys:bg-(--fairys-theme-color)': !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
       'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
     });
@@ -206,24 +207,44 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
   const mergeRef = useMergeRefs([menuItemInstance.dom, ref]);
 
   return (
-    <div {...rest} ref={mergeRef} data-level={level} title={item.title} className={menuItemClassName} onClick={onClick}>
-      <div className={titleClassName} style={titleStyle}>
-        {item.icon ? (
-          <span className={iconClassName}>
-            <FairysIcon className={iconClassName} icon={item.icon} iconProps={iconProps} />
-          </span>
-        ) : (
-          <Fragment />
-        )}
-        {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
-      </div>
-      {isExpandCollapse ? (
-        <div className="fairys_admin_menu_item_extra fairys_admin_down_up_icon">
-          {isSubMenu ? <div className={expandIcon} /> : <Fragment />}
-        </div>
+    <motion.div className="fairys_admin_menu_item_warp fairys:relative fairys:shrink-0">
+      {!!isActive ? (
+        <motion.div
+          className="fairys:rounded-sm w-full h-full fairys:absolute fairys:top-0 fairys:left-0"
+          layoutId="menu-selected"
+          initial={{ backgroundColor: 'var(--fairys-theme-color)' }}
+          animate={{ backgroundColor: 'var(--fairys-theme-color)' }}
+          transition={{ duration: 0.3 }}
+        />
       ) : (
         <Fragment />
       )}
-    </div>
+      <div
+        {...rest}
+        ref={mergeRef}
+        data-level={level}
+        title={item.title}
+        className={menuItemClassName}
+        onClick={onClick}
+      >
+        <div className={titleClassName} style={titleStyle}>
+          {item.icon ? (
+            <span className={iconClassName}>
+              <FairysIcon className={iconClassName} icon={item.icon} iconProps={iconProps} />
+            </span>
+          ) : (
+            <Fragment />
+          )}
+          {isExpandCollapse ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
+        </div>
+        {isExpandCollapse ? (
+          <div className="fairys_admin_menu_item_extra fairys_admin_down_up_icon">
+            {isSubMenu ? <div className={expandIcon} /> : <Fragment />}
+          </div>
+        ) : (
+          <Fragment />
+        )}
+      </div>
+    </motion.div>
   );
 });

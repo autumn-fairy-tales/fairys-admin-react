@@ -1,8 +1,8 @@
 import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
-import { settingDataInstance } from './setting';
 import { tabBarDataInstance } from './tab-bar';
 import type { FairysIconPropsType } from 'components/icon';
+
 export interface MenuItemType {
   /**标题*/
   title: string;
