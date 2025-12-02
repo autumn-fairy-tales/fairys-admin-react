@@ -17,6 +17,7 @@ import { appDataInstance } from 'context/app-data';
 import { useFavoritesDataInstance } from 'context/favorites-data';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
 import { motion } from 'framer-motion';
+import { UtilsColor } from 'utils/utils.color';
 
 interface TabBarItemProps {
   item: TabBarItemType;
@@ -211,7 +212,9 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-gray-50 fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800 fairys:dark:bg-gray-800',
+      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-gray-50 fairys:px-[8px] fairys:border-b ',
+      UtilsColor.otherBorderClassNameBase,
+      'fairys:dark:bg-gray-800',
     );
   }, []);
   const location = useLocation();

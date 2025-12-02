@@ -1,6 +1,8 @@
 import clsx from 'clsx';
 import { useMemo, useState } from 'react';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
+import { UtilsColor } from 'utils/utils.color';
+
 export interface FairysSelectBaseProps {
   /**选择器选项*/
   items?: FairysPopoverMenuItemType[];
@@ -70,7 +72,9 @@ export const FairysSelectBase = (props: FairysSelectBaseProps) => {
       value={value}
       mode={multiple ? 'multiple' : 'single'}
     >
-      <div className="fairys:min-w-[120px] fairys:min-h-[38px] fairys:px-[12px] fairys:py-[4px] fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:rounded-sm fairys:cursor-pointer fairys:flex fairys:flex-row fairys:justify-between fairys:items-center">
+      <div
+        className={`fairys:min-w-[120px] fairys:min-h-[38px] fairys:px-[12px] fairys:py-[4px] fairys:border fairys:rounded-sm fairys:cursor-pointer fairys:flex fairys:flex-row fairys:justify-between fairys:items-center ${UtilsColor.componentBorderClassNameBase}`}
+      >
         <span>{render}</span>
         <span className="fairys_admin_down_up_icon fairys:size-[16px] fairys:flex fairys:items-center fairys:justify-center fairys:relative">
           <div className={expandIcon} />

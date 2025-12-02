@@ -7,6 +7,7 @@ import { FairysBreadcrumbBase } from 'components/breadcrumb';
 import { useNavigate } from 'react-router';
 import hotkeys from 'hotkeys-js';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
+import { UtilsColor } from 'utils/utils.color';
 
 interface SearchItemProps {
   rowItemData: MenuItemType;
@@ -41,7 +42,7 @@ const SearchItem = (props: SearchItemProps) => {
   return (
     <div
       onClick={onClick}
-      className="fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:border-gray-200 fairys:dark:border-gray-700 fairys:p-[14px] fairys:overflow-auto no-scrollbar"
+      className={`fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:p-[14px] fairys:overflow-auto no-scrollbar ${UtilsColor.componentBorderClassNameBase}`}
     >
       <div className="fairys:w-[45px] fairys:min-w-[45px] fairys:flex fairys:items-center fairys:justify-center fairys:icon fairys:transition-all fairys:duration-300">
         <FairysIcon className="fairys:size-[20px] " icon={rowItemData.icon} iconProps={iconProps} />
@@ -69,7 +70,9 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
 
   return (
     <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:h-full fairys:w-[670px] fairys_max_w_modal fairys:px-5 fairys:py-5 fairys:overflow-hidden ">
-      <div className="fairys:flex fairys:items-center fairys:border fairys:border-gray-200 fairys:dark:border-gray-700 fairys:rounded-md ">
+      <div
+        className={`fairys:flex fairys:items-center fairys:border ${UtilsColor.componentBorderClassNameBase} fairys:rounded-md `}
+      >
         <div className="fairys:pl-4 fairys:flex fairys:items-center fairys:justify-center">
           <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[26px] fairys:text-gray-600 fairys:dark:text-gray-200" />
         </div>

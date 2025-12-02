@@ -9,6 +9,7 @@ import { FairysButtonBase } from 'components/button';
 import { Logo } from 'logo';
 import { FairysPopoverBase } from 'components/popover-base';
 import { useAppPluginDataInstance } from 'context';
+import { UtilsColor } from 'utils/utils.color';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSettingDataInstance();
@@ -22,7 +23,9 @@ const LayoutSiderMainMenu = () => {
     return <Fragment />;
   }
   return (
-    <div className="fairys:border-r fairys:border-gray-200 fairys:h-full fairys:dark:border-gray-800! fairys:transition-all fairys:duration-300 fairys:w-[80px] fairys:overflow-hidden">
+    <div
+      className={`fairys:border-r fairys:h-full ${UtilsColor.otherBorderClassNameBase} fairys:transition-all fairys:duration-300 fairys:w-[80px] fairys:overflow-hidden`}
+    >
       <MainMenu layoutMode="vertical" />
     </div>
   );
@@ -38,7 +41,9 @@ const LayoutSubSider = () => {
   const layoutMode = state.layoutMode;
   const bodyClassName = useMemo(() => {
     return clsx(
-      'fairys:flex fairys:flex-col fairys:h-full fairys:border-r fairys:border-gray-200 fairys:dark:border-gray-800! fairys:transition-all fairys:duration-300 fairys:dark:text-gray-400 fairys:overflow-hidden',
+      'fairys:flex fairys:flex-col fairys:h-full fairys:border-r ',
+      UtilsColor.otherBorderClassNameBase,
+      'fairys:transition-all fairys:duration-300 fairys:dark:text-gray-400 fairys:overflow-hidden',
       {
         'fairys:w-[60px]': sideMenuMode === 'close',
         'fairys:w-[220px]': sideMenuMode !== 'close',
@@ -67,7 +72,7 @@ const LayoutSubSider = () => {
   const headerRender = useMemo(() => {
     if (layoutMode === 'main_sub_left' || layoutMode === 'left')
       return (
-        <div className=" fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800">
+        <div className={` fairys:border-b ${UtilsColor.otherBorderClassNameBase}`}>
           <Logo
             isOnlyName={layoutMode === 'main_sub_left'}
             logoSize={32}
@@ -85,7 +90,7 @@ const LayoutSubSider = () => {
       <div className="fairys_admin_layout_sider_menu fairys:flex-1 fairys:overflow-hidden">
         <Menu />
       </div>
-      <div className="fairys:flex fairys:flex-col fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-800">
+      <div className={`fairys:flex fairys:flex-col fairys:border-t ${UtilsColor.otherBorderClassNameBase}`}>
         {childMenuBottom?.['top-render'] || <Fragment />}
         <div
           className={`fairys:flex ${sideMenuMode === 'close' ? 'fairys:justify-center' : 'fairys:justify-end'} ${

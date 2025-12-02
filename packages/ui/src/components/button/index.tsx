@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import { forwardRef, useMemo, Ref } from 'react';
+import { UtilsColor } from 'utils/utils.color';
 
 export interface FairysButtonBaseProps
   extends React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement> {
@@ -23,7 +24,8 @@ export const FairysButtonBase = forwardRef((props: FairysButtonBaseProps, ref: R
       ],
       {
         'fairys:border-0': !bordered,
-        'fairys:border fairys:border-gray-300 fairys:dark:border-gray-600': bordered,
+        'fairys:border ': bordered,
+        [UtilsColor.componentBorderClassNameBase]: bordered,
         'fairys:bg-transparent': !isBg && !bordered,
       },
       className,

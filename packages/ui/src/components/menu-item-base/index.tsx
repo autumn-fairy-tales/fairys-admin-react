@@ -1,6 +1,7 @@
 import { forwardRef, Ref, useMemo, Fragment } from 'react';
 import clsx from 'clsx';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
+import { UtilsColor } from 'utils/utils.color';
 
 export interface FairysMenuItemBaseProps
   extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
@@ -50,7 +51,8 @@ export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, re
       [NotDisabledClassName]: !disabled,
       [ActiveClassName]: isActive,
       'fairys:border-0': !bordered,
-      'fairys:border fairys:border-gray-300 fairys:dark:border-gray-600': bordered,
+      'fairys:border': bordered,
+      [UtilsColor.componentBorderClassNameBase]: bordered,
     });
   }, [disabled, isActive, bordered]);
 

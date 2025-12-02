@@ -6,6 +6,7 @@ import { useMemo } from 'react';
 import { tabBarDataInstance } from 'context';
 import { useFloatingTree } from '@floating-ui/react';
 import { useNavigate } from 'react-router';
+import { UtilsColor } from 'utils/utils.color';
 
 export const Favorites = () => {
   const [state, favoritesDataInstance] = useFavoritesDataInstance();
@@ -38,7 +39,9 @@ export const Favorites = () => {
 
   return (
     <div className="fairys_admin_tool_bar_favorites fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col ">
-      <div className="fairys_admin_tool_bar_favorites_title fairys:relative fairys:flex fairys:items-center fairys:justify-start fairys:p-3 fairys:font-medium fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-600">
+      <div
+        className={`fairys_admin_tool_bar_favorites_title fairys:relative fairys:flex fairys:items-center fairys:justify-start fairys:p-3 fairys:font-medium fairys:border-b ${UtilsColor.componentBorderClassNameBase}`}
+      >
         <span>我的收藏夹</span>
         <FairysButtonBase
           className="fairys_admin_tool_bar_favorites_clear_btn fairys:absolute fairys:top-1 fairys:right-1 fairys:text-[12px]"

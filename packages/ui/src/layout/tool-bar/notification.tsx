@@ -4,6 +4,7 @@ import { useNotificationDatainstance } from 'context/notification-data';
 import { Fragment } from 'react/jsx-runtime';
 import { FairysButtonBase } from 'components/button';
 import { FairysPopoverBase } from 'components/popover-base';
+import { UtilsColor } from 'utils/utils.color';
 
 export const Notification = () => {
   const [state, notificationDataInstance] = useNotificationDatainstance();
@@ -15,7 +16,9 @@ export const Notification = () => {
 
   return (
     <div className="fairys_admin_tool_bar_notification fairys:w-[300px] fairys:h-[400px] fairys:flex fairys:flex-col ">
-      <div className="fairys_admin_tool_bar_notification_title fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-600">
+      <div
+        className={`fairys_admin_tool_bar_notification_title fairys:border-b ${UtilsColor.componentBorderClassNameBase}`}
+      >
         {isTabs ? (
           <div className="fairys:py-1 fairys:px-3">
             <FairysTabs
@@ -44,7 +47,9 @@ export const Notification = () => {
       {isEmpty ? (
         <Fragment />
       ) : (
-        <div className="fairys_admin_tool_bar_notification_footer fairys:py-3 fairys:text-[12px] fairys:font-medium fairys:border-t fairys:border-gray-200 fairys:dark:border-gray-600">
+        <div
+          className={`fairys_admin_tool_bar_notification_footer fairys:py-3 fairys:text-[12px] fairys:font-medium fairys:border-t ${UtilsColor.componentBorderClassNameBase}`}
+        >
           <div className="fairys:flex fairys:justify-center fairys:items-center">
             <div className="fairys:cursor-pointer" onClick={notificationDataInstance._onClickMore}>
               查看全部

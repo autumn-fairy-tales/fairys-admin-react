@@ -9,6 +9,7 @@ import { appDataInstance } from 'context/app-data';
 import { useLocation } from 'react-router-dom';
 import { NotificationBtn } from './notification';
 import { FavoritesBtn } from './favorites';
+import { UtilsColor } from 'utils/utils.color';
 
 const MenuDarkLight = () => {
   const [state, settingDataInstance] = useSettingDataInstance();
@@ -122,7 +123,9 @@ export const ToolBar = () => {
   }, [plugin, enableToolBarFavorites, enableToolBarNotification, enableToolBarFullScreen, enableToolBarRefresh]);
 
   return (
-    <div className="fairys_admin_tool_bar fairys:transition-all fairys:min-h-[50px] fairys:duration-300 fairys:w-full fairys:flex fairys:flex-row fairys:items-center fairys:px-[8px] fairys:border-b fairys:border-gray-200 fairys:dark:border-gray-800 fairys:overflow-auto no-scrollbar fairys:gap-2 ">
+    <div
+      className={`fairys_admin_tool_bar fairys:transition-all fairys:min-h-[50px] fairys:duration-300 fairys:w-full fairys:flex fairys:flex-row fairys:items-center fairys:px-[8px] fairys:border-b ${UtilsColor.otherBorderClassNameBase} fairys:overflow-auto no-scrollbar fairys:gap-2 `}
+    >
       <div className="fairys_admin_tool_bar_left">
         <Breadcrumb />
       </div>
