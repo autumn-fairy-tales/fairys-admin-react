@@ -94,7 +94,7 @@ const TabBarItem = (props: TabBarItemProps) => {
     return clsx('fairys:icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 ', {
       'fairys:text-gray-300 fairys:hover:text-white': !!match,
       'fairys:text-gray-400 fairys:hover:text-gray-600': !match,
-      'fairys:dark:text-gray-400': !!match,
+      'fairys:dark:text-gray-200': !!match,
       'fairys:dark:text-gray-500 fairys:dark:hover:text-gray-300': !match,
     });
   }, [match]);
