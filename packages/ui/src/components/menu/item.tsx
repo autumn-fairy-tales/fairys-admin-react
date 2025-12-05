@@ -1,48 +1,52 @@
-import { Fragment, useMemo } from 'react';
+import { forwardRef, Fragment, useMemo } from 'react';
 import { FairysMenuItemType } from './interface';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { FairysIcon } from 'components/icon';
 import { useFairysMenuInstanceContext } from './instance';
+import { useFloatingTree, FloatingTreeType, ReferenceType } from '@floating-ui/react';
+import { UtilsItemOptions } from './utils';
 
 export interface FairysMenuItemProps {
   item: FairysMenuItemType;
   expandCollapse?: boolean;
   isExpandCollapse?: boolean;
-  /**层级，用于计算缩进距离*/
-  level?: number;
+  utilsItemOptions?: UtilsItemOptions;
 }
 
 const menuItemBaseClassName =
   'fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:px-[14px] fairys:py-[8px] fairys:min-h-[36px]';
 
-const titleClassName =
-  'fairys_admin_menu_item_title fairys:flex fairys:flex-1 fairys:items-center fairys:justify-center fairys:overflow-hidden fairys:gap-1';
-
 const titleTextClassName =
   'fairys-menu-item_title-text fairys:flex-1 fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap';
 
-export const FairysMenuItem = (props: FairysMenuItemProps) => {
-  const { item, expandCollapse, isExpandCollapse, level = 0 } = props;
-  const { className, style, iconProps, icon, extra, disabled } = item;
+export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React.LegacyRef<HTMLDivElement>) => {
+  const { item, expandCollapse, isExpandCollapse, utilsItemOptions } = props;
+  const { level = 0, popoverLevel } = utilsItemOptions || {};
+  const { className, style, iconProps, icon, extra, disabled, type } = item;
+
   const [state, instance] = useFairysMenuInstanceContext();
   const collapsedMode = state.collapsedMode;
   const selectedKey = state.selectedKey;
 
+  const floatingTree = useFloatingTree();
   // 选中项
   const isActive = useMemo(() => instance.isActive(item.path), [item.path, selectedKey]);
-
   /**判断菜单是否缩放*/
-  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+  const _isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+
+  /**最顶层才生效*/
+  const isCollapsed = _isCollapsed && level === 0;
 
   const _class = useMemo(() => {
     return clsx('fairys-menu-item', menuItemBaseClassName, className, {
       active: !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
-      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive && !disabled,
+      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive && !disabled && type !== 'group',
       'fairys:justify-center': isCollapsed,
+      'fairys:opacity-90': type === 'group',
     });
-  }, [className, isActive, isCollapsed, disabled]);
+  }, [className, isActive, isCollapsed, disabled, type]);
 
   const expandIcon = useMemo(() => {
     return clsx(
@@ -64,13 +68,15 @@ export const FairysMenuItem = (props: FairysMenuItemProps) => {
   }, [level, isCollapsed, disabled]);
 
   const _styleBody = useMemo(() => {
-    if (isCollapsed) {
-      return {};
+    if (_isCollapsed) {
+      return {
+        paddingLeft: `${popoverLevel * 20}px`,
+      };
     }
     return {
       paddingLeft: `${level * 20}px`,
     };
-  }, [level]);
+  }, [level, _isCollapsed, popoverLevel]);
 
   const _classExtra = useMemo(() => {
     return clsx('fairys-menu-item_extra', {
@@ -86,18 +92,19 @@ export const FairysMenuItem = (props: FairysMenuItemProps) => {
   }, [isCollapsed]);
 
   const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    if (item.disabled) {
+    if (item.disabled || type === 'group') {
       return;
     }
     if (isExpandCollapse) {
       instance._onClickSubItem(item, event, instance);
     } else {
       instance._onClickItem(item, event, instance);
+      floatingTree?.events?.emit?.('click');
     }
   };
 
   return (
-    <motion.div title={item.title} style={style} className={_class} onClick={onClick}>
+    <motion.div title={item.title} style={style} className={_class} onClick={onClick} ref={ref}>
       {!!isActive ? (
         <motion.div
           className="fairys:rounded-sm w-full h-full fairys:absolute fairys:top-0 fairys:left-0"
@@ -129,4 +136,4 @@ export const FairysMenuItem = (props: FairysMenuItemProps) => {
       )}
     </motion.div>
   );
-};
+});

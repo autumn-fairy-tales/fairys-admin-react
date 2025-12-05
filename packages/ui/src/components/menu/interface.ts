@@ -24,28 +24,19 @@ export interface FairysSubMenuItemBaseType {
 
 export interface FairysMenuItemType extends FairysSubMenuItemBaseType {
   /**父级菜单项*/
-  type?: 'subMenu' | 'item';
+  type?: 'subMenu' | 'item' | 'group';
   /**点击事件*/
   onClick?: (item: FairysMenuItemType, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
 }
 
-export interface FairysGroupMenuItemType extends FairysSubMenuItemBaseType {
-  type: 'group';
-  /**点击事件*/
-  onClick?: (item: FairysGroupMenuItemType, event: React.MouseEvent<HTMLDivElement, MouseEvent>) => void;
-}
-
 export interface FairysDividerMenuItemType {
   type: 'divider';
-  /**路径*/
-  path: string;
   /**菜单样式*/
   style?: React.CSSProperties;
   /**菜单类名*/
   className?: string;
 }
-
-export type FairysItemType = FairysMenuItemType | FairysGroupMenuItemType | FairysDividerMenuItemType;
+export type FairysItemType = FairysMenuItemType | FairysDividerMenuItemType;
 
 export interface FairysMenuInstanceState {
   /**
@@ -59,7 +50,7 @@ export interface FairysMenuInstanceState {
   /**
    * 展开的菜单项列表（在没有传递 openKeys 值的情况下使用）
    */
-  expandItems?: FairysItemType[];
+  expandItems?: FairysMenuItemType[];
   /**
    * 选中的菜单 key
    */

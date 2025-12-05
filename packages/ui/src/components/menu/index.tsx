@@ -17,7 +17,7 @@
  */
 import { forwardRef, useMemo } from 'react';
 import { FairysMenuProps } from './interface';
-import { useFairysMenuInstance, FairysMenuInstanceContextProvider } from './instance';
+import { useFairysMenuInstance, FairysMenuInstanceContext } from './instance';
 import { renderItems } from './utils';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
@@ -77,16 +77,16 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
   }, [selectedKey, isOpenKeysField]);
 
   const render = useMemo(() => {
-    return renderItems(items, -1);
+    return renderItems(items, { level: -1 });
   }, [items]);
 
   return (
     <FairysPopoverBaseFloatingTreeParent>
-      <FairysMenuInstanceContextProvider instance={instance}>
+      <FairysMenuInstanceContext.Provider value={instance}>
         <motion.div ref={ref} className={_class}>
           {render}
         </motion.div>
-      </FairysMenuInstanceContextProvider>
+      </FairysMenuInstanceContext.Provider>
     </FairysPopoverBaseFloatingTreeParent>
   );
 });

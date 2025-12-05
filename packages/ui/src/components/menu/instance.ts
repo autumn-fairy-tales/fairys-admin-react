@@ -1,7 +1,7 @@
 import { proxy, useSnapshot, ref } from 'valtio';
 import { FairysMenuItemType, FairysMenuInstanceState, FairysItemType } from './interface';
 import { createContext, useContext, useRef } from 'react';
-import { useFloatingTree, FloatingTreeType, ReferenceType } from '@floating-ui/react';
+import { FloatingTreeType, ReferenceType } from '@floating-ui/react';
 
 /**
  * 菜单组件
@@ -29,8 +29,8 @@ export class FairysMenuInstance {
    * key: 子菜单 path
    * value: 父级菜单列表
    */
-  public parentPathMap = new Map<string, FairysItemType[]>();
-  public pathMap = new Map<string, FairysItemType>();
+  public parentPathMap = new Map<string, FairysMenuItemType[]>();
+  public pathMap = new Map<string, FairysMenuItemType>();
   public floatingTree: FloatingTreeType<ReferenceType>;
 
   /**props 传递的字段*/
@@ -45,7 +45,7 @@ export class FairysMenuInstance {
   /**
    * 对比两个父级路径是否相同
    */
-  public compareParentPath = (oldParentItems: FairysItemType[], newParentItems: FairysItemType[]) => {
+  public compareParentPath = (oldParentItems: FairysMenuItemType[], newParentItems: FairysMenuItemType[]) => {
     // 新的如果长，则直接返回去更新新的
     // 长度相同，则直接更新最新的
     const oldLength = oldParentItems.length;
@@ -57,11 +57,11 @@ export class FairysMenuInstance {
     // 新的移除最后一个进行判断是否相同父级
     const newList = newParentItems
       .slice(0, newLength - 1)
-      .map((it) => it.path)
+      .map((it: FairysMenuItemType) => it.path)
       .join('_');
     const oldList = oldParentItems
       .slice(0, newLength - 1)
-      .map((it) => it.path)
+      .map((it: FairysMenuItemType) => it.path)
       .join('_');
     if (newList === oldList) {
       return oldParentItems;
@@ -73,7 +73,7 @@ export class FairysMenuInstance {
    * 处理菜单数据，构建父级菜单映射表
    * @param items 菜单数据
    */
-  public processMenuItems = (items: FairysItemType[], parentItems: FairysItemType[] = []) => {
+  public processMenuItems = (items: FairysItemType[], parentItems: FairysMenuItemType[] = []) => {
     for (let index = 0; index < items.length; index++) {
       const element = items[index];
       if (element.type !== 'divider') {
@@ -192,19 +192,12 @@ export const useFairysMenuInstance = (instance?: FairysMenuInstance) => {
   return ref.current;
 };
 
-const FairysMenuInstanceContext = createContext<FairysMenuInstance>(new FairysMenuInstance());
+export const FairysMenuInstanceContext = createContext<FairysMenuInstance>(new FairysMenuInstance());
 
 export interface FairysMenuInstanceContextProviderProps {
   instance: FairysMenuInstance;
   children: React.ReactNode;
 }
-
-export const FairysMenuInstanceContextProvider = ({ instance, children }: FairysMenuInstanceContextProviderProps) => {
-  const floatingTree = useFloatingTree();
-  instance.floatingTree = floatingTree;
-
-  return <FairysMenuInstanceContext.Provider value={instance}>{children}</FairysMenuInstanceContext.Provider>;
-};
 
 export const useFairysMenuInstanceContext = () => {
   const instance = useContext(FairysMenuInstanceContext);

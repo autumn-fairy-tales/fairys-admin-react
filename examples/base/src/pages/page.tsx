@@ -42,6 +42,7 @@ const MainIndex = () => {
             // collapsedMode='icon'
             // selectedKey={selectedKey}
             // openKeys={openKeys}
+            collapsedMode="inline"
             onClickItem={(item, event, instance) => {
               updateSelectedKey(item.path);
             }}
@@ -68,6 +69,10 @@ const MainIndex = () => {
                 disabled: true,
               },
               {
+                type: 'divider',
+              },
+
+              {
                 title: '详情',
                 icon: 'ant-design:profile',
                 path: '/detail',
@@ -78,26 +83,78 @@ const MainIndex = () => {
                     path: '/detail/1',
                   },
                   {
+                    type: 'group',
+                    path: '/group',
+                    title: '分组',
+                    items: [
+                      {
+                        title: '分组1',
+                        icon: 'ant-design:profile',
+                        path: '/group/1',
+                      },
+                      {
+                        title: '分组2',
+                        icon: 'ant-design:profile',
+                        path: '/group/2',
+                      },
+                      {
+                        type: 'group',
+                        path: '/group/3',
+                        title: '分组',
+                        items: [
+                          {
+                            title: '分组1',
+                            icon: 'ant-design:profile',
+                            path: '/group/3/1',
+                          },
+                          {
+                            title: '管理',
+                            icon: 'ant-design:profile',
+                            path: '/about',
+                            items: [
+                              {
+                                title: '关于1',
+                                icon: 'ant-design:profile',
+                                path: '/about/1',
+                              },
+                              {
+                                title: '关于2',
+                                icon: 'ant-design:profile',
+                                path: '/about/2',
+                              },
+                            ],
+                          },
+                          {
+                            title: '分组2',
+                            icon: 'ant-design:profile',
+                            path: '/group/3/2',
+                          },
+                        ],
+                      },
+                    ],
+                  },
+                  {
                     title: '详情2',
                     icon: 'ant-design:profile',
                     path: '/detail/2',
                   },
-                ],
-              },
-              {
-                title: '管理',
-                icon: 'ant-design:profile',
-                path: '/about',
-                items: [
+
                   {
-                    title: '关于1',
-                    icon: 'ant-design:profile',
-                    path: '/about/1',
-                  },
-                  {
-                    title: '关于2',
-                    icon: 'ant-design:profile',
-                    path: '/about/2',
+                    type: 'group',
+                    path: '/group/4',
+                    title: '分组',
+                    items: [
+                      {
+                        title: '分组1',
+                        icon: 'ant-design:profile',
+                        path: '/group/4/1',
+                      },
+                      {
+                        title: '分组2',
+                        icon: 'ant-design:profile',
+                        path: '/group/4/2',
+                      },
+                    ],
                   },
                 ],
               },
