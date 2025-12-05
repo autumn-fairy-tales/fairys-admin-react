@@ -29,7 +29,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
 
   return (
     <motion.div style={style} className={_class}>
-      <FairysMenuItem item={item} isExpandCollapse level={level} />
+      <FairysMenuItem item={item} isExpandCollapse expandCollapse={isOpen} level={level} />
       <FairysDisclosureItem
         open={isOpen}
         className="fairys-sub-menu-item_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[1px]"
