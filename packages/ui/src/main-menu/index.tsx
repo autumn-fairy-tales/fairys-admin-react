@@ -139,6 +139,9 @@ export const MainMenu = (props: MainMenuProps) => {
   const header = snapshot?.header;
   const mainMenuBottom = snapshot?.['main-menu-bottom'];
 
+  const [menuState] = useMenuDataInstance();
+  const mainMenuItems = menuState.mainMenuItems;
+
   const mainMenuClassName = useMemo(() => {
     return clsx(
       'fairys_admin_main_menu fairys:flex  fairys:overflow-auto fairys:items-center fairys:justify-between fairys:px-[8px]',
@@ -184,7 +187,7 @@ export const MainMenu = (props: MainMenuProps) => {
           <Fragment />
         ) : (
           <div className={bodyMenusClassName}>
-            <MainMenuItems layoutMode={layoutMode} />
+            {mainMenuItems?.length ? <MainMenuItems layoutMode={layoutMode} /> : <Fragment />}
           </div>
         )}
       </div>

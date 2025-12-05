@@ -21,3 +21,4 @@ export * from './error-page/403';
 export { ErrorPage404 } from './error-page/404';
 export { ErrorPage500 } from './error-page/500';
 export * from './icon';
+export * from './menu';

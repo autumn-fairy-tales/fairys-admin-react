@@ -128,7 +128,6 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
       fairys_admin_menu_sub_menu: isSubMenu,
       [`data-level=${level}`]: true,
       active: !!isActive,
-      // 'fairys:bg-(--fairys-theme-color)': !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
       'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
     });

@@ -1,7 +1,8 @@
-import { FairysMainPage } from '@fairys/admin-tools-react';
+import { FairysMainPage, FairysMenu } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
 import { FairysLoginPage, FairysMainPageBody } from '@fairys/admin-tools-react';
 import { FairysNotificationListBase } from '@fairys/admin-tools-react/lib/components/notification';
+import { useState } from 'react';
 
 const rules = {
   username: (value: string) => {
@@ -30,11 +31,81 @@ const MainIndex = () => {
         console.log(err);
       });
   };
+  const [selectedKey, updateSelectedKey] = useState('/');
+  const [openKeys, updateOpenKeys] = useState<string[]>([]);
 
   return (
     <FairysMainPage>
       <FairysMainPageBody>
-        <FairysNotificationListBase
+        <div style={{ width: 200 }}>
+          <FairysMenu
+            // collapsedMode='icon'
+            // selectedKey={selectedKey}
+            // openKeys={openKeys}
+            onClickItem={(item, event, instance) => {
+              updateSelectedKey(item.path);
+            }}
+            onClickSubItem={(item) => {
+              console.log(item);
+              updateOpenKeys((prev) => {
+                const finx = prev.includes(item.path);
+                if (finx) {
+                  return prev.filter((i) => i !== item.path);
+                }
+                return [...prev, item.path];
+              });
+            }}
+            items={[
+              {
+                title: '首页',
+                icon: 'ant-design:home',
+                path: '/',
+              },
+              {
+                title: '列表',
+                icon: 'ant-design:unordered-list',
+                path: '/list',
+                disabled: true,
+              },
+              {
+                title: '详情',
+                icon: 'ant-design:profile',
+                path: '/detail',
+                items: [
+                  {
+                    title: '详情1',
+                    icon: 'ant-design:profile',
+                    path: '/detail/1',
+                  },
+                  {
+                    title: '详情2',
+                    icon: 'ant-design:profile',
+                    path: '/detail/2',
+                  },
+                ],
+              },
+              {
+                title: '管理',
+                icon: 'ant-design:profile',
+                path: '/about',
+                items: [
+                  {
+                    title: '关于1',
+                    icon: 'ant-design:profile',
+                    path: '/about/1',
+                  },
+                  {
+                    title: '关于2',
+                    icon: 'ant-design:profile',
+                    path: '/about/2',
+                  },
+                ],
+              },
+            ]}
+          />
+        </div>
+
+        {/* <FairysNotificationListBase
           items={[
             {
               id: '1',
@@ -78,7 +149,7 @@ const MainIndex = () => {
         </div>
         <NavLink to="/">首页</NavLink>
         <NavLink to="/list">列表</NavLink>
-        <NavLink to="/detail">详情</NavLink>
+        <NavLink to="/detail">详情</NavLink> */}
       </FairysMainPageBody>
     </FairysMainPage>
   );
