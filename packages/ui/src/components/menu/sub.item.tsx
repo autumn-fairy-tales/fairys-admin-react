@@ -15,7 +15,7 @@ export interface FairysSubMenuItemProps {
 
 export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
   const { item, utilsItemOptions } = props;
-  const { items, className, style } = item;
+  const { items, className, style, type } = item;
   const [state, instance] = useFairysMenuInstanceContext();
   const openKeys = state.openKeys;
   const collapsedMode = state.collapsedMode;
@@ -26,7 +26,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
   const isOpen = useMemo(() => instance.isOpen(item.path), [item.path, openKeys]);
 
   const render = useMemo(() => {
-    return renderItems(items, { ...utilsItemOptions, popoverLevel: -1 });
+    return renderItems(items, utilsItemOptions);
   }, [items, utilsItemOptions]);
 
   const _class = useMemo(() => {

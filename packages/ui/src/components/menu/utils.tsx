@@ -8,12 +8,13 @@ import { FairysItemType } from './interface';
 export interface UtilsItemOptions {
   level?: number;
   parentPaths?: string;
-  /**弹出层内的层级(主要是 分组使用)*/
-  popoverLevel?: number;
+  /**父级的菜单类型*/
+  menuTypes?: FairysItemType['type'][];
+  currentType?: FairysItemType['type'];
 }
 
 export const renderItems = (items: FairysItemType[], options: UtilsItemOptions = {}) => {
-  const { level = 0, parentPaths = '0', popoverLevel = 0 } = options;
+  const { level = 0, parentPaths = '0', menuTypes = [] } = options;
   return items.map((item, index) => {
     if (item.type === 'divider') {
       return <FairysDividerMenuItem key={`${parentPaths}_${index}`} item={item} level={level + 1} />;
@@ -25,7 +26,8 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
           utilsItemOptions={{
             level: level + 1,
             parentPaths: `${parentPaths}_${index}`,
-            popoverLevel: popoverLevel + 1,
+            menuTypes: [...menuTypes].concat([item.type || 'group']),
+            currentType: 'group',
           }}
         />
       );
@@ -37,7 +39,8 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
           utilsItemOptions={{
             level: level + 1,
             parentPaths: `${parentPaths}_${index}`,
-            popoverLevel: popoverLevel + 1,
+            menuTypes: [...menuTypes].concat([item.type || 'subMenu']),
+            currentType: 'subMenu',
           }}
         />
       );
@@ -49,7 +52,8 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
           utilsItemOptions={{
             level: level + 1,
             parentPaths: `${parentPaths}_${index}`,
-            popoverLevel: popoverLevel + 1,
+            menuTypes: [...menuTypes].concat([item.type || 'item']),
+            currentType: 'item',
           }}
         />
       );

@@ -1,11 +1,11 @@
-import { forwardRef, Fragment, useMemo } from 'react';
+import { forwardRef, Fragment, useEffect, useMemo } from 'react';
 import { FairysMenuItemType } from './interface';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { FairysIcon } from 'components/icon';
-import { useFairysMenuInstanceContext } from './instance';
-import { useFloatingTree, FloatingTreeType, ReferenceType } from '@floating-ui/react';
+import { useFairysMenuInstanceContext, useFairysMenuItemInstance } from './instance';
 import { UtilsItemOptions } from './utils';
+import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
 
 export interface FairysMenuItemProps {
   item: FairysMenuItemType;
@@ -15,14 +15,14 @@ export interface FairysMenuItemProps {
 }
 
 const menuItemBaseClassName =
-  'fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:px-[14px] fairys:py-[8px] fairys:min-h-[36px]';
+  'fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:px-[14px] fairys:py-[8px] fairys:min-h-[36px] fairys:box-border';
 
 const titleTextClassName =
   'fairys-menu-item_title-text fairys:flex-1 fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap';
 
 export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React.LegacyRef<HTMLDivElement>) => {
   const { item, expandCollapse, isExpandCollapse, utilsItemOptions } = props;
-  const { level = 0, popoverLevel } = utilsItemOptions || {};
+  const { level: _level = 0, currentType } = utilsItemOptions || {};
   const { className, style, iconProps, icon, extra, disabled, type } = item;
 
   const [state, instance] = useFairysMenuInstanceContext();
@@ -31,9 +31,45 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
 
   const floatingTree = useFloatingTree();
   // 选中项
-  const isActive = useMemo(() => instance.isActive(item.path), [item.path, selectedKey]);
+  const _isActive = useMemo(() => instance.isActive(item.path), [item.path, selectedKey]);
+  let isActive = _isActive;
+
+  /**判断菜单是否折叠选中*/
+  const isCollapsedCheck = useMemo(() => instance.isCollapsed(item.path), [item.path, selectedKey]);
+
   /**判断菜单是否缩放*/
   const _isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+  let level = _level;
+  const collapsedLevel = useMemo(
+    () => [...utilsItemOptions.menuTypes].reverse().findIndex((type) => type === 'subMenu'),
+    [utilsItemOptions.menuTypes],
+  );
+
+  /**折叠模式下 第一层 submenu 菜单展示选中项*/
+  if (level === 0 && _isCollapsed) {
+    isActive = _isActive || isCollapsedCheck;
+  }
+
+  // 折叠模式下计算缩进距离
+  if (collapsedLevel === -1 && _isCollapsed) {
+    level = 0;
+  }
+
+  const menuItemInstance = useFairysMenuItemInstance();
+  menuItemInstance.item = item;
+  menuItemInstance.isActive = isActive;
+
+  useEffect(() => {
+    const onMount = instance.register(menuItemInstance);
+    return () => onMount();
+  }, [menuItemInstance]);
+
+  // 跳转后滚动到当前tab
+  useEffect(() => {
+    if (!!isActive && menuItemInstance.dom.current) {
+      menuItemInstance.scrollIntoView();
+    }
+  }, [isActive, menuItemInstance.dom]);
 
   /**最顶层才生效*/
   const isCollapsed = _isCollapsed && level === 0;
@@ -68,15 +104,22 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   }, [level, isCollapsed, disabled]);
 
   const _styleBody = useMemo(() => {
+    if (level === 0) {
+      return {};
+    }
     if (_isCollapsed) {
+      // 折叠模式下计算缩进距离
+      if (collapsedLevel === -1) {
+        return {};
+      }
       return {
-        paddingLeft: `${popoverLevel * 20}px`,
+        paddingLeft: `${(collapsedLevel - 1) * 20}px`,
       };
     }
     return {
       paddingLeft: `${level * 20}px`,
     };
-  }, [level, _isCollapsed, popoverLevel]);
+  }, [level, _isCollapsed, collapsedLevel]);
 
   const _classExtra = useMemo(() => {
     return clsx('fairys-menu-item_extra', {
@@ -103,12 +146,14 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     }
   };
 
+  const mergeRef = useMergeRefs([menuItemInstance.dom, ref] as any[]);
+  //
   return (
-    <motion.div title={item.title} style={style} className={_class} onClick={onClick} ref={ref}>
+    <motion.div title={item.title} style={style} className={_class} onClick={onClick} ref={mergeRef}>
       {!!isActive ? (
         <motion.div
           className="fairys:rounded-sm w-full h-full fairys:absolute fairys:top-0 fairys:left-0"
-          layoutId="fairys-menu-item-selected"
+          layoutId={`fairys-menu-${currentType}-selected`}
           initial={{ backgroundColor: 'var(--fairys-theme-color)' }}
           animate={{ backgroundColor: 'var(--fairys-theme-color)' }}
           transition={{ duration: 0.3 }}

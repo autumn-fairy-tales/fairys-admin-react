@@ -207,7 +207,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
 
   return (
     <motion.div className="fairys_admin_menu_item_warp fairys:relative fairys:shrink-0">
-      {!!isActive ? (
+      {/* {!!isActive ? (
         <motion.div
           className="fairys:rounded-sm w-full h-full fairys:absolute fairys:top-0 fairys:left-0"
           layoutId="menu-selected"
@@ -217,7 +217,7 @@ export const MenuItem = forwardRef((props: MenuItemProps, ref: Ref<HTMLDivElemen
         />
       ) : (
         <Fragment />
-      )}
+      )} */}
       <div
         {...rest}
         ref={mergeRef}

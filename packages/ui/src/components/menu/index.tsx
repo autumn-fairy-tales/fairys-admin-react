@@ -15,13 +15,14 @@
  * 13. 自动滚动到选中菜单(单选菜单)
  * 14. 支持多选菜单
  */
-import { forwardRef, useMemo } from 'react';
+import { forwardRef, useEffect, useMemo } from 'react';
 import { FairysMenuProps } from './interface';
 import { useFairysMenuInstance, FairysMenuInstanceContext } from './instance';
 import { renderItems } from './utils';
 import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { FairysPopoverBaseFloatingTreeParent } from 'components/popover-base';
+import { useMergeRefs } from '@floating-ui/react';
 
 export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyRef<HTMLDivElement>) => {
   const {
@@ -48,12 +49,19 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
   instance.onClickItem = onClickItem;
   instance.onClickSubItem = onClickSubItem;
 
+  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+
   const _class = useMemo(() => {
-    return clsx('fairys-menu fairys:flex', {
-      'fairys:flex-col fairys:gap-y-[1px]': mode === 'vertical',
-      'fairys:flex-row fairys:gap-x-[1px]': mode === 'horizontal',
-    });
-  }, []);
+    return clsx(
+      'fairys-menu fairys:transition-all fairys:duration-300 fairys:flex fairys:p-[8px] fairys:overflow-auto fairys:h-full no-scrollbar fairys:box-border',
+      {
+        'fairys:flex-col fairys:gap-y-[2px]': mode === 'vertical',
+        'fairys:flex-row fairys:gap-x-[2px]': mode === 'horizontal',
+        'fairys:max-w-[220px]': !isCollapsed && mode === 'vertical',
+        'fairys:max-w-[80px]': isCollapsed && mode === 'vertical',
+      },
+    );
+  }, [mode, isCollapsed]);
 
   useMemo(() => instance.processMenuItems(items), [items]);
   useMemo(() => (instance.state.mode = mode), [mode]);
@@ -80,10 +88,17 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
     return renderItems(items, { level: -1 });
   }, [items]);
 
+  useEffect(() => {
+    const unMount = instance.addEventListener();
+    return () => unMount();
+  }, [instance.dom]);
+
+  const mergeRef = useMergeRefs([instance.dom, ref] as any[]);
+
   return (
     <FairysPopoverBaseFloatingTreeParent>
       <FairysMenuInstanceContext.Provider value={instance}>
-        <motion.div ref={ref} className={_class}>
+        <motion.div ref={mergeRef} className={_class}>
           {render}
         </motion.div>
       </FairysMenuInstanceContext.Provider>

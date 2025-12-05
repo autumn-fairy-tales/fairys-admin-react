@@ -315,6 +315,7 @@ export class MenuInstance {
       this.menuItems = this.menuItems.filter((it) => it !== item);
     };
   };
+
   /**监听节点尺寸变化 回调方法*/
   private resizeObserverCallback = () => {
     // 需要把当前tab项移入可视区
