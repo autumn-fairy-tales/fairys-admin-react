@@ -20,6 +20,7 @@ export const FairysGroupMenuItem = (props: FairysGroupMenuItemProps) => {
 
   /**判断菜单是否缩放*/
   const _isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+
   const collapsedLevel = useMemo(
     () => [...utilsItemOptions.menuTypes].reverse().findIndex((type) => type === 'subMenu'),
     [utilsItemOptions.menuTypes],
@@ -39,13 +40,16 @@ export const FairysGroupMenuItem = (props: FairysGroupMenuItemProps) => {
       'fairys:flex-row fairys:gap-x-[2px]': mode === 'horizontal' && collapsedLevel === -1,
     });
   }, [mode, collapsedLevel]);
+  // 横向的不显示分组，和折叠一样
 
   return (
     <motion.div style={style} className={_class}>
-      {!_isCollapsed || collapsedLevel !== -1 ? (
-        <FairysMenuItem item={item} utilsItemOptions={utilsItemOptions} />
-      ) : (
+      {mode === 'horizontal' ? (
         <Fragment />
+      ) : _isCollapsed ? (
+        <Fragment />
+      ) : (
+        <FairysMenuItem item={item} utilsItemOptions={utilsItemOptions} />
       )}
       <div className={_classBody}>{render}</div>
     </motion.div>

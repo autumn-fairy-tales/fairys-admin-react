@@ -42,17 +42,15 @@ const MainIndex = () => {
         <div>
           {/* <div style={{ width: 200, height: 200, overflow: 'hidden' }}> */}
           <FairysMenu
-            // collapsedMode='icon'
-            // selectedKey={selectedKey}
-            // openKeys={openKeys}
-            // mode='horizontal'
-            // collapsedMode="inline"
+            // size='small'
             selectedKey={selectedKey}
+            openKeys={openKeys}
+            mode="horizontal"
+            collapsedMode="inline"
             onClickItem={(item, event, instance) => {
               updateSelectedKey(item.path);
             }}
             onClickSubItem={(item) => {
-              console.log(item);
               updateOpenKeys((prev) => {
                 const finx = prev.includes(item.path);
                 if (finx) {

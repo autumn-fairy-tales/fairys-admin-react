@@ -176,14 +176,13 @@ export class FairysMenuInstance {
   ) => void = () => void 0;
 
   public _onClickItem: FairysMenuInstance['onClickItem'] = (rowItem, event, instance) => {
-    this.onClickItem?.(rowItem, event, instance);
     if (!this.isSelectedKeyField) {
       this.state.selectedKey = rowItem.path;
     }
+    this.onClickItem?.(rowItem, event, instance);
   };
 
   public _onClickSubItem: FairysMenuInstance['onClickSubItem'] = (item, event, instance) => {
-    this.onClickSubItem?.(item, event, instance);
     if (!this.isOpenKeysField) {
       const isOpen = this.isOpen(item.path);
       if (isOpen) {
@@ -203,6 +202,7 @@ export class FairysMenuInstance {
         }
       }
     }
+    this.onClickSubItem?.(item, event, instance);
   };
 
   state = proxy<FairysMenuInstanceState>({

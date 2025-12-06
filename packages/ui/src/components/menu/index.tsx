@@ -35,6 +35,8 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
     onClickItem,
     onClickSubItem,
     isOnlyParentOpenKeys = false,
+    disabledShowChildItem = false,
+    size = 'default',
   } = props;
   const propsKeys = Object.keys(props);
   const isOpenKeysField = propsKeys.includes('openKeys');
@@ -65,6 +67,8 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
 
   useMemo(() => instance.processMenuItems(items), [items]);
   useMemo(() => (instance.state.mode = mode), [mode]);
+  useMemo(() => (instance.state.disabledShowChildItem = disabledShowChildItem), [disabledShowChildItem]);
+  useMemo(() => (instance.state.size = size), [size]);
   useMemo(() => (instance.state.collapsedMode = collapsedMode), [collapsedMode]);
   useMemo(() => {
     if (isSelectedKeyField) {

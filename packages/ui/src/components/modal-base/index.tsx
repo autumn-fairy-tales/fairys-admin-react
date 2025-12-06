@@ -1,5 +1,5 @@
 import { FloatingPortal } from '@floating-ui/react';
-import { Fragment } from 'react';
+import { Fragment, useMemo } from 'react';
 import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAnimationStatus } from '../utils';
@@ -11,6 +11,7 @@ import {
   overlay_className,
   transitionBase,
   fullScreen_base_className,
+  base_drawer_variants,
 } from './utils';
 import { UtilsColor } from 'utils/utils.color';
 
@@ -48,10 +49,16 @@ export interface FairysModalBaseProps {
   children?: React.ReactNode;
   /**模式 */
   mode?: 'modal' | 'drawer';
+  /**抽屉方向 */
+  drawerDirection?: 'right' | 'left' | 'top' | 'bottom';
   /**是否全屏*/
   isFullScreen?: boolean;
   /**点击 overlay 关闭弹窗 */
   outsidePressClose?: boolean;
+  /**宽度 */
+  width?: number;
+  /**高度 */
+  height?: number;
 }
 
 export const FairysModalBase = (props: FairysModalBaseProps) => {
@@ -75,8 +82,33 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
     mode = 'modal',
     isFullScreen,
     outsidePressClose = true,
+    drawerDirection = 'right',
+    width,
+    height,
   } = props;
   const { show, onAnimationComplete } = useAnimationStatus(open);
+
+  const _clsxDrawerDirection = useMemo(() => {
+    if (mode === 'drawer') {
+      return clsx('fairys:flex fairys:flex-row no-scrollbar fairys:overflow-hidden', {
+        'fairys:justify-end': drawerDirection === 'right',
+        'fairys:justify-start': drawerDirection === 'left',
+        'fairys:items-end': drawerDirection === 'bottom',
+        'fairys:items-start': drawerDirection === 'top',
+      });
+    }
+    return '';
+  }, [drawerDirection, mode]);
+
+  const _clsxBaseDrawerDirection = useMemo(() => {
+    if (mode === 'drawer') {
+      return clsx({
+        'fairys:min-w-[400px] fairys:min-h-[100vh]': drawerDirection === 'right' || drawerDirection === 'left',
+        'fairys:min-h-[400px] fairys:min-w-[100vw]': drawerDirection === 'bottom' || drawerDirection === 'top',
+      });
+    }
+    return '';
+  }, [drawerDirection, mode]);
 
   if (!show) {
     return <Fragment />;
@@ -86,13 +118,14 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
   const baseClassName = base_className[mode] || base_className.modal;
   const overlayVariants = overlay_variants[mode] || overlay_variants.modal;
   const baseVariants = base_variants[mode] || base_variants.modal;
+  const drawerVariants = base_drawer_variants[drawerDirection] || base_drawer_variants.right;
 
   return (
     <FloatingPortal>
       <AnimatePresence mode="wait">
         <DarkModeInstancePopoverContextProvider>
           <motion.div
-            className={overlayClassName}
+            className={`${overlayClassName} ${_clsxDrawerDirection}`}
             initial="collapsed"
             animate={open ? 'open' : 'collapsed'}
             variants={overlayVariants}
@@ -106,11 +139,13 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
             }}
           >
             <motion.div
-              className={`${baseClassName} ${isFullScreen ? fullScreen_base_className : ''} ${className}`}
-              style={style}
+              className={`${baseClassName} ${_clsxBaseDrawerDirection}  ${
+                isFullScreen ? fullScreen_base_className : ''
+              } ${className}`}
+              style={{ ...style, width, height }}
               initial="collapsed"
               animate={open ? 'open' : 'collapsed'}
-              variants={baseVariants}
+              variants={mode === 'drawer' ? drawerVariants : baseVariants}
               transition={transitionBase}
               onAnimationComplete={onAnimationComplete}
             >

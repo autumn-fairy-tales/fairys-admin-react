@@ -20,6 +20,8 @@ export interface FairysSubMenuItemBaseType {
   style?: React.CSSProperties;
   /**菜单类名*/
   className?: string;
+  /**自定义属性*/
+  [key: string]: any;
 }
 
 export interface FairysMenuItemType extends FairysSubMenuItemBaseType {
@@ -62,7 +64,7 @@ export interface FairysMenuInstanceState {
   /**子菜单数据*/
   items?: FairysItemType[];
   /**
-   * 是否内联折叠子菜单，子菜单移入或者点击显示
+   * 菜单缩小模式，子菜单移入或者点击显示
    *
    * inline: 显示图标和标题
    * icon: 只显示图标
@@ -70,7 +72,8 @@ export interface FairysMenuInstanceState {
   collapsedMode?: 'inline' | 'icon';
   /**禁用移入点击显示子菜单*/
   disabledShowChildItem?: boolean;
-
+  /**菜单大小*/
+  size?: 'small' | 'default';
   /**默认字段不进行使用*/
   __defaultValue?: string;
 }

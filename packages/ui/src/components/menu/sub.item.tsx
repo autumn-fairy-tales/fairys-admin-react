@@ -15,12 +15,15 @@ export interface FairysSubMenuItemProps {
 
 export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
   const { item, utilsItemOptions } = props;
-  const { items, className, style, type } = item;
+  const { items, className, style } = item;
   const [state, instance] = useFairysMenuInstanceContext();
   const openKeys = state.openKeys;
   const collapsedMode = state.collapsedMode;
+  const disabledShowChildItem = state.disabledShowChildItem;
+  const mode = state.mode;
+
   /**判断菜单是否缩放*/
-  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline' || mode === 'horizontal';
 
   const [open, setOpen] = useState(false);
   const isOpen = useMemo(() => instance.isOpen(item.path), [item.path, openKeys]);
@@ -33,6 +36,18 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
     return clsx('fairys-sub-menu-item fairys:shrink-0 fairys:gap-y-[2px]', className);
   }, [className]);
 
+  if (disabledShowChildItem) {
+    return (
+      <motion.div style={style} className={_class}>
+        <FairysMenuItem
+          item={item}
+          isExpandCollapse
+          expandCollapse={isCollapsed ? open : isOpen}
+          utilsItemOptions={utilsItemOptions}
+        />
+      </motion.div>
+    );
+  }
   if (isCollapsed) {
     return (
       <FairysPopoverBase
@@ -47,12 +62,14 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
         placement="right-start"
         isNotMinWidth
       >
-        <FairysMenuItem
-          item={item}
-          isExpandCollapse
-          expandCollapse={isCollapsed ? open : isOpen}
-          utilsItemOptions={utilsItemOptions}
-        />
+        <motion.div style={style} className={_class}>
+          <FairysMenuItem
+            item={item}
+            isExpandCollapse
+            expandCollapse={isCollapsed ? open : isOpen}
+            utilsItemOptions={utilsItemOptions}
+          />
+        </motion.div>
       </FairysPopoverBase>
     );
   }

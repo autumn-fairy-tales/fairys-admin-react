@@ -34,12 +34,12 @@ export interface FairysModalBaseProps {
 export const overlay_className = {
   modal: `fairys_admin_modal_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-col fairys:items-center no-scrollbar fairys:justify-around fairys:overflow-hidden`,
   drawer:
-    'fairys_admin_drawer_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-row fairys:justify-end no-scrollbar fairys:overflow-hidden',
+    'fairys_admin_drawer_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-row no-scrollbar fairys:overflow-hidden',
 };
 
 export const base_className = {
   modal: `fairys_admin_modal_base fairys:min-w-[400px] fairys:min-h-[200px] fairys:rounded-lg fairys:bg-white fairys:dark:bg-gray-800! fairys:border  fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[calc(100vh-100px)] fairys:overflow-hidden fairys:max-w-[100vw] ${UtilsColor.popoverBorderClassNameBase}`,
-  drawer: `fairys_admin_drawer_base_drawer fairys:min-w-[400px] fairys:min-h-[100vh] fairys:rounded-l-lg fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:overflow-hidden  ${UtilsColor.popoverBorderClassNameBase}`,
+  drawer: `fairys_admin_drawer_base_drawer fairys:rounded-l-lg fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:max-w-[100vw] fairys:overflow-hidden  ${UtilsColor.popoverBorderClassNameBase}`,
 };
 
 export const fullScreen_base_className = 'fairys:min-w-[100vw]! fairys:min-h-[100vh]! fairys:p-0!';
@@ -84,5 +84,24 @@ export const base_variants = {
   drawer: {
     open: { clipPath: 'inset(0% 0% 0% 0% round var(--radius-sm))' },
     collapsed: { clipPath: 'inset(0% 0% 100% 100% round var(--radius-sm))' },
+  },
+};
+
+export const base_drawer_variants = {
+  right: {
+    open: { clipPath: 'inset(0% 0% 0% 0% round var(--radius-sm))' },
+    collapsed: { clipPath: 'inset(0% 0% 100% 100% round var(--radius-sm))' },
+  },
+  left: {
+    open: { clipPath: 'inset(0% 0% 0% 0% round var(--radius-sm))' },
+    collapsed: { clipPath: 'inset(0% 100% 100% 0% round var(--radius-sm))' },
+  },
+  top: {
+    open: { clipPath: 'inset(0% 0% 0% 0% round var(--radius-sm))' },
+    collapsed: { clipPath: 'inset(0% 0% 100% 0% round var(--radius-sm))' },
+  },
+  bottom: {
+    open: { clipPath: 'inset(0% 0% 0% 0% round var(--radius-sm))' },
+    collapsed: { clipPath: 'inset(0% 100% 0% 0% round var(--radius-sm))' },
   },
 };
