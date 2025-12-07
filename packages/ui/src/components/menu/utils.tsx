@@ -17,8 +17,16 @@ export interface UtilsItemOptions {
   countGroupMenu?: number;
   /**当前菜单的分组层级(在弹框中使用)*/
   groupLevel?: number;
-  /**弹框个数*/
-  popupLevel?: number;
+  /**
+   * 组菜单层级  firstGroupMode === 'click' 或 'hover' ，层级数据
+   */
+  groupModeClickOrHoverLevel?: number;
+  /**
+   * subMenu 下 组层级
+   */
+  subMenuGroupLevel?: number;
+  /**移除 组菜单后，菜单层级*/
+  removeGroupMenuLevel?: number;
 }
 
 export const renderItems = (items: FairysItemType[], options: UtilsItemOptions = {}) => {
@@ -29,10 +37,11 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
     countSubMenu = 0,
     countGroupMenu = 0,
     groupLevel = -1,
-    popupLevel = -1,
+    groupModeClickOrHoverLevel = -1,
+    subMenuGroupLevel = -1,
+    removeGroupMenuLevel = 0,
   } = options;
   return items.map((item, index) => {
-    // console.log('item', item, options);
     if (item.type === 'divider') {
       return <FairysDividerMenuItem key={`${parentPaths}_${index}`} item={item} level={level + 1} />;
     } else if (item.type === 'group') {
@@ -48,7 +57,9 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
             countGroupMenu: countGroupMenu + 1,
             countSubMenu,
             groupLevel: groupLevel + 1,
-            popupLevel: popupLevel + 1,
+            removeGroupMenuLevel: removeGroupMenuLevel,
+            groupModeClickOrHoverLevel: groupModeClickOrHoverLevel + 1,
+            subMenuGroupLevel: subMenuGroupLevel,
           }}
         />
       );
@@ -65,7 +76,9 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
             countGroupMenu,
             countSubMenu: countSubMenu + 1,
             groupLevel: groupLevel,
-            popupLevel: popupLevel + 1,
+            removeGroupMenuLevel: removeGroupMenuLevel + 1,
+            groupModeClickOrHoverLevel: groupModeClickOrHoverLevel + 1,
+            subMenuGroupLevel: subMenuGroupLevel + 1,
           }}
         />
       );
@@ -82,7 +95,9 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
             countGroupMenu,
             countSubMenu,
             groupLevel,
-            popupLevel,
+            removeGroupMenuLevel,
+            groupModeClickOrHoverLevel,
+            subMenuGroupLevel,
           }}
         />
       );
