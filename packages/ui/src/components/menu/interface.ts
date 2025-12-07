@@ -64,34 +64,33 @@ export interface FairysMenuInstanceState {
    */
   mode?: 'horizontal' | 'vertical';
   /**
-   * 菜单项模式
-   */
-  menuItemMode?: 'horizontal' | 'vertical';
-  /**
-   * 分组菜单模式
+   * 分组菜单模式(第一层使用)
    * click: 点击分组菜单展开子菜单
    * hover: 鼠标移入分组菜单展开子菜单
+   * onlyGroup: 只显示分组菜单，子菜单不进行任何操作
    * none: 不做任何处理，直接展开，（相当于 subMenu 菜单直接展开，不可折叠和收起）
    * @default 'none'
    */
-  groupMode?: 'click' | 'hover' | 'none';
+  firstGroupMode?: 'click' | 'hover' | 'onlyGroup' | 'none';
   /**菜单大小*/
   size?: 'small' | 'default' | 'large';
   /**第一层菜单大小*/
   firstLevelSize?: 'small' | 'default' | 'large';
-
   /**最大宽度*/
   maxWidth?: number;
   /**选中菜单类名前缀*/
   activeMotionPrefixCls?: string;
-  /**禁用移入点击显示子菜单*/
-  disabledShowChildItem?: boolean;
+  /**是否收起菜单*/
+  collapsed?: boolean;
   /**
-   * 菜单缩小模式，子菜单移入或者点击显示
+   * 收起菜单，第一层菜单 显示 图标+标题 还是 只显示图标
    * icon: 只显示图标
    * vertical: 垂直显示图标和标题
+   * @default 'vertical'
    */
   collapsedMode?: 'icon' | 'vertical';
+  /**禁用移入点击显示子菜单*/
+  disabledShowChildItem?: boolean;
   /**默认字段不进行使用*/
   __defaultValue?: string;
 }
@@ -109,6 +108,12 @@ export interface FairysMenuProps extends Omit<FairysMenuInstanceState, '__defaul
   ) => void;
   /**点击sub菜单项事件*/
   onClickSubItem?: (
+    item: FairysMenuItemType,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    instance: FairysMenuInstance,
+  ) => void;
+  /**点击分组菜单项事件*/
+  onClickGroupItem?: (
     item: FairysMenuItemType,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     instance: FairysMenuInstance,

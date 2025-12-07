@@ -44,9 +44,12 @@ const MainIndex = () => {
           <FairysMenu
             // size='small'
             selectedKey={selectedKey}
-            openKeys={openKeys}
-            mode="horizontal"
-            collapsedMode="vertical"
+            // openKeys={openKeys}
+            // mode="horizontal"
+            // collapsedMode="vertical"
+            collapsed
+            // firstGroupMode='hover'
+            // firstGroupMode='hover'
             onClickItem={(item, event, instance) => {
               updateSelectedKey(item.path);
             }}
@@ -143,11 +146,11 @@ const MainIndex = () => {
                   },
                 ],
               },
-
               {
                 type: 'group',
                 path: '/group/4',
                 title: '分组',
+                icon: 'ant-design:home',
                 items: [
                   {
                     title: '分组1',

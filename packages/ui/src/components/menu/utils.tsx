@@ -20,7 +20,7 @@ export const renderItems = (items: FairysItemType[], options: UtilsItemOptions =
       return <FairysDividerMenuItem key={`${parentPaths}_${index}`} item={item} level={level + 1} />;
     } else if (item.type === 'group') {
       return (
-        <FairysGroupMenuItem
+        <FairysSubMenuItem
           key={item.path}
           item={item}
           utilsItemOptions={{

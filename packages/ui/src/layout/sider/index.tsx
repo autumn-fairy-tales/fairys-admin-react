@@ -45,7 +45,7 @@ const LayoutSubSider = () => {
       UtilsColor.otherBorderClassNameBase,
       'fairys:transition-all fairys:duration-300 fairys:dark:text-gray-400 fairys:overflow-hidden',
       {
-        'fairys:w-[60px]': sideMenuMode === 'close',
+        'fairys:w-[80px]': sideMenuMode === 'close',
         'fairys:w-[220px]': sideMenuMode !== 'close',
       },
     );

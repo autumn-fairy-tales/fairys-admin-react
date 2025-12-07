@@ -177,6 +177,12 @@ export class FairysMenuInstance {
     instance: FairysMenuInstance,
   ) => void = () => void 0;
 
+  public onClickGroupItem: (
+    item: FairysMenuItemType,
+    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
+    instance: FairysMenuInstance,
+  ) => void = () => void 0;
+
   public _onClickItem: FairysMenuInstance['onClickItem'] = (rowItem, event, instance) => {
     if (!this.isSelectedKeyField) {
       this.state.selectedKey = rowItem.path;

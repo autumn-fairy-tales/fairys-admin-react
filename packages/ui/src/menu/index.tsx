@@ -1,16 +1,18 @@
 import { menuDataInstance, MenuItemType, useMenuDataInstance } from 'context/menu-data';
 import { useSettingDataInstance } from 'context/setting';
-import { FairysMenu } from 'components/menu';
+import { FairysMenu, FairysMenuProps } from 'components/menu';
 import { useLocation } from 'react-router';
 import { routerDataInstance } from 'context/router-data';
 import { tabBarDataInstance } from 'context/tab-bar';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 
 export const Menu = () => {
   const [state] = useMenuDataInstance();
   const menuItems = state.menuItems;
+  const _menuItems = menuDataInstance._menuItems || [];
   const [settingState] = useSettingDataInstance();
   const sideMenuMode = settingState.sideMenuMode;
+  const layoutMode = settingState.layoutMode;
   const location = useLocation();
 
   const onClickItem = useCallback(
@@ -42,9 +44,10 @@ export const Menu = () => {
 
   return (
     <FairysMenu
-      items={menuItems}
+      items={layoutMode === 'left' ? _menuItems : menuItems}
       activeMotionPrefixCls="fairys-menu-item-active"
-      collapsedMode={sideMenuMode === 'close' ? 'icon' : undefined}
+      collapsed={sideMenuMode === 'close' ? true : undefined}
+      firstLevelSize={sideMenuMode === 'close' ? 'large' : 'default'}
       isOnlyParentOpenKeys
       selectedKey={location.pathname}
       onClickItem={onClickItem}

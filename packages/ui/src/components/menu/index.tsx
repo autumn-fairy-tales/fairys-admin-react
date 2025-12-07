@@ -37,13 +37,16 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
     openKeys,
     onClickItem,
     onClickSubItem,
+    onClickGroupItem,
     isOnlyParentOpenKeys = false,
-    disabledShowChildItem = false,
     size = 'default',
     activeMotionPrefixCls,
     firstLevelSize = 'default',
     maxWidth,
+    firstGroupMode,
+    collapsed,
   } = props;
+
   const propsKeys = Object.keys(props);
   const isOpenKeysField = propsKeys.includes('openKeys');
   const isSelectedKeyField = propsKeys.includes('selectedKey');
@@ -56,8 +59,7 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
 
   instance.onClickItem = onClickItem;
   instance.onClickSubItem = onClickSubItem;
-
-  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'vertical';
+  instance.onClickGroupItem = onClickGroupItem;
 
   const _class = useMemo(() => {
     return clsx(
@@ -65,23 +67,23 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
       {
         'fairys:flex-col fairys:gap-y-2': mode === 'vertical',
         'fairys:flex-row fairys:gap-x-2': mode === 'horizontal',
-        'fairys:max-w-[220px]': !isCollapsed && mode === 'vertical',
-        'fairys:max-w-[80px]': isCollapsed && mode === 'vertical',
-        'fairys:p-[8px]': size !== 'small',
+        'fairys:max-w-[220px]': !collapsed && mode === 'vertical',
+        'fairys:max-w-[80px]': collapsed && mode === 'vertical',
+        'fairys:p-[8px]': size !== 'small' && firstLevelSize !== 'small',
       },
       className,
     );
-  }, [mode, isCollapsed, size, className]);
+  }, [mode, collapsed, size, className]);
 
   useMemo(() => instance.processMenuItems(items), [items]);
   useMemo(() => instance.setActiveMotionPrefixCls(activeMotionPrefixCls), [activeMotionPrefixCls]);
   useMemo(() => (instance.state.mode = mode), [mode]);
+  useMemo(() => (instance.state.firstGroupMode = firstGroupMode), [firstGroupMode]);
+  useMemo(() => (instance.state.collapsed = collapsed), [collapsed]);
   useMemo(() => (instance.state.maxWidth = maxWidth), [maxWidth]);
-  useMemo(() => (instance.state.disabledShowChildItem = disabledShowChildItem), [disabledShowChildItem]);
   useMemo(() => (instance.state.size = size), [size]);
   useMemo(() => (instance.state.firstLevelSize = firstLevelSize), [firstLevelSize]);
   useMemo(() => (instance.state.collapsedMode = collapsedMode), [collapsedMode]);
-
   // 当 selectedKey 传递时，根据 selectedKey 更新 selectedKey
   useMemo(() => {
     if (isSelectedKeyField) {

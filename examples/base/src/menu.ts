@@ -6,6 +6,7 @@ export const menuItems: MenuItemType[] = [
     path: 'main-menu',
     isMain: true,
     icon: 'ant-design:home-outlined',
+    type: 'group',
     items: [
       {
         title: '首页',
@@ -139,6 +140,7 @@ export const menuItems: MenuItemType[] = [
     path: 'main-menu2',
     isMain: true,
     icon: 'ant-design:home-outlined',
+    type: 'group',
     left_isMainShow: true,
     items: [
       {

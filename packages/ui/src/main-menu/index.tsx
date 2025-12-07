@@ -5,14 +5,10 @@
 import clsx from 'clsx';
 import { useMemo, Fragment, useCallback } from 'react';
 import { useSettingDataInstance } from 'context/setting';
-import { useLocation } from 'react-router';
 import { useMenuDataInstance, MenuItemType, menuDataInstance } from 'context/menu-data';
-import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';
-import { FairysPopoverBase } from 'components/popover-base';
 import { LayoutMenuMobile } from 'layout/sider';
-import { FairysIcon, FairysIconPropsType } from 'components/icon';
 import { routerDataInstance, useAppPluginDataInstance, tabBarDataInstance } from 'context';
 import { FairysMenu } from 'components/menu';
 import type { FairysMenuProps } from 'components/menu';
@@ -20,106 +16,6 @@ import type { FairysMenuProps } from 'components/menu';
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
 }
-
-interface MainMenuItemProps extends MainMenuProps {
-  item: MenuItemType;
-}
-
-const MainMenuItem = (props: MainMenuItemProps) => {
-  const { item, layoutMode } = props;
-  const _className = item.className;
-  const location = useLocation();
-  const [state, menuInstance] = useMenuDataInstance();
-  const mainMenuItemSelected = state.mainMenuItemSelected;
-  const isActive = mainMenuItemSelected === item.path;
-  const [settingState] = useSettingDataInstance();
-  const layoutModeState = settingState.layoutMode;
-  const iconProps = item.iconProps as FairysIconPropsType;
-
-  const className = useMemo(() => {
-    return clsx(
-      'fairys_admin_main_menu_item fairys:px-[8px] fairys:py-[4px] fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm  fairys:flex fairys:items-center fairys:cursor-pointer fairys:gap-1 fairys:dark:text-gray-400',
-      _className,
-      {
-        active: isActive,
-        'fairys:bg-(--fairys-theme-color)': !!isActive,
-        'fairys:text-white fairys:dark:text-white': isActive,
-        'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive,
-        'fairys:flex-col ': layoutMode === 'vertical',
-        'fairys:flex-row': layoutMode === 'horizontal',
-      },
-    );
-  }, [isActive, layoutMode, _className]);
-
-  const onClickMainMenuItem = useCallback(async () => {
-    // 打开浏览器新窗口
-    if (item.isOpenNewWindow) {
-      window.open(item.path, '_blank');
-      return;
-    }
-    if (typeof item.onBeforeNavigate === 'function') {
-      const isBool = await item.onBeforeNavigate(item);
-      // 如果为 false 不进行跳转
-      if (!isBool) {
-        return;
-      }
-    }
-    if (typeof menuInstance.onBeforeNavigate === 'function') {
-      const isBool = await menuInstance.onBeforeNavigate(item);
-      // 如果为 false 不进行跳转
-      if (!isBool) {
-        return;
-      }
-    }
-    menuInstance.updateMainExpandItem(item);
-    if (!isActive) {
-      menuDataInstance.onExpandItems(location.pathname);
-      menuInstance.onMainMenu(item.path);
-    }
-  }, [item, isActive, location, menuDataInstance, menuInstance]);
-
-  const iconClassName = useMemo(() => {
-    return clsx('', {
-      'fairys:size-[20px]': layoutMode === 'horizontal',
-      'fairys:size-[26px]': layoutMode === 'vertical',
-    });
-  }, [layoutMode]);
-
-  const render = useMemo(() => {
-    return (
-      <div className={className} onClick={onClickMainMenuItem} title={item.title}>
-        {item.icon ? (
-          <span className={iconClassName}>
-            <FairysIcon className={iconClassName} icon={item.icon} iconProps={iconProps} />
-          </span>
-        ) : (
-          <Fragment />
-        )}
-        <div>{item.title}</div>
-      </div>
-    );
-  }, [className, iconClassName, item, onClickMainMenuItem]);
-
-  if (['main_top_header', 'main_left'].includes(layoutModeState)) {
-    return (
-      <FairysPopoverBase
-        className="fairys_admin_main_menu_popover"
-        content={<Menu />}
-        // eventName="hover"
-        placement={layoutMode === 'vertical' ? 'right-start' : 'bottom-start'}
-        isNotMinWidth
-        onOpenChange={(open) => {
-          if (open) {
-            onClickMainMenuItem();
-          }
-        }}
-      >
-        {render}
-      </FairysPopoverBase>
-    );
-  }
-  return render;
-};
 
 const MainMenuItems = (props: MainMenuProps) => {
   const { layoutMode } = props;
@@ -162,7 +58,6 @@ const MainMenuItems = (props: MainMenuProps) => {
         window.open(item.path, '_blank');
         return;
       }
-
       if (typeof item.onBeforeNavigate === 'function') {
         const isBool = await item.onBeforeNavigate(item);
         // 如果为 false 不进行跳转
@@ -183,19 +78,34 @@ const MainMenuItems = (props: MainMenuProps) => {
   );
 
   const propsConfig: FairysMenuProps = useMemo(() => {
-    if (['main_sub_left', 'main_left'].includes(layoutModeState)) {
+    if (layoutModeState === 'main_left') {
       return {
-        collapsedMode: 'vertical',
-        size: 'default',
-        disabledShowChildItem: layoutModeState !== 'main_left',
+        collapsed: true,
+        firstGroupMode: 'hover',
+        firstLevelSize: 'large',
+      };
+    } else if (layoutModeState === 'main_sub_left') {
+      return {
+        collapsed: true,
+        firstGroupMode: 'onlyGroup',
+        firstLevelSize: 'large',
+      };
+    } else if (layoutModeState === 'main_top_header') {
+      return {
+        mode: 'horizontal',
+        firstGroupMode: 'hover',
+        firstLevelSize: 'small',
       };
     }
-    return {
-      collapsedMode: undefined,
-      size: 'small',
-      disabledShowChildItem: true,
-    };
-  }, [layoutMode]);
+    if (layoutModeState === 'main_top_sub_left_header') {
+      return {
+        mode: 'horizontal',
+        firstGroupMode: 'onlyGroup',
+        firstLevelSize: 'small',
+      };
+    }
+    return {};
+  }, [layoutModeState]);
 
   return (
     <FairysMenu
@@ -206,6 +116,12 @@ const MainMenuItems = (props: MainMenuProps) => {
       mode={layoutMode}
       onClickItem={onClickItem}
       onClickSubItem={onClickSubItem}
+      onClickGroupItem={(item: MenuItemType) => {
+        if (layoutModeState === 'main_left') {
+          return;
+        }
+        onClickSubItem(item);
+      }}
       maxWidth={220}
     />
   );
@@ -235,7 +151,7 @@ export const MainMenu = (props: MainMenuProps) => {
 
   const mainMenuBodyClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_main_menu_body fairys:flex-1 fairys:w-full fairys:overflow-hidden fairys:flex fairys:gap-2 fairys:items-center  fairys:py-[8px]',
+      'fairys_admin_main_menu_body fairys:flex-1 fairys:w-full fairys:overflow-hidden fairys:flex fairys:gap-2 fairys:items-center fairys:py-[8px]',
       {
         'fairys:flex-col ': layoutMode === 'vertical',
         'fairys:flex-row': layoutMode === 'horizontal',
