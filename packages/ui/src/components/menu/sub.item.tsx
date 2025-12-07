@@ -18,14 +18,10 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
   const { items, className, style, type } = item;
   const [state, instance] = useFairysMenuInstanceContext();
   const openKeys = state.openKeys;
-  const collapsedMode = state.collapsedMode;
-  // const disabledShowChildItem = state.disabledShowChildItem;
   const mode = state.mode;
   const maxWidth = state.maxWidth;
-
   const [open, setOpen] = useState(false);
   const isOpen = useMemo(() => instance.isOpen(item.path), [item.path, openKeys]);
-
   const render = useMemo(() => {
     return renderItems(items, utilsItemOptions);
   }, [items, utilsItemOptions]);
@@ -38,13 +34,6 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
     );
   }, [className]);
 
-  // if (disabledShowChildItem) {
-  //   return (
-  //     <motion.div style={style} className={_class}>
-  //       <FairysMenuItem item={item} utilsItemOptions={utilsItemOptions} isExpandCollapse />
-  //     </motion.div>
-  //   );
-  // }
   const collapsed = state.collapsed;
   const firstGroupMode = state.firstGroupMode;
 

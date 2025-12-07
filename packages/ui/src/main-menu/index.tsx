@@ -117,7 +117,7 @@ const MainMenuItems = (props: MainMenuProps) => {
       onClickItem={onClickItem}
       onClickSubItem={onClickSubItem}
       onClickGroupItem={(item: MenuItemType) => {
-        if (layoutModeState === 'main_left') {
+        if (layoutModeState === 'main_left' || layoutModeState === 'main_top_header') {
           return;
         }
         onClickSubItem(item);

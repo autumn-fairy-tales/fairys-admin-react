@@ -22,7 +22,7 @@ const titleTextClassName =
 
 export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React.LegacyRef<HTMLDivElement>) => {
   const { item, expandCollapse, isExpandCollapse, utilsItemOptions } = props;
-  const { level: _level = 0, currentType } = utilsItemOptions || {};
+  const { level: _level = 0, currentType, countGroupMenu, countSubMenu } = utilsItemOptions || {};
   const { className, style, iconProps, icon, extra, disabled, type } = item;
 
   const [state, instance] = useFairysMenuInstanceContext();
@@ -51,43 +51,50 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     [utilsItemOptions.menuTypes],
   );
 
-  const isCol = useMemo(() => {
-    let isCol = false;
-    /**
-     * 1. collapsed === true ,如果  collapsedSubMenuIndex === -1, 是第一层数据
-     * 2. collapsed === true , _level === 0 的时候也是第一层，
-     * 3. collapsed === true , firstGroupMode === 'hover'或者'click'、onlyGroup 时，
-     */
-    if (collapsed && _level === 0) {
-      isCol = true;
-    }
-    // 判断只有分组菜单的时候，
-    if (collapsed && collapsedSubMenuIndex === -1) {
-      isCol = true;
-    }
-    if (collapsed && collapsedSubMenuIndex === 0) {
-      const [f, ...list] = [...utilsItemOptions.menuTypes].reverse();
-      const collapsedSubMenuIndex2 = list.findIndex((type) => type === 'subMenu');
-      if (collapsedSubMenuIndex2 === -1) {
-        isCol = true;
+  const isFlexCol = useMemo(() => {
+    let isFlexCol = false;
+    if (collapsed) {
+      // 第一层/伪第一层  全部 Col
+      // 1. 父级全是组菜单，并且没有 subMenu 菜单  firstGroupMode 为 hover 或 click，则 countGroupMenu 相当于 countSubMenu 值
+      // 2. 父级组菜单，当前菜单是 subMenu 菜单
+      // 3. 父级没有组菜单，也没有 subMenu 菜单
+      if (_level === 0) {
+        isFlexCol = true;
+      } else if (utilsItemOptions.countSubMenu === 0 && utilsItemOptions.countGroupMenu === 0) {
+        isFlexCol = true;
+      } else if (utilsItemOptions.countSubMenu === 0) {
+        if (firstGroupMode === 'hover' || firstGroupMode === 'click') {
+          isFlexCol = utilsItemOptions.countGroupMenu === 1 && utilsItemOptions.currentType === 'group';
+        } else {
+          isFlexCol = true;
+        }
+      } else if (
+        utilsItemOptions.countGroupMenu &&
+        utilsItemOptions.countSubMenu === 1 &&
+        utilsItemOptions.currentType === 'subMenu'
+      ) {
+        if (firstGroupMode === 'hover' || firstGroupMode === 'click') {
+          isFlexCol = utilsItemOptions.countGroupMenu === 1 && utilsItemOptions.groupLevel === -1;
+        } else {
+          isFlexCol = true;
+        }
       }
     }
-    return isCol;
-  }, [collapsed, collapsedSubMenuIndex, _level, firstGroupMode]);
+    return isFlexCol;
+  }, [collapsed, _level, firstGroupMode, utilsItemOptions]);
 
   // 菜单缩小模式 下计算缩进距离
-  if (isCol && collapsed) {
+  if (isFlexCol) {
     level = 0;
+  }
+  // 第一层菜单大小
+  if (isFlexCol) {
+    size = firstLevelSize;
   }
 
   /**菜单缩小模式 第一层 subMenu 菜单展示选中项*/
-  if (level === 0 && (collapsed || mode === 'horizontal')) {
+  if (isFlexCol || mode === 'horizontal') {
     isActive = _isActive || isCollapsedCheck;
-  }
-
-  // 第一层菜单大小
-  if (level === 0 && firstLevelSize !== 'default') {
-    size = firstLevelSize;
   }
 
   const menuItemInstance = useFairysMenuItemInstance();
@@ -113,10 +120,10 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       active: !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
       'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive && !disabled && type !== 'group',
-      'fairys:justify-center': isCol,
+      'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': type === 'group',
     });
-  }, [className, isActive, collapsed, disabled, type, isCol]);
+  }, [className, isActive, collapsed, disabled, type, isFlexCol]);
 
   const expandIcon = useMemo(() => {
     return clsx(
@@ -134,13 +141,13 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       'fairys-menu-item_body fairys:flex fairys:items-center fairys:relative fairys:gap-1 fairys:overflow-hidden',
       {
         [`data-level=${level}`]: true,
-        'fairys:flex-col': isCol,
+        'fairys:flex-col': isFlexCol,
         // 'fairys:flex-col': collapsed && (collapsedSubMenuIndex === -1 || (collapsedSubMenuIndex === 0 && level === 0)) && firstGroupMode !== 'click' && firstGroupMode !== 'hover',
         'fairys:flex-row': isRow,
         'fairys:opacity-50': disabled,
       },
     );
-  }, [level, collapsed, disabled, isCol]);
+  }, [level, collapsed, disabled, isFlexCol]);
 
   const _styleBody = useMemo(() => {
     if (level === 0) {
@@ -167,12 +174,12 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   }, [collapsed]);
 
   const _classIcon = useMemo(() => {
-    // const isCol  的时候， 图标大小为 26px
+    // const isFlexCol  的时候， 图标大小为 26px
     return clsx({
-      'fairys:size-[26px]': isCol,
-      'fairys:size-[16px]': !isCol,
+      'fairys:size-[26px]': isFlexCol,
+      'fairys:size-[16px]': !isFlexCol,
     });
-  }, [collapsed, isCol]);
+  }, [collapsed, isFlexCol]);
 
   const onClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     // 禁用项 或 分组项 或 已选中项 不响应点击事件
@@ -201,16 +208,15 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
    *
    */
   const isShowExpandCollapse = useMemo(() => {
-    if (isExpandCollapse && level > 0 && !collapsed) {
-      return true;
-    }
     if (collapsed) {
-      // 判断是否第一层
-      if (isExpandCollapse && level > 1) {
-        return true;
+      return !isFlexCol && isExpandCollapse;
+    } else if (mode === 'horizontal' && isExpandCollapse) {
+      if ((countSubMenu === 0 && countGroupMenu === 1) || (countSubMenu === 1 && countGroupMenu === 0)) {
+        return false;
       }
     }
-  }, [collapsed, level]);
+    return isExpandCollapse;
+  }, [collapsed, level, isExpandCollapse, countGroupMenu, countSubMenu]);
 
   return (
     <motion.div title={item.title} style={style} className={_class} onClick={onClick} ref={mergeRef}>

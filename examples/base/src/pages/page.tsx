@@ -48,7 +48,7 @@ const MainIndex = () => {
             // mode="horizontal"
             // collapsedMode="vertical"
             collapsed
-            // firstGroupMode='hover'
+            firstGroupMode="hover"
             // firstGroupMode='hover'
             onClickItem={(item, event, instance) => {
               updateSelectedKey(item.path);
