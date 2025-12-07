@@ -2,8 +2,10 @@ import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
 import { tabBarDataInstance } from './tab-bar';
 import type { FairysIconPropsType } from 'components/icon';
+import { FairysItemType } from 'components/menu';
 
 export interface MenuItemType {
+  type?: FairysItemType['type'];
   /**标题*/
   title: string;
   /**路径*/
@@ -266,96 +268,5 @@ export const useMenuDataInstance = () => {
     MenuDataInstanceState,
     MenuDataInstance,
     string | undefined,
-  ];
-};
-
-// ================================================================================================
-export class MenuItemInstance {
-  dom = createRef<HTMLDivElement>();
-  item: MenuItemType;
-  isSubMenu: boolean;
-  /**是否当前项选中*/
-  isActive = false;
-  /**关闭弹框事件*/
-  close: () => void;
-  /**滚动到当前项*/
-  scrollIntoView = () => {
-    this.dom.current?.scrollIntoView({
-      behavior: 'smooth',
-      block: 'nearest',
-      inline: 'nearest',
-    });
-  };
-}
-
-export const useMenuItemInstance = () => useRef<MenuItemInstance>(new MenuItemInstance()).current;
-
-export interface MenuInstanceState {
-  /**菜单展开隐藏*/
-  menuModeExpandCollapse?: 'close' | 'open';
-}
-
-export class MenuInstance {
-  /**节点*/
-  dom = createRef<HTMLDivElement>();
-  menuItems: MenuItemInstance[] = [];
-
-  /**菜单数据状态*/
-  state = proxy<MenuInstanceState>({
-    menuModeExpandCollapse: 'open',
-  });
-
-  setMenuModeExpandCollapse = (mode: MenuInstanceState['menuModeExpandCollapse']) => {
-    this.state.menuModeExpandCollapse = mode;
-  };
-
-  register = (item: MenuItemInstance) => {
-    this.menuItems.push(item);
-    return () => {
-      this.menuItems = this.menuItems.filter((it) => it !== item);
-    };
-  };
-
-  /**监听节点尺寸变化 回调方法*/
-  private resizeObserverCallback = () => {
-    // 需要把当前tab项移入可视区
-    for (let index = 0; index < this.menuItems.length; index++) {
-      const element = this.menuItems[index];
-      if (element.isActive) {
-        element.scrollIntoView();
-      }
-    }
-  };
-
-  /**监听节点尺寸变化*/
-  private resizeObserver = () => {
-    const resizeObserver = new ResizeObserver(this.resizeObserverCallback);
-    if (this.dom.current) resizeObserver.observe(this.dom.current);
-    return () => {
-      resizeObserver.disconnect();
-    };
-  };
-
-  /**添加监听事件*/
-  addEventListener = () => {
-    // 1. 监听子节点的尺寸变化（ResizeObserver）
-    const unMount_resizeObserver = this.resizeObserver();
-    return () => {
-      unMount_resizeObserver();
-    };
-  };
-}
-
-export const MenuInstanceContext = createContext<MenuInstance>(new MenuInstance());
-export const useMenuInstance = () => useRef(new MenuInstance()).current;
-
-export const useMenuInstanceContext = () => {
-  const menuInstance = useContext(MenuInstanceContext);
-  const state = useSnapshot(menuInstance.state);
-  const menuModeExpandCollapse = state.menuModeExpandCollapse;
-  return [state, menuInstance, menuModeExpandCollapse] as [
-    MenuInstanceState,
-    MenuInstance,
-    MenuInstanceState['menuModeExpandCollapse'],
   ];
 };

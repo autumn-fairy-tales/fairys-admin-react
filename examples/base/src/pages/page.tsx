@@ -39,8 +39,7 @@ const MainIndex = () => {
       <FairysMainPageBody>
         <button onClick={() => updateSelectedKey('/about/1')}>切换选中</button>
         <button onClick={() => updateSelectedKey('/')}>切换选中</button>
-        <div>
-          {/* <div style={{ width: 200, height: 200, overflow: 'hidden' }}> */}
+        {/* <div>
           <FairysMenu
             // size='small'
             selectedKey={selectedKey}
@@ -166,9 +165,9 @@ const MainIndex = () => {
               },
             ]}
           />
-        </div>
+        </div> */}
 
-        {/* <FairysNotificationListBase
+        <FairysNotificationListBase
           items={[
             {
               id: '1',
@@ -212,7 +211,7 @@ const MainIndex = () => {
         </div>
         <NavLink to="/">首页</NavLink>
         <NavLink to="/list">列表</NavLink>
-        <NavLink to="/detail">详情</NavLink> */}
+        <NavLink to="/detail">详情</NavLink>
       </FairysMainPageBody>
     </FairysMainPage>
   );

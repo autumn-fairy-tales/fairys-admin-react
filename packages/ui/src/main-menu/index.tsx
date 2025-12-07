@@ -11,7 +11,7 @@ import { Logo } from 'logo';
 import { LayoutMenuMobile } from 'layout/sider';
 import { routerDataInstance, useAppPluginDataInstance, tabBarDataInstance } from 'context';
 import { FairysMenu } from 'components/menu';
-import type { FairysMenuProps } from 'components/menu';
+import type { FairysMenuItemType, FairysMenuProps } from 'components/menu';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -20,12 +20,12 @@ export interface MainMenuProps {
 const MainMenuItems = (props: MainMenuProps) => {
   const { layoutMode } = props;
   const [state, menuInstance] = useMenuDataInstance();
-  const mainMenuItems = state.mainMenuItems || [];
+  const mainMenuItems = state.mainMenuItems as FairysMenuItemType[];
   const [settingState] = useSettingDataInstance();
   const layoutModeState = settingState.layoutMode;
 
   const onClickItem = useCallback(
-    async (item: MenuItemType) => {
+    async (item: MenuItemType & FairysMenuItemType) => {
       // 打开浏览器新窗口
       if (item.isOpenNewWindow) {
         window.open(item.path, '_blank');
@@ -52,7 +52,7 @@ const MainMenuItems = (props: MainMenuProps) => {
   );
 
   const onClickSubItem = useCallback(
-    async (item: MenuItemType) => {
+    async (item: MenuItemType & FairysMenuItemType) => {
       // 打开浏览器新窗口
       if (item.isOpenNewWindow) {
         window.open(item.path, '_blank');
@@ -116,7 +116,7 @@ const MainMenuItems = (props: MainMenuProps) => {
       mode={layoutMode}
       onClickItem={onClickItem}
       onClickSubItem={onClickSubItem}
-      onClickGroupItem={(item: MenuItemType) => {
+      onClickGroupItem={(item: MenuItemType & FairysMenuItemType) => {
         if (layoutModeState === 'main_left' || layoutModeState === 'main_top_header') {
           return;
         }

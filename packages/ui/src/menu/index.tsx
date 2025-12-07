@@ -1,6 +1,6 @@
 import { menuDataInstance, MenuItemType, useMenuDataInstance } from 'context/menu-data';
 import { useSettingDataInstance } from 'context/setting';
-import { FairysMenu, FairysMenuProps } from 'components/menu';
+import { FairysMenu, FairysMenuItemType, FairysMenuProps } from 'components/menu';
 import { useLocation } from 'react-router';
 import { routerDataInstance } from 'context/router-data';
 import { tabBarDataInstance } from 'context/tab-bar';
@@ -8,15 +8,15 @@ import { useCallback, useMemo } from 'react';
 
 export const Menu = () => {
   const [state] = useMenuDataInstance();
-  const menuItems = state.menuItems;
-  const _menuItems = menuDataInstance._menuItems || [];
+  const menuItems = state.menuItems as FairysMenuItemType[];
+  const _menuItems = menuDataInstance._menuItems as FairysMenuItemType[];
   const [settingState] = useSettingDataInstance();
   const sideMenuMode = settingState.sideMenuMode;
   const layoutMode = settingState.layoutMode;
   const location = useLocation();
 
   const onClickItem = useCallback(
-    async (item: MenuItemType) => {
+    async (item: MenuItemType & FairysMenuItemType) => {
       // 打开浏览器新窗口
       if (item.isOpenNewWindow) {
         window.open(item.path, '_blank');

@@ -87,8 +87,9 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   if (isFlexCol) {
     level = 0;
   }
+
   // 第一层菜单大小
-  if (isFlexCol) {
+  if (level === 0 && firstLevelSize !== 'default') {
     size = firstLevelSize;
   }
 
@@ -123,7 +124,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': type === 'group',
     });
-  }, [className, isActive, collapsed, disabled, type, isFlexCol]);
+  }, [className, isActive, collapsed, disabled, type, isFlexCol, size]);
 
   const expandIcon = useMemo(() => {
     return clsx(
