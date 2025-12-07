@@ -44,7 +44,7 @@ export const Menu = () => {
 
   return (
     <FairysMenu
-      items={layoutMode === 'left' ? _menuItems : menuItems}
+      items={layoutMode === 'left' || layoutMode === 'mobile' ? _menuItems : menuItems}
       activeMotionPrefixCls="fairys-menu-item-active"
       collapsed={sideMenuMode === 'close' ? true : undefined}
       firstLevelSize={sideMenuMode === 'close' ? 'large' : 'default'}
