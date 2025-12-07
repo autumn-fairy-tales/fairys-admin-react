@@ -19,9 +19,9 @@ export const FairysGroupMenuItem = (props: FairysGroupMenuItemProps) => {
   const mode = state.mode;
 
   /**判断菜单是否缩放*/
-  const _isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+  const _isCollapsed = collapsedMode === 'icon' || collapsedMode === 'vertical';
 
-  const collapsedLevel = useMemo(
+  const collapsedSubMenuIndex = useMemo(
     () => [...utilsItemOptions.menuTypes].reverse().findIndex((type) => type === 'subMenu'),
     [utilsItemOptions.menuTypes],
   );
@@ -36,10 +36,10 @@ export const FairysGroupMenuItem = (props: FairysGroupMenuItemProps) => {
 
   const _classBody = useMemo(() => {
     return clsx('fairys-group-menu-item_body fairys:shrink-0 fairys:flex', {
-      'fairys:flex-col fairys:gap-y-[2px]': mode === 'vertical' || collapsedLevel !== -1,
-      'fairys:flex-row fairys:gap-x-[2px]': mode === 'horizontal' && collapsedLevel === -1,
+      'fairys:flex-col fairys:gap-y-2': mode === 'vertical' || collapsedSubMenuIndex !== -1,
+      'fairys:flex-row fairys:gap-x-2': mode === 'horizontal' && collapsedSubMenuIndex === -1,
     });
-  }, [mode, collapsedLevel]);
+  }, [mode, collapsedSubMenuIndex]);
   // 横向的不显示分组，和折叠一样
 
   return (

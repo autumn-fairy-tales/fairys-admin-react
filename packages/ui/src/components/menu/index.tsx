@@ -23,9 +23,12 @@ import { motion } from 'framer-motion';
 import clsx from 'clsx';
 import { FairysPopoverBaseFloatingTreeParent } from 'components/popover-base';
 import { useMergeRefs } from '@floating-ui/react';
+export * from './interface';
 
 export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyRef<HTMLDivElement>) => {
   const {
+    className,
+    style,
     items,
     menuInstance,
     mode = 'vertical',
@@ -37,6 +40,9 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
     isOnlyParentOpenKeys = false,
     disabledShowChildItem = false,
     size = 'default',
+    activeMotionPrefixCls,
+    firstLevelSize = 'default',
+    maxWidth,
   } = props;
   const propsKeys = Object.keys(props);
   const isOpenKeysField = propsKeys.includes('openKeys');
@@ -51,42 +57,53 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
   instance.onClickItem = onClickItem;
   instance.onClickSubItem = onClickSubItem;
 
-  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline';
+  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'vertical';
 
   const _class = useMemo(() => {
     return clsx(
-      'fairys-menu fairys:transition-all fairys:duration-300 fairys:flex fairys:p-[8px] fairys:overflow-auto fairys:h-full no-scrollbar fairys:box-border',
+      'fairys-menu fairys:transition-all fairys:duration-300 fairys:flex fairys:overflow-auto fairys:h-full no-scrollbar fairys:box-border',
       {
-        'fairys:flex-col fairys:gap-y-[2px]': mode === 'vertical',
-        'fairys:flex-row fairys:gap-x-[2px]': mode === 'horizontal',
+        'fairys:flex-col fairys:gap-y-2': mode === 'vertical',
+        'fairys:flex-row fairys:gap-x-2': mode === 'horizontal',
         'fairys:max-w-[220px]': !isCollapsed && mode === 'vertical',
         'fairys:max-w-[80px]': isCollapsed && mode === 'vertical',
+        'fairys:p-[8px]': size !== 'small',
       },
+      className,
     );
-  }, [mode, isCollapsed]);
+  }, [mode, isCollapsed, size, className]);
 
   useMemo(() => instance.processMenuItems(items), [items]);
+  useMemo(() => instance.setActiveMotionPrefixCls(activeMotionPrefixCls), [activeMotionPrefixCls]);
   useMemo(() => (instance.state.mode = mode), [mode]);
+  useMemo(() => (instance.state.maxWidth = maxWidth), [maxWidth]);
   useMemo(() => (instance.state.disabledShowChildItem = disabledShowChildItem), [disabledShowChildItem]);
   useMemo(() => (instance.state.size = size), [size]);
+  useMemo(() => (instance.state.firstLevelSize = firstLevelSize), [firstLevelSize]);
   useMemo(() => (instance.state.collapsedMode = collapsedMode), [collapsedMode]);
+
+  // 当 selectedKey 传递时，根据 selectedKey 更新 selectedKey
   useMemo(() => {
     if (isSelectedKeyField) {
       instance.state.selectedKey = selectedKey;
     }
   }, [selectedKey, isSelectedKeyField]);
 
+  // 当 openKeys 传递时，根据 openKeys 更新 selectedKey
   useMemo(() => {
     if (isOpenKeysField) {
       instance.state.openKeys = openKeys;
     }
   }, [openKeys, isOpenKeysField]);
 
+  /**
+   * 当 openKeys 未传递时，根据 selectedKey 更新 openKeys
+   */
   useMemo(() => {
     if (!isOpenKeysField) {
       instance.updatedOpenKeys(selectedKey);
     }
-  }, [selectedKey, isOpenKeysField]);
+  }, [selectedKey, isOpenKeysField, items, collapsedMode]);
 
   const render = useMemo(() => {
     return renderItems(items, { level: -1 });
@@ -102,7 +119,7 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
   return (
     <FairysPopoverBaseFloatingTreeParent>
       <FairysMenuInstanceContext.Provider value={instance}>
-        <motion.div ref={mergeRef} className={_class}>
+        <motion.div ref={mergeRef} className={_class} style={{ maxWidth, ...style }}>
           {render}
         </motion.div>
       </FairysMenuInstanceContext.Provider>

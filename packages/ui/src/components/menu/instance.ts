@@ -24,6 +24,8 @@ import { FloatingTreeType, ReferenceType } from '@floating-ui/react';
  * 17. 最顶层为分组菜单，则可拆分成两列菜单，左侧主菜单(可以点击/移入 显示弹框子菜单)，右侧子菜单
  */
 
+let DEFAULT_ACTIVE_MOTION_PREFIX_CLS_Number = 0;
+
 export class FairysMenuItemInstance {
   dom = createRef<HTMLDivElement>();
   item: FairysMenuItemType;
@@ -193,7 +195,7 @@ export class FairysMenuInstance {
         if (this.isOnlyParentOpenKeys) {
           const parentItems = this.parentPathMap.get(item.path);
           if (parentItems) {
-            this.state.expandItems = this.compareParentPath(this.state.expandItems, parentItems);
+            this.state.expandItems = [...parentItems];
             this.state.openKeys = Array.from(new Set(this.state.expandItems.map((it) => it.path)));
           }
         } else {
@@ -218,6 +220,14 @@ export class FairysMenuInstance {
     /**子菜单数据*/
     items: ref([]),
   });
+
+  setActiveMotionPrefixCls = (cls?: string) => {
+    if (!cls) {
+      this.state.activeMotionPrefixCls = 'fairys-menu' + DEFAULT_ACTIVE_MOTION_PREFIX_CLS_Number++;
+    } else {
+      this.state.activeMotionPrefixCls = cls;
+    }
+  };
 
   /**
    * 是否选中菜单

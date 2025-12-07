@@ -10,10 +10,12 @@ import { useMenuDataInstance, MenuItemType, menuDataInstance } from 'context/men
 import { Menu } from 'menu';
 import { Avatar } from 'avatar';
 import { Logo } from 'logo';
-import { FairysPopoverBaseFloatingTreeParent, FairysPopoverBase } from 'components/popover-base';
+import { FairysPopoverBase } from 'components/popover-base';
 import { LayoutMenuMobile } from 'layout/sider';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
-import { useAppPluginDataInstance } from 'context';
+import { routerDataInstance, useAppPluginDataInstance, tabBarDataInstance } from 'context';
+import { FairysMenu } from 'components/menu';
+import type { FairysMenuProps } from 'components/menu';
 
 export interface MainMenuProps {
   layoutMode?: 'vertical' | 'horizontal';
@@ -121,14 +123,92 @@ const MainMenuItem = (props: MainMenuItemProps) => {
 
 const MainMenuItems = (props: MainMenuProps) => {
   const { layoutMode } = props;
-  const [state] = useMenuDataInstance();
+  const [state, menuInstance] = useMenuDataInstance();
   const mainMenuItems = state.mainMenuItems || [];
+  const [settingState] = useSettingDataInstance();
+  const layoutModeState = settingState.layoutMode;
 
-  const menuRender = useMemo(() => {
-    return mainMenuItems.map((item) => <MainMenuItem layoutMode={layoutMode} item={item} key={item.path} />);
-  }, [mainMenuItems, layoutMode]);
+  const onClickItem = useCallback(
+    async (item: MenuItemType) => {
+      // 打开浏览器新窗口
+      if (item.isOpenNewWindow) {
+        window.open(item.path, '_blank');
+        return;
+      }
+      if (typeof item.onBeforeNavigate === 'function') {
+        const isBool = await item.onBeforeNavigate(item);
+        // 如果为 false 不进行跳转
+        if (!isBool) {
+          return;
+        }
+      }
+      if (typeof menuDataInstance.onBeforeNavigate === 'function') {
+        const isBool = await menuDataInstance.onBeforeNavigate(item);
+        // 如果为 false 不进行跳转
+        if (!isBool) {
+          return;
+        }
+      }
+      routerDataInstance.navigate(item.path);
+      tabBarDataInstance.addItem(item as any);
+    },
+    [menuDataInstance],
+  );
 
-  return <FairysPopoverBaseFloatingTreeParent>{menuRender}</FairysPopoverBaseFloatingTreeParent>;
+  const onClickSubItem = useCallback(
+    async (item: MenuItemType) => {
+      // 打开浏览器新窗口
+      if (item.isOpenNewWindow) {
+        window.open(item.path, '_blank');
+        return;
+      }
+
+      if (typeof item.onBeforeNavigate === 'function') {
+        const isBool = await item.onBeforeNavigate(item);
+        // 如果为 false 不进行跳转
+        if (!isBool) {
+          return;
+        }
+      }
+      if (typeof menuInstance.onBeforeNavigate === 'function') {
+        const isBool = await menuInstance.onBeforeNavigate(item);
+        // 如果为 false 不进行跳转
+        if (!isBool) {
+          return;
+        }
+      }
+      menuInstance.onMainMenu(item.path);
+    },
+    [menuInstance],
+  );
+
+  const propsConfig: FairysMenuProps = useMemo(() => {
+    if (['main_sub_left', 'main_left'].includes(layoutModeState)) {
+      return {
+        collapsedMode: 'vertical',
+        size: 'default',
+        disabledShowChildItem: layoutModeState !== 'main_left',
+      };
+    }
+    return {
+      collapsedMode: undefined,
+      size: 'small',
+      disabledShowChildItem: true,
+    };
+  }, [layoutMode]);
+
+  return (
+    <FairysMenu
+      {...propsConfig}
+      activeMotionPrefixCls="fairys-main-menu-item-active"
+      selectedKey={state.mainMenuItemSelected}
+      items={mainMenuItems}
+      mode={layoutMode}
+      onClickItem={onClickItem}
+      onClickSubItem={onClickSubItem}
+      maxWidth={220}
+    />
+  );
 };
 
 export const MainMenu = (props: MainMenuProps) => {

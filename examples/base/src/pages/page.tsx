@@ -46,7 +46,7 @@ const MainIndex = () => {
             selectedKey={selectedKey}
             openKeys={openKeys}
             mode="horizontal"
-            collapsedMode="inline"
+            collapsedMode="vertical"
             onClickItem={(item, event, instance) => {
               updateSelectedKey(item.path);
             }}

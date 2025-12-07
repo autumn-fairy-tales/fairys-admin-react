@@ -21,9 +21,10 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
   const collapsedMode = state.collapsedMode;
   const disabledShowChildItem = state.disabledShowChildItem;
   const mode = state.mode;
+  const maxWidth = state.maxWidth;
 
-  /**判断菜单是否缩放*/
-  const isCollapsed = collapsedMode === 'icon' || collapsedMode === 'inline' || mode === 'horizontal';
+  /**判断是否显示弹框*/
+  const isPopover = collapsedMode === 'icon' || collapsedMode === 'vertical' || mode === 'horizontal';
 
   const [open, setOpen] = useState(false);
   const isOpen = useMemo(() => instance.isOpen(item.path), [item.path, openKeys]);
@@ -33,28 +34,26 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
   }, [items, utilsItemOptions]);
 
   const _class = useMemo(() => {
-    return clsx('fairys-sub-menu-item fairys:shrink-0 fairys:gap-y-[2px]', className);
+    return clsx('fairys-sub-menu-item fairys:shrink-0 fairys:gap-y-2', className);
   }, [className]);
 
   if (disabledShowChildItem) {
     return (
       <motion.div style={style} className={_class}>
-        <FairysMenuItem
-          item={item}
-          isExpandCollapse
-          expandCollapse={isCollapsed ? open : isOpen}
-          utilsItemOptions={utilsItemOptions}
-        />
+        <FairysMenuItem item={item} utilsItemOptions={utilsItemOptions} isExpandCollapse />
       </motion.div>
     );
   }
-  if (isCollapsed) {
+  if (isPopover) {
     return (
       <FairysPopoverBase
         className="fairys-sub-menu-item_popover"
         eventName="hover"
         content={
-          <div className="fairys-sub-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px] fairys:p-[5px]">
+          <div
+            style={{ maxWidth }}
+            className="fairys-sub-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-2 fairys:p-[5px]"
+          >
             {render}
           </div>
         }
@@ -66,7 +65,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
           <FairysMenuItem
             item={item}
             isExpandCollapse
-            expandCollapse={isCollapsed ? open : isOpen}
+            expandCollapse={isPopover ? open : isOpen}
             utilsItemOptions={utilsItemOptions}
           />
         </motion.div>
@@ -79,7 +78,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
       <FairysMenuItem item={item} isExpandCollapse expandCollapse={isOpen} utilsItemOptions={utilsItemOptions} />
       <FairysDisclosureItem
         open={isOpen}
-        className="fairys-sub-menu-item_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-[2px]"
+        className="fairys-sub-menu-item_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-2"
       >
         {render}
       </FairysDisclosureItem>

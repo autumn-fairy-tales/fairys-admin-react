@@ -42,10 +42,6 @@ export type FairysItemType = FairysMenuItemType | FairysDividerMenuItemType;
 
 export interface FairysMenuInstanceState {
   /**
-   * 菜单模式
-   */
-  mode?: 'horizontal' | 'vertical';
-  /**
    * 展开的菜单 key 列表
    */
   openKeys?: string[];
@@ -64,16 +60,38 @@ export interface FairysMenuInstanceState {
   /**子菜单数据*/
   items?: FairysItemType[];
   /**
-   * 菜单缩小模式，子菜单移入或者点击显示
-   *
-   * inline: 显示图标和标题
-   * icon: 只显示图标
+   * 菜单模式
    */
-  collapsedMode?: 'inline' | 'icon';
+  mode?: 'horizontal' | 'vertical';
+  /**
+   * 菜单项模式
+   */
+  menuItemMode?: 'horizontal' | 'vertical';
+  /**
+   * 分组菜单模式
+   * click: 点击分组菜单展开子菜单
+   * hover: 鼠标移入分组菜单展开子菜单
+   * none: 不做任何处理，直接展开，（相当于 subMenu 菜单直接展开，不可折叠和收起）
+   * @default 'none'
+   */
+  groupMode?: 'click' | 'hover' | 'none';
+  /**菜单大小*/
+  size?: 'small' | 'default' | 'large';
+  /**第一层菜单大小*/
+  firstLevelSize?: 'small' | 'default' | 'large';
+
+  /**最大宽度*/
+  maxWidth?: number;
+  /**选中菜单类名前缀*/
+  activeMotionPrefixCls?: string;
   /**禁用移入点击显示子菜单*/
   disabledShowChildItem?: boolean;
-  /**菜单大小*/
-  size?: 'small' | 'default';
+  /**
+   * 菜单缩小模式，子菜单移入或者点击显示
+   * icon: 只显示图标
+   * vertical: 垂直显示图标和标题
+   */
+  collapsedMode?: 'icon' | 'vertical';
   /**默认字段不进行使用*/
   __defaultValue?: string;
 }
@@ -83,11 +101,13 @@ export interface FairysMenuProps extends Omit<FairysMenuInstanceState, '__defaul
   items?: FairysItemType[];
   /**菜单实例*/
   menuInstance?: FairysMenuInstance;
+  /**点击菜单项事件*/
   onClickItem?: (
     item: FairysMenuItemType,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     instance: FairysMenuInstance,
   ) => void;
+  /**点击sub菜单项事件*/
   onClickSubItem?: (
     item: FairysMenuItemType,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
@@ -95,4 +115,6 @@ export interface FairysMenuProps extends Omit<FairysMenuInstanceState, '__defaul
   ) => void;
   /**是否只保留一组父级菜单展开(在未传递 openKeys 字段时生效)*/
   isOnlyParentOpenKeys?: boolean;
+  className?: string;
+  style?: React.CSSProperties;
 }
