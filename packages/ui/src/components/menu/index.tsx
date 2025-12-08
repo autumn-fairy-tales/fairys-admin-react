@@ -24,6 +24,7 @@ import clsx from 'clsx';
 import { FairysPopoverBaseFloatingTreeParent } from 'components/popover-base';
 import { useMergeRefs } from '@floating-ui/react';
 export * from './interface';
+export * from './instance';
 
 export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyRef<HTMLDivElement>) => {
   const {
