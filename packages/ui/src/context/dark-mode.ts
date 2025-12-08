@@ -1,15 +1,5 @@
-import React, {
-  createContext,
-  useContext,
-  useRef,
-  useEffect,
-  createElement,
-  ReactNode,
-  cloneElement,
-  createRef,
-} from 'react';
+import { createContext, useContext, useRef, useEffect, createElement, ReactNode, createRef } from 'react';
 import { proxy, useSnapshot } from 'valtio';
-import clsx from 'clsx';
 
 interface DarkModeInstanceState {
   darkMode: boolean;
@@ -51,27 +41,6 @@ export interface DarkModeInstanceContextProviderProps {
   /**自定义darkModeInstance*/
   darkModeInstance?: DarkModeInstance;
 }
-
-/**为了在弹窗中使用darkMode，需要在弹窗中包裹这个组件*/
-export const DarkModeInstancePopoverContextProvider = (props: DarkModeInstanceContextProviderProps) => {
-  const { children } = props;
-  const [state, darkModeInstance] = useDarkModeInstanceContext();
-  const darkMode = state.darkMode;
-  return createElement(DarkModeInstanceContext.Provider, {
-    children: React.Children.map(children, (child: any) => {
-      const prop = child?.props;
-      if (!React.isValidElement(child)) {
-        return child;
-      }
-      return cloneElement(child as React.ReactElement, {
-        className: clsx(prop?.className, 'fairys:transition-all fairys:duration-300', {
-          dark: darkMode,
-        }),
-      });
-    }),
-    value: darkModeInstance,
-  });
-};
 
 export const DarkModeInstanceContextProvider = (props: DarkModeInstanceContextProviderProps) => {
   const { children, darkMode, darkModeInstance: instance } = props;

@@ -1,5 +1,5 @@
 import React, { forwardRef, useState, useEffect, cloneElement, type Ref, ReactNode, Fragment, useMemo } from 'react';
-import { DarkModeInstancePopoverContextProvider } from 'context/dark-mode';
+import { useDarkModeInstanceContext } from 'context/dark-mode';
 import {
   useFloatingParentNodeId,
   FloatingTree,
@@ -71,6 +71,10 @@ export const FairysPopoverBaseComponent = forwardRef(
       isNotMinWidth = false,
       isOpacity = false,
     } = props;
+
+    const [state] = useDarkModeInstanceContext();
+    const darkMode = state.darkMode;
+
     const [open, setIsOpen] = useState(false);
     const { show, onAnimationComplete } = useAnimationStatus(open);
     const onOpenChange = (open: boolean) => {
@@ -177,6 +181,7 @@ export const FairysPopoverBaseComponent = forwardRef(
     const bodyClasName = useMemo(() => {
       return clsx(
         'fairys_admin_popover-base no-scrollbar',
+        darkMode ? 'dark' : '',
         className,
         'fairys:rounded-sm fairys:shadow-xl fairys:inset-shadow-sm',
         {
@@ -219,24 +224,20 @@ export const FairysPopoverBaseComponent = forwardRef(
         })}
         {show ? (
           <FloatingPortal>
-            <DarkModeInstancePopoverContextProvider>
-              <div>
-                <AnimatePresence>
-                  <div ref={refs.setFloating} style={floatingStyles} className={bodyClasName} {...getFloatingProps()}>
-                    <motion.div
-                      initial="collapsed"
-                      animate={open ? 'open' : 'collapsed'}
-                      variants={variantsBase}
-                      transition={transitionBase}
-                      onAnimationComplete={onAnimationComplete}
-                      className={motionBodyClasName}
-                    >
-                      {content}
-                    </motion.div>
-                  </div>
-                </AnimatePresence>
+            <AnimatePresence>
+              <div ref={refs.setFloating} style={floatingStyles} className={bodyClasName} {...getFloatingProps()}>
+                <motion.div
+                  initial="collapsed"
+                  animate={open ? 'open' : 'collapsed'}
+                  variants={variantsBase}
+                  transition={transitionBase}
+                  onAnimationComplete={onAnimationComplete}
+                  className={motionBodyClasName}
+                >
+                  {content}
+                </motion.div>
               </div>
-            </DarkModeInstancePopoverContextProvider>
+            </AnimatePresence>
           </FloatingPortal>
         ) : (
           <Fragment />

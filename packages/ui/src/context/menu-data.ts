@@ -1,4 +1,3 @@
-import { createContext, useContext, createRef, useRef } from 'react';
 import { proxy, useSnapshot, ref } from 'valtio';
 import { tabBarDataInstance } from './tab-bar';
 import type { FairysIconPropsType } from 'components/icon';

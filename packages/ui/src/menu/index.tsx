@@ -1,10 +1,10 @@
 import { menuDataInstance, MenuItemType, useMenuDataInstance } from 'context/menu-data';
 import { useSettingDataInstance } from 'context/setting';
-import { FairysMenu, FairysMenuItemType, FairysMenuProps } from 'components/menu';
+import { FairysMenu, FairysMenuItemType } from 'components/menu';
 import { useLocation } from 'react-router';
 import { routerDataInstance } from 'context/router-data';
 import { tabBarDataInstance } from 'context/tab-bar';
-import { useCallback, useMemo } from 'react';
+import { useCallback } from 'react';
 
 export const Menu = () => {
   const [state] = useMenuDataInstance();
