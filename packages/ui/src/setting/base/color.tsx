@@ -5,6 +5,26 @@ import { getHexadecimalColor } from 'utils/getHexadecimalColor';
 import { useMemo } from 'react';
 import Sketch from '@uiw/react-color-sketch';
 
+const PRESET_COLORS = [
+  '#D0021B',
+  '#F5A623',
+  '#f8e61b',
+  '#8B572A',
+  '#7ED321',
+  '#417505',
+  '#BD10E0',
+  '#9013FE',
+  '#af52de',
+  '#4A90E2',
+  '#1677ff',
+  '#50E3C2',
+  '#B8E986',
+  '#000000',
+  '#4A4A4A',
+  '#9B9B9B',
+  '#FFFFFF',
+];
+
 export const SettingColor = () => {
   const [state, settingDataInstance] = useSettingDataInstance();
   const themeColor = useMemo(() => getHexadecimalColor(state.themeColor), [state.themeColor]);
@@ -16,6 +36,7 @@ export const SettingColor = () => {
           <Sketch
             color={themeColor}
             disableAlpha
+            presetColors={PRESET_COLORS}
             onChange={(color) => {
               settingDataInstance.updatedThemeColor(color.hex);
             }}
