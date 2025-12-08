@@ -135,7 +135,6 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
         isTextColorThemeColor = true;
       }
     }
-    console.log('isTextColorThemeColor', isActive, item, isTextColorThemeColor);
     return clsx('fairys-menu-item', menuItemBaseClassName, className, {
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
       'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
