@@ -22,8 +22,8 @@ const titleTextClassName =
 
 export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React.LegacyRef<HTMLDivElement>) => {
   const { item, expandCollapse, isExpandCollapse, utilsItemOptions } = props;
-  const { level: _level = 0, currentType, countGroupMenu, countSubMenu } = utilsItemOptions || {};
-  const { className, style, iconProps, icon, extra, disabled, type } = item;
+  const { level: _level = 0, countGroupMenu, countSubMenu } = utilsItemOptions;
+  const { className, style, iconProps, icon, extra, disabled } = item;
 
   const [state, instance] = useFairysMenuInstanceContext();
   const collapsedMode = state.collapsedMode;
@@ -115,16 +115,39 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   }, [isActive, menuItemInstance.dom]);
 
   const _class = useMemo(() => {
+    let isTextColorThemeColor = false;
+    // 选中的父级默认 使用 --fairys-theme-color 颜色
+    // firstGroupMode === 'click'、'hover' 时，选中的父级默认 使用 --fairys-theme-color 颜色
+    // subMenu 选中时，默认使用 --fairys-theme-color 颜色
+    if (isCollapsedCheck) {
+      if (utilsItemOptions.currentType === 'subMenu') {
+        if (collapsed) {
+          // 折叠的时候，第一层不显示，已经存在背景色了
+          isTextColorThemeColor = utilsItemOptions.countSubMenu > 1;
+        } else {
+          isTextColorThemeColor = true;
+        }
+      } else if (
+        (firstGroupMode === 'click' || firstGroupMode === 'hover') &&
+        collapsed &&
+        utilsItemOptions.currentType === 'group'
+      ) {
+        isTextColorThemeColor = true;
+      }
+    }
+    console.log('isTextColorThemeColor', isActive, item, isTextColorThemeColor);
     return clsx('fairys-menu-item', menuItemBaseClassName, className, {
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
       'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
       active: !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
-      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600': !isActive && !disabled && type !== 'group',
+      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600':
+        !isActive && !disabled && utilsItemOptions.currentType !== 'group',
       'fairys:justify-center': isFlexCol,
-      'fairys:opacity-90': type === 'group',
+      'fairys:opacity-90': utilsItemOptions.currentType === 'group',
+      'fairys:text-(--fairys-theme-color)!': isTextColorThemeColor,
     });
-  }, [className, isActive, collapsed, disabled, type, isFlexCol, size]);
+  }, [className, isActive, isCollapsedCheck, collapsed, disabled, isFlexCol, size, utilsItemOptions]);
 
   const expandIcon = useMemo(() => {
     return clsx(
@@ -187,7 +210,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     if (item.disabled || isActive) {
       return;
     }
-    if (type === 'group') {
+    if (utilsItemOptions.currentType === 'group') {
       instance.onClickGroupItem(item, event, instance);
     } else if (isExpandCollapse) {
       instance._onClickSubItem(item, event, instance);
@@ -224,7 +247,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       {!!isActive ? (
         <motion.div
           className="fairys:rounded-sm w-full h-full fairys:absolute fairys:top-0 fairys:left-0"
-          layoutId={`${activeMotionPrefixCls}-${currentType}-selected`}
+          layoutId={`${activeMotionPrefixCls}-${utilsItemOptions.currentType}-selected`}
           initial={{ backgroundColor: 'var(--fairys-theme-color)' }}
           animate={{ backgroundColor: 'var(--fairys-theme-color)' }}
           transition={{ duration: 0.3 }}
