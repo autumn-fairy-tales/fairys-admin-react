@@ -1,12 +1,17 @@
 import { menuDataInstance, MenuItemType, useMenuDataInstance } from 'context/menu-data';
 import { useSettingDataInstance } from 'context/setting';
-import { FairysMenu, FairysMenuItemType } from 'components/menu';
+import { FairysMenu, FairysMenuItemType, FairysMenuProps } from 'components/menu';
 import { useLocation } from 'react-router';
 import { routerDataInstance } from 'context/router-data';
 import { tabBarDataInstance } from 'context/tab-bar';
 import { useCallback } from 'react';
 
-export const Menu = () => {
+export interface MenuProps extends FairysMenuProps {
+  // 点击菜单项回调
+  onClickItem?: (item: MenuItemType & FairysMenuItemType) => void;
+}
+
+export const Menu = (props: MenuProps) => {
   const [state] = useMenuDataInstance();
   const menuItems = state.menuItems as FairysMenuItemType[];
   const _menuItems = menuDataInstance._menuItems as FairysMenuItemType[];
@@ -38,20 +43,22 @@ export const Menu = () => {
       }
       routerDataInstance.navigate(item.path);
       tabBarDataInstance.addItem(item as any);
+      props.onClickItem?.(item);
     },
     [menuDataInstance],
   );
 
   return (
     <FairysMenu
+      maxWidth={220}
+      {...props}
       items={layoutMode === 'left' || layoutMode === 'mobile' ? _menuItems : menuItems}
       activeMotionPrefixCls="fairys-menu-item-active"
-      collapsed={sideMenuMode === 'close' ? true : undefined}
-      firstLevelSize={sideMenuMode === 'close' ? 'large' : 'default'}
+      collapsed={sideMenuMode === 'close' && layoutMode !== 'mobile' ? true : undefined}
+      firstLevelSize={sideMenuMode === 'close' && layoutMode !== 'mobile' ? 'large' : 'default'}
       isOnlyParentOpenKeys
       selectedKey={location.pathname}
       onClickItem={onClickItem}
-      maxWidth={220}
     />
   );
 };

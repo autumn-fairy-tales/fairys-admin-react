@@ -76,7 +76,7 @@ export interface FairysMenuInstanceState {
   size?: 'small' | 'default' | 'large';
   /**第一层菜单大小*/
   firstLevelSize?: 'small' | 'default' | 'large';
-  /**最大宽度*/
+  /**菜单最大宽度*/
   maxWidth?: number;
   /**选中菜单类名前缀*/
   activeMotionPrefixCls?: string;
@@ -122,4 +122,9 @@ export interface FairysMenuProps extends Omit<FairysMenuInstanceState, '__defaul
   isOnlyParentOpenKeys?: boolean;
   className?: string;
   style?: React.CSSProperties;
+  /**宽度
+   * auto: 自动宽度
+   * number: 固定宽度
+   */
+  width?: 'auto' | number;
 }

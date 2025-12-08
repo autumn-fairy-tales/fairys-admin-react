@@ -1,7 +1,7 @@
 import { Menu } from 'menu';
 import { MainMenu } from 'main-menu';
 import { useSettingDataInstance } from 'context/setting';
-import { Fragment, memo, useMemo } from 'react';
+import { Fragment, memo, useMemo, useState } from 'react';
 import clsx from 'clsx';
 import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { Avatar } from 'avatar';
@@ -10,6 +10,7 @@ import { Logo } from 'logo';
 import { FairysPopoverBase } from 'components/popover-base';
 import { useAppPluginDataInstance } from 'context';
 import { UtilsColor } from 'utils/utils.color';
+import { FairysModalBase } from 'components/modal-base';
 
 const LayoutSiderMainMenu = () => {
   const [state] = useSettingDataInstance();
@@ -151,11 +152,34 @@ export const LayoutSider = memo(() => {
 });
 
 export const LayoutMenuMobile = () => {
+  const [visible, setVisible] = useState(false);
+
   return (
-    <FairysPopoverBase content={<Menu />} placement="bottom-end">
-      <FairysButtonBase className="fairys_admin_layout_menu_mobile_btn fairys:relative">
+    <Fragment>
+      <FairysButtonBase
+        onClick={() => setVisible(true)}
+        className="fairys_admin_layout_menu_mobile_btn fairys:relative"
+      >
         <span className="fairys:icon-[ant-design--appstore-outlined] fairys:size-[18px] fairys:text-[var(--fairys-theme-color)]" />
       </FairysButtonBase>
-    </FairysPopoverBase>
+      <FairysModalBase
+        mode="drawer"
+        drawerDirection="left"
+        // width={220}
+        open={visible}
+        onClose={() => {
+          setVisible(false);
+        }}
+      >
+        <Menu onClickItem={() => setVisible(false)} maxWidth={null} width="auto" />
+      </FairysModalBase>
+    </Fragment>
   );
+  // return (
+  //   <FairysPopoverBase content={<Menu />} placement="bottom-end">
+  //     <FairysButtonBase className="fairys_admin_layout_menu_mobile_btn fairys:relative">
+  //       <span className="fairys:icon-[ant-design--appstore-outlined] fairys:size-[18px] fairys:text-[var(--fairys-theme-color)]" />
+  //     </FairysButtonBase>
+  //   </FairysPopoverBase>
+  // );
 };

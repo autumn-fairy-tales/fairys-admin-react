@@ -45,6 +45,7 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
     maxWidth,
     firstGroupMode,
     collapsed,
+    width,
   } = props;
 
   const propsKeys = Object.keys(props);
@@ -65,15 +66,15 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
     return clsx(
       'fairys-menu fairys:transition-all fairys:duration-300 fairys:flex fairys:overflow-auto fairys:h-full no-scrollbar fairys:box-border',
       {
-        'fairys:flex-col fairys:gap-y-2': mode === 'vertical',
-        'fairys:flex-row fairys:gap-x-2': mode === 'horizontal',
-        'fairys:max-w-[220px]': !collapsed && mode === 'vertical',
-        'fairys:max-w-[80px]': collapsed && mode === 'vertical',
+        'fairys:flex-col fairys:gap-y-1': mode === 'vertical',
+        'fairys:flex-row fairys:gap-x-1': mode === 'horizontal',
+        'fairys:max-w-[220px]': !collapsed && mode === 'vertical' && !width,
+        'fairys:max-w-[80px]': collapsed && mode === 'vertical' && !width,
         'fairys:p-[8px]': size !== 'small' && firstLevelSize !== 'small',
       },
       className,
     );
-  }, [mode, collapsed, size, className]);
+  }, [mode, collapsed, size, className, !!width]);
 
   useMemo(() => instance.processMenuItems(items), [items]);
   useMemo(() => instance.setActiveMotionPrefixCls(activeMotionPrefixCls), [activeMotionPrefixCls]);
@@ -121,7 +122,7 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
   return (
     <FairysPopoverBaseFloatingTreeParent>
       <FairysMenuInstanceContext.Provider value={instance}>
-        <motion.div ref={mergeRef} className={_class} style={{ maxWidth, ...style }}>
+        <motion.div ref={mergeRef} className={_class} style={{ maxWidth, width, ...style }}>
           {render}
         </motion.div>
       </FairysMenuInstanceContext.Provider>

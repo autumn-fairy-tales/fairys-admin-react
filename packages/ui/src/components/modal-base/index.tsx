@@ -104,13 +104,27 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
   }, [drawerDirection, mode]);
 
   const _clsxBaseDrawerDirection = useMemo(() => {
+    // 获取屏幕宽度
+    const windowWidth = window.document.documentElement.clientWidth;
+    const windowHeight = window.document.documentElement.clientHeight;
+    // 如果设置 width 小于400 并且 容器也小于400 ，则判断 width 和 windowWidth 大小，取小的值
+    const _width = Math.min(width || 400, windowWidth, 400);
+    const _height = Math.min(height || 400, windowHeight, 400);
     if (mode === 'drawer') {
-      return clsx({
-        'fairys:min-w-[400px] fairys:min-h-[100vh]': drawerDirection === 'right' || drawerDirection === 'left',
-        'fairys:min-h-[400px] fairys:min-w-[100vw]': drawerDirection === 'bottom' || drawerDirection === 'top',
-      });
+      return {
+        style: {},
+        class: clsx({
+          'fairys:min-w-[400px] fairys:min-h-[100vh]':
+            (drawerDirection === 'right' || drawerDirection === 'left') && !width && _width === 400,
+          'fairys:min-h-[400px] fairys:min-w-[100vw]':
+            (drawerDirection === 'bottom' || drawerDirection === 'top') && !height && _height === 400,
+        }),
+      };
     }
-    return '';
+    return {
+      class: '',
+      style: {},
+    };
   }, [drawerDirection, mode]);
 
   if (!show) {
@@ -141,7 +155,7 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
           }}
         >
           <motion.div
-            className={`${baseClassName} ${_clsxBaseDrawerDirection}  ${
+            className={`${baseClassName} ${_clsxBaseDrawerDirection.class}  ${
               isFullScreen ? fullScreen_base_className : ''
             } ${className}`}
             style={{ ...style, width, height }}
@@ -155,7 +169,7 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
               <div
                 style={headerStyle}
                 className={clsx(
-                  'fairys_admin_modal_base_header  fairys:p-4 fairys:relative fairys:flex fairys:items-center fairys:justify-between fairys:border-b ',
+                  'fairys_admin_modal_base_header fairys:box-border fairys:p-4 fairys:relative fairys:flex fairys:items-center fairys:justify-between fairys:border-b ',
                   UtilsColor.componentBorderClassNameBase,
                   headerClassName,
                 )}
@@ -178,14 +192,14 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
 
             <div
               style={bodyStyle}
-              className={`fairys_admin_modal_base_content fairys:p-4  fairys:flex-1 fairys:overflow-hidden ${bodyClassName}`}
+              className={`fairys_admin_modal_base_content fairys:box-border fairys:p-4 fairys:flex-1 fairys:overflow-hidden ${bodyClassName}`}
             >
               {children}
             </div>
             {footer ? (
               <div
                 style={footerStyle}
-                className={`fairys_admin_modal_base_footer fairys:p-4  fairys:border-t ${UtilsColor.componentBorderClassNameBase} ${footerClassName}`}
+                className={`fairys_admin_modal_base_footer fairys:box-border fairys:p-4 fairys:border-t ${UtilsColor.componentBorderClassNameBase} ${footerClassName}`}
               >
                 {footer}
               </div>

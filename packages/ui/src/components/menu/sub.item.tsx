@@ -29,7 +29,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
   const _class = useMemo(() => {
     return clsx(
       type === 'group' ? 'fairys-group-menu-item' : 'fairys-sub-menu-item',
-      '-item fairys:shrink-0 fairys:gap-y-2',
+      'fairys:shrink-0 fairys:gap-y-1',
       className,
     );
   }, [className]);
@@ -61,8 +61,8 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
    * **/
   const _classBody = useMemo(() => {
     return clsx('fairys-group-menu-item_body fairys:shrink-0 fairys:flex', {
-      'fairys:flex-col fairys:gap-y-2': mode === 'vertical' || collapsedSubMenuIndex !== -1,
-      'fairys:flex-row fairys:gap-x-2': mode === 'horizontal' && collapsedSubMenuIndex === -1,
+      'fairys:flex-col fairys:gap-y-1': mode === 'vertical' || collapsedSubMenuIndex !== -1,
+      'fairys:flex-row fairys:gap-x-1': mode === 'horizontal' && collapsedSubMenuIndex === -1,
     });
   }, [mode, collapsedSubMenuIndex]);
   // 横向的不显示分组，和折叠一样
@@ -81,7 +81,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
             content={
               <div
                 style={{ maxWidth }}
-                className="fairys-group-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-2 fairys:p-[5px]"
+                className="fairys-group-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-1 fairys:p-[5px]"
               >
                 {render}
               </div>
@@ -125,7 +125,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
         content={
           <div
             style={{ maxWidth }}
-            className="fairys-sub-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-2 fairys:p-[5px]"
+            className="fairys-sub-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-1 fairys:p-[5px]"
           >
             {render}
           </div>
@@ -151,7 +151,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
       <FairysMenuItem item={item} isExpandCollapse expandCollapse={isOpen} utilsItemOptions={utilsItemOptions} />
       <FairysDisclosureItem
         open={isOpen}
-        className="fairys-sub-menu-item_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-2"
+        className="fairys-sub-menu-item_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-1"
       >
         {render}
       </FairysDisclosureItem>

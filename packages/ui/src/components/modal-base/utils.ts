@@ -38,7 +38,7 @@ export const overlay_className = {
 };
 
 export const base_className = {
-  modal: `fairys_admin_modal_base fairys:min-w-[400px] fairys:min-h-[200px] fairys:rounded-lg fairys:bg-white fairys:dark:bg-gray-800! fairys:border  fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[calc(100vh-100px)] fairys:overflow-hidden fairys:max-w-[100vw] ${UtilsColor.popoverBorderClassNameBase}`,
+  modal: `fairys_admin_modal_base fairys:min-w-[400px] fairys:min-h-[200px] fairys:rounded-lg fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[calc(100vh-100px)] fairys:overflow-hidden fairys:max-w-[100vw] ${UtilsColor.popoverBorderClassNameBase}`,
   drawer: `fairys_admin_drawer_base_drawer fairys:rounded-l-lg fairys:bg-white fairys:dark:bg-gray-800! fairys:border fairys:shadow-xl fairys:inset-shadow-sm fairys:relative fairys:flex fairys:flex-col fairys:max-h-[100vh] fairys:max-w-[100vw] fairys:overflow-hidden  ${UtilsColor.popoverBorderClassNameBase}`,
 };
 

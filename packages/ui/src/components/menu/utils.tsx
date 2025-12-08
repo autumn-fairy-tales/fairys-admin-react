@@ -1,6 +1,5 @@
 import { Fragment } from 'react/jsx-runtime';
 import { FairysDividerMenuItem } from './divider.item';
-import { FairysGroupMenuItem } from './group.item';
 import { FairysMenuItem } from './item';
 import { FairysSubMenuItem } from './sub.item';
 import { FairysItemType } from './interface';
