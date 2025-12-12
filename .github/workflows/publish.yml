@@ -4,21 +4,13 @@ on:
   push:
     branches:
       - main
-
 env:
   SKIP_PREFLIGHT_CHECK: true
   TZ: Asia/Shanghai
 
-permissions:
-  contents: read
-  id-token: write  # required to use OIDC
-
 jobs:
   build-deploy:
-    runs-on: ubuntu-22.04
-
-
-
+    runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
@@ -77,13 +69,29 @@ jobs:
           ```
           ${{ steps.changelog.outputs.compareurl }}
           ${{ steps.changelog.outputs.changelog }}
+   
+  deploy: 
+    name: Publish
+    runs-on: ubuntu-latest
+    environment: npm
 
-    - name: Publish 🚀
-      uses: SunLxy/npm-publish@main
-      with:
-        # token: ${{ secrets.NPM_TOKEN }}
-        workspaces: |
-          core
-          packages/*
+    permissions:
+      contents: read
+      id-token: write
 
-  
+    needs:
+      - build-deploy
+
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 22
+
+      - name: Publish 🚀
+        uses: SunLxy/npm-publish@main
+        with:
+          # token: ${{ secrets.NPM_TOKEN }}
+          workspaces: |
+            core
+            packages/*
