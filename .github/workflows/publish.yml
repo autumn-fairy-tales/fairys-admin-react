@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-
+      
 env:
   SKIP_PREFLIGHT_CHECK: true
   TZ: Asia/Shanghai
@@ -12,11 +12,16 @@ env:
 jobs:
   build-deploy:
     runs-on: ubuntu-22.04
+
+    permissions:
+      contents: read
+      id-token: write  # required to use OIDC
+
     steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-node@v3
       with:
-        node-version: 20
+        node-version: 22
 
     - run: yarn install
     - run: yarn run build:all
@@ -74,7 +79,7 @@ jobs:
     - name: Publish 🚀
       uses: SunLxy/npm-publish@main
       with:
-        token: ${{ secrets.NPM_TOKEN }}
+        # token: ${{ secrets.NPM_TOKEN }}
         workspaces: |
           core
           packages/*
