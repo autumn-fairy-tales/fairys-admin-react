@@ -12,6 +12,10 @@
     "build": "carefrees-rslib build --config=./rslib.config.ts",
     "watch": "carefrees-rslib build --watch --config=./rslib.config.ts"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/autumn-fairy-tales/fairys-admin-react.git"
+  },
   "publishConfig": {
     "access": "public"
   },

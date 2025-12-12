@@ -12,6 +12,10 @@
     "build": "carefrees-rslib build --node --esm",
     "watch": "carefrees-rslib build --watch  --node  --esm"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/autumn-fairy-tales/fairys-admin-react.git"
+  },
   "publishConfig": {
     "access": "public"
   },
