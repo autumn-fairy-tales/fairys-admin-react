@@ -45,36 +45,15 @@ const MainMenuItems = (props: MainMenuProps) => {
           return;
         }
       }
-      routerDataInstance.navigate(item.path);
-      tabBarDataInstance.addItem(item as any);
+      // 判断是否是子菜单
+      if (Array.isArray(item.items)) {
+        menuInstance.onMainMenu(item.path);
+      } else {
+        routerDataInstance.navigate(item.path);
+        tabBarDataInstance.addItem(item);
+      }
     },
     [menuDataInstance],
-  );
-
-  const onClickSubItem = useCallback(
-    async (item: MenuItemType & FairysMenuItemType) => {
-      // 打开浏览器新窗口
-      if (item.isOpenNewWindow) {
-        window.open(item.path, '_blank');
-        return;
-      }
-      if (typeof item.onBeforeNavigate === 'function') {
-        const isBool = await item.onBeforeNavigate(item);
-        // 如果为 false 不进行跳转
-        if (!isBool) {
-          return;
-        }
-      }
-      if (typeof menuInstance.onBeforeNavigate === 'function') {
-        const isBool = await menuInstance.onBeforeNavigate(item);
-        // 如果为 false 不进行跳转
-        if (!isBool) {
-          return;
-        }
-      }
-      menuInstance.onMainMenu(item.path);
-    },
-    [menuInstance],
   );
 
   const propsConfig: FairysMenuProps = useMemo(() => {
@@ -115,12 +94,12 @@ const MainMenuItems = (props: MainMenuProps) => {
       items={mainMenuItems}
       mode={layoutMode}
       onClickItem={onClickItem}
-      onClickSubItem={onClickSubItem}
+      onClickSubItem={onClickItem}
       onClickGroupItem={(item: MenuItemType & FairysMenuItemType) => {
         if (layoutModeState === 'main_left' || layoutModeState === 'main_top_header') {
           return;
         }
-        onClickSubItem(item);
+        onClickItem(item);
       }}
       maxWidth={220}
     />

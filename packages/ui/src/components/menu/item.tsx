@@ -6,6 +6,7 @@ import { FairysIcon } from 'components/icon';
 import { useFairysMenuInstanceContext, useFairysMenuItemInstance } from './instance';
 import { UtilsItemOptions } from './utils';
 import { useMergeRefs, useFloatingTree } from '@floating-ui/react';
+import { UtilsColor } from 'utils/utils.color';
 
 export interface FairysMenuItemProps {
   item: FairysMenuItemType;
@@ -15,7 +16,7 @@ export interface FairysMenuItemProps {
 }
 
 const menuItemBaseClassName =
-  'fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:rounded-sm fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:box-border';
+  'fairys:shrink-0 fairys:transition-all fairys:duration-300  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:box-border';
 
 const titleTextClassName =
   'fairys-menu-item_title-text fairys:flex-1 fairys:max-w-full fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap';
@@ -114,6 +115,14 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     }
   }, [isActive, menuItemInstance.dom]);
 
+  /**移入样式*/
+  const _classHover = useMemo(() => {
+    return clsx('fairys:shrink-0 fairys:rounded-sm', {
+      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600':
+        !isActive && !disabled && utilsItemOptions.currentType !== 'group',
+    });
+  }, [isActive, disabled, utilsItemOptions.currentType]);
+
   const _class = useMemo(() => {
     let isTextColorThemeColor = false;
     // 选中的父级默认 使用 --fairys-theme-color 颜色
@@ -135,16 +144,26 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
         isTextColorThemeColor = true;
       }
     }
+
+    // 如果 collapsed 为 true, 判断是否 firstGroupMode === 'click'、'hover' ，如果是则除第一层其他层显示
+    let isGroupBorderBottom = utilsItemOptions.currentType === 'group';
+    if (collapsed) {
+      if (firstGroupMode === 'click' || firstGroupMode === 'hover') {
+        isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1;
+      }
+    }
+
     return clsx('fairys-menu-item', menuItemBaseClassName, className, {
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
       'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
       active: !!isActive,
       'fairys:text-white fairys:dark:text-white': !!isActive,
-      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600':
-        !isActive && !disabled && utilsItemOptions.currentType !== 'group',
       'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': utilsItemOptions.currentType === 'group',
       'fairys:text-(--fairys-theme-color)!': isTextColorThemeColor,
+      'fairys:border-b fairys:mb-1 ': isGroupBorderBottom,
+      [UtilsColor.componentBorderClassNameBase]: isGroupBorderBottom,
+      'fairys:rounded-sm': !isGroupBorderBottom,
     });
   }, [className, isActive, isCollapsedCheck, collapsed, disabled, isFlexCol, size, utilsItemOptions]);
 
@@ -172,7 +191,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     );
   }, [level, collapsed, disabled, isFlexCol]);
 
-  const _styleBody = useMemo(() => {
+  const _stylePaddingLeft = useMemo(() => {
     if (level === 0) {
       return {};
     }
@@ -210,11 +229,12 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       return;
     }
     if (utilsItemOptions.currentType === 'group') {
-      instance.onClickGroupItem(item, event, instance);
+      instance.onClickGroupItem(item, event, instance, utilsItemOptions.currentType);
     } else if (isExpandCollapse) {
-      instance._onClickSubItem(item, event, instance);
+      instance._onClickSubItem(item, event, instance, utilsItemOptions.currentType);
     } else {
-      instance._onClickItem(item, event, instance);
+      instance._onClickItem(item, event, instance, utilsItemOptions.currentType);
+      /**在 在点击菜单后，关闭 因 点击/移入 展开的弹框 进行关闭*/
       floatingTree?.events?.emit?.('click');
     }
   };
@@ -242,7 +262,13 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   }, [collapsed, level, isExpandCollapse, countGroupMenu, countSubMenu]);
 
   return (
-    <motion.div title={item.title} style={style} className={_class} onClick={onClick} ref={mergeRef}>
+    <motion.div
+      title={item.title}
+      style={style}
+      className="fairys:shrink-0 fairys:relative fairys:box-border"
+      onClick={onClick}
+      ref={mergeRef}
+    >
       {!!isActive ? (
         <motion.div
           className="fairys:rounded-sm w-full h-full fairys:absolute fairys:top-0 fairys:left-0"
@@ -254,24 +280,33 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       ) : (
         <Fragment />
       )}
-      <div className={_classBody} style={_styleBody}>
-        {icon ? (
-          <span className={_classIcon}>
-            <FairysIcon className={_classIcon} icon={icon} iconProps={iconProps} />
-          </span>
-        ) : (
-          <Fragment />
-        )}
-        {isShowTitle ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
-        {extra ? <div className={_classExtra}>{extra}</div> : <Fragment />}
-      </div>
-      {isShowExpandCollapse ? (
-        <div className="fairys-menu-item_expand-icon fairys_admin_down_up_icon">
-          <div className={expandIcon} />
+      {/* 行整体 移入样式在这个地方加 */}
+      <div className={_classHover}>
+        {/*  padding-left */}
+        <div style={_stylePaddingLeft}>
+          <div className={_class}>
+            {/* 整体数据渲染，高度，padding 之类的 */}
+            <div className={_classBody}>
+              {icon ? (
+                <span className={_classIcon}>
+                  <FairysIcon className={_classIcon} icon={icon} iconProps={iconProps} />
+                </span>
+              ) : (
+                <Fragment />
+              )}
+              {isShowTitle ? <span className={titleTextClassName}>{item.title}</span> : <Fragment />}
+              {extra ? <div className={_classExtra}>{extra}</div> : <Fragment />}
+            </div>
+            {isShowExpandCollapse ? (
+              <div className="fairys-menu-item_expand-icon fairys_admin_down_up_icon">
+                <div className={expandIcon} />
+              </div>
+            ) : (
+              <Fragment />
+            )}
+          </div>
         </div>
-      ) : (
-        <Fragment />
-      )}
+      </div>
     </motion.div>
   );
 });

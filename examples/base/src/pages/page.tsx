@@ -39,7 +39,7 @@ const MainIndex = () => {
       <FairysMainPageBody>
         <button onClick={() => updateSelectedKey('/about/1')}>切换选中</button>
         <button onClick={() => updateSelectedKey('/')}>切换选中</button>
-        {/* <div>
+        <div>
           <FairysMenu
             // size='small'
             selectedKey={selectedKey}
@@ -165,7 +165,7 @@ const MainIndex = () => {
               },
             ]}
           />
-        </div> */}
+        </div>
 
         <FairysNotificationListBase
           items={[

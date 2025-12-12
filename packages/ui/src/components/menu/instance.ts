@@ -170,30 +170,34 @@ export class FairysMenuInstance {
     rowItem: FairysMenuItemType,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     instance: FairysMenuInstance,
+    menuType: FairysItemType['type'],
   ) => void = () => void 0;
   public onClickSubItem: (
     item: FairysMenuItemType,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     instance: FairysMenuInstance,
+    menuType: FairysItemType['type'],
   ) => void = () => void 0;
 
   public onClickGroupItem: (
     item: FairysMenuItemType,
     event: React.MouseEvent<HTMLDivElement, MouseEvent>,
     instance: FairysMenuInstance,
+    menuType: FairysItemType['type'],
   ) => void = () => void 0;
 
-  public _onClickItem: FairysMenuInstance['onClickItem'] = (rowItem, event, instance) => {
+  public _onClickItem: FairysMenuInstance['onClickItem'] = (rowItem, event, instance, menuType) => {
     if (!this.isSelectedKeyField) {
       this.state.selectedKey = rowItem.path;
     }
-    this.onClickItem?.(rowItem, event, instance);
+    this.onClickItem?.(rowItem, event, instance, menuType);
   };
 
-  public _onClickSubItem: FairysMenuInstance['onClickSubItem'] = (item, event, instance) => {
+  public _onClickSubItem: FairysMenuInstance['onClickSubItem'] = (item, event, instance, menuType) => {
     if (!this.isOpenKeysField) {
       const isOpen = this.isOpen(item.path);
       if (isOpen) {
+        // 关闭菜单，直接过滤当前点击的父级菜单
         this.state.expandItems = this.state.expandItems.filter((it) => it.path !== item.path);
         this.state.openKeys = Array.from(new Set(this.state.expandItems.map((it) => it.path)));
       } else {
@@ -205,12 +209,13 @@ export class FairysMenuInstance {
             this.state.openKeys = Array.from(new Set(this.state.expandItems.map((it) => it.path)));
           }
         } else {
+          // 保留多个父级展开，点击的那一个父级菜单，保存那个父级菜单
           this.state.expandItems = [...this.state.expandItems, item];
           this.state.openKeys = Array.from(new Set(this.state.expandItems.map((it) => it.path)));
         }
       }
     }
-    this.onClickSubItem?.(item, event, instance);
+    this.onClickSubItem?.(item, event, instance, menuType);
   };
 
   state = proxy<FairysMenuInstanceState>({

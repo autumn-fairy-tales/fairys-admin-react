@@ -101,23 +101,11 @@ export interface FairysMenuProps extends Omit<FairysMenuInstanceState, '__defaul
   /**菜单实例*/
   menuInstance?: FairysMenuInstance;
   /**点击菜单项事件*/
-  onClickItem?: (
-    item: FairysMenuItemType,
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    instance: FairysMenuInstance,
-  ) => void;
+  onClickItem?: FairysMenuInstance['onClickItem'];
   /**点击sub菜单项事件*/
-  onClickSubItem?: (
-    item: FairysMenuItemType,
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    instance: FairysMenuInstance,
-  ) => void;
+  onClickSubItem?: FairysMenuInstance['onClickSubItem'];
   /**点击分组菜单项事件*/
-  onClickGroupItem?: (
-    item: FairysMenuItemType,
-    event: React.MouseEvent<HTMLDivElement, MouseEvent>,
-    instance: FairysMenuInstance,
-  ) => void;
+  onClickGroupItem?: FairysMenuInstance['onClickGroupItem'];
   /**是否只保留一组父级菜单展开(在未传递 openKeys 字段时生效)*/
   isOnlyParentOpenKeys?: boolean;
   className?: string;
