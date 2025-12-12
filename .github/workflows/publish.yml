@@ -79,14 +79,14 @@ jobs:
       contents: read
       id-token: write
 
-    needs:
-      - build-deploy
-
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
         with:
           node-version: 22
+
+      - run: yarn install
+      - run: yarn run build:all
 
       - name: Publish 🚀
         uses: SunLxy/npm-publish@main
