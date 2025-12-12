@@ -4,18 +4,20 @@ on:
   push:
     branches:
       - main
-      
+
 env:
   SKIP_PREFLIGHT_CHECK: true
   TZ: Asia/Shanghai
+
+permissions:
+  contents: read
+  id-token: write  # required to use OIDC
 
 jobs:
   build-deploy:
     runs-on: ubuntu-22.04
 
-    permissions:
-      contents: read
-      id-token: write  # required to use OIDC
+
 
     steps:
     - uses: actions/checkout@v3
