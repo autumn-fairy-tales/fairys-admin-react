@@ -16,15 +16,15 @@ jobs:
   build-deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - uses: actions/setup-node@v3
+    - uses: actions/checkout@v6
+    - uses: actions/setup-node@v6
       with:
         node-version: 24
 
     - run: yarn install
-    - run: yarn run build:all
-    - run: yarn build:docs
-    - run: yarn build:example
+    - run: npm run build:all
+    - run: npm run build:docs
+    - run: npm run build:example
 
     - name: example
       run: |
