@@ -1,6 +1,6 @@
 {
   "name": "docs",
-  "version": "1.0.13",
+  "version": "1.0.14",
   "private": true,
   "homepage": "https://github.com/autumn-fairy-tales/fairys-admin-react",
   "description": "文档",
@@ -10,7 +10,7 @@
     "preview": "rspress preview"
   },
   "dependencies": {
-    "@fairys/admin-tools-react": "^1.0.13"
+    "@fairys/admin-tools-react": "^1.0.14"
   },
   "devDependencies": {
     "@rspress/plugin-preview": "~1.47.0",
