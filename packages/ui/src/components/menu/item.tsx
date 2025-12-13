@@ -154,7 +154,8 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     }
     // 水平模式下，除了一级菜单，其他菜单都显示 border-bottom
     if (mode === 'horizontal' && utilsItemOptions.currentType === 'group') {
-      isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1;
+      // 如果是 subMenu 菜单，且有子菜单，则显示 border-bottom
+      isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1 || utilsItemOptions.countSubMenu > 0;
     }
 
     return clsx('fairys-menu-item', menuItemBaseClassName, className, {
