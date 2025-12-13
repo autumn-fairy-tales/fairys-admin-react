@@ -152,6 +152,10 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
         isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1;
       }
     }
+    // 水平模式下，除了一级菜单，其他菜单都显示 border-bottom
+    if (mode === 'horizontal') {
+      isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1;
+    }
 
     return clsx('fairys-menu-item', menuItemBaseClassName, className, {
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
