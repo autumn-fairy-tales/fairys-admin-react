@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkexample=self.webpackChunkexample||[]).push([["40"],{5291(e,a,l){l.r(a),l.d(a,{Component:()=>p,default:()=>r});var s=l(1085),n=l(121);let p=()=>(0,s.jsx)(n.FairysMainPage,{children:"lazy load"}),r=p}}]);
