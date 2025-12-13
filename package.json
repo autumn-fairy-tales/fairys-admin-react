@@ -18,7 +18,7 @@
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\""
   },
   "dependencies": {
-    "@carefrees/rslib": "~0.0.14",
+    "@carefrees/rslib": "~0.0.15",
     "husky": "~9.1.7",
     "lerna": "~8.2.3",
     "prettier": "~2.7.0",
@@ -28,8 +28,7 @@
     "@tailwindcss/postcss": "~4.1.11",
     "tailwindcss": "~4.1.11",
     "@iconify/tailwind4": "~1.0.6",
-    "@iconify/json": "~2.2.367",
-    "@rsbuild/plugin-svgr": "1.2.3"
+    "@iconify/json": "~2.2.367"
   },
   "overrides": {
     "@types/react": "~18.2.21",
