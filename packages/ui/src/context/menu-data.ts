@@ -15,10 +15,6 @@ export interface MenuItemType {
   iconProps?: FairysIconPropsType;
   /**判断是否主子菜单字段，仅在第一层生效*/
   isMain?: boolean;
-  /**在left布局中，父级是否显示
-   * @default true
-   */
-  left_isMainShow?: boolean;
   /**子项菜单*/
   items?: MenuItemType[];
   /**是否为固定菜单,(直接固定到tabbar上，不可删除)*/
@@ -127,10 +123,16 @@ export class MenuDataInstance {
   });
   /**设置菜单所有数据*/
   ctor = (items: MenuItemType[]) => {
-    this._menuItems = items;
-    this._flatMenuItems = flatMenuItems(items, [], this._parentMenuItemMap);
-    this.state.menuItems = ref(items);
-    this.state.mainMenuItems = ref(items.filter((item) => item.isMain));
+    const _items: MenuItemType[] = items.map((it) => ({
+      ...it,
+      isMain: it.type === 'group' ? true : it.isMain ?? false,
+      type: it.type === 'group' ? 'group' : it.isMain ? 'group' : it.type,
+    }));
+
+    this._menuItems = _items;
+    this._flatMenuItems = flatMenuItems(_items, [], this._parentMenuItemMap);
+    this.state.menuItems = ref(_items);
+    this.state.mainMenuItems = ref(_items.filter((item) => item.isMain));
     this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain));
     const fixedItems = this._flatMenuItems.filter((it) => it.isTabFixed && !it.isMain);
     if (fixedItems.length) {

@@ -22,6 +22,7 @@ import { menuDataInstance } from '@fairys/admin-tools-react';
 
 ```ts
 import type { FairysIconPropsType } from "components/icon"
+import { FairysItemType } from 'components/menu';
 
 export interface MenuDataInstanceState {
   /**侧边渲染菜单*/
@@ -39,6 +40,7 @@ export interface MenuDataInstanceState {
 }
 
 export interface MenuItemType {
+  type?: FairysItemType['type'];
   /**标题*/
   title: string;
   /**路径*/
@@ -49,10 +51,6 @@ export interface MenuItemType {
   iconProps?: FairysIconPropsType;
   /**判断是否主子菜单字段，仅在第一层生效*/
   isMain?: boolean;
-  /**在left布局中，父级是否显示
-   * @default true
-   */
-  left_isMainShow?: boolean;
   /**子项菜单*/
   items?: MenuItemType[];
   /**是否为固定菜单,(直接固定到tabbar上，不可删除)*/
@@ -67,6 +65,7 @@ export interface MenuItemType {
   onBeforeNavigate?: (item: MenuItemType) => boolean | Promise<boolean>;
   [x: string]: any;
 }
+
 
 ```
 
