@@ -146,16 +146,29 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     }
 
     // 如果 collapsed 为 true, 判断是否 firstGroupMode === 'click'、'hover' ，如果是则除第一层其他层显示
-    let isGroupBorderBottom = utilsItemOptions.currentType === 'group';
-    if (collapsed) {
-      if (firstGroupMode === 'click' || firstGroupMode === 'hover') {
+    let isGroupBorderBottom = false;
+
+    if (utilsItemOptions.currentType === 'group') {
+      // 折叠模式
+      if (collapsed) {
+        // 折叠模式下，判断是否 firstGroupMode === 'click'、'hover' ，如果是则除第一层其他层显示 border-bottom
+        if (firstGroupMode === 'click' || firstGroupMode === 'hover') {
+          isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1;
+        } else {
+          isGroupBorderBottom = true;
+        }
+      } else {
+        // 非折叠模式
+        isGroupBorderBottom = true;
+      }
+      // 水平模式下，除了一级菜单，其他菜单都显示 border-bottom
+      if (mode === 'horizontal') {
+        // 如果是 subMenu 菜单，且有子菜单，则显示 border-bottom
         isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1;
       }
-    }
-    // 水平模式下，除了一级菜单，其他菜单都显示 border-bottom
-    if (mode === 'horizontal' && utilsItemOptions.currentType === 'group') {
-      // 如果是 subMenu 菜单，且有子菜单，则显示 border-bottom
-      isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1 || utilsItemOptions.countSubMenu > 0;
+      if (utilsItemOptions.countSubMenu) {
+        isGroupBorderBottom = true;
+      }
     }
 
     return clsx('fairys-menu-item', menuItemBaseClassName, className, {
@@ -189,7 +202,6 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       {
         [`data-level=${level}`]: true,
         'fairys:flex-col': isFlexCol,
-        // 'fairys:flex-col': collapsed && (collapsedSubMenuIndex === -1 || (collapsedSubMenuIndex === 0 && level === 0)) && firstGroupMode !== 'click' && firstGroupMode !== 'hover',
         'fairys:flex-row': isRow,
         'fairys:opacity-50': disabled,
       },

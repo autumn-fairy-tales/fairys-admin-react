@@ -28,6 +28,12 @@ export interface UtilsItemOptions {
   removeGroupMenuLevel?: number;
 }
 
+/**
+ * 1. collapsed 下 所有一级菜单 都是 Col
+ * 2. collapsed 下 在组菜单的时候，分两中情况：1 只显示组菜单下的一级菜单(嵌套组菜单显示子菜单除非到 subMenu或者menuItem菜单) 2. 类似 subMenu 显示
+ *
+ */
+
 export const renderItems = (items: FairysItemType[], options: UtilsItemOptions = {}) => {
   const {
     level = 0,
