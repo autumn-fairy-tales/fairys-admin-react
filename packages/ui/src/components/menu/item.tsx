@@ -178,7 +178,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       'fairys:text-white fairys:dark:text-white': !!isActive,
       'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': utilsItemOptions.currentType === 'group',
-      'fairys:text-(--fairys-theme-color)!': isTextColorThemeColor,
+      'fairys:text-(--fairys-theme-color)!': isTextColorThemeColor && !isActive,
       'fairys:border-b fairys:mb-1 ': isGroupBorderBottom,
       [UtilsColor.componentBorderClassNameBase]: isGroupBorderBottom,
       'fairys:rounded-sm': !isGroupBorderBottom,

@@ -32,6 +32,8 @@ export interface SettingDataInstanceState {
   projectName?: string;
   /**颜色主题风格*/
   theme?: 'dark' | 'light';
+  /**侧边栏主题（默认 与主题风格一致）*/
+  siderTheme?: 'dark' | 'light';
   /**自动监听系统的明暗色系*/
   autoListenSystemTheme?: boolean;
   /**主题颜色*/
@@ -40,8 +42,6 @@ export interface SettingDataInstanceState {
   layoutMode?: LayoutMode;
   /**旧的导航栏模式,(用于切换mobile布局时，切换回旧的布局模式)*/
   _oldLayoutMode?: LayoutMode;
-  /**暗黑导航栏*/
-  darkMenu?: boolean;
   /**侧边栏模式*/
   sideMenuMode?: 'open' | 'close';
   /**页面切换动画*/
@@ -113,6 +113,8 @@ export class SettingDataInstance {
      */
     maxWidthScreen: 1024,
     isMobile: false,
+    /**侧边栏主题*/
+    siderTheme: undefined,
   });
 
   /**浏览器端初始化*/
@@ -223,6 +225,14 @@ export class SettingDataInstance {
       this.updated({ theme, autoListenSystemTheme: false });
     }
     this.autoListenSystemTheme();
+  };
+  /**点击设置切换侧边栏主题*/
+  onToggleSiderTheme = (theme: 'light' | 'dark' | 'system') => {
+    if (theme === 'system') {
+      this.updated({ siderTheme: undefined });
+    } else {
+      this.updated({ siderTheme: theme });
+    }
   };
   // ================================================================================================
   /**更新主题颜色*/

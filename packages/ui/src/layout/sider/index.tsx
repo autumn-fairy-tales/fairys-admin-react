@@ -7,7 +7,6 @@ import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import { Avatar } from 'avatar';
 import { FairysButtonBase } from 'components/button';
 import { Logo } from 'logo';
-import { FairysPopoverBase } from 'components/popover-base';
 import { useAppPluginDataInstance } from 'context';
 import { UtilsColor } from 'utils/utils.color';
 import { FairysModalBase } from 'components/modal-base';
@@ -118,9 +117,10 @@ const LayoutSubSider = () => {
 export const LayoutSider = memo(() => {
   const [state] = useSettingDataInstance();
   const layoutMode = state.layoutMode;
-  const darkMode = state.darkMenu;
+  const siderTheme = state.siderTheme;
+  // const theme = siderTheme || state.theme;
   const theme = state.theme;
-  const _darkMode = darkMode || theme === 'dark';
+  const _darkMode = theme === 'dark';
   const hideSideMenu = useMemo(() => {
     return ['main_left'].includes(layoutMode);
   }, [layoutMode]);
@@ -135,9 +135,7 @@ export const LayoutSider = memo(() => {
   const clssName = useMemo(() => {
     return clsx(
       'fairys_admin_layout_sider fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:h-full fairys:dark:text-gray-400 fairys:dark:bg-gray-900!',
-      {
-        dark: _darkMode,
-      },
+      { dark: _darkMode },
     );
   }, [_darkMode]);
 
