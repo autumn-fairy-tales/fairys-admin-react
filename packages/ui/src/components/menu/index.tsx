@@ -65,7 +65,7 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
 
   const _class = useMemo(() => {
     return clsx(
-      'fairys-menu fairys:transition-all fairys:duration-300 fairys:flex fairys:overflow-auto fairys:h-full no-scrollbar fairys:box-border',
+      'fairys_admin_menu_base fairys:transition-all fairys:duration-300 fairys:flex fairys:overflow-auto fairys:h-full no-scrollbar fairys:box-border',
       {
         'fairys:flex-col fairys:gap-y-1': mode === 'vertical',
         'fairys:flex-row fairys:gap-x-1': mode === 'horizontal',

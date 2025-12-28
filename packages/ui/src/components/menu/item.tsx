@@ -171,7 +171,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       }
     }
 
-    return clsx('fairys-menu-item', menuItemBaseClassName, className, {
+    return clsx('fairys_admin_menu_base-item', menuItemBaseClassName, className, {
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
       'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
       active: !!isActive,
@@ -198,7 +198,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   const _classBody = useMemo(() => {
     const isRow = !collapsed;
     return clsx(
-      'fairys-menu-item_body fairys:flex fairys:items-center fairys:relative fairys:gap-1 fairys:overflow-hidden',
+      'fairys_admin_menu_base-item_body fairys:flex fairys:items-center fairys:relative fairys:gap-1 fairys:overflow-hidden',
       {
         [`data-level=${level}`]: true,
         'fairys:flex-col': isFlexCol,
@@ -227,7 +227,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   }, [level, collapsed, collapsedSubMenuIndex, mode]);
 
   const _classExtra = useMemo(() => {
-    return clsx('fairys-menu-item_extra', {
+    return clsx('fairys_admin_menu_base-item_extra', {
       'fairys:absolute fairys:top-1/2 fairys:-translate-y-1/2 fairys:me-2': collapsed,
     });
   }, [collapsed]);
@@ -282,7 +282,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     <motion.div
       title={item.title}
       style={style}
-      className="fairys:shrink-0 fairys:relative fairys:box-border"
+      className="fairys_admin_menu_base-item-warp fairys:shrink-0 fairys:relative fairys:box-border"
       onClick={onClick}
       ref={mergeRef}
     >

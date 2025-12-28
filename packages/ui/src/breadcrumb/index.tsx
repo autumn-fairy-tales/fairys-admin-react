@@ -11,5 +11,5 @@ export const Breadcrumb = () => {
   if (!menuItems) {
     return <Fragment />;
   }
-  return <FairysBreadcrumbBase items={menuItems} />;
+  return <FairysBreadcrumbBase className="fairys-admin-breadcrumb" items={menuItems} />;
 };

@@ -28,7 +28,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
 
   const _class = useMemo(() => {
     return clsx(
-      type === 'group' ? 'fairys-group-menu-item' : 'fairys-sub-menu-item',
+      type === 'group' ? 'fairys_admin_menu_base-group-menu-item' : 'fairys_admin_menu_base-sub-menu-item',
       'fairys:shrink-0 fairys:gap-y-1',
       className,
     );
@@ -60,7 +60,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
    * 4. collapsed === false , 所有菜单都显示，图标+标题 或 图标
    * **/
   const _classBody = useMemo(() => {
-    return clsx('fairys-group-menu-item_body fairys:shrink-0 fairys:flex', {
+    return clsx('fairys_admin_menu_base-group-menu-item_body fairys:shrink-0 fairys:flex', {
       'fairys:flex-col fairys:gap-y-1': mode === 'vertical' || collapsedSubMenuIndex !== -1,
       'fairys:flex-row fairys:gap-x-1': mode === 'horizontal' && collapsedSubMenuIndex === -1,
     });
@@ -76,7 +76,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
       if (firstGroupMode === 'hover' || firstGroupMode === 'click') {
         return (
           <FairysPopoverBase
-            className="fairys-group-menu-item_popover"
+            className="fairys_admin_menu_base-group-menu-item_popover"
             eventName={firstGroupMode}
             content={
               <div
@@ -125,7 +125,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
         content={
           <div
             style={{ maxWidth }}
-            className="fairys-sub-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-1 fairys:p-[5px]"
+            className="fairys_admin_menu_base-sub-menu-item_popover_content fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-1 fairys:p-[5px]"
           >
             {render}
           </div>
@@ -151,7 +151,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
       <FairysMenuItem item={item} isExpandCollapse expandCollapse={isOpen} utilsItemOptions={utilsItemOptions} />
       <FairysDisclosureItem
         open={isOpen}
-        className="fairys-sub-menu-item_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-1"
+        className="fairys_admin_menu_base-sub-menu-item_body fairys:shrink-0 fairys:flex fairys:flex-col fairys:gap-y-1"
       >
         {render}
       </FairysDisclosureItem>

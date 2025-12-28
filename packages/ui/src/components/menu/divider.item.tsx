@@ -12,7 +12,7 @@ export const FairysDividerMenuItem = (props: FairysDividerMenuItemProps) => {
   const { className, style } = item;
   const _class = useMemo(() => {
     return clsx(
-      'fairys-menu-divider-item fairys:shrink-0 fairys:border-t fairys:border-solid fairys:mt-[2px] fairys:mb-[2px] ',
+      'fairys_admin_menu_base-divider-item fairys:shrink-0 fairys:border-t fairys:border-solid fairys:mt-[2px] fairys:mb-[2px] ',
       UtilsColor.componentBorderClassNameBase,
       className,
     );

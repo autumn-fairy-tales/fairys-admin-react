@@ -50,6 +50,7 @@ export const Menu = (props: MenuProps) => {
 
   return (
     <FairysMenu
+      className="fairys_admin_menu"
       maxWidth={220}
       {...props}
       items={layoutMode === 'left' || layoutMode === 'mobile' ? _menuItems : menuItems}

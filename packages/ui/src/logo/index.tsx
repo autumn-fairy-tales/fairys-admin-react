@@ -47,7 +47,7 @@ export const Logo = (props: LogoProps) => {
       {isOnlyName ? (
         <Fragment />
       ) : (
-        <div className="fairys:flex fairys:items-center fairys:justify-center fairys:cursor-pointer">
+        <div className="fairys_admin_logo_image fairys:flex fairys:items-center fairys:justify-center fairys:cursor-pointer">
           <img width={logoSize} height={logoSize} src={state.logo} alt={state.projectName} onClick={onClickHome} />
         </div>
       )}
