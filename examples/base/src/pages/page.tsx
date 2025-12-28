@@ -1,6 +1,11 @@
 import { FairysMainPage, FairysMenu } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
-import { FairysLoginPage, FairysMainPageBody } from '@fairys/admin-tools-react';
+import {
+  FairysLoginPage,
+  FairysMainPageBody,
+  FairysMainPageFooter,
+  FairysMainPageSearch,
+} from '@fairys/admin-tools-react';
 import { FairysNotificationListBase } from '@fairys/admin-tools-react/lib/components/notification';
 import { useState } from 'react';
 
@@ -36,6 +41,9 @@ const MainIndex = () => {
 
   return (
     <FairysMainPage>
+      <FairysMainPageSearch>
+        <input type="text" placeholder="搜索" />
+      </FairysMainPageSearch>
       <FairysMainPageBody>
         <button onClick={() => updateSelectedKey('/about/1')}>切换选中</button>
         <button onClick={() => updateSelectedKey('/')}>切换选中</button>
@@ -213,6 +221,13 @@ const MainIndex = () => {
         <NavLink to="/list">列表</NavLink>
         <NavLink to="/detail">详情</NavLink>
       </FairysMainPageBody>
+      <FairysMainPageFooter>
+        <div className="flex justify-end items-center">
+          <div className="flex items-center">
+            <span className="text-sm text-gray-500 dark:text-gray-400">共 100 条</span>
+          </div>
+        </div>
+      </FairysMainPageFooter>
     </FairysMainPage>
   );
 };

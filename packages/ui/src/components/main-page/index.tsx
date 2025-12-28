@@ -7,7 +7,10 @@ export interface FairysMainPageBaseProps
 export const FairysMainPageSearch = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
-    return clsx('fairys_admin_main_page_search fairys:w-full ', className);
+    return clsx(
+      'fairys_admin_main_page_search fairys:w-full fairys:p-[14px] fairys:box-border fairys:bg-white fairys:dark:bg-gray-900 ',
+      className,
+    );
   }, [className]);
 
   return (
@@ -21,7 +24,7 @@ export const FairysMainPageBody = forwardRef((props: FairysMainPageBaseProps, re
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx(
-      'fairys_admin_main_page_body fairys:w-full  fairys:flex-1 fairys:flex fairys:flex-col fairys:overflow-auto',
+      'fairys_admin_main_page_body fairys:w-full fairys:flex-1 fairys:flex fairys:flex-col fairys:overflow-auto fairys:p-[14px] fairys:box-border fairys:bg-white fairys:dark:bg-gray-900 ',
       className,
     );
   }, [className]);
@@ -36,7 +39,10 @@ export const FairysMainPageBody = forwardRef((props: FairysMainPageBaseProps, re
 export const FairysMainPageFooter = forwardRef((props: FairysMainPageBaseProps, ref: Ref<HTMLDivElement>) => {
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
-    return clsx('fairys_admin_main_page_footer  fairys:w-full', className);
+    return clsx(
+      'fairys_admin_main_page_footer fairys:w-full fairys:p-[14px] fairys:box-border fairys:bg-white fairys:dark:bg-gray-900',
+      className,
+    );
   }, [className]);
 
   return (
@@ -58,7 +64,7 @@ export const FairysMainPage = forwardRef(
 
     const mainBodyCls = useMemo(() => {
       return clsx(
-        'fairys_admin_main_page_main fairys:p-[14px] fairys:flex fairys:flex-col  fairys:h-full fairys:w-full fairys:bg-white fairys:dark:bg-gray-900 fairys:rounded-sm',
+        'fairys_admin_main_page_main fairys:flex fairys:flex-col fairys:h-full fairys:w-full fairys:rounded-sm fairys:gap-[14px]',
         bodyClassName,
       );
     }, [bodyClassName]);

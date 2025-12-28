@@ -18,7 +18,8 @@
     "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\""
   },
   "dependencies": {
-    "@carefrees/rslib": "~0.0.15",
+    "@rsbuild/plugin-svgr": "~1.2.3",
+    "@carefrees/rslib": "~0.0.18",
     "husky": "~9.1.7",
     "lerna": "~8.2.3",
     "prettier": "~2.7.0",
