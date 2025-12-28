@@ -45,7 +45,7 @@ body {
   }
 }
 
-@custom-variant light (&:where(.light, .light *));
+@custom-variant dark (&:where(.dark, .dark *));
 
 @layer components {
   .no-scrollbar::-webkit-scrollbar {

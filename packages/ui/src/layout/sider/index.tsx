@@ -117,8 +117,6 @@ const LayoutSubSider = () => {
 export const LayoutSider = memo(() => {
   const [state] = useSettingDataInstance();
   const layoutMode = state.layoutMode;
-  const siderTheme = state.siderTheme;
-  // const theme = siderTheme || state.theme;
   const theme = state.theme;
   const _darkMode = theme === 'dark';
   const hideSideMenu = useMemo(() => {
