@@ -32,31 +32,6 @@ body {
     transition-property: all;
     transition-timing-function: var(--tw-ease, var(--fairys-default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
-    /* 使用 css 变量方式调整颜色值 */
-    /* 字体颜色方面 (各种颜色) */
-    /* 边框颜色方面 */
-    /* 背景颜色方面 (一般只有一种颜色) */
-  }
-
-  .light {
-    background-color: white;
-    color: var(--fairys-color-black);
-    transition-property: all;
-    transition-timing-function: var(--tw-ease, var(--fairys-default-transition-timing-function));
-    transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
-    /* 使用 css 变量方式调整颜色值 */
-    /* 字体颜色方面 (各种颜色) */
-    --fairys-color: var(--fairys-color-black); /**普通字体颜色*/
-    --fairys-hover-color: var(--fairys-color-black); /**悬停字体颜色*/
-    --fairys-active-color: var(--fairys-color-black); /**激活字体颜色*/
-    /* 边框颜色方面 */
-    --fairys-border-color: var(--fairys-color-gray-300); /**普通边框颜色*/
-    --fairys-hover-border-color: var(--fairys-color-gray-400); /**悬停边框颜色*/
-    --fairys-active-border-color: var(--fairys-color-gray-500); /**激活边框颜色*/
-    /* 背景颜色方面 */
-    --fairys-bg-color: var(--fairys-color-white); /**普通背景颜色*/
-    --fairys-hover-bg-color: var(--fairys-color-white); /**悬停背景颜色*/
-    --fairys-active-bg-color: var(--fairys-color-white); /**激活背景颜色*/
   }
 
   .ka-wrapper,
@@ -70,8 +45,7 @@ body {
   }
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
-/* @custom-variant light (&:where(.light, .light *)); */
+@custom-variant light (&:where(.light, .light *));
 
 @layer components {
   .no-scrollbar::-webkit-scrollbar {

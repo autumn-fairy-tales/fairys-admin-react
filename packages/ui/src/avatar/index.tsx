@@ -21,7 +21,7 @@ export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttribute
 }
 
 const baseClassName =
-  'fairys:flex fairys:transition-all fairys:duration-300 fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-700 fairys:rounded-md fairys:cursor-pointer';
+  'fairys-avatar fairys:flex fairys:transition-all fairys:duration-300 fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-700 fairys:rounded-md fairys:cursor-pointer';
 
 export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElement>) => {
   const { mode = 'header', nameMode, className, ...rest } = props;
@@ -116,11 +116,11 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   return (
     <FairysPopoverMenu items={items} onClickItem={onMenuItemClick} ref={ref} motionClassName="fairys:min-w-[180px]">
       <div {...rest} title={userName} className={classNameBase}>
-        <span className="fairys:flex fairys:items-center fairys:justify-center fairys:rounded-full fairys:bg-gray-200 fairys:dark:bg-gray-700">
+        <span className="fairys-avatar-image fairys:flex fairys:items-center fairys:justify-center fairys:rounded-full fairys:bg-gray-200 fairys:dark:bg-gray-700">
           {avatarRender}
         </span>
         {nameMode === 'show' ? (
-          <span className="fairys:text-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-400">
+          <span className="fairys-avatar-name fairys:text-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-400">
             {userName}
           </span>
         ) : (

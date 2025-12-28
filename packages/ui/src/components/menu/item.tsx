@@ -16,7 +16,7 @@ export interface FairysMenuItemProps {
 }
 
 const menuItemBaseClassName =
-  'fairys:shrink-0 fairys:transition-all fairys:duration-300  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:box-border';
+  'fairys:shrink-0 fairys:transition-all fairys:duration-300  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:text-gray-950 fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:box-border';
 
 const titleTextClassName =
   'fairys-menu-item_title-text fairys:flex-1 fairys:max-w-full fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap';

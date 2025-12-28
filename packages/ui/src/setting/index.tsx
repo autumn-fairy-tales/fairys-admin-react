@@ -7,7 +7,6 @@ import { SettingColor } from './base/color';
 import hotkeys from 'hotkeys-js';
 import { memo, useEffect } from 'react';
 import { useAppPluginDataInstance } from 'context/app-plugins-data';
-// import { SettingSiderThemeBase } from './base/sider-theme';
 
 export const SettingDrawer = memo(() => {
   const [state, settingDataInstance] = useSettingDataInstance();
@@ -31,7 +30,6 @@ export const SettingDrawer = memo(() => {
       <div className="fairys:h-full fairys:overflow-auto">
         <div className="fairys:flex fairys:flex-col fairys:gap-4 ">
           <SettingThemeBase />
-          {/* <SettingSiderThemeBase /> */}
           <SettingColor />
           <SettingLayoutMode />
           <SettingPageTransitionMode />
