@@ -134,8 +134,7 @@ export const LayoutSider = memo(() => {
     return clsx(
       'fairys_admin_layout_sider fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:h-full fairys:dark:text-gray-400 fairys:dark:bg-gray-900!',
       {
-        // dark: _darkMode ,
-        light: true,
+        dark: _darkMode,
       },
     );
   }, [_darkMode]);
