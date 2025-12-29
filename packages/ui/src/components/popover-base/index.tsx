@@ -25,6 +25,7 @@ import {
 import { useAnimationStatus } from 'components/utils';
 import { motion, AnimatePresence } from 'framer-motion';
 import { variantsBase, transitionBase } from './utils';
+import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 import clsx from 'clsx';
 import { UtilsColor } from 'utils/utils.color';
 
@@ -49,6 +50,8 @@ export interface FairysPopoverComponentBaseProps {
   isNotMinWidth?: boolean;
   /**是否加透明度*/
   isOpacity?: boolean;
+  /**主题*/
+  theme?: 'light' | 'dark';
 }
 
 const motionClassNameBase = `fairys:flex fairys:flex-col fairys:relative fairys:border fairys:rounded-md fairys:gap-1 ${UtilsColor.popoverBorderClassNameBase}`;
@@ -70,10 +73,11 @@ export const FairysPopoverBaseComponent = forwardRef(
       placement,
       isNotMinWidth = false,
       isOpacity = false,
+      theme: _parentTheme,
     } = props;
 
     const [state] = useDarkModeInstanceContext();
-    const darkMode = state.darkMode;
+    const theme = _parentTheme || state.theme;
 
     const [open, setIsOpen] = useState(false);
     const { show, onAnimationComplete } = useAnimationStatus(open);
@@ -181,7 +185,7 @@ export const FairysPopoverBaseComponent = forwardRef(
     const bodyClasName = useMemo(() => {
       return clsx(
         'fairys_admin_popover-base no-scrollbar',
-        darkMode ? 'dark' : '',
+        theme,
         className,
         'fairys:rounded-sm fairys:shadow-xl fairys:inset-shadow-sm',
         {
@@ -189,7 +193,7 @@ export const FairysPopoverBaseComponent = forwardRef(
           'fairys:bg-white/75 fairys:dark:bg-gray-800/75!': isOpacity,
         },
       );
-    }, [className, isOpacity]);
+    }, [className, isOpacity, theme]);
 
     const motionBodyClasName = useMemo(() => {
       return clsx(
@@ -224,20 +228,22 @@ export const FairysPopoverBaseComponent = forwardRef(
         })}
         {show ? (
           <FloatingPortal>
-            <AnimatePresence>
-              <div ref={refs.setFloating} style={floatingStyles} className={bodyClasName} {...getFloatingProps()}>
-                <motion.div
-                  initial="collapsed"
-                  animate={open ? 'open' : 'collapsed'}
-                  variants={variantsBase}
-                  transition={transitionBase}
-                  onAnimationComplete={onAnimationComplete}
-                  className={motionBodyClasName}
-                >
-                  {content}
-                </motion.div>
-              </div>
-            </AnimatePresence>
+            <DarkModeInstanceContextProvider theme={theme}>
+              <AnimatePresence>
+                <div ref={refs.setFloating} style={floatingStyles} className={bodyClasName} {...getFloatingProps()}>
+                  <motion.div
+                    initial="collapsed"
+                    animate={open ? 'open' : 'collapsed'}
+                    variants={variantsBase}
+                    transition={transitionBase}
+                    onAnimationComplete={onAnimationComplete}
+                    className={motionBodyClasName}
+                  >
+                    {content}
+                  </motion.div>
+                </div>
+              </AnimatePresence>
+            </DarkModeInstanceContextProvider>
           </FloatingPortal>
         ) : (
           <Fragment />

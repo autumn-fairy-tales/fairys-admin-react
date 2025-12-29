@@ -39,14 +39,16 @@ export const FairysBreadcrumbBase = (props: FairysBreadcrumbBaseProps) => {
         {
           'fairys:px-[14px]': (index !== 0 && isFristNoPadding) || !isFristNoPadding,
           'fairys:pr-[14px]': isFristNoPadding && index === 0,
-          'fairys:text-gray-500 fairys:hover:text-gray-500': isLast,
-          'fairys:text-gray-400 fairys:hover:text-gray-500': !isLast,
-          'fairys:bg-gray-100 fairys:hover:bg-gray-100': isLast && separate === 'bg',
-          'fairys:bg-gray-100 fairys:hover:bg-gray-200': !isLast && separate === 'bg',
-          'fairys:dark:text-gray-300 fairys:dark:hover:text-gray-200': isLast,
-          'fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300': !isLast,
-          'fairys:dark:bg-gray-800 fairys:dark:hover:bg-gray-700': separate === 'bg',
-          'fairys:after:text-gray-200 fairys:dark:after:text-gray-600 fairys:after:content-["/"]': separate === 'slash',
+          'fairys:text-(--fairys-admin-breadcrumb-item-last-text-color) fairys:hover:text-(--fairys-admin-breadcrumb-item-last-hover-text-color)':
+            isLast,
+          'fairys:text-(--fairys-admin-breadcrumb-item-text-color) fairys:hover:text-(--fairys-admin-breadcrumb-item-hover-text-color)':
+            !isLast,
+          'fairys:bg-(--fairys-admin-breadcrumb-item-last-bg-color) fairys:hover:bg-(--fairys-admin-breadcrumb-item-last-hover-bg-color)':
+            isLast && separate === 'bg',
+          'fairys:bg-(--fairys-admin-breadcrumb-item-bg-color) fairys:hover:bg-(--fairys-admin-breadcrumb-item-hover-bg-color)':
+            !isLast && separate === 'bg',
+          'fairys:after:text-(--fairys-admin-breadcrumb-item-divider-color) fairys:after:content-["/"]':
+            separate === 'slash',
         },
         itemClassName,
       );

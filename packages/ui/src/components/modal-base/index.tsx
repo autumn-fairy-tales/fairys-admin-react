@@ -14,6 +14,7 @@ import {
   base_drawer_variants,
 } from './utils';
 import { UtilsColor } from 'utils/utils.color';
+import { DarkModeInstanceContextProvider } from 'context/dark-mode';
 
 export interface FairysModalBaseProps {
   /**显示隐藏*/
@@ -59,6 +60,8 @@ export interface FairysModalBaseProps {
   width?: number;
   /**高度 */
   height?: number;
+  /**主题*/
+  theme?: 'light' | 'dark';
 }
 
 export const FairysModalBase = (props: FairysModalBaseProps) => {
@@ -85,9 +88,10 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
     drawerDirection = 'right',
     width,
     height,
+    theme: _parentTheme,
   } = props;
   const [state] = useDarkModeInstanceContext();
-  const darkMode = state.darkMode;
+  const theme = _parentTheme || state.theme;
 
   const { show, onAnimationComplete } = useAnimationStatus(open);
 
@@ -139,85 +143,87 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
 
   return (
     <FloatingPortal>
-      <AnimatePresence mode="wait">
-        <motion.div
-          className={`${overlayClassName} ${_clsxDrawerDirection} ${darkMode ? 'dark' : ''}`}
-          initial="collapsed"
-          animate={open ? 'open' : 'collapsed'}
-          variants={overlayVariants}
-          transition={transitionBase}
-          onClick={(event) => {
-            event.preventDefault();
-            // 点击 overlay 关闭弹窗
-            if (event.target === event.currentTarget && outsidePressClose) {
-              onClose?.();
-            }
-          }}
-        >
+      <DarkModeInstanceContextProvider theme={theme}>
+        <AnimatePresence mode="wait">
           <motion.div
-            className={`${baseClassName} ${_clsxBaseDrawerDirection.class}  ${
-              isFullScreen ? fullScreen_base_className : ''
-            } ${className}`}
-            style={{ ...style, width, height }}
+            className={`${overlayClassName} ${_clsxDrawerDirection} ${theme}`}
             initial="collapsed"
             animate={open ? 'open' : 'collapsed'}
-            variants={mode === 'drawer' ? drawerVariants : baseVariants}
+            variants={overlayVariants}
             transition={transitionBase}
-            onAnimationComplete={onAnimationComplete}
+            onClick={(event) => {
+              event.preventDefault();
+              // 点击 overlay 关闭弹窗
+              if (event.target === event.currentTarget && outsidePressClose) {
+                onClose?.();
+              }
+            }}
           >
-            {title || extra ? (
-              <div
-                style={headerStyle}
-                className={clsx(
-                  'fairys_admin_modal_base_header fairys:box-border fairys:p-4 fairys:relative fairys:flex fairys:items-center fairys:justify-between fairys:border-b ',
-                  UtilsColor.componentBorderClassNameBase,
-                  headerClassName,
-                )}
-              >
-                {title ? (
-                  <div
-                    style={titleStyle}
-                    className={`fairys_admin_modal_base_header_title fairys:font-medium fairys:text-lg ${titleClassName}`}
-                  >
-                    {title}
-                  </div>
-                ) : (
-                  <Fragment />
-                )}
-                {extra ? <div className="fairys_admin_modal_base_header_extra">{extra}</div> : <Fragment />}
-              </div>
-            ) : (
-              <Fragment />
-            )}
-
-            <div
-              style={bodyStyle}
-              className={`fairys_admin_modal_base_content fairys:box-border fairys:p-4 fairys:flex-1 fairys:overflow-hidden ${bodyClassName}`}
+            <motion.div
+              className={`${baseClassName} ${_clsxBaseDrawerDirection.class}  ${
+                isFullScreen ? fullScreen_base_className : ''
+              } ${className}`}
+              style={{ ...style, width, height }}
+              initial="collapsed"
+              animate={open ? 'open' : 'collapsed'}
+              variants={mode === 'drawer' ? drawerVariants : baseVariants}
+              transition={transitionBase}
+              onAnimationComplete={onAnimationComplete}
             >
-              {children}
-            </div>
-            {footer ? (
+              {title || extra ? (
+                <div
+                  style={headerStyle}
+                  className={clsx(
+                    'fairys_admin_modal_base_header fairys:box-border fairys:p-4 fairys:relative fairys:flex fairys:items-center fairys:justify-between fairys:border-b ',
+                    UtilsColor.componentBorderClassNameBase,
+                    headerClassName,
+                  )}
+                >
+                  {title ? (
+                    <div
+                      style={titleStyle}
+                      className={`fairys_admin_modal_base_header_title fairys:font-medium fairys:text-lg ${titleClassName}`}
+                    >
+                      {title}
+                    </div>
+                  ) : (
+                    <Fragment />
+                  )}
+                  {extra ? <div className="fairys_admin_modal_base_header_extra">{extra}</div> : <Fragment />}
+                </div>
+              ) : (
+                <Fragment />
+              )}
+
               <div
-                style={footerStyle}
-                className={`fairys_admin_modal_base_footer fairys:box-border fairys:p-4 fairys:border-t ${UtilsColor.componentBorderClassNameBase} ${footerClassName}`}
+                style={bodyStyle}
+                className={`fairys_admin_modal_base_content fairys:box-border fairys:p-4 fairys:flex-1 fairys:overflow-hidden ${bodyClassName}`}
               >
-                {footer}
+                {children}
               </div>
-            ) : (
-              <Fragment />
-            )}
-            {onClose ? (
-              <span
-                className="fairys_admin_modal_base_close fairys:text-gray-400 fairys:hover:text-gray-500 fairys:dark:hover:text-gray-300 fairys:absolute fairys:top-4 fairys:right-4 fairys:size-[16px] fairys:cursor-pointer fairys:icon-[ant-design--close-outlined]"
-                onClick={onClose}
-              />
-            ) : (
-              <Fragment />
-            )}
+              {footer ? (
+                <div
+                  style={footerStyle}
+                  className={`fairys_admin_modal_base_footer fairys:box-border fairys:p-4 fairys:border-t ${UtilsColor.componentBorderClassNameBase} ${footerClassName}`}
+                >
+                  {footer}
+                </div>
+              ) : (
+                <Fragment />
+              )}
+              {onClose ? (
+                <span
+                  className="fairys_admin_modal_base_close fairys:text-gray-400 fairys:hover:text-gray-500 fairys:dark:hover:text-gray-300 fairys:absolute fairys:top-4 fairys:right-4 fairys:size-[16px] fairys:cursor-pointer fairys:icon-[ant-design--close-outlined]"
+                  onClick={onClose}
+                />
+              ) : (
+                <Fragment />
+              )}
+            </motion.div>
+            {mode === 'modal' ? <div data-empty /> : <Fragment />}
           </motion.div>
-          {mode === 'modal' ? <div data-empty /> : <Fragment />}
-        </motion.div>
-      </AnimatePresence>
+        </AnimatePresence>
+      </DarkModeInstanceContextProvider>
     </FloatingPortal>
   );
 };

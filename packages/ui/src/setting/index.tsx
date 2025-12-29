@@ -27,7 +27,7 @@ export const SettingDrawer = memo(() => {
 
   return (
     <FairysModalBase onClose={settingDataInstance.onToggleOpen} open={state.open} title="偏好设置" mode="drawer">
-      <div className="fairys:h-full fairys:overflow-auto">
+      <div className="fairys-admin-setting-content fairys:h-full fairys:overflow-auto">
         <div className="fairys:flex fairys:flex-col fairys:gap-4 ">
           <SettingThemeBase />
           <SettingColor />

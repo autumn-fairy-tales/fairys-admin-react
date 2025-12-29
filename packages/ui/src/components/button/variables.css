@@ -1,0 +1,13 @@
+.dark .fairys_button_base {
+  /* fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-600  */
+  --fairys-admin-button-base-hover-bg-color: var(--fairys-color-gray-600);
+  /* fairys:bg-gray-200 fairys:dark:bg-gray-600 */
+  --fairys-admin-button-base-bg-color: var(--fairys-color-gray-600);
+}
+
+.light .fairys_button_base {
+  /* fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-600  */
+  --fairys-admin-button-base-hover-bg-color: var(--fairys-color-gray-200);
+  /* fairys:bg-gray-200 fairys:dark:bg-gray-600 */
+  --fairys-admin-button-base-bg-color: var(--fairys-color-gray-200);
+}

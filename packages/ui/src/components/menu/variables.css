@@ -1,0 +1,17 @@
+.dark .fairys_admin_menu_base {
+  /* fairys:text-gray-950 fairys:dark:text-gray-400 */
+  --fairys-admin-menu-base-text-color: var(--fairys-color-gray-400);
+  /* fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600 */
+  --fairys-admin-menu-base-hover-bg-color: var(--fairys-color-gray-600);
+  /* fairys:text-white fairys:dark:text-white */
+  --fairys-admin-menu-base-active-text-color: var(--fairys-color-white);
+}
+
+.light .fairys_admin_menu_base {
+  /* fairys:text-gray-950 fairys:dark:text-gray-400 */
+  --fairys-admin-menu-base-text-color: var(--fairys-color-gray-950);
+  /* fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600 */
+  --fairys-admin-menu-base-hover-bg-color: var(--fairys-color-gray-200);
+  /* fairys:text-white fairys:dark:text-white */
+  --fairys-admin-menu-base-active-text-color: var(--fairys-color-white);
+}

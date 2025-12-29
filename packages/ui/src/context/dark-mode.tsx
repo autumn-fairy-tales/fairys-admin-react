@@ -2,15 +2,15 @@ import { createContext, useContext, useRef, useEffect, createElement, ReactNode,
 import { proxy, useSnapshot } from 'valtio';
 
 interface DarkModeInstanceState {
-  darkMode: boolean;
+  theme: 'light' | 'dark';
 }
 
 export class DarkModeInstance {
   state = proxy<DarkModeInstanceState>({
-    darkMode: false,
+    theme: 'light',
   });
-  setDarkMode = (darkMode: boolean) => {
-    this.state.darkMode = darkMode;
+  setTheme = (theme: 'light' | 'dark') => {
+    this.state.theme = theme;
   };
 }
 
@@ -37,23 +37,19 @@ export const useDarkModeInstanceContext = () => {
 export interface DarkModeInstanceContextProviderProps {
   children: ReactNode;
   /**是否暗色系*/
-  darkMode?: boolean;
+  theme?: 'light' | 'dark';
   /**自定义darkModeInstance*/
   darkModeInstance?: DarkModeInstance;
 }
 
 export const DarkModeInstanceContextProvider = (props: DarkModeInstanceContextProviderProps) => {
-  const { children, darkMode, darkModeInstance: instance } = props;
+  const { children, theme, darkModeInstance: instance } = props;
   const darkModeInstance = useDarkModeInstance(instance);
 
   useEffect(() => {
-    darkModeInstance.setDarkMode(darkMode);
-  }, [darkMode, darkModeInstance]);
-
-  return createElement(DarkModeInstanceContext.Provider, {
-    children,
-    value: darkModeInstance,
-  });
+    darkModeInstance.setTheme(theme);
+  }, [theme, darkModeInstance]);
+  return <DarkModeInstanceContext.Provider value={darkModeInstance}>{children}</DarkModeInstanceContext.Provider>;
 };
 
 /**监听暗黑模式变化实例*/

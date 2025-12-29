@@ -1,0 +1,9 @@
+.dark .fairys_admin_enter_loading {
+  /* fairys:bg-white/75 fairys:dark:bg-black/75 */
+  --fairys-admin-enter-loading-bg-color: var(--fairys-color-black);
+}
+
+.light .fairys_admin_enter_loading {
+  /* fairys:bg-black/75 fairys:dark:bg-white/75 */
+  --fairys-admin-enter-loading-bg-color: var(--fairys-color-black);
+}

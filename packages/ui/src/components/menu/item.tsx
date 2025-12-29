@@ -16,7 +16,7 @@ export interface FairysMenuItemProps {
 }
 
 const menuItemBaseClassName =
-  'fairys:shrink-0 fairys:transition-all fairys:duration-300  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:text-gray-950 fairys:dark:text-gray-400 fairys:relative fairys:gap-1 fairys:box-border';
+  'fairys:shrink-0 fairys:transition-all fairys:duration-300  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:text-(--fairys-admin-menu-base-text-color) fairys:relative fairys:gap-1 fairys:box-border';
 
 const titleTextClassName =
   'fairys-menu-item_title-text fairys:flex-1 fairys:max-w-full fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap';
@@ -118,7 +118,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   /**移入样式*/
   const _classHover = useMemo(() => {
     return clsx('fairys:shrink-0 fairys:rounded-sm', {
-      'fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600':
+      'fairys:hover:bg-(--fairys-admin-menu-base-hover-bg-color)/75':
         !isActive && !disabled && utilsItemOptions.currentType !== 'group',
     });
   }, [isActive, disabled, utilsItemOptions.currentType]);
@@ -154,6 +154,8 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
         // 折叠模式下，判断是否 firstGroupMode === 'click'、'hover' ，如果是则除第一层其他层显示 border-bottom
         if (firstGroupMode === 'click' || firstGroupMode === 'hover') {
           isGroupBorderBottom = utilsItemOptions.countGroupMenu > 1;
+        } else if (firstGroupMode === 'onlyGroup') {
+          isGroupBorderBottom = false;
         } else {
           isGroupBorderBottom = true;
         }
@@ -175,7 +177,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
       'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
       active: !!isActive,
-      'fairys:text-white fairys:dark:text-white': !!isActive,
+      'fairys:text-(--fairys-admin-menu-base-active-text-color)!': !!isActive,
       'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': utilsItemOptions.currentType === 'group',
       'fairys:text-(--fairys-theme-color)!': isTextColorThemeColor && !isActive,

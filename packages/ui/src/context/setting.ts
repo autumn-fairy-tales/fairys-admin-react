@@ -32,6 +32,8 @@ export interface SettingDataInstanceState {
   projectName?: string;
   /**颜色主题风格*/
   theme?: 'dark' | 'light';
+  /**侧边栏主题*/
+  siderTheme?: 'dark' | 'light';
   /**自动监听系统的明暗色系*/
   autoListenSystemTheme?: boolean;
   /**主题颜色*/

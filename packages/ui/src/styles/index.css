@@ -15,6 +15,12 @@ body {
 
 @import 'tailwindcss/theme' prefix(fairys);
 @import 'tailwindcss/utilities' prefix(fairys);
+@import './../avatar/variables.css';
+@import './../setting/variables.css';
+@import './../components/breadcrumb/variables.css';
+@import './../components/button/variables.css';
+@import './../components/enter-loading/variables.css';
+@import './../components/menu/variables.css';
 
 @plugin "@iconify/tailwind4";
 
@@ -27,8 +33,29 @@ body {
 
 @layer base {
   .dark {
+    /* fairys:border-gray-100 fairys:dark:border-gray-600 */
+    --fairys-admin-popover_border-color: var(--fairys-color-gray-600);
+    /* fairys:border-gray-200 fairys:dark:border-gray-600 */
+    --fairys-admin-component_border-color: var(--fairys-color-gray-600);
+    /* fairys:border-gray-200 fairys:dark:border-gray-800 */
+    --fairys-admin-other_border-color: var(--fairys-color-gray-800);
+
     background-color: black;
     color: var(--fairys-color-gray-400);
+    transition-property: all;
+    transition-timing-function: var(--tw-ease, var(--fairys-default-transition-timing-function));
+    transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
+  }
+  .light {
+    /* fairys:border-gray-100 fairys:dark:border-gray-600 */
+    --fairys-admin-popover_border-color: var(--fairys-color-gray-100);
+    /* fairys:border-gray-200 fairys:dark:border-gray-600 */
+    --fairys-admin-component_border-color: var(--fairys-color-gray-200);
+    /* fairys:border-gray-200 fairys:dark:border-gray-800 */
+    --fairys-admin-other_border-color: var(--fairys-color-gray-200);
+
+    background-color: white;
+    color: var(--fairys-color-gray-950);
     transition-property: all;
     transition-timing-function: var(--tw-ease, var(--fairys-default-transition-timing-function));
     transition-duration: var(--tw-duration, var(--fairys-default-transition-duration));
@@ -45,9 +72,14 @@ body {
   }
 }
 
-@custom-variant dark (&:where(.dark, .dark *));
+@custom-variant dark (&:is(.dark));
+@custom-variant light (&:is(.light));
 
 @layer components {
+  /* 主题样式 */
+
+  /* ================================================================================================== */
+
   .no-scrollbar::-webkit-scrollbar {
     width: 0px;
     height: 0px;

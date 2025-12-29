@@ -5,7 +5,7 @@ import { forwardRef, Fragment, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
-import { appPluginDataInstance, useAppPluginDataInstance } from 'context/app-plugins-data';
+import { useAppPluginDataInstance } from 'context/app-plugins-data';
 
 export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**
@@ -21,7 +21,7 @@ export interface AvatarProps extends React.DetailedHTMLProps<React.HTMLAttribute
 }
 
 const baseClassName =
-  'fairys-admin-avatar fairys:flex fairys:transition-all fairys:duration-300 fairys:hover:bg-gray-200 fairys:dark:hover:bg-gray-700 fairys:rounded-md fairys:cursor-pointer';
+  'fairys-admin-avatar fairys:flex fairys:transition-all fairys:duration-300 fairys:hover:bg-(--fairys-admin-avatar-hover-bg-color) fairys:rounded-md fairys:cursor-pointer';
 
 export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElement>) => {
   const { mode = 'header', nameMode, className, ...rest } = props;
@@ -49,7 +49,8 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   const classNameBase = useMemo(() => {
     return clsx(baseClassName, className, {
       'fairys:p-[2px] fairys:items-center fairys:justify-center fairys:mr-2': mode === 'header',
-      'fairys:p-[4px] fairys:mx-[8px] fairys:my-[8px] fairys:bg-gray-200 fairys:dark:bg-gray-700': mode === 'sider',
+      'fairys:p-[4px] fairys:mx-[8px] fairys:my-[8px] fairys:bg-(--fairys-admin-avatar-hover-bg-color)':
+        mode === 'sider',
       'fairys:px-[14px] ': mode === 'sider' && nameMode === 'show',
       'fairys:items-center fairys:gap-4': nameMode === 'show',
       'fairys:items-center fairys:justify-center': nameMode === 'node',
@@ -61,14 +62,16 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
       {
         children: (
           <div className="fairys-admin-avatar-info fairys:p-2 fairys:flex fairys:flex-col fairys:gap-y-4">
-            <span className="fairys:text-[12px] fairys:text-gray-300 fairys:dark:text-gray-500">当前登录账号</span>
+            <span className="fairys:text-[12px] fairys:text-(--fairys-admin-avatar-info-text-color)">当前登录账号</span>
             <div className="fairys:flex fairys:min-h-[38px] fairys:gap-x-2">
               {avatarRender}
               <div className="fairys:flex fairys:flex-col fairys:gap-y-1">
-                <div className="fairys:text-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-400">
+                <div className="fairys:text-[14px] fairys:font-medium fairys:text-(--fairys-admin-avatar-info-name-text-color">
                   {userName}
                 </div>
-                <div className="fairys:text-[12px] fairys:text-gray-400 fairys:dark:text-gray-500">[{userEmail}]</div>
+                <div className="fairys:text-[12px] fairys:text-(--fairys-admin-avatar-info-email-text-color)">
+                  [{userEmail}]
+                </div>
               </div>
             </div>
           </div>
@@ -121,11 +124,11 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
       motionClassName="fairys-admin-avatar-popover-menu fairys:min-w-[180px]"
     >
       <div {...rest} title={userName} className={classNameBase}>
-        <span className="fairys-admin-avatar-image fairys:flex fairys:items-center fairys:justify-center fairys:rounded-full fairys:bg-gray-200 fairys:dark:bg-gray-700">
+        <span className="fairys-admin-avatar-image fairys:flex fairys:items-center fairys:justify-center fairys:rounded-full fairys:bg-(--fairys-admin-avatar-bg-color)">
           {avatarRender}
         </span>
         {nameMode === 'show' ? (
-          <span className="fairys-admin-avatar-name fairys:text-[14px] fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-400">
+          <span className="fairys-admin-avatar-name fairys:text-[14px] fairys:font-medium fairys:text-(--fairys-admin-avatar-text-color)">
             {userName}
           </span>
         ) : (

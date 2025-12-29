@@ -20,7 +20,7 @@ export const LayoutHeader = memo(() => {
   }, [theme]);
 
   return (
-    <DarkModeInstanceContextProvider darkMode={theme === 'dark'}>
+    <DarkModeInstanceContextProvider theme={theme}>
       <div className={headerCls}>
         <MainMenu layoutMode="horizontal" />
       </div>

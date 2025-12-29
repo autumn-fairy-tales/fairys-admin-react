@@ -1,0 +1,9 @@
+.dark .fairys-admin-setting-content {
+  /* fairys:dark:after:border-gray-600  */
+  --fairys-admin-setting-content-border-color: var(--fairys-color-gray-600);
+}
+
+.light .fairys-admin-setting-content {
+  /* fairys:after:border-gray-200  */
+  --fairys-admin-setting-content-border-color: var(--fairys-color-gray-200);
+}

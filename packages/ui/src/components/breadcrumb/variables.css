@@ -1,0 +1,37 @@
+.dark .fairys_admin_breadcrumb {
+  /* 文本颜色 */
+  /* 默认文本颜色 、悬停文本颜色 、最后一项文本颜色 */
+  --fairys-admin-breadcrumb-item-text-color: var(--fairys-color-gray-400);
+  --fairys-admin-breadcrumb-item-hover-text-color: var(--fairys-color-gray-300);
+  --fairys-admin-breadcrumb-item-last-text-color: var(--fairys-color-gray-300);
+  --fairys-admin-breadcrumb-item-last-hover-text-color: var(--fairys-color-gray-200);
+
+  /* 背景色 */
+  /* 默认背景颜色 、悬停背景颜色 、最后一项背景颜色 */
+  --fairys-admin-breadcrumb-item-bg-color: var(--fairys-color-gray-800);
+  --fairys-admin-breadcrumb-item-hover-bg-color: var(--fairys-color-gray-700);
+  --fairys-admin-breadcrumb-item-last-bg-color: var(--fairys-color-gray-800);
+  --fairys-admin-breadcrumb-item-last-hover-bg-color: var(--fairys-color-gray-700);
+
+  /* 分割 */
+  --fairys-admin-breadcrumb-item-divider-color: var(--fairys-color-gray-600);
+}
+
+.light .fairys_admin_breadcrumb {
+  /* 文本颜色 */
+  /* 默认文本颜色 、悬停文本颜色 、最后一项文本颜色 */
+  --fairys-admin-breadcrumb-item-text-color: var(--fairys-color-gray-400);
+  --fairys-admin-breadcrumb-item-hover-text-color: var(--fairys-color-gray-500);
+  --fairys-admin-breadcrumb-item-last-text-color: var(--fairys-color-gray-500);
+  --fairys-admin-breadcrumb-item-last-hover-text-color: var(--fairys-color-gray-500);
+
+  /* 背景色 */
+  /* 默认背景颜色 、悬停背景颜色 、最后一项背景颜色 */
+  --fairys-admin-breadcrumb-item-bg-color: var(--fairys-color-gray-100);
+  --fairys-admin-breadcrumb-item-hover-bg-color: var(--fairys-color-gray-200);
+  --fairys-admin-breadcrumb-item-last-bg-color: var(--fairys-color-gray-100);
+  --fairys-admin-breadcrumb-item-last-hover-bg-color: var(--fairys-color-gray-100);
+
+  /* 分割 */
+  --fairys-admin-breadcrumb-item-divider-color: var(--fairys-color-gray-200);
+}

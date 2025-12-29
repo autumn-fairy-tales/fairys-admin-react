@@ -17,7 +17,7 @@ export const FairysEnterLoading = forwardRef((props: FairysEnterLoadingProps, re
   const { title = '', tips = '载入中', className, loading = false, ...rest } = props;
   const { show, onAnimationComplete } = useAnimationStatus(loading);
   const classNames = useMemo(
-    () => clsx('fairys_admin_enter_loading fairys:bg-white/75 fairys:dark:bg-black/75', className),
+    () => clsx('fairys_admin_enter_loading fairys:bg-(--fairys-admin-enter-loading-bg-color)/75', className),
     [className],
   );
   return show ? (

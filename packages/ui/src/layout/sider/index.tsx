@@ -117,8 +117,8 @@ const LayoutSubSider = () => {
 export const LayoutSider = memo(() => {
   const [state] = useSettingDataInstance();
   const layoutMode = state.layoutMode;
-  const theme = state.theme;
-  const _darkMode = theme === 'dark';
+  const siderTheme = state.siderTheme;
+  const theme = siderTheme || state.theme;
   const hideSideMenu = useMemo(() => {
     return ['main_left'].includes(layoutMode);
   }, [layoutMode]);
@@ -133,14 +133,12 @@ export const LayoutSider = memo(() => {
   const clssName = useMemo(() => {
     return clsx(
       'fairys_admin_layout_sider fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:h-full fairys:dark:text-gray-400 fairys:dark:bg-gray-900!',
-      {
-        dark: _darkMode,
-      },
+      { [theme]: true },
     );
-  }, [_darkMode]);
+  }, [theme]);
 
   return (
-    <DarkModeInstanceContextProvider darkMode={_darkMode}>
+    <DarkModeInstanceContextProvider theme={theme}>
       <div className={clssName}>
         <LayoutSiderMainMenu />
         {render}
