@@ -136,7 +136,7 @@ const createChildMenu = (item: FairysPopoverMenuItemType, index: number) => {
     return (
       <div
         key={item.path || item.title || item.key || index}
-        className={`fairys:w-full fairys:h-px ${UtilsColor.popoverBorderClassNameBase}`}
+        className={`fairys:w-full fairys:h-px fairys:bg-(--fairys-admin-popover_border-color)`}
       />
     );
   } else if (Array.isArray(item.items)) {

@@ -176,7 +176,6 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
       'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
       active: !!isActive,
-      // 'fairys:text-(--fairys-admin-menu-base-active-text-color)!': !!isActive,
       'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': utilsItemOptions.currentType === 'group',
       'fairys:text-(--fairys-theme-color)!': isTextColorThemeColor && !isActive,

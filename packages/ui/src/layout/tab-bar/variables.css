@@ -6,6 +6,21 @@
   /* fairys:dark:hover:text-gray-300 */
   --fairys-admin-tab-bar-item-text-color: var(--fairys-color-gray-400);
   --fairys-admin-tab-bar-item-hover-text-color: var(--fairys-color-gray-300);
+
+  /*  fairys:bg-white fairys:dark:bg-gray-600 fairys:text-gray-400 fairys:hover:text-gray-600  fairys:dark:text-gray-400 fairys:dark:hover:text-white */
+  --fairys-admin-tab-bar-drop-down-bg-color: var(--fairys-color-gray-600);
+  --fairys-admin-tab-bar-drop-down-text-color: var(--fairys-color-gray-400);
+  --fairys-admin-tab-bar-drop-down-hover-text-color: var(--fairys-color-white);
+
+  /*  'fairys:text-gray-300 fairys:hover:text-white': !!match,
+      'fairys:text-gray-400 fairys:hover:text-gray-600': !match,
+      'fairys:dark:text-gray-200': !!match,
+      'fairys:dark:text-gray-500 fairys:dark:hover:text-gray-300': !match, */
+
+  --fairys-admin-tab-bar-item-icon-active-text-color: var(--fairys-color-gray-200);
+  --fairys-admin-tab-bar-item-icon-active-hover-text-color: var(--fairys-color-white);
+  --fairys-admin-tab-bar-item-icon-text-color: var(--fairys-color-gray-500);
+  --fairys-admin-tab-bar-item-icon-hover-text-color: var(--fairys-color-gray-603000);
 }
 
 .light .fairys_admin_tab_bar {
@@ -15,6 +30,21 @@
   /* fairys:text-gray-400 fairys:hover:text-gray-500 */
   --fairys-admin-tab-bar-item-text-color: var(--fairys-color-gray-400);
   --fairys-admin-tab-bar-item-hover-text-color: var(--fairys-color-gray-500);
+
+  /*  fairys:bg-white fairys:dark:bg-gray-600 fairys:text-gray-400 fairys:hover:text-gray-600  fairys:dark:text-gray-400 fairys:dark:hover:text-white */
+  --fairys-admin-tab-bar-drop-down-bg-color: var(--fairys-color-white);
+  --fairys-admin-tab-bar-drop-down-text-color: var(--fairys-color-gray-400);
+  --fairys-admin-tab-bar-drop-down-hover-text-color: var(--fairys-color-gray-600);
+
+  /*  'fairys:text-gray-300 fairys:hover:text-white': !!match,
+      'fairys:text-gray-400 fairys:hover:text-gray-600': !match,
+      'fairys:dark:text-gray-200': !!match,
+      'fairys:dark:text-gray-500 fairys:dark:hover:text-gray-300': !match, */
+
+  --fairys-admin-tab-bar-item-icon-active-text-color: var(--fairys-color-gray-300);
+  --fairys-admin-tab-bar-item-icon-active-hover-text-color: var(--fairys-color-white);
+  --fairys-admin-tab-bar-item-icon-text-color: var(--fairys-color-gray-400);
+  --fairys-admin-tab-bar-item-icon-hover-text-color: var(--fairys-color-gray-600);
 }
 
 .fairys_admin_tab_bar {
@@ -37,4 +67,26 @@
 }
 .fairys_admin_tab_bar .fairys_admin_tab_bar_item.active:hover {
   color: var(--fairys-admin-tab-bar-item-active-hover-text-color);
+}
+
+.fairys_admin_tab_bar_drop_down {
+  background-color: var(--fairys-admin-tab-bar-drop-down-bg-color);
+  color: var(--fairys-admin-tab-bar-drop-down-text-color);
+}
+.fairys_admin_tab_bar_drop_down:hover {
+  color: var(--fairys-admin-tab-bar-drop-down-hover-text-color);
+}
+
+.fairys_admin_tab_bar_item_icon {
+  color: var(--fairys-admin-tab-bar-item-icon-text-color);
+}
+.fairys_admin_tab_bar_item_icon:hover {
+  color: var(--fairys-admin-tab-bar-item-icon-hover-text-color);
+}
+
+.fairys_admin_tab_bar_item_icon.active {
+  color: var(--fairys-admin-tab-bar-item-icon-active-text-color);
+}
+.fairys_admin_tab_bar_item_icon.active:hover {
+  color: var(--fairys-admin-tab-bar-item-icon-active-hover-text-color);
 }

@@ -24,7 +24,7 @@ const PopoverButton = () => {
 
   return (
     <FairysPopoverMenu items={list} onClickItem={onNativeClick} onCloseItem={onClose} isHideClose={false}>
-      <div className="fairys:w-[25px] fairys:h-[25px] fairys:flex fairys:justify-center fairys:items-center fairys:text-sm/6 fairys:font-semibold fairys:bg-white fairys:dark:bg-gray-600 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:cursor-pointer fairys:dark:text-gray-400 fairys:dark:hover:text-white">
+      <div className="fairys_admin_tab_bar_drop_down fairys:w-[25px] fairys:h-[25px] fairys:flex fairys:justify-center fairys:items-center fairys:text-sm/6 fairys:font-semibold fairys:cursor-pointer">
         <span className="fairys:icon-[ant-design--caret-down-outlined]" />
       </div>
     </FairysPopoverMenu>
@@ -41,7 +41,7 @@ export const DropDownTabBarItems = () => {
       return <Fragment />;
     }
     return (
-      <div className="fairys:h-full  fairys:flex fairys:items-center fairys:justify-center fairys:w-[50px]">
+      <div className="fairys:h-full fairys:flex fairys:items-center fairys:justify-center fairys:w-[50px]">
         <PopoverButton />
       </div>
     );

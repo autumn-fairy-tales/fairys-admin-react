@@ -224,6 +224,14 @@ export class SettingDataInstance {
     }
     this.autoListenSystemTheme();
   };
+  /**点击设置切换侧边栏主题*/
+  onToggleSiderTheme = (theme: 'light' | 'dark' | 'system') => {
+    if (theme === 'system') {
+      this.updated({ siderTheme: undefined });
+    } else {
+      this.updated({ siderTheme: theme });
+    }
+  };
   // ================================================================================================
   /**更新主题颜色*/
   updatedThemeColor = (themeColor: string) => {

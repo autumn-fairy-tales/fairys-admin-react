@@ -56,9 +56,6 @@ const TabBarItem = (props: TabBarItemProps) => {
       className,
       {
         active: !!match,
-        // 'fairys:text-white fairys:hover:text-gray-100': !!match,
-        // 'fairys:text-gray-400 fairys:hover:text-gray-500': !match,
-        // 'fairys:dark:hover:text-gray-300': !match,
       },
     );
   }, [match, className]);
@@ -91,12 +88,12 @@ const TabBarItem = (props: TabBarItemProps) => {
   }, [match, tabItemInstance.dom]);
 
   const iconClassName = useMemo(() => {
-    return clsx('fairys:icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 ', {
-      'fairys:text-gray-300 fairys:hover:text-white': !!match,
-      'fairys:text-gray-400 fairys:hover:text-gray-600': !match,
-      'fairys:dark:text-gray-200': !!match,
-      'fairys:dark:text-gray-500 fairys:dark:hover:text-gray-300': !match,
-    });
+    return clsx(
+      'fairys_admin_tab_bar_item_icon fairys:icon-[ant-design--close-outlined] fairys:transition-all fairys:duration-300 fairys:ml-5 ',
+      {
+        active: !!match,
+      },
+    );
   }, [match]);
 
   const items: FairysPopoverMenuItemType[] = useMemo(() => {

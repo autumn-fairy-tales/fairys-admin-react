@@ -1,4 +1,4 @@
-.dark .fairys_admin_menu_base {
+.dark .fairys_admin_menu_base-item-warp {
   /* fairys:text-gray-950 fairys:dark:text-gray-400 */
   --fairys-admin-menu-base-text-color: var(--fairys-color-gray-400);
   /* fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600 */
@@ -7,7 +7,7 @@
   --fairys-admin-menu-base-active-text-color: var(--fairys-color-white);
 }
 
-.light .fairys_admin_menu_base {
+.light .fairys_admin_menu_base-item-warp {
   /* fairys:text-gray-950 fairys:dark:text-gray-400 */
   --fairys-admin-menu-base-text-color: var(--fairys-color-gray-950);
   /* fairys:hover:bg-gray-200/75 fairys:dark:hover:bg-gray-600 */
@@ -15,14 +15,15 @@
   /* fairys:text-white fairys:dark:text-white */
   --fairys-admin-menu-base-active-text-color: var(--fairys-color-white);
 }
-.fairys_admin_menu_base .fairys_admin_menu_base-item {
+
+.fairys_admin_menu_base-item {
   color: var(--fairys-admin-menu-base-text-color);
 }
 
-.fairys_admin_menu_base .fairys_admin_menu_base-item.active {
+.fairys_admin_menu_base-item.active {
   color: var(--fairys-admin-menu-base-active-text-color);
 }
 
-.fairys_admin_menu_base .fairys_admin_menu_base-item_hover:hover {
+.fairys_admin_menu_base-item_hover:hover {
   background-color: --alpha(var(--fairys-admin-menu-base-hover-bg-color) / 75%);
 }
