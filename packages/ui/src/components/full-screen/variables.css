@@ -1,0 +1,20 @@
+.dark .fairys_admin_full_screen {
+  /* fairys:bg-white fairys:dark:bg-gray-800 */
+  --fairys-admin-full-screen-bg-color: var(--fairys-color-gray-800);
+  /*  fairys:text-white fairys:dark:hover:text-neutral-300 */
+  --fairys-admin-full-screen-close-text-color: var(--fairys-color-white);
+  --fairys-admin-full-screen-close-hover-text-color: var(--fairys-color-neutral-300);
+}
+
+.light .fairys_admin_full_screen {
+  /* fairys:bg-white fairys:dark:bg-gray-800 */
+  --fairys-admin-full-screen-bg-color: var(--fairys-color-white);
+  /*  fairys:text-white fairys:dark:hover:text-neutral-300 */
+  --fairys-admin-full-screen-close-text-color: var(--fairys-color-white);
+  --fairys-admin-full-screen-close-hover-text-color: var(--fairys-color-white);
+}
+.fairys_admin_full_screen {
+  /* fairys:bg-neutral-500 fairys:hover:bg-neutral-600 */
+  --fairys-admin-full-screen-close-bg-color: var(--fairys-color-neutral-500);
+  --fairys-admin-full-screen-close-hover-bg-color: var(--fairys-color-neutral-600);
+}

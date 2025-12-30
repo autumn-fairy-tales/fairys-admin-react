@@ -43,7 +43,7 @@ const LayoutSubSider = () => {
     return clsx(
       'fairys:flex fairys:flex-col fairys:h-full fairys:border-r ',
       UtilsColor.otherBorderClassNameBase,
-      'fairys:transition-all fairys:duration-300 fairys:dark:text-gray-400 fairys:overflow-hidden',
+      'fairys:transition-all fairys:duration-300 fairys:overflow-hidden',
       {
         'fairys:w-[80px]': sideMenuMode === 'close',
         'fairys:w-[220px]': sideMenuMode !== 'close',
@@ -132,7 +132,7 @@ export const LayoutSider = memo(() => {
 
   const clssName = useMemo(() => {
     return clsx(
-      'fairys_admin_layout_sider fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:h-full fairys:dark:text-gray-400 fairys:dark:bg-gray-900!',
+      'fairys_admin_layout_sider fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:h-full',
       { [theme]: true },
     );
   }, [theme]);
@@ -156,7 +156,7 @@ export const LayoutMenuMobile = () => {
         onClick={() => setVisible(true)}
         className="fairys_admin_layout_menu_mobile_btn fairys:relative"
       >
-        <span className="fairys:icon-[ant-design--appstore-outlined] fairys:size-[18px] fairys:text-[var(--fairys-theme-color)]" />
+        <span className="fairys:icon-[ant-design--appstore-outlined] fairys:size-[18px] fairys:text-(--fairys-theme-color)" />
       </FairysButtonBase>
       <FairysModalBase
         mode="drawer"
@@ -171,11 +171,4 @@ export const LayoutMenuMobile = () => {
       </FairysModalBase>
     </Fragment>
   );
-  // return (
-  //   <FairysPopoverBase content={<Menu />} placement="bottom-end">
-  //     <FairysButtonBase className="fairys_admin_layout_menu_mobile_btn fairys:relative">
-  //       <span className="fairys:icon-[ant-design--appstore-outlined] fairys:size-[18px] fairys:text-[var(--fairys-theme-color)]" />
-  //     </FairysButtonBase>
-  //   </FairysPopoverBase>
-  // );
 };

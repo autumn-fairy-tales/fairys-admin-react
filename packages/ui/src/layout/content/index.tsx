@@ -60,7 +60,7 @@ const OutletContentContext = () => {
 export const LayoutContent = memo(() => {
   return (
     <div className="fairys_admin_main_content fairys:overflow-hidden fairys:flex fairys:flex-col fairys:w-full fairys:h-full">
-      <div className="fairys_admin_main_content_header fairys:w-full fairys:overflow-hidden fairys:sticky fairys:top-0 fairys:shadow-[var(--fairys-box-shadow)]">
+      <div className="fairys_admin_main_content_header fairys:w-full fairys:overflow-hidden fairys:sticky fairys:top-0 fairys:shadow-(--fairys-box-shadow)">
         <ToolBar />
         <TabBar />
       </div>

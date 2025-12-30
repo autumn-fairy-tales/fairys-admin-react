@@ -56,9 +56,9 @@ const TabBarItem = (props: TabBarItemProps) => {
       className,
       {
         active: !!match,
-        'fairys:text-white fairys:hover:text-gray-100': !!match,
-        'fairys:text-gray-400 fairys:hover:text-gray-500': !match,
-        'fairys:dark:hover:text-gray-300': !match,
+        // 'fairys:text-white fairys:hover:text-gray-100': !!match,
+        // 'fairys:text-gray-400 fairys:hover:text-gray-500': !match,
+        // 'fairys:dark:hover:text-gray-300': !match,
       },
     );
   }, [match, className]);
@@ -212,9 +212,8 @@ export const TabBar = () => {
   const tabInstance = useTabInstance();
   const tabBarClassName = useMemo(() => {
     return clsx(
-      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:bg-white fairys:px-[8px] fairys:border-b ',
+      'fairys_admin_tab_bar fairys:transition-all fairys:duration-300 fairys:overflow-hidden fairys:w-full fairys:flex fairys:flex-row fairys:px-[8px] fairys:border-b ',
       UtilsColor.otherBorderClassNameBase,
-      'fairys:dark:bg-gray-800',
     );
   }, []);
   const location = useLocation();

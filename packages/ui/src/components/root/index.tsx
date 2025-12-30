@@ -5,6 +5,8 @@ import { aliveControllerDataInstance } from 'context/alive-controller';
 import { DataRouter, RouterProvider } from 'react-router';
 import { routerDataInstance } from 'context';
 import { FairysEnterLoading } from 'components/enter-loading';
+import { DarkModeInstanceContextProvider } from 'context/dark-mode';
+import { useSettingDataInstance } from 'context/setting';
 
 export interface FairysRootProps {
   children?: React.ReactNode;
@@ -45,7 +47,7 @@ export const FairysRootAliveController = () => {
   return <Fragment />;
 };
 
-export const FairysRoot = (props: FairysRootProps) => {
+const FairysRootBody = (props: FairysRootProps) => {
   const { children, keepAlive = true, router, isOutletKeepAlive = true } = props;
   const fairysRootClass = useFairysRoot();
   fairysRootClass.keepAlive = keepAlive;
@@ -78,5 +80,15 @@ export const FairysRoot = (props: FairysRootProps) => {
         <FairysRootAliveController />
       </AliveScope>
     </FairysRootContext.Provider>
+  );
+};
+
+export const FairysRoot = (props: FairysRootProps) => {
+  const [state] = useSettingDataInstance();
+  const theme = state.theme;
+  return (
+    <DarkModeInstanceContextProvider theme={theme}>
+      <FairysRootBody {...props} />
+    </DarkModeInstanceContextProvider>
   );
 };

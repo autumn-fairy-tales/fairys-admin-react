@@ -30,7 +30,7 @@ const SearchItem = (props: SearchItemProps) => {
     const list = menuDataInstance._parentMenuItemMap.get(rowItemData.path);
     return (
       <FairysBreadcrumbBase
-        className="fairys:py-0! fairys:min-h-[auto]!"
+        className="fairys:py-0! fairys:min-h-auto!"
         itemClassName="fairys:py-0! fairys:text-[12px]!"
         items={list}
         separate="slash"
@@ -42,13 +42,13 @@ const SearchItem = (props: SearchItemProps) => {
   return (
     <div
       onClick={onClick}
-      className={`fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:p-[14px] fairys:overflow-auto no-scrollbar ${UtilsColor.componentBorderClassNameBase}`}
+      className={`fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:p-[14px] fairys:overflow-auto no-scrollbar ${UtilsColor.componentBorderClassNameBase}`}
     >
       <div className="fairys:w-[45px] fairys:min-w-[45px] fairys:flex fairys:items-center fairys:justify-center fairys:icon fairys:transition-all fairys:duration-300">
         <FairysIcon className="fairys:size-[20px] " icon={rowItemData.icon} iconProps={iconProps} />
       </div>
       <div className="fairys:flex fairys:flex-col fairys:flex-1">
-        <div className="fairys:font-medium fairys:text-gray-900 fairys:dark:text-gray-300">{rowItemData.title}</div>
+        <div className="fairys_admin_tool_bar_menu_search_item_title fairys:font-medium ">{rowItemData.title}</div>
         <div>{parentItemsRender}</div>
       </div>
     </div>
@@ -69,12 +69,12 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
   };
 
   return (
-    <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:h-full fairys:w-[670px] fairys_max_w_modal fairys:px-5 fairys:py-5 fairys:overflow-hidden ">
+    <div className="fairys_admin_tool_bar_menu_search_modal fairys:flex fairys:flex-col fairys:gap-2 fairys:h-full fairys:w-[670px] fairys_max_w_modal fairys:px-5 fairys:py-5 fairys:overflow-hidden ">
       <div
         className={`fairys:flex fairys:items-center fairys:border ${UtilsColor.componentBorderClassNameBase} fairys:rounded-md `}
       >
-        <div className="fairys:pl-4 fairys:flex fairys:items-center fairys:justify-center">
-          <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[26px] fairys:text-gray-600 fairys:dark:text-gray-200" />
+        <div className="fairys_admin_tool_bar_menu_search_modal_icon_search fairys:pl-4 fairys:flex fairys:items-center fairys:justify-center">
+          <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[26px]" />
         </div>
         <input
           placeholder="搜索菜单"
@@ -128,9 +128,9 @@ export const MenuSearch = () => {
         className="fairys_admin_tool_bar_menu_search fairys:px-4 fairys:flex fairys:flex-row fairys:gap-x-4 fairys:w-[150px]"
         onClick={() => setOpen(true)}
       >
-        <span className="fairys:icon-[ant-design--search-outlined] fairys:size-[18px] fairys:text-gray-600 fairys:dark:text-gray-200 fairys:transition-all fairys:duration-300" />
-        <span className="fairys:text-gray-400">搜索</span>
-        <span className="fairys:text-gray-500 fairys:bg-gray-100 fairys:dark:bg-gray-800 fairys:px-2 fairys:rounded-sm fairys:transition-all fairys:duration-300">
+        <span className="fairys_admin_tool_bar_menu_search-icon fairys:icon-[ant-design--search-outlined] fairys:size-[18px] fairys:transition-all fairys:duration-300" />
+        <span>搜索</span>
+        <span className="fairys_admin_tool_bar_menu_search-btn fairys:px-2 fairys:rounded-sm fairys:transition-all fairys:duration-300">
           ⌘ K
         </span>
       </FairysButtonBase>

@@ -1,0 +1,13 @@
+.dark .fairys_login_page {
+  /*  fairys:disabled:bg-gray-100 fairys:dark:disabled:bg-gray-700  */
+  --fairys-login-page-disabled-bg-color: var(--fairys-color-gray-700);
+}
+
+.light .fairys_login_page {
+  /*  fairys:disabled:bg-gray-100 fairys:dark:disabled:bg-gray-700  */
+  --fairys-login-page-disabled-bg-color: var(--fairys-color-gray-100);
+}
+
+.fairys_login_page .fairys_input_base.fairys_login_page_content_form_item_input:disabled {
+  color: var(--fairys-login-page-disabled-bg-color);
+}

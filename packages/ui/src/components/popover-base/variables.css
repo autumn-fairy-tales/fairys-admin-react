@@ -1,0 +1,24 @@
+.dark.fairys_admin_popover-base {
+  /* fairys:bg-white fairys:dark:bg-gray-800! */
+  --fairys-admin-popover-base-bg-color: var(--fairys-color-gray-800);
+
+  /* fairys:bg-white/75 fairys:dark:bg-gray-800/75! */
+  --fairys-admin-popover-base-bg-color-opacity: --alpha(var(--fairys-color-gray-800) / 75%);
+}
+
+.light.fairys_admin_popover-base {
+  /* fairys:bg-white fairys:dark:bg-gray-800! */
+  --fairys-admin-popover-base-bg-color: var(--fairys-color-gray-800);
+  /* fairys:bg-white/75 fairys:dark:bg-gray-800/75! */
+  --fairys-admin-popover-base-bg-color-opacity: --alpha(var(--fairys-color-white) / 75%);
+}
+
+.fairys_admin_popover-base,
+.fairys_admin_popover-base .fairys_admin_popover-base-motion {
+  background-color: var(--fairys-admin-popover-base-bg-color);
+}
+
+.fairys_admin_popover-base.is_opacity,
+.fairys_admin_popover-base .fairys_admin_popover-base-motion {
+  background-color: var(--fairys-admin-popover-base-bg-color-opacity);
+}

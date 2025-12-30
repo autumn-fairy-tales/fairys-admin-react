@@ -11,7 +11,7 @@ export const LayoutHeader = memo(() => {
 
   const headerCls = useMemo(() => {
     return clsx(
-      'fairys_admin_layout_header fairys:transition-all fairys:duration-300 fairys:h-[48px] fairys:border-b  fairys:dark:bg-gray-900!',
+      'fairys_admin_layout_header fairys:transition-all fairys:duration-300 fairys:h-[48px] fairys:border-b',
       {
         [UtilsColor.otherBorderClassNameBase]: true,
         [theme]: true,

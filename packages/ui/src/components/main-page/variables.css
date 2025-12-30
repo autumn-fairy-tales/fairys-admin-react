@@ -1,0 +1,13 @@
+.dark .fairys_admin_main_page {
+  /* fairys:bg-gray-100 fairys:dark:bg-gray-950 */
+  --fairys-admin-main-page-bg-color: var(--fairys-color-gray-950);
+  /* fairys:bg-white fairys:dark:bg-gray-900 */
+  --fairys-admin-main-page-item-bg-color: var(--fairys-color-gray-900);
+}
+
+.light .fairys_admin_main_page {
+  /* fairys:bg-gray-100 fairys:dark:bg-gray-950 */
+  --fairys-admin-main-page-bg-color: var(--fairys-color-gray-100);
+  /* fairys:bg-white fairys:dark:bg-gray-900 */
+  --fairys-admin-main-page-item-bg-color: var(--fairys-color-white);
+}

@@ -11,6 +11,7 @@ import { useFloatingTree } from '@floating-ui/react';
 import clsx from 'clsx';
 import { FairysPopoverBase } from 'components/popover-base';
 import { FairysIcon } from 'components/icon';
+import { UtilsColor } from 'utils/utils.color';
 
 export * from './context';
 
@@ -20,10 +21,10 @@ interface FairysMenuItemProps {
   isSubMenuItem?: boolean;
 }
 
-const popoverMenuItemBaseCls = `fairys:shrink-0 fairys:text-gray-400 fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:items-center fairys:justify-between fairys:gap-1 fairys:py-[5px] fairys:px-[8px] fairys:mx-[5px] fairys:rounded-sm`;
+const popoverMenuItemBaseCls = `fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:items-center fairys:justify-between fairys:gap-1 fairys:py-[5px] fairys:px-[8px] fairys:mx-[5px] fairys:rounded-sm`;
 const popoverMenuItemBaseClsDisabled = `fairys:opacity-70 fairys:select-none`;
-const popoverMenuItemBaseClsNotDisabled = `fairys:text-gray-600 fairys:cursor-pointer fairys:hover:text-gray-700 fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300 fairys:dark:hover:bg-gray-700 fairys:hover:bg-gray-100`;
-const popoverMenuItemBaseClsActive = `active fairys:bg-(--fairys-theme-color)! fairys:text-white!`;
+const popoverMenuItemBaseClsNotDisabled = `fairys:cursor-pointer not_disabled`;
+const popoverMenuItemBaseClsActive = `active`;
 
 const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivElement>) => {
   const { rowItemData, isSubMenuItem = false } = props;
@@ -65,8 +66,7 @@ const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivE
         [popoverMenuItemBaseClsDisabled]: rowItemData.disabled,
         [popoverMenuItemBaseClsNotDisabled]: !rowItemData.disabled,
         [popoverMenuItemBaseClsActive]: isActive,
-        'fairys:dark:bg-gray-700/75 fairys:bg-gray-100/75 fairys:text-gray-600!':
-          !rowItemData.disabled && isSubMenuItem,
+        is_sub: !rowItemData.disabled && isSubMenuItem,
       },
       className,
     );
@@ -86,12 +86,12 @@ const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: Ref<HTMLDivE
       </div>
       <div>
         {isSubMenuItem ? (
-          <span className="fairys:icon-[ant-design--right-outlined] fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white fairys:dark:text-gray-500 fairys:transition-all fairys:duration-300" />
+          <span className="fairys_admin_popover_menu_item_close fairys:icon-[ant-design--right-outlined] fairys:ml-5 " />
         ) : popoverMenuInstance.isHideClose || isShowClose === false ? (
           <Fragment />
         ) : (
           <span
-            className="fairys:icon-[ant-design--close-outlined] fairys:ml-5 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white fairys:dark:text-gray-500 fairys:transition-all fairys:duration-300"
+            className="fairys_admin_popover_menu_item_close fairys:icon-[ant-design--close-outlined] fairys:ml-5 transition-all fairys:duration-300"
             onClick={onCloseItem}
           />
         )}
@@ -136,7 +136,7 @@ const createChildMenu = (item: FairysPopoverMenuItemType, index: number) => {
     return (
       <div
         key={item.path || item.title || item.key || index}
-        className="fairys:w-full fairys:h-[1px] fairys:bg-gray-100 fairys:dark:bg-gray-700"
+        className={`fairys:w-full fairys:h-px ${UtilsColor.popoverBorderClassNameBase}`}
       />
     );
   } else if (Array.isArray(item.items)) {

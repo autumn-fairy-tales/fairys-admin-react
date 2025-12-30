@@ -92,9 +92,7 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
   } = props;
   const [state] = useDarkModeInstanceContext();
   const theme = _parentTheme || state.theme;
-
   const { show, onAnimationComplete } = useAnimationStatus(open);
-
   const _clsxDrawerDirection = useMemo(() => {
     if (mode === 'drawer') {
       return clsx('fairys:flex fairys:flex-row no-scrollbar fairys:overflow-hidden', {
@@ -213,7 +211,7 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
               )}
               {onClose ? (
                 <span
-                  className="fairys_admin_modal_base_close fairys:text-gray-400 fairys:hover:text-gray-500 fairys:dark:hover:text-gray-300 fairys:absolute fairys:top-4 fairys:right-4 fairys:size-[16px] fairys:cursor-pointer fairys:icon-[ant-design--close-outlined]"
+                  className="fairys_admin_modal_base_close fairys:absolute fairys:top-4 fairys:right-4 fairys:size-[16px] fairys:cursor-pointer fairys:icon-[ant-design--close-outlined]"
                   onClick={onClose}
                 />
               ) : (

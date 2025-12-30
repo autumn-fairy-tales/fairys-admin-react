@@ -1,0 +1,69 @@
+.dark .fairys_admin_tool_bar {
+  /* fairys:dark:text-gray-200 */
+  --fairys-admin-tool-bar-text-color: var(--fairys-color-gray-200);
+  color: var(--fairys-admin-tool-bar-text-color);
+}
+
+.light .fairys_admin_tool_bar {
+  /* fairys:dark:text-gray-200 */
+  --fairys-admin-tool-bar-text-color: var(--fairys-color-gray-400);
+  color: var(--fairys-admin-tool-bar-text-color);
+}
+
+/* 搜索按钮 */
+.dark .fairys_admin_tool_bar_menu_search {
+  /* fairys:text-gray-600 fairys:dark:text-gray-200 */
+  --fairys-admin-tool-bar-menu-search-icon-text-color: var(--fairys-color-gray-200);
+  /* fairys:text-gray-500 fairys:bg-gray-100 fairys:dark:bg-gray-800  */
+  --fairys-admin-tool-bar-menu-search-btn-bg-color: var(--fairys-color-gray-800);
+  --fairys-admin-tool-bar-menu-search-btn-text-color: var(--fairys-color-gray-500);
+}
+
+.light .fairys_admin_tool_bar_menu_search {
+  /* fairys:text-gray-600 fairys:dark:text-gray-200 */
+  --fairys-admin-tool-bar-menu-search-icon-text-color: var(--fairys-color-gray-600);
+  /* fairys:text-gray-500 fairys:bg-gray-100 fairys:dark:bg-gray-800  */
+  --fairys-admin-tool-bar-menu-search-btn-bg-color: var(--fairys-color-gray-100);
+  --fairys-admin-tool-bar-menu-search-btn-text-color: var(--fairys-color-gray-500);
+}
+.fairys_admin_tool_bar_menu_search {
+  --fairys-admin-tool-bar-menu-search-text-color: var(--fairys-color-gray-400);
+  color: var(--fairys-admin-tool-bar-menu-search-text-color);
+}
+
+.fairys_admin_tool_bar_menu_search .fairys_admin_tool_bar_menu_search-btn {
+  background-color: var(--fairys-admin-tool-bar-menu-search-btn-bg-color);
+  color: var(--fairys-admin-tool-bar-menu-search-btn-text-color);
+}
+.fairys_admin_tool_bar_menu_search .fairys_admin_tool_bar_menu_search-icon {
+  color: var(--fairys-admin-tool-bar-menu-search-icon-text-color);
+}
+/* 搜索弹窗 */
+.dark .fairys_admin_tool_bar_menu_search_modal {
+  /* fairys:text-gray-600 fairys:dark:text-gray-200 */
+  --fairys-admin-tool-bar-menu-search-modal-close-text-color: var(--fairys-color-gray-200);
+  /* fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 */
+  --fairys-admin-tool-bar-menu-search-modal-hover-bg-color: var(--fairys-color-gray-700);
+  /* fairys:text-gray-900 fairys:dark:text-gray-300 */
+  --fairys-admin-tool-bar-menu-search-modal-title-text-color: var(--fairys-color-gray-300);
+}
+
+.light .fairys_admin_tool_bar_menu_search_modal {
+  /* fairys:text-gray-600 fairys:dark:text-gray-200 */
+  --fairys-admin-tool-bar-menu-search-modal-icon-text-color: var(--fairys-color-gray-600);
+  /* fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-700 */
+  --fairys-admin-tool-bar-menu-search-modal-hover-bg-color: var(--fairys-color-gray-100);
+  /* fairys:text-gray-900 fairys:dark:text-gray-300 */
+  --fairys-admin-tool-bar-menu-search-modal-title-text-color: var(--fairys-color-gray-900);
+}
+
+.fairys_admin_tool_bar_menu_search_modal .fairys_admin_tool_bar_menu_search_modal_icon_search {
+  color: var(--fairys-admin-tool-bar-menu-search-modal-icon-text-color);
+}
+
+.fairys_admin_tool_bar_menu_search_modal .fairys_admin_tool_bar_menu_search_item:hover {
+  background-color: var(--fairys-admin-tool-bar-menu-search-modal-hover-bg-color);
+}
+.fairys_admin_tool_bar_menu_search_modal .fairys_admin_tool_bar_menu_search_item_title {
+  color: var(--fairys-admin-tool-bar-menu-search-modal-title-text-color);
+}

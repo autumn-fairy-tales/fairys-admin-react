@@ -25,10 +25,10 @@ export interface FairysMenuItemBaseProps
   isTextEllipsis?: boolean;
 }
 
-const BaseClassName = `fairys:shrink-0 fairys:text-gray-400 fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:items-center fairys:justify-between fairys:gap-1 fairys:py-[5px] fairys:px-[8px] fairys:mx-[5px] fairys:rounded-sm`;
+const BaseClassName = `fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:items-center fairys:justify-between fairys:gap-1 fairys:py-[5px] fairys:px-[8px] fairys:mx-[5px] fairys:rounded-sm`;
 const DisabledClassName = `fairys:opacity-70 fairys:select-none`;
-const NotDisabledClassName = `fairys:text-gray-600 fairys:cursor-pointer fairys:hover:text-gray-700 fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300 fairys:dark:hover:bg-gray-700 fairys:hover:bg-gray-100`;
-const ActiveClassName = `active fairys:bg-(--fairys-theme-color)! fairys:text-white!`;
+const NotDisabledClassName = `fairys:cursor-pointer fairys:text-(--fairys-admin-menu-item-base-text-color) fairys:hover:text-(--fairys-admin-menu-item-base-hover-text-color)  fairys:dark:hover:bg-(--fairys-admin-menu-item-base-hover-bg-color)`;
+const ActiveClassName = `active fairys:bg-(--fairys-admin-menu-item-base-active-bg-color)! fairys:text-(--fairys-admin-menu-item-base-active-text-color)!`;
 
 export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, ref: Ref<HTMLDivElement>) => {
   const {

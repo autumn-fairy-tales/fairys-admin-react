@@ -1,0 +1,11 @@
+.dark .fairys_admin_layout_header {
+  /* fairys:dark:bg-gray-900! */
+  --fairys-admin-layout-header-bg-color: var(--fairys-color-gray-900);
+  background-color: var(--fairys-admin-layout-header-bg-color);
+}
+
+.light .fairys_admin_layout_header {
+  /* fairys:bg-gray-100! */
+  --fairys-admin-layout-header-bg-color: var(--fairys-color-white);
+  background-color: var(--fairys-admin-layout-header-bg-color);
+}

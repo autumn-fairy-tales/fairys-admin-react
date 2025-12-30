@@ -6,9 +6,7 @@ interface DarkModeInstanceState {
 }
 
 export class DarkModeInstance {
-  state = proxy<DarkModeInstanceState>({
-    theme: 'light',
-  });
+  state = proxy<DarkModeInstanceState>({ theme: 'light' });
   setTheme = (theme: 'light' | 'dark') => {
     this.state.theme = theme;
   };
@@ -45,10 +43,10 @@ export interface DarkModeInstanceContextProviderProps {
 export const DarkModeInstanceContextProvider = (props: DarkModeInstanceContextProviderProps) => {
   const { children, theme, darkModeInstance: instance } = props;
   const darkModeInstance = useDarkModeInstance(instance);
-
   useEffect(() => {
     darkModeInstance.setTheme(theme);
   }, [theme, darkModeInstance]);
+
   return <DarkModeInstanceContext.Provider value={darkModeInstance}>{children}</DarkModeInstanceContext.Provider>;
 };
 

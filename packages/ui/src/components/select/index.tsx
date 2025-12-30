@@ -21,7 +21,7 @@ export const FairysSelectBase = (props: FairysSelectBaseProps) => {
   const [isExpand, setIsExpand] = useState(false);
   const expandIcon = useMemo(() => {
     return clsx(
-      'fairys:relative fairys:after:bg-current fairys:before:bg-current fairys:after:-translate-y-[1px] fairys:before:-translate-y-[1px]',
+      'fairys:relative fairys:after:bg-current fairys:before:bg-current fairys:after:-translate-y-px fairys:before:-translate-y-px',
       {
         expand: isExpand,
         close: !isExpand,

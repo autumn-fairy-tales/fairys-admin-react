@@ -1,4 +1,4 @@
-import { FairysMainPage, FairysMenu } from '@fairys/admin-tools-react';
+import { FairysMainPage, FairysMenu, useDarkModeInstanceContext } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
 import {
   FairysLoginPage,
@@ -36,6 +36,9 @@ const MainIndex = () => {
         console.log(err);
       });
   };
+  const [state] = useDarkModeInstanceContext();
+  const theme = state.theme;
+  console.log('theme', theme);
   const [selectedKey, updateSelectedKey] = useState('/');
   const [openKeys, updateOpenKeys] = useState<string[]>([]);
 
@@ -55,7 +58,8 @@ const MainIndex = () => {
             // mode="horizontal"
             // collapsedMode="vertical"
             collapsed
-            firstGroupMode="hover"
+            // firstGroupMode="hover"
+            firstGroupMode="click"
             // firstGroupMode='hover'
             onClickItem={(item, event, instance) => {
               updateSelectedKey(item.path);

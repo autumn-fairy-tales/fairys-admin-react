@@ -1,0 +1,15 @@
+.dark.fairys_admin_layout_sider {
+  /* fairys:dark:text-gray-400 fairys:dark:bg-gray-900! */
+  --fairys-admin-layout-sider-text-color: var(--fairys-color-gray-400);
+  --fairys-admin-layout-sider-bg-color: var(--fairys-color-gray-900);
+}
+
+.light.fairys_admin_layout_sider {
+  --fairys-admin-layout-sider-text-color: var(--fairys-color-gray-950);
+  --fairys-admin-layout-sider-bg-color: var(--fairys-color-white);
+}
+
+.fairys_admin_layout_sider {
+  color: var(--fairys-admin-layout-sider-text-color);
+  background-color: var(--fairys-admin-layout-sider-bg-color);
+}

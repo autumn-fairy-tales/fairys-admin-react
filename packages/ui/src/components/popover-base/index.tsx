@@ -189,8 +189,7 @@ export const FairysPopoverBaseComponent = forwardRef(
         className,
         'fairys:rounded-sm fairys:shadow-xl fairys:inset-shadow-sm',
         {
-          'fairys:bg-white fairys:dark:bg-gray-800!': !isOpacity,
-          'fairys:bg-white/75 fairys:dark:bg-gray-800/75!': isOpacity,
+          is_opacity: isOpacity,
         },
       );
     }, [className, isOpacity, theme]);
@@ -203,8 +202,7 @@ export const FairysPopoverBaseComponent = forwardRef(
         'fairys:rounded-sm',
         {
           'fairys:min-w-[120px]': isNotMinWidth === false,
-          'fairys:bg-white fairys:dark:bg-gray-800!': !isOpacity,
-          'fairys:bg-white/75 fairys:dark:bg-gray-800/75!': isOpacity,
+          is_opacity: isOpacity,
         },
       );
     }, [motionClassName, isNotMinWidth, isOpacity]);

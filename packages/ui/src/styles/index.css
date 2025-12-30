@@ -21,6 +21,18 @@ body {
 @import './../components/button/variables.css';
 @import './../components/enter-loading/variables.css';
 @import './../components/menu/variables.css';
+@import './../components/full-screen/variables.css';
+@import './../components/main-page/variables.css';
+@import './../components/notification/variables.css';
+@import './../components/popover-base/variables.css';
+@import './../components/popover-menu/variables.css';
+@import './../components/tabs/variables.css';
+@import './../layout/header/variables.css';
+@import './../layout/sider/variables.css';
+@import './../layout/tab-bar/variables.css';
+@import './../layout/tool-bar/variables.css';
+@import './../components/modal-base/variables.css';
+@import './../components/login/variables.css';
 
 @plugin "@iconify/tailwind4";
 

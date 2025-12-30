@@ -44,7 +44,7 @@ export const FairysNotificationBaseItem = forwardRef(
 
     const clxName = useMemo(() => {
       return clsx(
-        'fairys_admin_notification_item fairys:rounded-sm fairys:p-2 fairys:gap-1 fairys:w-full fairys:flex fairys:items-start fairys:flex-row fairys:cursor-pointer fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-600 fairys:transition-all fairys:duration-300',
+        'fairys_admin_notification_item fairys:rounded-sm fairys:p-2 fairys:gap-1 fairys:w-full fairys:flex fairys:items-start fairys:flex-row fairys:cursor-pointer  fairys:transition-all fairys:duration-300',
         className,
         {
           [`fairys_admin_notification_item-${item?.type}`]: item?.type,
@@ -74,7 +74,7 @@ export const FairysNotificationBaseItem = forwardRef(
           >
             {item?.title}
           </div>
-          <div className="fairys_admin_notification_item_content_date fairys:text-[12px] fairys:text-gray-400 fairys:break-words">
+          <div className="fairys_admin_notification_item_content_date fairys:text-[12px] fairys:wrap-break-word">
             {item?.date}
           </div>
         </div>
@@ -103,7 +103,7 @@ export const FairysNotificationListBase = forwardRef(
 
     const clxName = useMemo(() => {
       return clsx(
-        'fairys_admin_notification_list fairys:min-w-[200px] fairys:bg-white fairys:dark:bg-gray-800 fairys:rounded-sm fairys:flex fairys:flex-col',
+        'fairys_admin_notification_list fairys:min-w-[200px] fairys:rounded-sm fairys:flex fairys:flex-col',
         className,
       );
     }, [className]);

@@ -8,7 +8,7 @@ export const FairysMainPageSearch = forwardRef((props: FairysMainPageBaseProps, 
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx(
-      'fairys_admin_main_page_search fairys:w-full fairys:p-[14px] fairys:box-border fairys:bg-white fairys:dark:bg-gray-900 ',
+      'fairys_admin_main_page_search fairys:w-full fairys:p-[14px] fairys:box-border fairys:bg-(--fairys-admin-main-page-item-bg-color)',
       className,
     );
   }, [className]);
@@ -24,7 +24,7 @@ export const FairysMainPageBody = forwardRef((props: FairysMainPageBaseProps, re
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx(
-      'fairys_admin_main_page_body fairys:w-full fairys:flex-1 fairys:flex fairys:flex-col fairys:overflow-auto fairys:p-[14px] fairys:box-border fairys:bg-white fairys:dark:bg-gray-900 ',
+      'fairys_admin_main_page_body fairys:w-full fairys:flex-1 fairys:flex fairys:flex-col fairys:overflow-auto fairys:p-[14px] fairys:box-border fairys:bg-(--fairys-admin-main-page-item-bg-color)',
       className,
     );
   }, [className]);
@@ -40,7 +40,7 @@ export const FairysMainPageFooter = forwardRef((props: FairysMainPageBaseProps, 
   const { className, children, ...rest } = props;
   const clx = useMemo(() => {
     return clsx(
-      'fairys_admin_main_page_footer fairys:w-full fairys:p-[14px] fairys:box-border fairys:bg-white fairys:dark:bg-gray-900',
+      'fairys_admin_main_page_footer fairys:w-full fairys:p-[14px] fairys:box-border fairys:bg-(--fairys-admin-main-page-item-bg-color)',
       className,
     );
   }, [className]);
@@ -57,7 +57,7 @@ export const FairysMainPage = forwardRef(
     const { className, children, bodyClassName, ...rest } = props;
     const clx = useMemo(() => {
       return clsx(
-        'fairys_admin_main_page fairys:p-[14px]  fairys:h-full fairys:w-full fairys:bg-stone-100 fairys:dark:bg-gray-950',
+        'fairys_admin_main_page fairys:p-[14px]  fairys:h-full fairys:w-full fairys:bg-(--fairys-admin-main-page-bg-color)',
         className,
       );
     }, [className]);

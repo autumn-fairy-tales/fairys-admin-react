@@ -1,0 +1,27 @@
+.dark .fairys_admin_notification_list {
+  /* fairys:bg-white fairys:dark:bg-gray-800 */
+  --fairys-admin-notification-list-bg-color: var(--fairys-color-gray-800);
+  /* fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-600 */
+  --fairys-admin-notification-list-item-hover-bg-color: var(--fairys-color-gray-600);
+}
+
+.light .fairys_admin_notification_list {
+  /* fairys:bg-white fairys:dark:bg-gray-800 */
+  --fairys-admin-notification-list-bg-color: var(--fairys-color-white);
+  /* fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-600 */
+  --fairys-admin-notification-list-item-hover-bg-color: var(--fairys-color-gray-100);
+}
+
+.fairys_admin_notification_list .fairys_admin_notification_item_content_date {
+  /* fairys:text-gray-400*/
+  --fairys-admin-notification-list-item-date-text-color: var(--fairys-color-gray-400);
+  color: var(--fairys-admin-notification-list-item-date-text-color);
+}
+
+.fairys_admin_notification_item:hover {
+  background-color: var(--fairys-admin-notification-list-item-hover-bg-color);
+}
+
+.fairys_admin_notification_list {
+  background-color: var(--fairys-admin-notification-list-bg-color);
+}

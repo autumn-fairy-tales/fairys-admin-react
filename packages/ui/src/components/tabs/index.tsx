@@ -34,11 +34,7 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
   const clsName = useMemo(() => {
     return clsx(
       'fairys_admin_tabs_item fairys:relative fairys:flex-1 fairys:cursor-pointer fairys:px-2 fairys:py-1 fairys:transition-all fairys:duration-300',
-      {
-        'fairys:opacity-50': disabled,
-        'fairys:text-white': selected,
-        'fairys:text-gray-600 fairys:dark:text-gray-400': !selected,
-      },
+      { 'fairys:opacity-50': disabled, active: selected },
     );
   }, [disabled, selected]);
 
