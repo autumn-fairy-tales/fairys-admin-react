@@ -39,16 +39,8 @@ export const FairysBreadcrumbBase = (props: FairysBreadcrumbBaseProps) => {
         {
           'fairys:px-[14px]': (index !== 0 && isFristNoPadding) || !isFristNoPadding,
           'fairys:pr-[14px]': isFristNoPadding && index === 0,
-          'fairys:text-(--fairys-admin-breadcrumb-item-last-text-color) fairys:hover:text-(--fairys-admin-breadcrumb-item-last-hover-text-color)':
-            isLast,
-          'fairys:text-(--fairys-admin-breadcrumb-item-text-color) fairys:hover:text-(--fairys-admin-breadcrumb-item-hover-text-color)':
-            !isLast,
-          'fairys:bg-(--fairys-admin-breadcrumb-item-last-bg-color) fairys:hover:bg-(--fairys-admin-breadcrumb-item-last-hover-bg-color)':
-            isLast && separate === 'bg',
-          'fairys:bg-(--fairys-admin-breadcrumb-item-bg-color) fairys:hover:bg-(--fairys-admin-breadcrumb-item-hover-bg-color)':
-            !isLast && separate === 'bg',
-          'fairys:after:text-(--fairys-admin-breadcrumb-item-divider-color) fairys:after:content-["/"]':
-            separate === 'slash',
+          [separate]: true,
+          last: isLast,
         },
         itemClassName,
       );

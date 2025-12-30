@@ -7,3 +7,448 @@
   /* fairys:bg-black/75 fairys:dark:bg-white/75 */
   --fairys-admin-enter-loading-bg-color: var(--fairys-color-black);
 }
+
+.fairys_admin_enter_loading {
+  --enter-loading-transform-color: #00a98e;
+  background-color: --alpha(var(--fairys-admin-enter-loading-bg-color) / 75%);
+}
+
+/* fairys_admin_enter_loading */
+@keyframes fairys_enter_loading_transform {
+  0% {
+    --fairys-enter-loading-transform-color: #00a98e;
+  }
+
+  1.25% {
+    --fairys-enter-loading-transform-color: #00a996;
+  }
+
+  2.5% {
+    --fairys-enter-loading-transform-color: #00a99f;
+  }
+
+  3.75% {
+    --fairys-enter-loading-transform-color: #00a9a7;
+  }
+
+  5% {
+    --fairys-enter-loading-transform-color: #00a9b0;
+  }
+
+  6.25% {
+    --fairys-enter-loading-transform-color: #00a9b8;
+  }
+
+  7.5% {
+    --fairys-enter-loading-transform-color: #00a9c0;
+  }
+
+  8.75% {
+    --fairys-enter-loading-transform-color: #00a8c7;
+  }
+
+  10% {
+    --fairys-enter-loading-transform-color: #00a8cf;
+  }
+
+  11.25% {
+    --fairys-enter-loading-transform-color: #00a7d5;
+  }
+
+  12.5% {
+    --fairys-enter-loading-transform-color: #00a6dc;
+  }
+
+  13.75% {
+    --fairys-enter-loading-transform-color: #00a6e2;
+  }
+
+  15% {
+    --fairys-enter-loading-transform-color: #00a4e7;
+  }
+
+  16.25% {
+    --fairys-enter-loading-transform-color: #00a3ec;
+  }
+
+  17.5% {
+    --fairys-enter-loading-transform-color: #00a2f1;
+  }
+
+  18.75% {
+    --fairys-enter-loading-transform-color: #00a0f4;
+  }
+
+  20% {
+    --fairys-enter-loading-transform-color: #009ff7;
+  }
+
+  21.25% {
+    --fairys-enter-loading-transform-color: #009dfa;
+  }
+
+  22.5% {
+    --fairys-enter-loading-transform-color: #009bfc;
+  }
+
+  23.75% {
+    --fairys-enter-loading-transform-color: #0098fd;
+  }
+
+  25% {
+    --fairys-enter-loading-transform-color: #0096fd;
+  }
+
+  26.25% {
+    --fairys-enter-loading-transform-color: #0093fd;
+  }
+
+  27.5% {
+    --fairys-enter-loading-transform-color: #2e90fc;
+  }
+
+  28.75% {
+    --fairys-enter-loading-transform-color: #4d8dfa;
+  }
+
+  30% {
+    --fairys-enter-loading-transform-color: #638af8;
+  }
+
+  31.25% {
+    --fairys-enter-loading-transform-color: #7587f5;
+  }
+
+  32.5% {
+    --fairys-enter-loading-transform-color: #8583f1;
+  }
+
+  33.75% {
+    --fairys-enter-loading-transform-color: #9280ed;
+  }
+
+  35% {
+    --fairys-enter-loading-transform-color: #9f7ce9;
+  }
+
+  36.25% {
+    --fairys-enter-loading-transform-color: #aa78e3;
+  }
+
+  37.5% {
+    --fairys-enter-loading-transform-color: #b574dd;
+  }
+
+  38.75% {
+    --fairys-enter-loading-transform-color: #be71d7;
+  }
+
+  40% {
+    --fairys-enter-loading-transform-color: #c76dd1;
+  }
+
+  41.25% {
+    --fairys-enter-loading-transform-color: #cf69c9;
+  }
+
+  42.5% {
+    --fairys-enter-loading-transform-color: #d566c2;
+  }
+
+  43.75% {
+    --fairys-enter-loading-transform-color: #dc63ba;
+  }
+
+  45% {
+    --fairys-enter-loading-transform-color: #e160b3;
+  }
+
+  46.25% {
+    --fairys-enter-loading-transform-color: #e65eab;
+  }
+
+  47.5% {
+    --fairys-enter-loading-transform-color: #e95ca2;
+  }
+
+  48.75% {
+    --fairys-enter-loading-transform-color: #ed5a9a;
+  }
+
+  50% {
+    --fairys-enter-loading-transform-color: #ef5992;
+  }
+
+  51.25% {
+    --fairys-enter-loading-transform-color: #f15989;
+  }
+
+  52.5% {
+    --fairys-enter-loading-transform-color: #f25981;
+  }
+
+  53.75% {
+    --fairys-enter-loading-transform-color: #f25a79;
+  }
+
+  55% {
+    --fairys-enter-loading-transform-color: #f25c71;
+  }
+
+  56.25% {
+    --fairys-enter-loading-transform-color: #f15e69;
+  }
+
+  57.5% {
+    --fairys-enter-loading-transform-color: #ef6061;
+  }
+
+  58.75% {
+    --fairys-enter-loading-transform-color: #ed635a;
+  }
+
+  60% {
+    --fairys-enter-loading-transform-color: #eb6552;
+  }
+
+  61.25% {
+    --fairys-enter-loading-transform-color: #e8694b;
+  }
+
+  62.5% {
+    --fairys-enter-loading-transform-color: #e46c44;
+  }
+
+  63.75% {
+    --fairys-enter-loading-transform-color: #e06f3d;
+  }
+
+  65% {
+    --fairys-enter-loading-transform-color: #db7336;
+  }
+
+  66.25% {
+    --fairys-enter-loading-transform-color: #d77630;
+  }
+
+  67.5% {
+    --fairys-enter-loading-transform-color: #d17a2a;
+  }
+
+  68.75% {
+    --fairys-enter-loading-transform-color: #cc7d24;
+  }
+
+  70% {
+    --fairys-enter-loading-transform-color: #c6811e;
+  }
+
+  71.25% {
+    --fairys-enter-loading-transform-color: #bf8418;
+  }
+
+  72.5% {
+    --fairys-enter-loading-transform-color: #b98713;
+  }
+
+  73.75% {
+    --fairys-enter-loading-transform-color: #b28a0f;
+  }
+
+  75% {
+    --fairys-enter-loading-transform-color: #ab8d0c;
+  }
+
+  76.25% {
+    --fairys-enter-loading-transform-color: #a3900b;
+  }
+
+  77.5% {
+    --fairys-enter-loading-transform-color: #9c920d;
+  }
+
+  78.75% {
+    --fairys-enter-loading-transform-color: #949510;
+  }
+
+  80% {
+    --fairys-enter-loading-transform-color: #8b9715;
+  }
+
+  81.25% {
+    --fairys-enter-loading-transform-color: #83991b;
+  }
+
+  82.5% {
+    --fairys-enter-loading-transform-color: #7a9b21;
+  }
+
+  83.75% {
+    --fairys-enter-loading-transform-color: #719d27;
+  }
+
+  85% {
+    --fairys-enter-loading-transform-color: #679e2e;
+  }
+
+  86.25% {
+    --fairys-enter-loading-transform-color: #5da035;
+  }
+
+  87.5% {
+    --fairys-enter-loading-transform-color: #51a13c;
+  }
+
+  88.75% {
+    --fairys-enter-loading-transform-color: #44a244;
+  }
+
+  90% {
+    --fairys-enter-loading-transform-color: #34a44b;
+  }
+
+  91.25% {
+    --fairys-enter-loading-transform-color: #1ba553;
+  }
+
+  92.5% {
+    --fairys-enter-loading-transform-color: #00a65b;
+  }
+
+  93.75% {
+    --fairys-enter-loading-transform-color: #00a663;
+  }
+
+  95% {
+    --fairys-enter-loading-transform-color: #00a76c;
+  }
+
+  96.25% {
+    --fairys-enter-loading-transform-color: #00a874;
+  }
+
+  97.5% {
+    --fairys-enter-loading-transform-color: #00a87d;
+  }
+
+  98.75% {
+    --fairys-enter-loading-transform-color: #00a985;
+  }
+
+  100% {
+    --fairys-enter-loading-transform-color: #00a98e;
+  }
+}
+
+.fairys_admin_enter_loading {
+  animation: fairys_enter_loading_transform 20s linear infinite;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 10000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  color: var(--fairys-enter-loading-transform-color);
+  user-select: none;
+}
+
+.fairys_admin_enter_loading *::before,
+.fairys_admin_enter_loading *::after {
+  box-sizing: content-box;
+}
+.fairys_admin_enter_loading .fairys_admin_enter_loading-main {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+}
+.fairys_admin_enter_loading .fairys_admin_enter_loading-main .square {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+}
+.fairys_admin_enter_loading .fairys_admin_enter_loading-main .square::before {
+  width: 10px;
+  height: 10px;
+  content: '';
+  border: 3px solid var(--fairys-enter-loading-transform-color);
+  border-radius: 15%;
+  animation: square-to-dot-animation 2s linear infinite;
+}
+.fairys_admin_enter_loading .fairys_admin_enter_loading-main .square:nth-child(1)::before {
+  animation-delay: calc(150ms * 1);
+}
+.fairys_admin_enter_loading .fairys_admin_enter_loading-main .square:nth-child(2)::before {
+  animation-delay: calc(150ms * 2);
+}
+.fairys_admin_enter_loading .fairys_admin_enter_loading-main .square:nth-child(3)::before {
+  animation-delay: calc(150ms * 3);
+}
+.fairys_admin_enter_loading .fairys_admin_enter_loading-main .square:nth-child(4)::before {
+  animation-delay: calc(150ms * 4);
+}
+@keyframes square-to-dot-animation {
+  15%,
+  25% {
+    width: 0;
+    height: 0;
+    margin: 5px;
+    border-width: 5px;
+    border-radius: 100%;
+  }
+  40% {
+    width: 10px;
+    height: 10px;
+    margin: initial;
+    border-width: 3px;
+    border-radius: 15%;
+  }
+}
+.fairys_admin_enter_loading .name {
+  position: relative;
+  margin-top: 20px;
+  font-size: 24px;
+  line-height: 1.5;
+}
+.fairys_admin_enter_loading .tips {
+  position: relative;
+  margin-top: 10px;
+  font-size: 16px;
+  opacity: 0.5;
+  line-height: 1.5;
+}
+.fairys_admin_enter_loading .loading-dots {
+  display: inline-block;
+  width: 20px;
+  text-align: left;
+}
+
+.fairys_admin_enter_loading .loading-dots::after {
+  content: '';
+  animation: fairys_admin_enter_loading_dots 1.5s steps(4) infinite;
+}
+@keyframes fairys_admin_enter_loading_dots {
+  0% {
+    content: '';
+  }
+  25% {
+    content: '.';
+  }
+  50% {
+    content: '..';
+  }
+  75% {
+    content: '...';
+  }
+  100% {
+    content: '';
+  }
+}

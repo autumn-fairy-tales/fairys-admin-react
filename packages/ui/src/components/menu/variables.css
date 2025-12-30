@@ -15,3 +15,14 @@
   /* fairys:text-white fairys:dark:text-white */
   --fairys-admin-menu-base-active-text-color: var(--fairys-color-white);
 }
+.fairys_admin_menu_base .fairys_admin_menu_base-item {
+  color: var(--fairys-admin-menu-base-text-color);
+}
+
+.fairys_admin_menu_base .fairys_admin_menu_base-item.active {
+  color: var(--fairys-admin-menu-base-active-text-color);
+}
+
+.fairys_admin_menu_base .fairys_admin_menu_base-item_hover:hover {
+  background-color: --alpha(var(--fairys-admin-menu-base-hover-bg-color) / 75%);
+}

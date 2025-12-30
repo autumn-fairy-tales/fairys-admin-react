@@ -18,3 +18,16 @@
   --fairys-admin-full-screen-close-bg-color: var(--fairys-color-neutral-500);
   --fairys-admin-full-screen-close-hover-bg-color: var(--fairys-color-neutral-600);
 }
+
+.fairys_admin_full_screen.open {
+  background-color: var(--fairys-admin-full-screen-bg-color);
+}
+
+.fairys_admin_full_screen_close {
+  background-color: var(--fairys-admin-full-screen-close-bg-color);
+  color: var(--fairys-admin-full-screen-close-text-color);
+}
+.fairys_admin_full_screen_close:hover {
+  background-color: var(--fairys-admin-full-screen-close-hover-bg-color);
+  color: var(--fairys-admin-full-screen-close-hover-text-color);
+}

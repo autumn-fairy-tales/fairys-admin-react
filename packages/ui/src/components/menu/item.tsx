@@ -16,7 +16,7 @@ export interface FairysMenuItemProps {
 }
 
 const menuItemBaseClassName =
-  'fairys:shrink-0 fairys:transition-all fairys:duration-300  fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:text-(--fairys-admin-menu-base-text-color) fairys:relative fairys:gap-1 fairys:box-border';
+  'fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:flex fairys:items-center fairys:justify-between fairys:cursor-pointer fairys:relative fairys:gap-1 fairys:box-border';
 
 const titleTextClassName =
   'fairys-menu-item_title-text fairys:flex-1 fairys:max-w-full fairys:text-ellipsis fairys:overflow-hidden fairys:whitespace-nowrap';
@@ -118,8 +118,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   /**移入样式*/
   const _classHover = useMemo(() => {
     return clsx('fairys:shrink-0 fairys:rounded-sm', {
-      'fairys:hover:bg-(--fairys-admin-menu-base-hover-bg-color)/75':
-        !isActive && !disabled && utilsItemOptions.currentType !== 'group',
+      'fairys_admin_menu_base-item_hover': !isActive && !disabled && utilsItemOptions.currentType !== 'group',
     });
   }, [isActive, disabled, utilsItemOptions.currentType]);
 
@@ -177,7 +176,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
       'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
       active: !!isActive,
-      'fairys:text-(--fairys-admin-menu-base-active-text-color)!': !!isActive,
+      // 'fairys:text-(--fairys-admin-menu-base-active-text-color)!': !!isActive,
       'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': utilsItemOptions.currentType === 'group',
       'fairys:text-(--fairys-theme-color)!': isTextColorThemeColor && !isActive,
@@ -189,7 +188,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
 
   const expandIcon = useMemo(() => {
     return clsx(
-      'fairys:relative fairys:ms-1 fairys:w-[10px] fairys:after:bg-current fairys:before:bg-current fairys:after:-translate-y-[1px] fairys:before:-translate-y-[1px]',
+      'fairys:relative fairys:ms-1 fairys:w-[10px] fairys:after:bg-current fairys:before:bg-current fairys:after:-translate-y-px fairys:before:-translate-y-px',
       {
         expand: expandCollapse,
         close: !expandCollapse,

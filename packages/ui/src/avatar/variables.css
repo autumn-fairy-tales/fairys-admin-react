@@ -7,14 +7,6 @@
   /* fairys:dark:text-gray-400 */
   --fairys-admin-avatar-text-color: var(--fairys-color-gray-400);
 }
-.dark .fairys-admin-avatar-info {
-  /* fairys:dark:text-gray-500 */
-  --fairys-admin-avatar-info-text-color: var(--fairys-color-gray-500);
-  /* fairys:dark:text-gray-400 */
-  --fairys-admin-avatar-info-name-text-color: var(--fairys-color-gray-400);
-  /*fairys:dark:text-gray-500 */
-  --fairys-admin-avatar-info-email-text-color: var(--fairys-color-gray-500);
-}
 .light .fairys-admin-avatar {
   /* fairys:hover:bg-gray-200 */
   --fairys-admin-avatar-hover-bg-color: var(--fairys-color-gray-200);
@@ -23,6 +15,15 @@
   /* fairys:text-gray-900*/
   --fairys-admin-avatar-text-color: var(--fairys-color-gray-900);
 }
+.dark .fairys-admin-avatar-info {
+  /* fairys:dark:text-gray-500 */
+  --fairys-admin-avatar-info-text-color: var(--fairys-color-gray-500);
+  /* fairys:dark:text-gray-400 */
+  --fairys-admin-avatar-info-name-text-color: var(--fairys-color-gray-400);
+  /*fairys:dark:text-gray-500 */
+  --fairys-admin-avatar-info-email-text-color: var(--fairys-color-gray-500);
+}
+
 .light .fairys-admin-avatar-info {
   /* fairys:text-gray-300 */
   --fairys-admin-avatar-info-text-color: var(--fairys-color-gray-300);
@@ -30,4 +31,28 @@
   --fairys-admin-avatar-info-name-text-color: var(--fairys-color-gray-900);
   /*  fairys:text-gray-400  */
   --fairys-admin-avatar-info-email-text-color: var(--fairys-color-gray-400);
+}
+
+.fairys-admin-avatar:hover {
+  background-color: var(--fairys-admin-avatar-hover-bg-color);
+}
+
+.fairys-admin-avatar.sider {
+  background-color: var(--fairys-admin-avatar-hover-bg-color);
+}
+.fairys-admin-avatar-info_title {
+  color: var(--fairys-admin-avatar-info-text-color);
+}
+.fairys-admin-avatar-info_name {
+  color: var(--fairys-admin-avatar-info-name-text-color);
+}
+.fairys-admin-avatar-info_email {
+  color: var(--fairys-admin-avatar-info-email-text-color);
+}
+
+.fairys-admin-avatar-name {
+  color: var(--fairys-admin-avatar-text-color);
+}
+.fairys-admin-avatar-image {
+  background-color: var(--fairys-admin-avatar-bg-color);
 }

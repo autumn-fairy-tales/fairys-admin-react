@@ -23,3 +23,23 @@
   --fairys-admin-menu-item-base-active-text-color: var(--fairys-color-white);
   --fairys-admin-menu-item-base-active-bg-color: var(--fairys-theme-color);
 }
+
+.fairys_admin_menu_item_base:not(.disabled) {
+  color: var(--fairys-admin-menu-item-base-text-color);
+}
+.fairys_admin_menu_item_base:not(.disabled):hover {
+  color: var(--fairys-admin-menu-item-base-hover-text-color);
+  background-color: var(--fairys-admin-menu-item-base-hover-bg-color);
+}
+
+.fairys_admin_menu_item_base:not(.disabled).active {
+  background-color: var(--fairys-admin-menu-item-base-active-bg-color);
+  color: var(--fairys-admin-menu-item-base-active-text-color);
+}
+
+.fairys_admin_menu_item_base .fairys_admin_menu_item_base_close {
+  color: var(--fairys-admin-menu-item-base-close-text-color);
+}
+.fairys_admin_menu_item_base .fairys_admin_menu_item_base_close:hover {
+  color: var(--fairys-admin-menu-item-base-close-hover-text-color);
+}

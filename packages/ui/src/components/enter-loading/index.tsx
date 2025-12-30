@@ -16,10 +16,7 @@ export interface FairysEnterLoadingProps extends MotionProps {
 export const FairysEnterLoading = forwardRef((props: FairysEnterLoadingProps, ref: Ref<HTMLDivElement>) => {
   const { title = '', tips = '载入中', className, loading = false, ...rest } = props;
   const { show, onAnimationComplete } = useAnimationStatus(loading);
-  const classNames = useMemo(
-    () => clsx('fairys_admin_enter_loading fairys:bg-(--fairys-admin-enter-loading-bg-color)/75', className),
-    [className],
-  );
+  const classNames = useMemo(() => clsx('fairys_admin_enter_loading', className), [className]);
   return show ? (
     <motion.div
       {...rest}

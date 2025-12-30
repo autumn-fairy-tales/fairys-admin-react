@@ -27,8 +27,7 @@ export interface FairysMenuItemBaseProps
 
 const BaseClassName = `fairys:shrink-0 fairys:transition-all fairys:duration-300 fairys:flex fairys:flex-row fairys:items-center fairys:justify-between fairys:gap-1 fairys:py-[5px] fairys:px-[8px] fairys:mx-[5px] fairys:rounded-sm`;
 const DisabledClassName = `fairys:opacity-70 fairys:select-none`;
-const NotDisabledClassName = `fairys:cursor-pointer fairys:text-(--fairys-admin-menu-item-base-text-color) fairys:hover:text-(--fairys-admin-menu-item-base-hover-text-color)  fairys:dark:hover:bg-(--fairys-admin-menu-item-base-hover-bg-color)`;
-const ActiveClassName = `active fairys:bg-(--fairys-admin-menu-item-base-active-bg-color)! fairys:text-(--fairys-admin-menu-item-base-active-text-color)!`;
+const NotDisabledClassName = `fairys:cursor-pointer`;
 
 export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, ref: Ref<HTMLDivElement>) => {
   const {
@@ -47,9 +46,10 @@ export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, re
 
   const clx = useMemo(() => {
     return clsx('fairys_admin_menu_item_base', BaseClassName, {
+      disabled: disabled,
+      active: isActive,
       [DisabledClassName]: disabled,
       [NotDisabledClassName]: !disabled,
-      [ActiveClassName]: isActive,
       'fairys:border-0': !bordered,
       'fairys:border': bordered,
       [UtilsColor.componentBorderClassNameBase]: bordered,
@@ -85,7 +85,7 @@ export const FairysMenuItemBase = forwardRef((props: FairysMenuItemBaseProps, re
         {extra}
         {isShowClose ? (
           <span
-            className="fairys:icon-[ant-design--close-outlined] fairys:ml-2 fairys:text-gray-400 fairys:hover:text-gray-600 fairys:dark:hover:text-white fairys:dark:text-gray-500 fairys:transition-all fairys:duration-300"
+            className="fairys_admin_menu_item_base_close fairys:icon-[ant-design--close-outlined] fairys:ml-2  fairys:transition-all fairys:duration-300"
             onClick={onCloseClick}
           />
         ) : (

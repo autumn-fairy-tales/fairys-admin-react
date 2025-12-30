@@ -11,3 +11,11 @@
   /* fairys:bg-gray-200 fairys:dark:bg-gray-600 */
   --fairys-admin-button-base-bg-color: var(--fairys-color-gray-200);
 }
+
+.fairys_button_base:hover {
+  background-color: var(--fairys-admin-button-base-hover-bg-color);
+}
+
+.fairys_button_base.bg {
+  background-color: var(--fairys-admin-button-base-bg-color);
+}

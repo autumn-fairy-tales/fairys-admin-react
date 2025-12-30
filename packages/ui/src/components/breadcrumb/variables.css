@@ -35,3 +35,37 @@
   /* 分割 */
   --fairys-admin-breadcrumb-item-divider-color: var(--fairys-color-gray-200);
 }
+
+/* bg , separate ,last*/
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item:not(.last) {
+  color: var(--fairys-admin-breadcrumb-item-text-color);
+}
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item:not(.last):hover {
+  color: var(--fairys-admin-breadcrumb-item-hover-text-color);
+}
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item.last {
+  color: var(--fairys-admin-breadcrumb-item-last-text-color);
+}
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item.last:hover {
+  color: var(--fairys-admin-breadcrumb-item-last-hover-text-color);
+}
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item:not(.last).bg {
+  background-color: var(--fairys-admin-breadcrumb-item-bg-color);
+}
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item:not(.last).bg:hover {
+  background-color: var(--fairys-admin-breadcrumb-item-hover-bg-color);
+}
+
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item.last.bg {
+  background-color: var(--fairys-admin-breadcrumb-item-last-bg-color);
+}
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item.last.bg:hover {
+  background-color: var(--fairys-admin-breadcrumb-item-last-hover-bg-color);
+}
+.fairys_admin_breadcrumb .fairys_admin_breadcrumb_item.slash:after {
+  content: '/';
+  color: var(--fairys-admin-breadcrumb-item-divider-color);
+}

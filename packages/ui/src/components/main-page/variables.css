@@ -11,3 +11,13 @@
   /* fairys:bg-white fairys:dark:bg-gray-900 */
   --fairys-admin-main-page-item-bg-color: var(--fairys-color-white);
 }
+
+.fairys_admin_main_page_search,
+.fairys_admin_main_page_body,
+.fairys_admin_main_page_footer {
+  background-color: var(--fairys-admin-main-page-item-bg-color);
+}
+
+.fairys_admin_main_page {
+  background-color: var(--fairys-admin-main-page-bg-color);
+}
