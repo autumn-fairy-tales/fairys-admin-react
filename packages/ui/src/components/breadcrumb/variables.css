@@ -1,4 +1,4 @@
-.dark .fairys_admin_breadcrumb {
+.dark {
   /* 文本颜色 */
   /* 默认文本颜色 、悬停文本颜色 、最后一项文本颜色 */
   --fairys-admin-breadcrumb-item-text-color: var(--fairys-color-gray-400);
@@ -17,7 +17,7 @@
   --fairys-admin-breadcrumb-item-divider-color: var(--fairys-color-gray-600);
 }
 
-.light .fairys_admin_breadcrumb {
+.light {
   /* 文本颜色 */
   /* 默认文本颜色 、悬停文本颜色 、最后一项文本颜色 */
   --fairys-admin-breadcrumb-item-text-color: var(--fairys-color-gray-400);

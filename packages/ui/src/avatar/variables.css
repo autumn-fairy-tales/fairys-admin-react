@@ -1,5 +1,5 @@
 /* Avatar */
-.dark .fairys-admin-avatar {
+.dark {
   /* fairys:dark:hover:bg-gray-700 */
   --fairys-admin-avatar-hover-bg-color: var(--fairys-color-gray-700);
   /* fairys:dark:bg-gray-700 */
@@ -14,7 +14,7 @@
   /*fairys:dark:text-gray-500 */
   --fairys-admin-avatar-info-email-text-color: var(--fairys-color-gray-500);
 }
-.light .fairys-admin-avatar {
+.light {
   /* fairys:hover:bg-gray-200 */
   --fairys-admin-avatar-hover-bg-color: var(--fairys-color-gray-200);
   /* fairys:bg-gray-200  */

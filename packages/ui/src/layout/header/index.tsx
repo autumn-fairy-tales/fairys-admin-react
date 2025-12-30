@@ -21,7 +21,7 @@ export const LayoutHeader = memo(() => {
 
   return (
     <DarkModeInstanceContextProvider theme={theme}>
-      <div className={headerCls}>
+      <div className={headerCls} data-theme={theme}>
         <MainMenu layoutMode="horizontal" />
       </div>
     </DarkModeInstanceContextProvider>

@@ -1,4 +1,4 @@
-.dark .fairys_admin_popover_menu_item {
+.dark {
   /* fairys:dark:bg-gray-700/75 fairys:bg-gray-100/75 fairys:text-gray-600! */
   --fairys-admin-popover-menu-item-sub-bg-color: --alpha(var(--fairys-color-gray-700) / 75%);
   /* fairys:text-gray-600 fairys:hover:text-gray-700 fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300 fairys:dark:hover:bg-gray-700 fairys:hover:bg-gray-100 */
@@ -11,7 +11,7 @@
   --fairys-admin-popover-menu-item-close-hover-text-color: var(--fairys-color-white);
 }
 
-.light .fairys_admin_popover_menu_item {
+.light {
   /* fairys:dark:bg-gray-700/75 fairys:bg-gray-100/75 fairys:text-gray-600! */
   --fairys-admin-popover-menu-item-sub-bg-color: --alpha(var(--fairys-color-gray-100) / 75%);
   /* fairys:text-gray-600 fairys:hover:text-gray-700  fairys:hover:bg-gray-100 fairys:dark:text-gray-400 fairys:dark:hover:text-gray-300 fairys:dark:hover:bg-gray-700 */

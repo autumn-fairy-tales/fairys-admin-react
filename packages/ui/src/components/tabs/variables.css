@@ -1,10 +1,10 @@
-.dark .fairys_admin_tabs {
+.dark {
   /* 'fairys:text-white': selected, 'fairys:text-gray-600 fairys:dark:text-gray-400': !selected, */
   --fairys-admin-tabs-text-color: var(--fairys-color-400);
   --fairys-admin-tabs-active-text-color: var(--fairys-color-white);
 }
 
-.light .fairys_admin_tabs {
+.light {
   --fairys-admin-tabs-text-color: var(--fairys-color-600);
   --fairys-admin-tabs-active-text-color: var(--fairys-color-white);
 }

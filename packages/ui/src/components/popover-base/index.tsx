@@ -228,7 +228,13 @@ export const FairysPopoverBaseComponent = forwardRef(
           <FloatingPortal>
             <DarkModeInstanceContextProvider theme={theme}>
               <AnimatePresence>
-                <div ref={refs.setFloating} style={floatingStyles} className={bodyClasName} {...getFloatingProps()}>
+                <div
+                  ref={refs.setFloating}
+                  data-theme={theme}
+                  style={floatingStyles}
+                  className={bodyClasName}
+                  {...getFloatingProps()}
+                >
                   <motion.div
                     initial="collapsed"
                     animate={open ? 'open' : 'collapsed'}

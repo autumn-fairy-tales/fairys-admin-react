@@ -122,6 +122,7 @@ export const FairysSubMenuItem = (props: FairysSubMenuItemProps) => {
       <FairysPopoverBase
         className="fairys-sub-menu-item_popover"
         eventName="hover"
+        // eventName="click"
         content={
           <div
             style={{ maxWidth }}

@@ -139,7 +139,7 @@ export const LayoutSider = memo(() => {
 
   return (
     <DarkModeInstanceContextProvider theme={theme}>
-      <div className={clssName}>
+      <div className={clssName} data-theme={theme}>
         <LayoutSiderMainMenu />
         {render}
       </div>

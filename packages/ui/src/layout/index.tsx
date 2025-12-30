@@ -63,7 +63,7 @@ export const Layout = () => {
 
   return (
     <DarkModeInstanceContextProvider theme={theme}>
-      <div className={layoutCls}>
+      <div className={layoutCls} data-theme={theme}>
         {isSiderFull ? (
           <Fragment>
             {isShowSider ? (

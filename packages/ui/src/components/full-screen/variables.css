@@ -1,4 +1,4 @@
-.dark .fairys_admin_full_screen {
+.dark {
   /* fairys:bg-white fairys:dark:bg-gray-800 */
   --fairys-admin-full-screen-bg-color: var(--fairys-color-gray-800);
   /*  fairys:text-white fairys:dark:hover:text-neutral-300 */
@@ -6,7 +6,7 @@
   --fairys-admin-full-screen-close-hover-text-color: var(--fairys-color-neutral-300);
 }
 
-.light .fairys_admin_full_screen {
+.light {
   /* fairys:bg-white fairys:dark:bg-gray-800 */
   --fairys-admin-full-screen-bg-color: var(--fairys-color-white);
   /*  fairys:text-white fairys:dark:hover:text-neutral-300 */

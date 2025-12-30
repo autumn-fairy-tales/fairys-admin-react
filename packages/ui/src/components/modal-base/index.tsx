@@ -144,6 +144,7 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
       <DarkModeInstanceContextProvider theme={theme}>
         <AnimatePresence mode="wait">
           <motion.div
+            data-theme={theme}
             className={`${overlayClassName} ${_clsxDrawerDirection} ${theme}`}
             initial="collapsed"
             animate={open ? 'open' : 'collapsed'}

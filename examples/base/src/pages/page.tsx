@@ -36,9 +36,6 @@ const MainIndex = () => {
         console.log(err);
       });
   };
-  const [state] = useDarkModeInstanceContext();
-  const theme = state.theme;
-  console.log('theme', theme);
   const [selectedKey, updateSelectedKey] = useState('/');
   const [openKeys, updateOpenKeys] = useState<string[]>([]);
 

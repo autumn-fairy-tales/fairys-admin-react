@@ -1,11 +1,11 @@
-.dark .fairys_admin_notification_list {
+.dark {
   /* fairys:bg-white fairys:dark:bg-gray-800 */
   --fairys-admin-notification-list-bg-color: var(--fairys-color-gray-800);
   /* fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-600 */
   --fairys-admin-notification-list-item-hover-bg-color: var(--fairys-color-gray-600);
 }
 
-.light .fairys_admin_notification_list {
+.light {
   /* fairys:bg-white fairys:dark:bg-gray-800 */
   --fairys-admin-notification-list-bg-color: var(--fairys-color-white);
   /* fairys:hover:bg-gray-100 fairys:dark:hover:bg-gray-600 */

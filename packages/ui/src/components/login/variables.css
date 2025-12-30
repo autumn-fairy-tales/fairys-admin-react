@@ -1,9 +1,9 @@
-.dark .fairys_login_page {
+.dark {
   /*  fairys:disabled:bg-gray-100 fairys:dark:disabled:bg-gray-700  */
   --fairys-login-page-disabled-bg-color: var(--fairys-color-gray-700);
 }
 
-.light .fairys_login_page {
+.light {
   /*  fairys:disabled:bg-gray-100 fairys:dark:disabled:bg-gray-700  */
   --fairys-login-page-disabled-bg-color: var(--fairys-color-gray-100);
 }

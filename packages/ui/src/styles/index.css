@@ -83,8 +83,8 @@ body {
   }
 }
 
-@custom-variant dark (&:is(.dark));
-@custom-variant light (&:is(.light));
+@custom-variant dark (&:where(.dark));
+@custom-variant light (&:where(.light));
 
 @layer components {
   /* 主题样式 */
