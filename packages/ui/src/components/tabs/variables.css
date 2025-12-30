@@ -6,7 +6,7 @@
 
 .light .fairys_admin_tabs {
   --fairys-admin-tabs-text-color: var(--fairys-color-600);
-  --fairys-admin-tabs-active-text-color: var(--fairys-color-600);
+  --fairys-admin-tabs-active-text-color: var(--fairys-color-white);
 }
 
 .fairys_admin_tabs .fairys_admin_tabs_item {

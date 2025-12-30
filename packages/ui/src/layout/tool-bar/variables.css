@@ -1,13 +1,14 @@
 .dark .fairys_admin_tool_bar {
   /* fairys:dark:text-gray-200 */
-  --fairys-admin-tool-bar-text-color: var(--fairys-color-gray-200);
-  color: var(--fairys-admin-tool-bar-text-color);
+  --fairys-admin-tool-bar-right-text-color: var(--fairys-color-gray-200);
 }
 
 .light .fairys_admin_tool_bar {
   /* fairys:dark:text-gray-200 */
-  --fairys-admin-tool-bar-text-color: var(--fairys-color-gray-400);
-  color: var(--fairys-admin-tool-bar-text-color);
+  --fairys-admin-tool-bar-right-text-color: var(--fairys-color-gray-950);
+}
+.fairys_admin_tool_bar_right {
+  color: var(--fairys-admin-tool-bar-right-text-color);
 }
 
 /* 搜索按钮 */

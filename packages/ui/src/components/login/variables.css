@@ -9,5 +9,5 @@
 }
 
 .fairys_login_page .fairys_input_base.fairys_login_page_content_form_item_input:disabled {
-  color: var(--fairys-login-page-disabled-bg-color);
+  background-color: var(--fairys-login-page-disabled-bg-color);
 }
