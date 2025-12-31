@@ -20,6 +20,7 @@ settingDataInstance.ctor({
   themeColor: '#af52de',
   // autoListenSystemTheme: false,
 });
+
 /**挂载退出登录事件*/
 authDataInstance.onLogout = () => {
   console.log('onLogout');

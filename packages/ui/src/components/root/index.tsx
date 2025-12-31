@@ -5,7 +5,7 @@ import { aliveControllerDataInstance } from 'context/alive-controller';
 import { DataRouter, RouterProvider } from 'react-router';
 import { routerDataInstance } from 'context';
 import { FairysEnterLoading } from 'components/enter-loading';
-import { DarkModeInstanceContextProvider } from 'context/dark-mode';
+import { FairysDarkModeRoot } from 'context/dark-mode';
 import { useSettingDataInstance } from 'context/setting';
 
 export interface FairysRootProps {
@@ -84,11 +84,9 @@ const FairysRootBody = (props: FairysRootProps) => {
 };
 
 export const FairysRoot = (props: FairysRootProps) => {
-  const [state] = useSettingDataInstance();
-  const theme = state.theme;
   return (
-    <DarkModeInstanceContextProvider theme={theme}>
+    <FairysDarkModeRoot>
       <FairysRootBody {...props} />
-    </DarkModeInstanceContextProvider>
+    </FairysDarkModeRoot>
   );
 };

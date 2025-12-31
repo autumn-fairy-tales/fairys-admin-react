@@ -17,9 +17,7 @@ import { onGetAuth } from './server';
 export const AuthRoot = () => {
   useMemo(() => {
     const token = localStorage.getItem('token');
-    if (!token) {
-      loadingFadeOut();
-    }
+    loadingFadeOut();
     authDataInstance.updatedStatus(token ? 'RequestAuth' : 'Login');
   }, []);
   const [authState] = useAuthDataInstance();
@@ -48,7 +46,6 @@ export const AuthRoot = () => {
       onAuth();
     }
   }, []);
-
   if (status === 'Login') {
     return <Login onLogin={onSetInfo} />;
   } else if (status === 'RequestAuth' || status === 'Loading') {

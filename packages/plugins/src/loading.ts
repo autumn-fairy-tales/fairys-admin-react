@@ -326,14 +326,23 @@ const styles = `
   }
 
   :root {
-    --background: 0 0% 100%,
+    --background: rgba(255, 255, 255, 0.8);
     --rainbow-color: #00a98e;
     animation: rainbow 20s linear infinite;
   }
+
   @media (prefers-color-scheme: dark) {
     :root {
-      --background: 240 10% 3.9%;
+      --background: rgba(0, 0, 0, 0.75);
     }
+  }
+
+  .light{
+    --background: rgba(255, 255, 255, 0.8);
+  }
+    
+  .dark {
+    --background: rgba(0, 0, 0, 0.75);
   }
     
   #loading-container {
@@ -349,7 +358,7 @@ const styles = `
     height: 100%;
     color: var(--rainbow-color);
     user-select: none;
-    background-color: hsl(var(--background));
+    background-color: var(--background);
   }
 
   #loading-container *::before,

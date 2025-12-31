@@ -91,6 +91,16 @@ export class AuthDataInstance {
     appDataInstance.authDataInstance = this;
   }
 
+  /**初始化*/
+  ctor = (state: Partial<AuthDataInstanceState> = {}) => {
+    for (const key in state) {
+      const element = state[key];
+      if (element) {
+        this.state[key] = element;
+      }
+    }
+  };
+
   updatedStatus = (status: AuthDataInstanceState['status']) => {
     this.state.status = status;
   };

@@ -43,4 +43,25 @@ export const FairysEnterLoading = forwardRef((props: FairysEnterLoadingProps, re
     <Fragment />
   );
 });
+
+export interface FairysLoadingProps
+  extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
+  loading?: boolean;
+}
+
+export const FairysLoading = (props: FairysLoadingProps) => {
+  const { loading = false, className, children, ...rest } = props;
+  const classNames = useMemo(
+    () => clsx('fairys_admin_loading_base fairys:relative fairys:w-full fairys:h-full', className),
+    [className],
+  );
+
+  return (
+    <div {...rest} className={classNames}>
+      {children}
+      <FairysEnterLoading loading={loading} />
+    </div>
+  );
+};
+
 export default FairysEnterLoading;

@@ -1,4 +1,4 @@
-import { FairysMainPage, FairysMenu, useDarkModeInstanceContext } from '@fairys/admin-tools-react';
+import { FairysMainPage, FairysMenu } from '@fairys/admin-tools-react';
 import { NavLink } from 'react-router';
 import {
   FairysLoginPage,

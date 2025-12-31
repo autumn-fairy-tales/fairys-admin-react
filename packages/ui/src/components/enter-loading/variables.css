@@ -1,16 +1,16 @@
 .dark {
   /* fairys:bg-white/75 fairys:dark:bg-black/75 */
-  --fairys-admin-enter-loading-bg-color: var(--fairys-color-black);
+  --fairys-admin-enter-loading-bg-color: --alpha(var(--fairys-color-black) / 75%);
 }
 
 .light {
   /* fairys:bg-black/75 fairys:dark:bg-white/75 */
-  --fairys-admin-enter-loading-bg-color: var(--fairys-color-black);
+  --fairys-admin-enter-loading-bg-color: --alpha(var(--fairys-color-white) / 75%);
 }
 
 .fairys_admin_enter_loading {
   --enter-loading-transform-color: #00a98e;
-  background-color: --alpha(var(--fairys-admin-enter-loading-bg-color) / 75%);
+  background-color: var(--fairys-admin-enter-loading-bg-color);
 }
 
 /* fairys_admin_enter_loading */
@@ -342,9 +342,11 @@
 
 .fairys_admin_enter_loading {
   animation: fairys_enter_loading_transform 20s linear infinite;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
+  right: 0;
+  bottom: 0;
   z-index: 10000;
   display: flex;
   flex-direction: column;
