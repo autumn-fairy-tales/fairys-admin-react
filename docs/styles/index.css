@@ -6,3 +6,8 @@ body,
   height: auto !important;
   width: auto !important;
 }
+
+.fairys_admin_modal_base_overlay,
+.fairys_admin_drawer_base_overlay {
+  z-index: 999;
+}

@@ -1,11 +1,19 @@
 import * as path from 'node:path';
-import { defineConfig } from 'rspress/config';
+import { defineConfig, type UserConfig } from '@rspress/core';
 import { pluginPreview } from '@rspress/plugin-preview';
 
 export default defineConfig({
   route: {
     cleanUrls: true,
   },
+  locales: [
+    {
+      lang: 'zh',
+      label: '简体中文',
+      title: 'Rspress',
+      description: '静态网站生成器',
+    },
+  ],
   lang: 'zh',
   base: process.env.NODE_ENV === 'production' ? '/fairys-admin-react/' : '/',
   root: path.join(__dirname, 'docs'),
@@ -24,24 +32,6 @@ export default defineConfig({
         content: 'https://github.com/autumn-fairy-tales/fairys-admin-react',
       },
     ],
-    locales: [
-      {
-        lang: 'zh',
-        label: '中文',
-        prevPageText: '上一页',
-        nextPageText: '下一页',
-        lastUpdated: true,
-        lastUpdatedText: '最后更新',
-        searchPlaceholderText: '搜索',
-        searchNoResultsText: '没有结果',
-        searchSuggestedQueryText: '请使用其他关键字重试',
-        overview: {
-          filterNameText: '过滤',
-          filterPlaceholderText: '输入关键词',
-          filterNoResultText: '未找到匹配内容',
-        },
-      },
-    ],
   },
-  plugins: [pluginPreview({ defaultRenderMode: 'pure' }) as any],
-});
+  plugins: [pluginPreview({ defaultRenderMode: 'pure' })],
+} as unknown as UserConfig);

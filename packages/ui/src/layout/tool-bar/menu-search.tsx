@@ -42,7 +42,7 @@ const SearchItem = (props: SearchItemProps) => {
   return (
     <div
       onClick={onClick}
-      className={`fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:p-[14px] fairys:overflow-auto no-scrollbar ${UtilsColor.componentBorderClassNameBase}`}
+      className={`fairys_admin_tool_bar_menu_search_item fairys:shrink-0 fairys:hover:*:first:text-(--fairys-theme-color) fairys:flex fairys:items-center fairys:flex-row fairys:transition-all fairys:duration-300 fairys:border fairys:rounded-sm  fairys:p-[14px] fairys:overflow-auto no-scrollbar  fairys:cursor-pointer ${UtilsColor.componentBorderClassNameBase}`}
     >
       <div className="fairys:w-[45px] fairys:min-w-[45px] fairys:flex fairys:items-center fairys:justify-center fairys:icon fairys:transition-all fairys:duration-300">
         <FairysIcon className="fairys:size-[20px] " icon={rowItemData.icon} iconProps={iconProps} />

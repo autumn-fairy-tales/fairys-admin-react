@@ -1,6 +1,7 @@
 import { createContext, useContext, useRef, ReactNode, createRef, useEffect, useMemo } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 import { useSettingDataInstance } from './setting';
+import { isBrowser } from 'utils';
 
 interface DarkModeInstanceState {
   theme: 'light' | 'dark';
@@ -13,12 +14,40 @@ export class DarkModeInstance {
     this.state.theme = theme;
   };
 
+  /**监听事件更新系统主题*/
+  onListenChangeSystemTheme = (e: MediaQueryListEvent) => {
+    this.setTheme(e.matches ? 'dark' : 'light');
+  };
+  /**监听系统主题变化*/
+  mediaQueryList: MediaQueryList | null = null;
+  /**自动监听系统的明暗色系*/
+  autoListenSystemTheme = () => {
+    if (!this.mediaQueryList) {
+      this.mediaQueryList = window.matchMedia('(prefers-color-scheme: dark)');
+    } else {
+      this.mediaQueryList.removeEventListener('change', this.onListenChangeSystemTheme);
+    }
+    this.setTheme(this.mediaQueryList.matches ? 'dark' : 'light');
+    this.mediaQueryList.addEventListener('change', this.onListenChangeSystemTheme);
+  };
+
+  constructor() {
+    if (isBrowser) {
+      this.autoListenSystemTheme();
+    }
+  }
+  /**初始化配置*/
   ctor = (state: Partial<DarkModeInstanceState> = {}) => {
     for (const key in state) {
       const element = state[key];
       if (element) {
         this.state[key] = element;
       }
+    }
+    /**如果父级传递使用父级的，否则还是使用系统的*/
+    if (state.theme) {
+      this.mediaQueryList?.removeEventListener('change', this.onListenChangeSystemTheme);
+      this.mediaQueryList = null;
     }
     return this;
   };

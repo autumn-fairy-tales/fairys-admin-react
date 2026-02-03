@@ -129,6 +129,8 @@ export class SettingDataInstance {
         console.log(error);
       }
     }
+    // 在没设置的时候使用系统主题
+    this.autoListenSystemTheme();
   };
 
   constructor() {
