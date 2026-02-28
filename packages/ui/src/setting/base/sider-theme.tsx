@@ -30,8 +30,8 @@ export const SettingSiderThemeBase = () => {
           isBg={isCheckTheme.dark}
           onClick={() => settingDataInstance.onToggleSiderTheme('dark')}
         >
-          <span className="fairys:icon-[ri--moon-line] fairys:text-[18px]"></span>
-          <span className="fairys:text-[14px] fairys:pl-2">暗黑</span>
+          <span className="fairys:icon-[ri--moon-line]"></span>
+          <span className=" fairys:pl-2">暗黑</span>
         </FairysButtonBase>
         <FairysButtonBase
           className="fairys:w-[80px]"
@@ -39,8 +39,8 @@ export const SettingSiderThemeBase = () => {
           isBg={isCheckTheme.light}
           onClick={() => settingDataInstance.onToggleSiderTheme('light')}
         >
-          <span className="fairys:icon-[ri--sun-line] fairys:text-[18px]"></span>
-          <span className="fairys:text-[14px] fairys:pl-2">亮色</span>
+          <span className="fairys:icon-[ri--sun-line]"></span>
+          <span className=" fairys:pl-2">亮色</span>
         </FairysButtonBase>
         <FairysButtonBase
           className="fairys:w-[80px]"
@@ -48,8 +48,8 @@ export const SettingSiderThemeBase = () => {
           isBg={isCheckTheme.system}
           onClick={() => settingDataInstance.onToggleSiderTheme('system')}
         >
-          <span className="fairys:icon-[codicon--color-mode] fairys:text-[18px]"></span>
-          <span className="fairys:text-[14px] fairys:pl-2">系统</span>
+          <span className="fairys:icon-[codicon--color-mode]"></span>
+          <span className=" fairys:pl-2">系统</span>
         </FairysButtonBase>
       </div>
     </LayoutItem>

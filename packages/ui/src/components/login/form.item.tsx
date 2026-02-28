@@ -66,7 +66,7 @@ export const FairysLoginPageFormItem = (props: FairysLoginPageFormItemProps) => 
 
   const labelcCls = useMemo(() => {
     return clsx(
-      `fairys_login_page_content_form_item_label fairys:min-w-[80px] fairys:relative fairys:flex fairys:items-center fairys:font-medium fairys:text-[14px]`,
+      `fairys_login_page_content_form_item_label fairys:min-w-[80px] fairys:relative fairys:flex fairys:items-center fairys:font-medium `,
       labelClassName,
       {
         [`fairys:before:content-['*'] fairys:before:text-red-600 fairys:before:mr-[2px]`]: required,
@@ -102,7 +102,7 @@ export const FairysLoginPageFormItem = (props: FairysLoginPageFormItemProps) => 
             } as any)
           : children}
         {isShowErrorMessage && hasError ? (
-          <div className="fairys_login_page_content_form_item_error_message fairys:absolute fairys:top-full fairys:left-0 fairys:text-[10px] fairys:text-red-500">
+          <div className="fairys_login_page_content_form_item_error_message fairys:absolute fairys:top-full fairys:left-0 fairys:text-red-500">
             {errors}
           </div>
         ) : (

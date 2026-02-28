@@ -61,12 +61,12 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
       {
         children: (
           <div className="fairys-admin-avatar-info fairys:p-2 fairys:flex fairys:flex-col fairys:gap-y-4">
-            <span className="fairys-admin-avatar-info_title fairys:text-[12px]">当前登录账号</span>
+            <span className="fairys-admin-avatar-info_title">当前登录账号</span>
             <div className="fairys:flex fairys:min-h-[38px] fairys:gap-x-2">
               {avatarRender}
               <div className="fairys:flex fairys:flex-col fairys:gap-y-1">
-                <div className="fairys-admin-avatar-info_name fairys:text-[14px] fairys:font-medium">{userName}</div>
-                <div className="fairys-admin-avatar-info_email fairys:text-[12px]">[{userEmail}]</div>
+                <div className="fairys-admin-avatar-info_name fairys:font-medium">{userName}</div>
+                <div className="fairys-admin-avatar-info_email">[{userEmail}]</div>
               </div>
             </div>
           </div>
@@ -123,7 +123,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
           {avatarRender}
         </span>
         {nameMode === 'show' ? (
-          <span className="fairys-admin-avatar-name fairys:text-[14px] fairys:font-medium ">{userName}</span>
+          <span className="fairys-admin-avatar-name  fairys:font-medium ">{userName}</span>
         ) : (
           <Fragment />
         )}

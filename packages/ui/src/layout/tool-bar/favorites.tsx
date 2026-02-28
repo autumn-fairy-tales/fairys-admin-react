@@ -44,7 +44,8 @@ export const Favorites = () => {
       >
         <span>我的收藏夹</span>
         <FairysButtonBase
-          className="fairys_admin_tool_bar_favorites_clear_btn fairys:absolute fairys:top-1 fairys:right-1 fairys:text-[12px]"
+          sizeClassName="fairys:min-w-[30px] fairys:min-h-[30px]"
+          className="fairys_admin_tool_bar_favorites_clear_btn fairys:absolute fairys:top-1 fairys:right-1"
           onClick={() => {
             favoritesDataInstance.clearAll();
           }}
@@ -54,7 +55,7 @@ export const Favorites = () => {
       </div>
       <div className="fairys_admin_tool_bar_favorites_list fairys:flex-1 fairys:overflow-auto no-scrollbar ">
         {isEmpty ? (
-          <div className="fairys:py-20 fairys:text-center fairys:text-[14px] fairys:text-gray-400">暂无收藏</div>
+          <div className="fairys:py-20 fairys:text-center  fairys:text-gray-400">暂无收藏</div>
         ) : (
           <div className="fairys_admin_tool_bar_favorites_list_items fairys:grid fairys:grid-cols-2 fairys:gap-2 fairys:p-3">
             {itemsRender}

@@ -31,7 +31,7 @@ const SearchItem = (props: SearchItemProps) => {
     return (
       <FairysBreadcrumbBase
         className="fairys:py-0! fairys:min-h-auto!"
-        itemClassName="fairys:py-0! fairys:text-[12px]!"
+        itemClassName="fairys:py-0!"
         items={list}
         separate="slash"
         isFristNoPadding
@@ -79,7 +79,7 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
         <input
           placeholder="搜索菜单"
           onInput={onSearch}
-          className="fairys_input_base fairys:flex-1 fairys:px-4 fairys:py-2 fairys:h-[48px] fairys:text-[16px] fairys:border-0 fairys:outline-0 fairys:bg-transparent"
+          className="fairys_input_base fairys:flex-1 fairys:px-4 fairys:py-2 fairys:h-[48px] fairys:border-0 fairys:outline-0 fairys:bg-transparent"
         />
       </div>
       <div className="fairys:flex fairys:flex-col fairys:gap-2 fairys:overflow-auto fairys:flex-1 no-scrollbar">
@@ -87,7 +87,7 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
           return <SearchItem onClose={props.onClose} key={ite.path} rowItemData={ite} />;
         })}
         {searchMenuItems.length === 0 && (
-          <div className="fairys:text-center fairys:text-[14px] fairys:text-gray-500 fairys:flex fairys:items-center fairys:justify-center fairys:min-h-[150px]">
+          <div className="fairys:text-center  fairys:text-gray-500 fairys:flex fairys:items-center fairys:justify-center fairys:min-h-[150px]">
             暂无搜索结果
           </div>
         )}

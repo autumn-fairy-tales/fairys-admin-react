@@ -69,14 +69,12 @@ export const FairysNotificationBaseItem = forwardRef(
         )}
         <div className="fairys_admin_notification_item_content fairys:flex fairys:flex-col fairys:flex-1 fairys:overflow-hidden">
           <div
-            className="fairys_admin_notification_item_content_title fairys:text-[14px] fairys:font-medium fairys:line-clamp-2 fairys:w-full"
+            className="fairys_admin_notification_item_content_title  fairys:font-medium fairys:line-clamp-2 fairys:w-full"
             title={item?.title}
           >
             {item?.title}
           </div>
-          <div className="fairys_admin_notification_item_content_date fairys:text-[12px] fairys:wrap-break-word">
-            {item?.date}
-          </div>
+          <div className="fairys_admin_notification_item_content_date fairys:wrap-break-word">{item?.date}</div>
         </div>
       </div>
     );

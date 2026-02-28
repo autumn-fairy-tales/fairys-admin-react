@@ -35,7 +35,7 @@ export const Notification = () => {
       </div>
       <div className="fairys_admin_tool_bar_notification_list fairys:flex-1 fairys:overflow-auto no-scrollbar  fairys:px-3 fairys:pt-3">
         {isEmpty ? (
-          <div className="fairys:py-20 fairys:text-center fairys:text-[14px] fairys:text-gray-400">暂无通知</div>
+          <div className="fairys:py-20 fairys:text-center  fairys:text-gray-400">暂无通知</div>
         ) : (
           <FairysNotificationListBase
             onClickItem={notificationDataInstance._onClickItem}
@@ -48,7 +48,7 @@ export const Notification = () => {
         <Fragment />
       ) : (
         <div
-          className={`fairys_admin_tool_bar_notification_footer fairys:py-3 fairys:text-[12px] fairys:font-medium fairys:border-t ${UtilsColor.componentBorderClassNameBase}`}
+          className={`fairys_admin_tool_bar_notification_footer fairys:py-3  fairys:font-medium fairys:border-t ${UtilsColor.componentBorderClassNameBase}`}
         >
           <div className="fairys:flex fairys:justify-center fairys:items-center">
             <div className="fairys:cursor-pointer" onClick={notificationDataInstance._onClickMore}>
@@ -69,7 +69,7 @@ export const NotificationBtn = () => {
       <FairysButtonBase className="fairys_admin_tool_bar_notification fairys:relative">
         <span className="fairys:icon-[ant-design--bell-outlined] fairys:size-[18px]" />
         {count > 0 ? (
-          <span className="fairys:absolute fairys:px-[6px] fairys:top-[0px] fairys:left-[40%]  fairys:flex fairys:items-center fairys:justify-center fairys:text-[10px] fairys:rounded-[10px] fairys:bg-red-500 fairys:text-white">
+          <span className="fairys:absolute fairys:px-[6px] fairys:top-[0px] fairys:left-[40%]  fairys:flex fairys:items-center fairys:justify-center fairys:rounded-[10px] fairys:bg-red-500 fairys:text-white">
             {count > 99 ? '99+' : count}
           </span>
         ) : (
