@@ -235,7 +235,7 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
   const _classIcon = useMemo(() => {
     // const isFlexCol  的时候， 图标大小为 26px
     return clsx({
-      'fairys:size-[26px]': isFlexCol,
+      'fairys:size-[22px]': isFlexCol,
       'fairys:size-[16px]': !isFlexCol,
     });
   }, [collapsed, isFlexCol]);
