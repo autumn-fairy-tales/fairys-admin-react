@@ -55,7 +55,7 @@ export const AuthRoot = () => {
     return <div>NoAuth</div>;
   }
   return (
-    <FairysWatermarkBase zIndex={99} className="h-full w-full" content={['Fairys', 'Happy Working']}>
+    <FairysWatermarkBase className="h-full w-full" content={['Fairys', 'Happy Working']}>
       <FairysRoot isOutletKeepAlive={false} router={routerDataInstance.router} keepAlive={true} />
     </FairysWatermarkBase>
   );

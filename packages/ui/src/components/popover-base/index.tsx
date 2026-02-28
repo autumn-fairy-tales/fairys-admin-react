@@ -187,7 +187,7 @@ export const FairysPopoverBaseComponent = forwardRef(
         'fairys_admin_popover-base no-scrollbar',
         theme,
         className,
-        'fairys:rounded-sm fairys:shadow-xl fairys:inset-shadow-sm',
+        'fairys:rounded-sm fairys:shadow-xl fairys:inset-shadow-sm fairys:z-[var(--fairys-z-index)]',
         {
           is_opacity: isOpacity,
         },

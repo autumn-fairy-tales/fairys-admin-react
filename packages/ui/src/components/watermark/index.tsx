@@ -45,7 +45,7 @@ export const FairysWatermarkBase = forwardRef((props: FairysWatermarkProps, ref:
     rotate = -22,
     gap = [DEFAULT_GAP_X, DEFAULT_GAP_Y],
     offset,
-    zIndex,
+    zIndex = 1001,
     font = {},
     className,
     children,

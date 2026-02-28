@@ -32,9 +32,9 @@ export interface FairysModalBaseProps {
 }
 
 export const overlay_className = {
-  modal: `fairys_admin_modal_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-col fairys:items-center no-scrollbar fairys:justify-around fairys:overflow-hidden`,
+  modal: `fairys_admin_modal_base_overlay fairys:z-[var(--fairys-z-index)] fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-col fairys:items-center no-scrollbar fairys:justify-around fairys:overflow-hidden`,
   drawer:
-    'fairys_admin_drawer_base_overlay fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-row no-scrollbar fairys:overflow-hidden',
+    'fairys_admin_drawer_base_overlay fairys:z-[var(--fairys-z-index)] fairys:absolute fairys:top-0 fairys:left-0 fairys:right-0 fairys:bottom-0 fairys:flex fairys:flex-row no-scrollbar fairys:overflow-hidden',
 };
 
 export const base_className = {

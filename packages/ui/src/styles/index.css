@@ -40,6 +40,7 @@ body {
   --box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.03), 0 1px 6px -1px rgba(0, 0, 0, 0.02), 0 2px 4px 0 rgba(0, 0, 0, 0.02);
   --theme-color: var(--color-blue-500, oklch(62.3% 0.214 259.815));
   --bg-modal: oklch(27.8% 0.033 256.848 /0.5);
+  --z-index: 1000;
 }
 
 @layer base {
@@ -87,8 +88,10 @@ body {
 @custom-variant light (&:where(.light));
 
 @layer components {
+  .fairys_floating_portal {
+    z-index: var(--z-index);
+  }
   /* 主题样式 */
-
   /* ================================================================================================== */
 
   .no-scrollbar::-webkit-scrollbar {
