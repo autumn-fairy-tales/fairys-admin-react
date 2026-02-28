@@ -6,6 +6,7 @@ export default defineConfig({
   route: {
     cleanUrls: true,
   },
+  ssg: false,
   locales: [
     {
       lang: 'zh',
