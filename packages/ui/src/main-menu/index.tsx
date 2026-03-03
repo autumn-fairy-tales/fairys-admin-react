@@ -88,7 +88,7 @@ const MainMenuItems = (props: MainMenuProps) => {
 
   return (
     <FairysMenu
-      className="fairys_admin_main_menu_items"
+      className="fairys_admin_main_menu_items fairys:w-full fairys:p-0!"
       {...propsConfig}
       activeMotionPrefixCls="fairys-main-menu-item-active"
       selectedKey={state.mainMenuItemSelected}
