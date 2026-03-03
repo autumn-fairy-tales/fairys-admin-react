@@ -173,8 +173,8 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
     }
 
     return clsx('fairys_admin_menu_base-item', menuItemBaseClassName, className, {
-      'fairys:px-[8px] fairys:py-[4px] fairys:min-h-[36px]': size !== 'small',
-      'fairys:px-[8px] fairys:py-[4px]': size !== 'default',
+      'fairys:p-[8px] fairys:min-h-[36px]': size !== 'small',
+      'fairys:p-[8px]': size !== 'default',
       active: !!isActive,
       'fairys:justify-center': isFlexCol,
       'fairys:opacity-90': utilsItemOptions.currentType === 'group',
