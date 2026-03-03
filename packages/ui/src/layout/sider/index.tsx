@@ -24,7 +24,7 @@ const LayoutSiderMainMenu = () => {
   }
   return (
     <div
-      className={`fairys:border-r fairys:h-full ${UtilsColor.otherBorderClassNameBase} fairys:transition-all fairys:duration-300 fairys:w-[80px] fairys:overflow-hidden`}
+      className={`fairys:border-r fairys:h-full ${UtilsColor.otherBorderClassNameBase} fairys:transition-all fairys:duration-300 fairys:w-[90px] fairys:overflow-hidden`}
     >
       <MainMenu layoutMode="vertical" />
     </div>
@@ -45,7 +45,7 @@ const LayoutSubSider = () => {
       UtilsColor.otherBorderClassNameBase,
       'fairys:transition-all fairys:duration-300 fairys:overflow-hidden',
       {
-        'fairys:w-[80px]': sideMenuMode === 'close',
+        'fairys:w-[90px]': sideMenuMode === 'close',
         'fairys:w-[220px]': sideMenuMode !== 'close',
       },
     );

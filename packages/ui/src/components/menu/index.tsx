@@ -70,7 +70,7 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
         'fairys:flex-col fairys:gap-y-1': mode === 'vertical',
         'fairys:flex-row fairys:gap-x-1': mode === 'horizontal',
         'fairys:max-w-[220px]': !collapsed && mode === 'vertical' && !width,
-        'fairys:max-w-[80px]': collapsed && mode === 'vertical' && !width,
+        'fairys:max-w-[90px]': collapsed && mode === 'vertical' && !width,
         'fairys:p-[8px]': size !== 'small' && firstLevelSize !== 'small',
       },
       className,
