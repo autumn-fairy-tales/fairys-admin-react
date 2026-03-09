@@ -331,20 +331,26 @@ const styles = `
     animation: rainbow 20s linear infinite;
   }
 
+  .light{
+    --background: rgba(255, 255, 255, 0.8);
+  }
+
+  .dark {
+    --background: rgba(0, 0, 0, 0.75);
+  }
+
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root,:host {
       --background: rgba(0, 0, 0, 0.75);
     }
   }
 
-  .light{
-    --background: rgba(255, 255, 255, 0.8);
+  @media (prefers-color-scheme: light) {
+    :root,:host {
+       --background: rgba(255, 255, 255, 0.8);
+    }
   }
-    
-  .dark {
-    --background: rgba(0, 0, 0, 0.75);
-  }
-    
+
   #loading-container {
     position: fixed;
     top: 0;

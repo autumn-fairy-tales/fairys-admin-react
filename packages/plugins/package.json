@@ -8,6 +8,7 @@
   "types": "esm/index.d.ts",
   "module": "esm/index.js",
   "license": "ISC",
+  "type": "module",
   "scripts": {
     "build": "carefrees-rslib build --node --esm",
     "watch": "carefrees-rslib build --watch  --node  --esm"
