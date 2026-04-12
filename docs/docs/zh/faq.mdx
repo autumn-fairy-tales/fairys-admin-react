@@ -1,0 +1,296 @@
+# 常见问题
+
+本页面收集了使用 Fairys Admin React 时常见的问题和解决方案。
+
+## 安装与配置
+
+### Q: 安装 Fairys Admin React 后，组件样式不生效怎么办？
+
+**A:** 确保您已经正确配置了 Tailwind CSS：
+
+1. 检查 `tailwind.config.js` 文件，确保内容路径配置正确：
+
+```js
+content: [
+  "./index.html",
+  "./src/**/*.{js,ts,jsx,tsx}",
+]
+```
+
+2. 检查 `src/index.css` 文件，确保添加了 Tailwind 指令：
+
+```css
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+```
+
+3. 确保您的项目使用了正确的构建工具配置，例如 `rsbuild.config.ts` 中添加了 Tailwind CSS 插件。
+
+### Q: 如何配置路由生成插件？
+
+**A:** 您可以在 `rsbuild.config.ts` 文件中配置路由生成插件：
+
+```ts
+import { getLoadingHtmlTags, RsbuildReactRoutesPlugin } from '@fairys/admin-tools-react-plugins';
+
+export default defineConfig({
+  plugins: [
+    RsbuildReactRoutesPlugin({
+      watchDirs: [{ dir: 'src/pages', routePrefix: '/' }],
+      loadType: 'layout_default_lazy', // 路由加载方式
+      keepAliveBasePath: '@/components/KeepAlive', // 启用页面缓存
+    }),
+  ],
+});
+```
+
+## 状态管理
+
+### Q: 状态实例未初始化怎么办？
+
+**A:** 确保在使用状态实例之前，已经通过 `ctor` 方法初始化了状态实例：
+
+```tsx
+import { settingDataInstance } from '@fairys/admin-tools-react';
+
+// 在应用入口文件中初始化
+settingDataInstance.ctor({
+  projectName: 'Fairys Admin',
+  themeColor: '#af52de',
+});
+```
+
+### Q: 状态更新后组件没有重新渲染怎么办？
+
+**A:** 确保在组件中使用 `useXXXDataInstance` 钩子获取状态，而不是直接使用全局实例的状态：
+
+```tsx
+import { useSettingDataInstance } from '@fairys/admin-tools-react';
+
+const MyComponent = () => {
+  const [settingState] = useSettingDataInstance();
+  
+  return (
+    <div>{settingState.projectName}</div>
+  );
+};
+```
+
+## UI 组件
+
+### Q: 如何自定义组件样式？
+
+**A:** 大多数组件都支持通过 `className` 和 `style` 属性进行定制：
+
+```tsx
+import { FairysButtonBase } from '@fairys/admin-tools-react';
+
+const MyComponent = () => {
+  return (
+    <FairysButtonBase 
+      isBg 
+      className="custom-button"
+      style={{ margin: '10px' }}
+      onClick={() => console.log('点击了按钮')}
+    >
+      按钮
+    </FairysButtonBase>
+  );
+};
+```
+
+### Q: 如何使用图标组件？
+
+**A:** 您可以使用 Icon 组件来显示图标：
+
+```tsx
+import { FairysIcon } from '@fairys/admin-tools-react';
+
+const MyComponent = () => {
+  return (
+    <div>
+      <FairysIcon icon="ant-design:home-outlined" />
+      <FairysIcon icon="ant-design:setting-outlined" />
+    </div>
+  );
+};
+```
+
+## 布局与路由
+
+### Q: 如何配置布局模式？
+
+**A:** 您可以在初始化 `settingDataInstance` 时配置布局模式：
+
+```tsx
+import { settingDataInstance } from '@fairys/admin-tools-react';
+
+settingDataInstance.ctor({
+  projectName: 'Fairys Admin',
+  layoutMode: 'main_top_sub_left_header', // 顶部主菜单 + 侧边子菜单 + 有头部信息
+});
+```
+
+### Q: 如何配置页面缓存？
+
+**A:** 您可以在 `FairysRoot` 组件中配置页面缓存：
+
+```tsx
+import { FairysRoot } from '@fairys/admin-tools-react';
+
+return <FairysRoot 
+  isOutletKeepAlive={true} // 启用页面缓存
+  router={routerDataInstance.router} 
+  keepAlive={true} 
+/>;
+```
+
+或者在路由插件中配置：
+
+```ts
+RsbuildReactRoutesPlugin({
+  keepAliveBasePath: '@/components/KeepAlive',
+});
+```
+
+## 性能优化
+
+### Q: 如何优化组件渲染性能？
+
+**A:** 您可以使用以下方法优化组件渲染性能：
+
+1. 使用 React.memo 包裹组件，避免不必要的重渲染：
+
+```tsx
+import React from 'react';
+
+const MyComponent = React.memo(({ props }) => {
+  return (
+    <div>{props.text}</div>
+  );
+});
+```
+
+2. 对于大型列表，使用虚拟滚动等技术：
+
+```tsx
+import { VirtualList } from 'react-virtualized';
+
+const MyList = ({ items }) => {
+  return (
+    <VirtualList
+      width={300}
+      height={400}
+      rowCount={items.length}
+      rowHeight={50}
+      rowRenderer={({ index, key, style }) => (
+        <div key={key} style={style}>
+          {items[index]}
+        </div>
+      )}
+    />
+  );
+};
+```
+
+3. 对于频繁更新的状态，使用 useCallback 和 useMemo 进行优化：
+
+```tsx
+import { useCallback, useMemo } from 'react';
+
+const MyComponent = ({ items }) => {
+  const handleClick = useCallback((id) => {
+    console.log('点击了', id);
+  }, []);
+
+  const filteredItems = useMemo(() => {
+    return items.filter(item => item.active);
+  }, [items]);
+
+  return (
+    <div>
+      {filteredItems.map(item => (
+        <div key={item.id} onClick={() => handleClick(item.id)}>
+          {item.name}
+        </div>
+      ))}
+    </div>
+  );
+};
+```
+
+## 其他问题
+
+### Q: 如何添加自定义插件？
+
+**A:** 您可以使用 `appPluginDataInstance` 添加自定义插件：
+
+```tsx
+import { appPluginDataInstance } from '@fairys/admin-tools-react';
+
+// 添加自定义插件
+appPluginDataInstance.addPlugin({
+  'custom-plugin': {
+    // 插件配置
+  },
+});
+```
+
+### Q: 如何修改主题颜色？
+
+**A:** 您可以在初始化 `settingDataInstance` 时设置主题颜色：
+
+```tsx
+import { settingDataInstance } from '@fairys/admin-tools-react';
+
+settingDataInstance.ctor({
+  projectName: 'Fairys Admin',
+  themeColor: '#af52de',
+});
+```
+
+或者在运行时更新主题颜色：
+
+```tsx
+import { settingDataInstance } from '@fairys/admin-tools-react';
+
+const changeThemeColor = (color) => {
+  settingDataInstance.updatedThemeColor(color);
+};
+```
+
+### Q: 如何添加自定义页面过渡动画？
+
+**A:** 您可以使用 `motionAnimationDataInstance` 添加自定义页面过渡动画：
+
+```tsx
+import { motionAnimationDataInstance } from '@fairys/admin-tools-react';
+
+// 扩展动画选项
+motionAnimationDataInstance.expands([
+  {
+    name: '3D翻转',
+    config: {
+      initial: { rotateY: 90, opacity: 0 },
+      animate: { rotateY: 0, opacity: 1 },
+      exit: { rotateY: -90, opacity: 0 },
+      transition: { duration: 0.6 },
+      style: { transformStyle: 'preserve-3d' },
+    },
+  },
+]);
+```
+
+### Q: 如何处理移动端布局？
+
+**A:** Fairys Admin React 会自动处理移动端布局，当屏幕宽度小于 `maxWidthScreen` 时，会自动切换到移动端布局：
+
+```tsx
+import { settingDataInstance } from '@fairys/admin-tools-react';
+
+settingDataInstance.ctor({
+  projectName: 'Fairys Admin',
+  maxWidthScreen: 1024, // 当屏幕宽度小于 1024px 时，切换到移动端布局
+});
+```
