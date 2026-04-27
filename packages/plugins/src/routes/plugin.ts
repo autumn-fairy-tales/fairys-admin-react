@@ -234,7 +234,8 @@ export class ReactRoutesPlugin {
     /**组件名称*/
     const componentName = link
       .replace(/\.(tsx|jsx|js)$/, '')
-      .replace(/\./, '_')
+      .replace(/\./g, '_')
+      .replace(/-/g, '_')
       .split('/')
       .join('_')
       .replace(/\*/g, '__')

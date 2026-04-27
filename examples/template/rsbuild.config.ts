@@ -20,13 +20,7 @@ export default defineConfig({
     favicon: './public/logo.png',
     tags: getLoadingHtmlTags('Fairys'),
   },
-  plugins: [
-    pluginMockServer(),
-    pluginReact(),
-    RsbuildReactRoutesPlugin({
-      watchDirs: [{ dir: 'src/docs', routePrefix: '/docs' }],
-    }),
-  ],
+  plugins: [pluginMockServer(), pluginReact(), RsbuildReactRoutesPlugin()],
   tools: {
     postcss: (_, { addPlugins }) => {
       addPlugins([tailwindcss()]);

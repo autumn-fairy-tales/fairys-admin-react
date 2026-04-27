@@ -53,7 +53,8 @@ export class DirsTree {
     /**组件名称*/
     const componentName = _link
       .replace(/\.(tsx|jsx|js)$/, '')
-      .replace(/\./, '_')
+      .replace(/\./g, '_')
+      .replace(/-/g, '_')
       .split('/')
       .filter((item) => item)
       .join('_')
