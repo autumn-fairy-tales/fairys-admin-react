@@ -120,6 +120,7 @@ appPluginDataInstance.addPlugin({
     'bottom-render': <div className="px-4">子菜单底部2</div>,
   },
 });
+
 // /**临时加载菜单数据*/
 // menuDataInstance.ctor(menuItems);
 // /**临时加载一下tabBarItems*/

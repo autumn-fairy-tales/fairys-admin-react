@@ -4,14 +4,14 @@ import { FairysMenu, FairysMenuItemType, FairysMenuProps } from 'components/menu
 import { useLocation } from 'react-router';
 import { routerDataInstance } from 'context/router-data';
 import { tabBarDataInstance } from 'context/tab-bar';
-import { useCallback } from 'react';
+import { useCallback, memo } from 'react';
 
 export interface MenuProps extends FairysMenuProps {
   // 点击菜单项回调
   onClickItem?: (item: MenuItemType & FairysMenuItemType) => void;
 }
 
-export const Menu = (props: MenuProps) => {
+export const Menu = memo((props: MenuProps) => {
   const [state] = useMenuDataInstance();
   const menuItems = state.menuItems as FairysMenuItemType[];
   const _menuItems = menuDataInstance._menuItems as FairysMenuItemType[];
@@ -62,4 +62,4 @@ export const Menu = (props: MenuProps) => {
       onClickItem={onClickItem}
     />
   );
-};
+});
