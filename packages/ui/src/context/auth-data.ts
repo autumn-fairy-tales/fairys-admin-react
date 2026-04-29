@@ -24,6 +24,8 @@ export class AuthDataInstance {
   static localStorageKeyMenu = 'fairys-auth-data-menu';
   static localStorageKeyBtn = 'fairys-auth-data-btn';
   static localStorageKeyIgnore = 'fairys-auth-data-ignore';
+  /**是否开启权限判断*/
+  isAuthEnabled = true;
 
   state = proxy<AuthDataInstanceState>({
     status: 'Login',
@@ -137,6 +139,9 @@ export class AuthDataInstance {
 
   /**是否有菜单权限*/
   public isMenuAuth = (path: string) => {
+    if (!this.isAuthEnabled) {
+      return true;
+    }
     if (this.ignorePermissions.includes(path)) {
       return true;
     }
@@ -155,6 +160,9 @@ export class AuthDataInstance {
 
   /**是否有按钮权限*/
   public isBtnAuth = (path: string) => {
+    if (!this.isAuthEnabled) {
+      return true;
+    }
     if (this.ignorePermissions.includes(path)) {
       return true;
     }

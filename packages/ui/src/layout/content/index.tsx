@@ -10,6 +10,20 @@ import { useTabBarDataInstance } from 'context/tab-bar';
 import { AliveControllerDataInstance } from 'context/alive-controller';
 
 import { FairysMotionAnimation } from 'components/motion-animation';
+import { authDataInstance } from 'context/auth-data';
+import { ErrorPage403 } from 'components/error-page/403';
+
+export interface AuthWarpProps {
+  children: React.ReactNode;
+}
+
+export const AuthWarp = (props: AuthWarpProps) => {
+  const { children } = props;
+  const location = useLocation();
+  const isAuth = useMemo(() => authDataInstance.isMenuAuth(location.pathname), [location.pathname]);
+  if (!isAuth) return <ErrorPage403 />;
+  return children;
+};
 
 const KeepAliveContent = () => {
   const location = useLocation();
@@ -18,10 +32,13 @@ const KeepAliveContent = () => {
   }, [location.pathname]);
   const outlet = useOutlet();
   //嵌套多个 MotionAnimation ，为了解决页面刷新时，动画不生效的问题
+
   return (
     <FairysMotionAnimation animateKey={location.pathname}>
       <KeepAlive name={id} id={id} cacheKey={id} key={id}>
-        <FairysMotionAnimation animateKey={`${id}_motion_${location.pathname}`}>{outlet}</FairysMotionAnimation>
+        <FairysMotionAnimation animateKey={`${id}_motion_${location.pathname}`}>
+          <AuthWarp>{outlet}</AuthWarp>
+        </FairysMotionAnimation>
       </KeepAlive>
     </FairysMotionAnimation>
   );
@@ -31,7 +48,11 @@ const KeepAliveContent = () => {
 const KeepAliveContent2 = () => {
   const outlet = useOutlet();
   const location = useLocation();
-  return <FairysMotionAnimation animateKey={location.pathname}>{outlet}</FairysMotionAnimation>;
+  return (
+    <FairysMotionAnimation animateKey={location.pathname}>
+      <AuthWarp>{outlet}</AuthWarp>
+    </FairysMotionAnimation>
+  );
 };
 
 const OutletContentContext = () => {

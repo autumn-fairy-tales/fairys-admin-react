@@ -121,6 +121,9 @@ export class MenuDataInstance {
     mainExpandItem: undefined,
     searchMenuItems: [],
   });
+  /**跳转之前触发，返回 false 则不跳转*/
+  onBeforeNavigate?: (item: MenuItemType) => boolean | Promise<boolean>;
+
   /**设置菜单所有数据*/
   ctor = (items: MenuItemType[]) => {
     const _items: MenuItemType[] = items.map((it) => ({
@@ -257,8 +260,6 @@ export class MenuDataInstance {
     this.state.mainExpandItem = undefined;
     this.state.searchMenuItems = ref([]);
   };
-  /**跳转之前触发，返回 false 则不跳转*/
-  onBeforeNavigate?: (item: MenuItemType) => boolean | Promise<boolean>;
 }
 /**菜单数据使用实例*/
 export const menuDataInstance = new MenuDataInstance();

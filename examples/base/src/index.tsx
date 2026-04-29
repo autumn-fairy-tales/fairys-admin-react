@@ -4,7 +4,6 @@ import {
   authDataInstance,
   appPluginDataInstance,
   notificationDataInstance,
-  FairysWatermarkBase,
 } from '@fairys/admin-tools-react';
 import { AuthRoot } from './auth';
 
@@ -20,6 +19,9 @@ settingDataInstance.ctor({
   themeColor: '#af52de',
   // autoListenSystemTheme: false,
 });
+
+/**关闭权限判断*/
+authDataInstance.isAuthEnabled = false;
 
 /**挂载退出登录事件*/
 authDataInstance.onLogout = () => {

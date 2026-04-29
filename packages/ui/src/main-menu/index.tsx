@@ -71,14 +71,12 @@ const MainMenuItems = (props: MainMenuProps) => {
       };
     } else if (layoutModeState === 'main_top_header') {
       return {
-        mode: 'horizontal',
         firstGroupMode: 'hover',
         firstLevelSize: 'small',
       };
     }
     if (layoutModeState === 'main_top_sub_left_header') {
       return {
-        mode: 'horizontal',
         firstGroupMode: 'onlyGroup',
         firstLevelSize: 'small',
       };
@@ -102,7 +100,6 @@ const MainMenuItems = (props: MainMenuProps) => {
         }
         onClickItem(item);
       }}
-      maxWidth={220}
     />
   );
 };
