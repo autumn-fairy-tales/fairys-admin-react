@@ -2,6 +2,7 @@ import { proxy, useSnapshot, ref } from 'valtio';
 import { tabBarDataInstance } from './tab-bar';
 import type { FairysIconPropsType } from 'components/icon';
 import { FairysItemType } from 'components/menu';
+import { routerDataInstance } from './router-data';
 
 export interface MenuItemType {
   type?: FairysItemType['type'];
@@ -140,6 +141,17 @@ export class MenuDataInstance {
     const fixedItems = this._flatMenuItems.filter((it) => it.isTabFixed && !it.isMain);
     if (fixedItems.length) {
       tabBarDataInstance.ctor(fixedItems);
+    }
+    // 初始化主菜单选中项,为了解决开发时，更新有些代码菜单渲染问题
+    if (routerDataInstance.router?.state?.location?.pathname) {
+      const path = routerDataInstance.router?.state?.location?.pathname;
+      const parentItems = this._parentMenuItemMap.get(path);
+      const currentMainMenuItemPath = parentItems?.[0]?.path;
+      this.state.mainMenuItemSelected = currentMainMenuItemPath;
+      const _item = this.state.mainMenuItems.find((ite) => ite.path === currentMainMenuItemPath);
+      if (_item) {
+        this.state.menuItems = ref(_item.items);
+      }
     }
   };
 

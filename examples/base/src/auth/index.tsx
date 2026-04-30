@@ -24,9 +24,10 @@ export const AuthRoot = () => {
   const status = authState.status;
 
   const onSetInfo = () => {
-    menuDataInstance.ctor(menuItems);
     // 可以对 routes 进行处理
     routerDataInstance.createHashRouter(routes);
+    // 初始化菜单
+    menuDataInstance.ctor(menuItems);
     // 如果获取权限成功则设置状态为 auth
     authDataInstance.updatedStatus('Auth');
     /**移除页面加载动画*/
