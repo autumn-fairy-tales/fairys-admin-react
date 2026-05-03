@@ -34,7 +34,7 @@ class AppDataInstance {
     accountDataInstance.clear();
     appPluginDataInstance.clear();
     notificationDataInstance.clear();
-    this.aliveController.clear();
+    this.aliveController?.clear?.();
   };
 }
 
