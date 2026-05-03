@@ -1,5 +1,6 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import { appDataInstance } from './index';
+import { loadingFadeOut } from 'utils/loading-fade-out';
 
 export interface AuthDataInstanceState {
   /**
@@ -116,6 +117,8 @@ export class AuthDataInstance {
     this.updatedStatus('Login');
     appDataInstance.clear();
     this.clear();
+    /**退出登录后，隐藏loading*/
+    loadingFadeOut();
   };
 
   /**设置忽略权限*/
