@@ -108,14 +108,14 @@ export class AuthDataInstance {
   };
 
   /**退出登录(需要外部赋值)*/
-  public onLogout: (status?: number) => void = () => void 0;
+  public onLogout: (status?: number) => Promise<void> = () => void 0;
 
   /**内部退出登录*/
-  public _onLogout: (status?: number) => void = (status) => {
+  public _onLogout: (status?: number) => void = async (status) => {
+    await this.onLogout?.(status);
     this.updatedStatus('Login');
     appDataInstance.clear();
     this.clear();
-    this.onLogout?.(status);
   };
 
   /**设置忽略权限*/
