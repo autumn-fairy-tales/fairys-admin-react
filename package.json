@@ -7,6 +7,7 @@
     "build:docs": "npm run-script build --workspace docs",
     "docs": "npm run-script dev --workspace docs",
     "build:example": "npm run-script build --workspace example",
+    "build:template": "npm run-script build --workspace template",
     "----": "============================ui=============================",
     "watch": "npm run-script watch --workspace @fairys/admin-tools-react",
     "build": "npm run-script build --workspace @fairys/admin-tools-react",
