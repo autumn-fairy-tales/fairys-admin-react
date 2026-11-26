@@ -3,7 +3,7 @@ name: Build & Deploy
 on:
   push:
     branches:
-      - main
+      - v2
 env:
   SKIP_PREFLIGHT_CHECK: true
   TZ: Asia/Shanghai
