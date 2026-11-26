@@ -23,8 +23,10 @@ jobs:
 
     - run: yarn install
     - run: npm run build:all
+    - run: npm run test
     - run: npm run build:docs
     - run: npm run build:example
+    - run: npm run typecheck
 
     - name: example
       run: |

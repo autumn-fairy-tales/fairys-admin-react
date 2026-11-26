@@ -30,7 +30,7 @@ MenuItemBase 组件是菜单项的基础组件，提供菜单项的通用功能�
 
 ### 基本用法
 ```tsx
-import { FairysMenuItemBase } from '@fairys-admin/ui';
+import { FairysMenuItemBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -46,7 +46,7 @@ const App = () => {
 
 ### 带关闭按钮
 ```tsx
-import { FairysMenuItemBase } from '@fairys-admin/ui';
+import { FairysMenuItemBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const handleClose = (e) => {
@@ -67,7 +67,7 @@ const App = () => {
 
 ### 带额外内容
 ```tsx
-import { FairysMenuItemBase } from '@fairys-admin/ui';
+import { FairysMenuItemBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -83,7 +83,7 @@ const App = () => {
 
 ### 禁用状态
 ```tsx
-import { FairysMenuItemBase } from '@fairys-admin/ui';
+import { FairysMenuItemBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -99,7 +99,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysMenuItemBase } from '@fairys-admin/ui';
+import { FairysMenuItemBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

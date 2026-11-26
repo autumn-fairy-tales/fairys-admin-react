@@ -1,7 +1,6 @@
 node_modules
 .DS_Store
 fantastic-admin.v5.5.0
-yarn.lock
 lib
 esm
 参考

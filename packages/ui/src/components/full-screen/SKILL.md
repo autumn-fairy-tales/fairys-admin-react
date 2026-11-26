@@ -24,7 +24,7 @@ FullScreen 组件用于实现元素的全屏显示功能，适用于图片查看
 ### 基本用法
 ```tsx
 import { useState } from 'react';
-import { FairysFullScreen } from '@fairys-admin/ui';
+import { FairysFullScreen } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -46,7 +46,7 @@ const App = () => {
 ### 图片查看器
 ```tsx
 import { useState } from 'react';
-import { FairysFullScreen } from '@fairys-admin/ui';
+import { FairysFullScreen } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -75,7 +75,7 @@ const App = () => {
 ### 视频播放器
 ```tsx
 import { useState } from 'react';
-import { FairysFullScreen } from '@fairys-admin/ui';
+import { FairysFullScreen } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -103,7 +103,7 @@ const App = () => {
 ### 自定义样式
 ```tsx
 import { useState } from 'react';
-import { FairysFullScreen } from '@fairys-admin/ui';
+import { FairysFullScreen } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);

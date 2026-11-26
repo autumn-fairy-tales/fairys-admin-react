@@ -1,4 +1,5 @@
 import { proxy, useSnapshot, ref } from 'valtio';
+import { matchPath } from 'react-router';
 import { tabBarDataInstance } from './tab-bar';
 import type { FairysIconPropsType } from 'components/icon';
 import { FairysItemType } from 'components/menu';
@@ -69,7 +70,7 @@ const flatMenuItems = (
 };
 
 /**菜单搜索*/
-const filterMenuItems = (items: MenuItemType[], keyword: string) => {
+const filterMenuItems = (items: MenuItemType[], keyword: string): MenuItemType[] => {
   return items.filter((item) => {
     if (Array.isArray(item.items) && item.items.length) {
       return filterMenuItems(item.items, keyword).length > 0;
@@ -127,29 +128,31 @@ export class MenuDataInstance {
 
   /**设置菜单所有数据*/
   ctor = (items: MenuItemType[]) => {
-    const _items: MenuItemType[] = items.map((it) => ({
+    const _items: MenuItemType[] = (items || []).map((it) => ({
       ...it,
       isMain: it.type === 'group' ? true : it.isMain ?? false,
       type: it.type === 'group' ? 'group' : it.isMain ? 'group' : it.type,
     }));
 
     this._menuItems = _items;
+    this._parentMenuItemMap = new Map();
     this._flatMenuItems = flatMenuItems(_items, [], this._parentMenuItemMap);
     this.state.menuItems = ref(_items);
     this.state.mainMenuItems = ref(_items.filter((item) => item.isMain));
-    this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain));
+    /**动态路由需要参数，不进入搜索结果*/
+    this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain && !it.path.includes(':')));
     const fixedItems = this._flatMenuItems.filter((it) => it.isTabFixed && !it.isMain);
     if (fixedItems.length) {
       tabBarDataInstance.ctor(fixedItems);
     }
     // 初始化主菜单选中项,为了解决开发时，更新有些代码菜单渲染问题
     if (routerDataInstance.router?.state?.location?.pathname) {
-      const path = routerDataInstance.router?.state?.location?.pathname;
+      const path = this.get_match_menu_path(routerDataInstance.router?.state?.location?.pathname);
       const parentItems = this._parentMenuItemMap.get(path);
       const currentMainMenuItemPath = parentItems?.[0]?.path;
       this.state.mainMenuItemSelected = currentMainMenuItemPath;
       const _item = this.state.mainMenuItems.find((ite) => ite.path === currentMainMenuItemPath);
-      if (_item) {
+      if (_item && Array.isArray(_item.items)) {
         this.state.menuItems = ref(_item.items);
       }
     }
@@ -159,29 +162,45 @@ export class MenuDataInstance {
   updateMainExpandItem = (item?: MenuItemType) => {
     this.state.mainExpandItem = item;
   };
-  /**
-   * 通过path获取菜单对象
-   * 暂不支持 /path/:id 这种动态路由
-   */
+  /**通过 path 匹配菜单对象（支持 /path/:id 动态路由）*/
   get_path_menuItem = (path: string) => {
-    return this._flatMenuItems.find((item) => item.path === path);
+    const exact = this._flatMenuItems.find((item) => item.path === path);
+    if (exact) {
+      return exact;
+    }
+    /**仅用包含动态参数的菜单做匹配，避免通配菜单抢占未知路径*/
+    return this._flatMenuItems.find(
+      (item) => !!item.path && item.path.includes(':') && !!matchPath({ path: item.path, end: true }, path),
+    );
+  };
+
+  /**获取具体路径对应到的菜单路径（动态路由返回菜单中的 pattern）*/
+  get_match_menu_path = (path: string) => {
+    return this.get_path_menuItem(path)?.path || path;
+  };
+
+  /**获取具体路径对应的父级菜单*/
+  get_parent_menuItems = (path: string) => {
+    return this._parentMenuItemMap.get(this.get_match_menu_path(path));
   };
 
   /**搜索菜单*/
   onSearch = (word: string) => {
     const _key = `${word || ''}`.trim();
     if (!_key) {
-      this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain));
+      this.state.searchMenuItems = ref([...this._flatMenuItems].filter((it) => !it.isMain && !it.path.includes(':')));
       return;
     }
     this.state.searchMenuItems = ref(
-      this._flatMenuItems.filter((it) => !it.isMain).filter((item) => item.title.includes(_key)),
+      this._flatMenuItems
+        .filter((it) => !it.isMain && !it.path.includes(':'))
+        .filter((item) => item.title.includes(_key)),
     );
   };
 
   /**判断是否是父级菜单*/
   isParentMenuItem = (path: string, location_path: string) => {
-    const parentItems = this._parentMenuItemMap.get(location_path);
+    const parentItems = this.get_parent_menuItems(location_path);
     if (parentItems) {
       return !!parentItems.find((i) => i.path === path);
     }
@@ -195,7 +214,8 @@ export class MenuDataInstance {
 
   /**展开项*/
   onExpandItems = (path: string) => {
-    const finxItem = this.get_path_menuItem(path);
+    const menuPath = this.get_match_menu_path(path);
+    const finxItem = this.get_path_menuItem(menuPath);
     /**如果没找到则不进行更新*/
     if (!finxItem) {
       return;
@@ -204,13 +224,13 @@ export class MenuDataInstance {
 
     /**只有在未存在展开项时才进行更新(刚进行加载数据)*/
     if (this.state.expandItems.length === 0) {
-      const parentItems = this._parentMenuItemMap.get(path) || [];
+      const parentItems = this._parentMenuItemMap.get(menuPath) || [];
       this.state.expandItems = ref([...parentItems]);
       return;
     }
     // 如果不存在子菜单，则不进行更新展开项
-    const _item = this.get_path_menuItem(path);
-    const parentItems = this._parentMenuItemMap.get(path) || [];
+    const _item = this.get_path_menuItem(menuPath);
+    const parentItems = this._parentMenuItemMap.get(menuPath) || [];
     if (Array.isArray(_item?.items) && _item.items.length) {
       this.state.expandItems = ref([...parentItems]);
     } else {
@@ -241,12 +261,12 @@ export class MenuDataInstance {
   /**更新子菜单显示,和主菜单选中项*/
   updateChildMenus = (path: string) => {
     const mainMenuItemSelected = this.state.mainMenuItemSelected;
-    const parentItems = this._parentMenuItemMap.get(path);
+    const parentItems = this.get_parent_menuItems(path);
     const currentMainMenuItemPath = parentItems?.[0]?.path;
     if (currentMainMenuItemPath && currentMainMenuItemPath !== mainMenuItemSelected) {
       this.state.mainMenuItemSelected = currentMainMenuItemPath;
       const _item = this.state.mainMenuItems.find((ite) => ite.path === currentMainMenuItemPath);
-      if (_item) {
+      if (_item && Array.isArray(_item.items)) {
         this.state.menuItems = ref(_item.items);
       }
     }

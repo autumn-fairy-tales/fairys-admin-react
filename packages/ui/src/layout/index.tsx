@@ -1,4 +1,4 @@
-import { Fragment, useEffect, useMemo } from 'react';
+import { Fragment, useEffect, useLayoutEffect, useMemo } from 'react';
 import { useSettingDataInstance } from 'context/setting';
 import clsx from 'clsx';
 import { LayoutContent } from './content';
@@ -26,7 +26,7 @@ export const Layout = () => {
   const theme = state.theme;
   const location = useLocation();
 
-  useMemo(() => {
+  useLayoutEffect(() => {
     menuDataInstance.updateChildMenus(location.pathname);
     if (sideMenuMode !== 'close') {
       menuDataInstance.onExpandItems(location.pathname);

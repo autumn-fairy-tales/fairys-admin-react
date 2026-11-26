@@ -11,7 +11,10 @@
   "type": "module",
   "scripts": {
     "build": "carefrees-rslib build --node --esm",
-    "watch": "carefrees-rslib build --watch  --node  --esm"
+    "watch": "carefrees-rslib build --watch  --node  --esm",
+    "typecheck": "tsc --noEmit -p tsconfig.json",
+    "pretest": "npm run build",
+    "test": "node --test test/*.test.mjs"
   },
   "repository": {
     "type": "git",

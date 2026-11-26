@@ -1,3 +1,4 @@
+import { useSyncExternalStore } from 'react';
 import { proxy, ref, subscribe, useSnapshot } from 'valtio';
 import { MenuItemType } from './menu-data';
 import { settingDataInstance } from './setting';
@@ -123,4 +124,13 @@ export const useFavoritesDataInstance = () => {
     FavoritesDataInstance,
     FavoritesDataInstanceState['__defaultValue'],
   ];
+};
+
+/**只订阅某个路径的收藏状态，避免所有标签一起重渲染*/
+export const useIsFavorites = (path: string) => {
+  return useSyncExternalStore(
+    (onStoreChange) => subscribe(favoritesDataInstance.state, onStoreChange),
+    () => (favoritesDataInstance.state.dataList || []).some((item) => item.path === path),
+    () => false,
+  );
 };

@@ -1,4 +1,4 @@
-import React, { forwardRef, type Ref, ReactNode, Fragment, useMemo } from 'react';
+import React, { forwardRef, type Ref, ReactNode, Fragment, useLayoutEffect, useMemo } from 'react';
 import {
   FairysPopoverMenuProps,
   FairysPopoverMenuItemType,
@@ -171,9 +171,9 @@ export const FairysPopoverMenu = forwardRef((props: FairysPopoverMenuProps, ref:
   popoverMenuInstance.onCloseItem = onCloseItem;
   popoverMenuInstance.mode = mode;
 
-  useMemo(() => {
+  useLayoutEffect(() => {
     popoverMenuInstance.state.value = value;
-  }, [value]);
+  }, [value, popoverMenuInstance]);
 
   const render = useMemo(() => {
     return (items || []).map((item, index) => createChildMenu(item, index));

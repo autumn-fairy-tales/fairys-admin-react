@@ -27,6 +27,7 @@ export default defineConfig({
       loadType: 'lazy',
       watchDirs: [{ dir: 'src/docs', routePrefix: '/docs' }],
       keepAliveBasePath: '@fairys/admin-tools-react/esm/components/keep-alive',
+      errorElement: '@fairys/admin-tools-react/esm/components/error-page/error-element',
     }),
   ],
   tools: {

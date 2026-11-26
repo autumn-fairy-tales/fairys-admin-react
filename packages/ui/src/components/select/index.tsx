@@ -47,21 +47,20 @@ export const FairysSelectBase = (props: FairysSelectBaseProps) => {
   };
 
   const render = useMemo(() => {
-    if ((Array.isArray(value) && value.length) || !value) {
+    if (Array.isArray(value)) {
+      if (!value.length) {
+        return '请选择';
+      }
+      const labels = value
+        .map((it) => items.find((i) => i.value === it)?.title)
+        .filter((item): item is string => !!item);
+      return labels.length ? labels.join(',') : '请选择';
+    }
+    if (!value) {
       return '请选择';
     }
-    if (multiple) {
-      if (Array.isArray(value)) {
-        return (value || [])
-          .map((it) => {
-            const item = items.find((i) => i.value === it);
-            return item?.title;
-          })
-          .join(',');
-      }
-    }
-    return items.find((it) => it.value === value)?.title;
-  }, [value, items, multiple]);
+    return items.find((it) => it.value === value)?.title || '请选择';
+  }, [value, items]);
 
   return (
     <FairysPopoverMenu

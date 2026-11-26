@@ -46,7 +46,7 @@ interface PopoverMenuItem {
 
 ### 基本用法
 ```tsx
-import { FairysPopoverMenu } from '@fairys-admin/ui';
+import { FairysPopoverMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   const menuItems = [
@@ -97,7 +97,7 @@ const App = () => {
 
 ### 悬停触发
 ```tsx
-import { FairysPopoverMenu } from '@fairys-admin/ui';
+import { FairysPopoverMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   const menuItems = [
@@ -126,7 +126,7 @@ const App = () => {
 
 ### 禁用菜单项
 ```tsx
-import { FairysPopoverMenu } from '@fairys-admin/ui';
+import { FairysPopoverMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   const menuItems = [
@@ -159,7 +159,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysPopoverMenu } from '@fairys-admin/ui';
+import { FairysPopoverMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   const menuItems = [

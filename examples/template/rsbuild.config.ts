@@ -20,7 +20,13 @@ export default defineConfig({
     favicon: './public/logo.png',
     tags: getLoadingHtmlTags('Fairys'),
   },
-  plugins: [pluginMockServer(), pluginReact(), RsbuildReactRoutesPlugin()],
+  plugins: [
+    pluginMockServer(),
+    pluginReact(),
+    RsbuildReactRoutesPlugin({
+      errorElement: '@fairys/admin-tools-react/esm/components/error-page/error-element',
+    }),
+  ],
   tools: {
     postcss: (_, { addPlugins }) => {
       addPlugins([tailwindcss()]);

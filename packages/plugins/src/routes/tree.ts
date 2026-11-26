@@ -41,9 +41,10 @@ export class DirsTree {
       .replace(/^\//, '')
       .replace(/\[/g, ':')
       .replace(/\]/g, '')
-      .replace(/\.(tsx|jsx|js)$/, '');
+      .replace(/\.(tsx|jsx|js)$/, '')
+      .replace(/catch-all$/, '*');
 
-    const _componentPath = path.join(this.#rootTree?.dir || 'src/pages', _link);
+    const _componentPath = path.posix.join(this.#rootTree?.dir || 'src/pages', _link);
     // 组件地址
     const componentPath = _componentPath
       .replace(/^\//, '')
@@ -62,7 +63,7 @@ export class DirsTree {
       .replace(/[\s\t\r\n\f]/g, '___')
       .toUpperCase();
 
-    let routePath = path.join(this.#rootTree?.routePrefix || '/', _routePath);
+    let routePath = path.posix.join(this.#rootTree?.routePrefix || '/', _routePath);
 
     if (!/^\//.test(routePath)) {
       routePath = '/' + routePath;
@@ -86,7 +87,7 @@ export class DirsTree {
   /**创建路由路径*/
   #createPath = (dir: string) => {
     const _routePath = dir.replace(/^\//, '').replace(/\[/g, ':').replace(/\]/g, '');
-    this.#routePath = path.join(this.#rootTree?.routePrefix || '/', _routePath);
+    this.#routePath = path.posix.join(this.#rootTree?.routePrefix || '/', _routePath);
   };
 
   /**创建特殊页面字符串*/
@@ -121,9 +122,9 @@ export class DirsTree {
     }
     const filePath = `${parentDir}/${first}`;
     this.#createPath(parentDir);
-    if (rest.length === 1 || rest.length === 0) {
-      /**还剩最后一层*/
-      if (/^(?:.+\/)?(404|403|500|\*)\.(?:js|tsx|jsx)$/.test(dir)) {
+    if (rest.length === 0) {
+      /**已到文件所在目录，layout/special 归属当前节点*/
+      if (/^(?:.+\/)?(404|403|500|\*|catch-all)\.(?:js|tsx|jsx)$/.test(dir)) {
         this.special.push(parentDir + '/' + listDirs.join('/'));
         return;
       } else if (/^(?:.+\/)?(layout)\.(?:js|tsx|jsx)$/.test(dir)) {
@@ -151,14 +152,35 @@ export class DirsTree {
   removeChild(dir: string) {
     const listDirs = dir.split('/').filter((item) => item);
     const [first, ...rest] = listDirs;
-    const child = this.children.find((item) => item.dir === first);
     if (!first) {
       return;
     }
-    if (rest.length === 1) {
+    /**layout/special 按 add 时记录的完整路径精确匹配清理*/
+    const fullDir = listDirs.join('/');
+    const expectedPath = `${this.filePath}/${fullDir}`;
+    if (this.layout === expectedPath) {
+      this.layout = undefined;
+      this.#componentName = '';
+      this.#componentPath = '';
+      return;
+    }
+    if (this.special.includes(expectedPath)) {
+      this.special = this.special.filter((item) => item !== expectedPath);
+      return;
+    }
+    /**已到文件所在层级，只移除对应文件节点，避免误删整个目录*/
+    if (rest.length === 0) {
       this.children = this.children.filter((item) => item.dir !== first);
-    } else if (child) {
-      child.removeChild(rest.join('/'));
+      return;
+    }
+    const child = this.children.find((item) => item.dir === first);
+    if (!child) {
+      return;
+    }
+    child.removeChild(rest.join('/'));
+    /**删除后清理空的中间目录，避免生成空路由*/
+    if (!child.layout && child.special.length === 0 && child.children.length === 0 && !child.#componentName) {
+      this.children = this.children.filter((item) => item !== child);
     }
   }
 
@@ -180,7 +202,7 @@ export class DirsTree {
         routeString += result.routeString;
         importString += result.importString;
       }
-    } else {
+    } else if (!this.special.length) {
       /**如果路由前缀和当前路由相同*/
       if (this.#routePath === this.#rootTree?.routePrefix) {
         /**使用缓存页面*/
@@ -333,6 +355,10 @@ export class TreeRoutes {
    * @description 自定义 HydrateFallback 组件
    */
   hydrateFallback?: string;
+  /**
+   * @description 路由级错误边界组件模块路径（需默认导出组件）
+   */
+  errorElement?: string;
   /**是否是 ts 文件*/
   isTs?: boolean;
   /**路由树*/
@@ -397,6 +423,9 @@ export class TreeRoutes {
     if (this.keepAliveBasePath) {
       importString += `import KeepAliveBaseHOC from '${this.keepAliveBasePath}';\n`;
     }
+    if (this.errorElement) {
+      importString += `import FairysErrorElement from '${this.errorElement}';\n`;
+    }
 
     const routes = this.routes.sort((a, b) => {
       return (a.routePrefix || '/').localeCompare(b.routePrefix || '/');
@@ -417,12 +446,12 @@ export class TreeRoutes {
       importString += '\n' + HydrateFallbackCode;
     }
 
+    const routesBody = this.errorElement
+      ? `\t{ ErrorBoundary: FairysErrorElement, children: [\n${routeString}\t] },\n`
+      : routeString.replace(/,\n$/, '\n');
     if (this.isTs) {
-      return `${importString}\nconst routes: RouteObject[] = [\n${routeString.replace(
-        /,\n$/,
-        '\n',
-      )}];\nexport default routes;`;
+      return `${importString}\nconst routes: RouteObject[] = [\n${routesBody}];\nexport default routes;`;
     }
-    return `${importString}\nconst routes = [\n${routeString.replace(/,\n$/, '\n')}];\nexport default routes;`;
+    return `${importString}\nconst routes = [\n${routesBody}];\nexport default routes;`;
   };
 }

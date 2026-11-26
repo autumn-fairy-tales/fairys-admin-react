@@ -1,5 +1,5 @@
 import { useSettingDataInstance } from 'context/setting';
-import { useNavigate } from 'react-router';
+import { routerDataInstance } from 'context/router-data';
 import clsx from 'clsx';
 import { Fragment, useMemo } from 'react';
 
@@ -17,11 +17,10 @@ export interface LogoProps extends React.DetailedHTMLProps<React.HTMLAttributes<
 export const Logo = (props: LogoProps) => {
   const { mode, className, logoSize = 32, isOnlyName = false, isHeader = false, ...rest } = props;
 
-  const navigate = useNavigate();
   const [state] = useSettingDataInstance();
 
   const onClickHome = () => {
-    navigate('/');
+    routerDataInstance.navigate('/');
   };
 
   const baseClassName = useMemo(() => {
@@ -44,15 +43,15 @@ export const Logo = (props: LogoProps) => {
 
   return (
     <div {...rest} className={baseClassName}>
-      {isOnlyName ? (
-        <Fragment />
-      ) : (
+      {!isOnlyName && state.logo ? (
         <div className="fairys_admin_logo_image fairys:flex fairys:items-center fairys:justify-center fairys:cursor-pointer">
           <img width={logoSize} height={logoSize} src={state.logo} alt={state.projectName} onClick={onClickHome} />
         </div>
+      ) : (
+        <Fragment />
       )}
       {mode === 'open' || isOnlyName ? (
-        <div title={state.projectName} className={pname}>
+        <div title={state.projectName} className={pname} onClick={onClickHome}>
           {state.projectName}
         </div>
       ) : (

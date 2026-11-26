@@ -4,6 +4,7 @@
     "target": "esnext",
     "module": "ESNext",
     "moduleResolution": "node",
+    "noImplicitAny": true,
     "importHelpers": false,
     "esModuleInterop": true,
     "sourceMap": false,

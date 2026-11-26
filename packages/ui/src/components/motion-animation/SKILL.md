@@ -23,7 +23,7 @@ MotionAnimation 组件用于添加动画效果，提升用户界面的交互体�
 
 ### 基本用法
 ```tsx
-import { FairysMotionAnimation } from '@fairys-admin/ui';
+import { FairysMotionAnimation } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -36,7 +36,7 @@ const App = () => {
 
 ### 自定义类名和模式
 ```tsx
-import { FairysMotionAnimation } from '@fairys-admin/ui';
+import { FairysMotionAnimation } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -53,7 +53,7 @@ const App = () => {
 ### 条件动画
 ```tsx
 import { useState } from 'react';
-import { FairysMotionAnimation } from '@fairys-admin/ui';
+import { FairysMotionAnimation } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [show, setShow] = useState(false);
@@ -73,7 +73,7 @@ const App = () => {
 
 ### 禁用动画
 ```tsx
-import { FairysMotionAnimation } from '@fairys-admin/ui';
+import { FairysMotionAnimation } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -86,7 +86,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysMotionAnimation } from '@fairys-admin/ui';
+import { FairysMotionAnimation } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

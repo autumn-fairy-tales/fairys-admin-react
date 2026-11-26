@@ -1,4 +1,3 @@
-import './styles/index.css';
 export * from './avatar';
 export * from './breadcrumb';
 export * from './components';

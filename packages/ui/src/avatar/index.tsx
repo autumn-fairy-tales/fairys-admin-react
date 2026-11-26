@@ -1,8 +1,8 @@
 import { useAccountDataInstance } from 'context/account-data';
 import { authDataInstance } from 'context/auth-data';
 import { settingDataInstance } from 'context/setting';
+import { routerDataInstance } from 'context/router-data';
 import { forwardRef, Fragment, useMemo } from 'react';
-import { useNavigate } from 'react-router-dom';
 import clsx from 'clsx';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 import { useAppPluginDataInstance } from 'context/app-plugins-data';
@@ -28,7 +28,6 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   const [accountState] = useAccountDataInstance();
   const userName = accountState.userName || 'fairys';
   const userEmail = accountState.userEmail || '未绑定邮箱';
-  const navigate = useNavigate();
   const [snapshot] = useAppPluginDataInstance();
   const plugin = snapshot?.['avatar-menus'];
 
@@ -77,11 +76,13 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
       },
       {
         title: '主页',
+        value: 'fairys:avatar:home',
         icon: 'fairys:icon-[ant-design--home-outlined]',
         iconProps: { isClassName: true },
       },
       {
         title: '偏好设置',
+        value: 'fairys:avatar:setting',
         icon: 'fairys:icon-[ant-design--setting-outlined]',
         iconProps: { isClassName: true },
       },
@@ -91,6 +92,7 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
       },
       {
         title: '退出登录',
+        value: 'fairys:avatar:logout',
         icon: 'fairys:icon-[ant-design--logout-outlined]',
         iconProps: { isClassName: true },
       },
@@ -102,11 +104,11 @@ export const Avatar = forwardRef((props: AvatarProps, ref: React.Ref<HTMLDivElem
   }, [userEmail, avatarRender, userName, plugin]);
 
   const onMenuItemClick = (item: FairysPopoverMenuItemType) => {
-    if (item.title === '主页') {
-      navigate('/');
-    } else if (item.title === '偏好设置') {
+    if (item.value === 'fairys:avatar:home') {
+      routerDataInstance.navigate('/');
+    } else if (item.value === 'fairys:avatar:setting') {
       settingDataInstance.onToggleOpen();
-    } else if (item.title === '退出登录') {
+    } else if (item.value === 'fairys:avatar:logout') {
       authDataInstance._onLogout?.();
     }
   };

@@ -476,7 +476,26 @@ const styles = `
 
 
 `;
+const escapeHtml = (value: string) => {
+  return value.replace(/[&<>"']/g, (char) => {
+    switch (char) {
+      case '&':
+        return '&amp;';
+      case '<':
+        return '&lt;';
+      case '>':
+        return '&gt;';
+      case '"':
+        return '&quot;';
+      default:
+        return '&#39;';
+    }
+  });
+};
+
 export const getLoadingHtmlTags = (title: string = '', tips: string = '载入中') => {
+  const safeTitle = escapeHtml(title);
+  const safeTips = escapeHtml(tips);
   const htmlTags = [
     {
       tag: 'style',
@@ -495,8 +514,12 @@ export const getLoadingHtmlTags = (title: string = '', tips: string = '载入中
     <div class="square"></div>
     <div class="square"></div>
   </div>
-  ${title ? `<div class="name">${title}</div>` : ''}
-  ${tips ? `<div class="tips">${tips}<span class="loading-dots"></span></div>` : '<div class="loading-dots"></div>'}
+  ${safeTitle ? `<div class="name">${safeTitle}</div>` : ''}
+  ${
+    safeTips
+      ? `<div class="tips">${safeTips}<span class="loading-dots"></span></div>`
+      : '<div class="loading-dots"></div>'
+  }
 </div>
 `,
       head: false,

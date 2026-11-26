@@ -1,4 +1,4 @@
-import { forwardRef, useEffect, useMemo, Ref } from 'react';
+import { forwardRef, useEffect, useLayoutEffect, useMemo, Ref } from 'react';
 import { useFairysWatermark, FairysWatermarkContext, FairysWatermarkProps, useFairysWatermarkContext } from './context';
 import { useMergeRefs } from '@floating-ui/react';
 import { DEFAULT_GAP_X, DEFAULT_GAP_Y } from './utls';
@@ -81,9 +81,9 @@ export const FairysWatermarkBase = forwardRef((props: FairysWatermarkProps, ref:
   const offsetLeft = offset?.[0] ?? gapXCenter;
   const offsetTop = offset?.[1] ?? gapYCenter;
 
-  useMemo(() => {
-    return instance.createMarkStyle();
-  }, [zIndex, offsetLeft, gapXCenter, offsetTop, gapYCenter]);
+  useLayoutEffect(() => {
+    instance.createMarkStyle();
+  }, [instance, zIndex, offsetLeft, gapXCenter, offsetTop, gapYCenter]);
 
   useEffect(() => {
     instance.createWatermark();

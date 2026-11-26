@@ -4,8 +4,8 @@ import { FairysPopoverBase } from 'components/popover-base';
 import { FairysMenuItemBase } from 'components/menu-item-base';
 import { useMemo } from 'react';
 import { tabBarDataInstance } from 'context';
+import { routerDataInstance } from 'context/router-data';
 import { useFloatingTree } from '@floating-ui/react';
-import { useNavigate } from 'react-router';
 import { UtilsColor } from 'utils/utils.color';
 
 export const Favorites = () => {
@@ -13,7 +13,6 @@ export const Favorites = () => {
   const dataList = state.dataList;
   const isEmpty = !dataList?.length;
   const tree = useFloatingTree();
-  const navigate = useNavigate();
 
   const itemsRender = useMemo(() => {
     return dataList?.map((item) => {
@@ -24,7 +23,7 @@ export const Favorites = () => {
           iconProps={item.iconProps}
           onClick={() => {
             tabBarDataInstance.add(item.path);
-            navigate(item.path);
+            routerDataInstance.navigate(item.path);
             tree.events?.emit?.('click');
           }}
           onCloseItem={() => {

@@ -52,7 +52,7 @@ interface MenuItem {
 
 ### 基本用法
 ```tsx
-import { FairysMenu } from '@fairys-admin/ui';
+import { FairysMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -89,7 +89,7 @@ const App = () => {
 
 ### 带图标和徽章
 ```tsx
-import { FairysMenu } from '@fairys-admin/ui';
+import { FairysMenu } from '@fairys/admin-tools-react';
 import { HomeOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 
 const App = () => {
@@ -130,7 +130,7 @@ const App = () => {
 
 ### 水平菜单
 ```tsx
-import { FairysMenu } from '@fairys-admin/ui';
+import { FairysMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

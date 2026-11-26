@@ -20,7 +20,7 @@ Breadcrumb 组件用于显示当前页面的导航路径，从 context 中获取
 
 ### 基本用法
 ```tsx
-import { Breadcrumb } from '@fairys-admin/ui';
+import { Breadcrumb } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -31,7 +31,7 @@ const App = () => {
 
 ### 自定义分隔符
 ```tsx
-import { Breadcrumb } from '@fairys-admin/ui';
+import { Breadcrumb } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -42,7 +42,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { Breadcrumb } from '@fairys-admin/ui';
+import { Breadcrumb } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

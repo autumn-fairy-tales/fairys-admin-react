@@ -23,7 +23,7 @@ Logo 组件用于显示应用的 logo，支持多种显示模式和自定义选�
 
 ### 基本用法
 ```tsx
-import { Logo } from '@fairys-admin/ui';
+import { Logo } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -34,7 +34,7 @@ const App = () => {
 
 ### 关闭状态的 logo
 ```tsx
-import { Logo } from '@fairys-admin/ui';
+import { Logo } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -45,7 +45,7 @@ const App = () => {
 
 ### 仅显示项目名称
 ```tsx
-import { Logo } from '@fairys-admin/ui';
+import { Logo } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -56,7 +56,7 @@ const App = () => {
 
 ### 头部导航栏模式
 ```tsx
-import { Logo } from '@fairys-admin/ui';
+import { Logo } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -67,7 +67,7 @@ const App = () => {
 
 ### 自定义大小
 ```tsx
-import { Logo } from '@fairys-admin/ui';
+import { Logo } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -78,7 +78,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { Logo } from '@fairys-admin/ui';
+import { Logo } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

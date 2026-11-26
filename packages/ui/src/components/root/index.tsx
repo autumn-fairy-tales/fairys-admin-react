@@ -5,6 +5,7 @@ import { aliveControllerDataInstance } from 'context/alive-controller';
 import { DataRouter, RouterProvider } from 'react-router';
 import { routerDataInstance } from 'context';
 import { FairysEnterLoading } from 'components/enter-loading';
+import { FairysErrorBoundary } from 'components/error-page/error-boundary';
 import { FairysDarkModeRoot } from 'context/dark-mode';
 import { useSettingDataInstance } from 'context/setting';
 
@@ -70,7 +71,9 @@ const FairysRootBody = (props: FairysRootProps) => {
     return <Suspense fallback={<FairysEnterLoading loading />}>{children}</Suspense>;
   }, [children, router]);
 
-  if (!keepAlive) {
+  /**外部创建的 router 无法注入 AliveRoute，退回外层 AliveScope 以保持兼容*/
+  const hasInnerAliveScope = !!router && routerDataInstance.isManagedRouter(router);
+  if (!keepAlive || hasInnerAliveScope) {
     return <FairysRootContext.Provider value={fairysRootClass}>{childElement}</FairysRootContext.Provider>;
   }
   return (
@@ -85,8 +88,10 @@ const FairysRootBody = (props: FairysRootProps) => {
 
 export const FairysRoot = (props: FairysRootProps) => {
   return (
-    <FairysDarkModeRoot>
-      <FairysRootBody {...props} />
-    </FairysDarkModeRoot>
+    <FairysErrorBoundary>
+      <FairysDarkModeRoot>
+        <FairysRootBody {...props} />
+      </FairysDarkModeRoot>
+    </FairysErrorBoundary>
   );
 };

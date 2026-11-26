@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from 'react';
+import { useEffect } from 'react';
 import {
   menuDataInstance,
   routerDataInstance,
@@ -14,14 +14,14 @@ import { routes } from '../routes';
 import { Login } from './login';
 import { onGetAuth } from './server';
 
+/**入口初始化：在首次渲染前确定登录态，避免在渲染期写 store*/
+const token = localStorage.getItem('token');
+if (!token) {
+  loadingFadeOut();
+}
+authDataInstance.updatedStatus(token ? 'RequestAuth' : 'Login');
+
 export const AuthRoot = () => {
-  useMemo(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      loadingFadeOut();
-    }
-    authDataInstance.updatedStatus(token ? 'RequestAuth' : 'Login');
-  }, []);
   const [authState] = useAuthDataInstance();
   const status = authState.status;
 

@@ -22,7 +22,7 @@ Utils 组件提供了一些通用的工具函数和钩子，用于辅助其他�
 ### useAnimationStatus 钩子使用
 ```tsx
 import { useState } from 'react';
-import { useAnimationStatus } from '@fairys-admin/ui';
+import { useAnimationStatus } from '@fairys/admin-tools-react';
 import { motion } from 'framer-motion';
 
 const App = () => {
@@ -54,7 +54,7 @@ const App = () => {
 ### 复杂动画场景
 ```tsx
 import { useState } from 'react';
-import { useAnimationStatus } from '@fairys-admin/ui';
+import { useAnimationStatus } from '@fairys/admin-tools-react';
 import { motion } from 'framer-motion';
 
 const App = () => {

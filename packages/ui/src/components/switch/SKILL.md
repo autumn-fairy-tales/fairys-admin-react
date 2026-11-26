@@ -23,7 +23,7 @@ Switch 组件是一个开关组件，用于在两种状态之间切换，适用�
 ### 基本用法
 ```tsx
 import { useState } from 'react';
-import { FairysSwitchBase } from '@fairys-admin/ui';
+import { FairysSwitchBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState(false);
@@ -41,7 +41,7 @@ const App = () => {
 ### 禁用状态
 ```tsx
 import { useState } from 'react';
-import { FairysSwitchBase } from '@fairys-admin/ui';
+import { FairysSwitchBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState(false);
@@ -59,7 +59,7 @@ const App = () => {
 ### 带回调函数
 ```tsx
 import { useState } from 'react';
-import { FairysSwitchBase } from '@fairys-admin/ui';
+import { FairysSwitchBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState(false);
@@ -82,7 +82,7 @@ const App = () => {
 ### 自定义样式
 ```tsx
 import { useState } from 'react';
-import { FairysSwitchBase } from '@fairys-admin/ui';
+import { FairysSwitchBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState(false);

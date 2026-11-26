@@ -37,7 +37,7 @@ interface SelectItem {
 ### 基本用法
 ```tsx
 import { useState } from 'react';
-import { FairysSelectBase } from '@fairys-admin/ui';
+import { FairysSelectBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState('');
@@ -75,7 +75,7 @@ const App = () => {
 ### 多选示例
 ```tsx
 import { useState } from 'react';
-import { FairysSelectBase } from '@fairys-admin/ui';
+import { FairysSelectBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState<string[]>([]);
@@ -112,7 +112,7 @@ const App = () => {
 ### 带占位文本
 ```tsx
 import { useState } from 'react';
-import { FairysSelectBase } from '@fairys-admin/ui';
+import { FairysSelectBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState('');
@@ -144,7 +144,7 @@ const App = () => {
 ### 禁用状态
 ```tsx
 import { useState } from 'react';
-import { FairysSelectBase } from '@fairys-admin/ui';
+import { FairysSelectBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState('1');
@@ -182,7 +182,7 @@ const App = () => {
 ### 自定义样式
 ```tsx
 import { useState } from 'react';
-import { FairysSelectBase } from '@fairys-admin/ui';
+import { FairysSelectBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [value, setValue] = useState('');

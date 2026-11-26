@@ -1,10 +1,11 @@
-import { createContext, useContext, useRef, ReactNode, createRef, useEffect, useMemo } from 'react';
+import { createContext, useContext, useRef, ReactNode, createRef, useEffect } from 'react';
 import { proxy, useSnapshot } from 'valtio';
 import { useSettingDataInstance } from './setting';
 import { isBrowser } from 'utils';
 
 interface DarkModeInstanceState {
   theme: 'light' | 'dark';
+  [key: string]: any;
 }
 
 export class DarkModeInstance {
@@ -86,9 +87,11 @@ export interface DarkModeInstanceContextProviderProps {
 export const DarkModeInstanceContextProvider = (props: DarkModeInstanceContextProviderProps) => {
   const { children, theme, darkModeInstance: instance } = props;
   const darkModeInstance = useDarkModeInstance(instance, theme);
-  useMemo(() => {
-    darkModeInstance.setTheme(theme);
-  }, [theme]);
+  useEffect(() => {
+    if (theme) {
+      darkModeInstance.setTheme(theme);
+    }
+  }, [theme, darkModeInstance]);
 
   return <DarkModeInstanceContext.Provider value={darkModeInstance}>{children}</DarkModeInstanceContext.Provider>;
 };
@@ -98,9 +101,11 @@ export const FairysDarkModeRoot = (props: DarkModeInstanceContextProviderProps) 
   const [state] = useSettingDataInstance();
   const settTheme = theme || state.theme;
   const darkModeInstance = useDarkModeInstance(undefined, settTheme);
-  useMemo(() => {
-    darkModeInstance.setTheme(theme);
-  }, [theme]);
+  useEffect(() => {
+    if (settTheme) {
+      darkModeInstance.setTheme(settTheme);
+    }
+  }, [settTheme, darkModeInstance]);
 
   return <DarkModeInstanceContext.Provider value={darkModeInstance}>{children}</DarkModeInstanceContext.Provider>;
 };

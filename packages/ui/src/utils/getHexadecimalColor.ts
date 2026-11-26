@@ -1,3 +1,4 @@
+// @ts-ignore tinycolor2 未提供类型声明
 import tinycolor from 'tinycolor2';
 
 /**

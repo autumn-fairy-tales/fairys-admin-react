@@ -39,7 +39,7 @@
 │   ├── index.tsx
 │   ├── menu.ts
 │   ├── pages
-│   │   ├── *.tsx
+│   │   ├── catch-all.tsx
 │   │   ├── 404.tsx
 │   │   ├── about
 │   │   │   └── page.tsx
@@ -65,6 +65,8 @@
 └── tsconfig.json
 
 ```
+
+> `catch-all.tsx` 会生成通配路由 `/*`；旧文件名 `*.tsx` 仍兼容，但 Windows 不允许 `*` 作为文件名，建议统一使用 `catch-all.tsx`。
 
 ## rsbuild.config.ts 配置
 

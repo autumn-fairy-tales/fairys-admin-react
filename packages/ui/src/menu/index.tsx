@@ -19,12 +19,14 @@ export const Menu = memo((props: MenuProps) => {
   const sideMenuMode = settingState.sideMenuMode;
   const layoutMode = settingState.layoutMode;
   const location = useLocation();
+  /**动态路由时使用菜单中的 pattern 作为选中项，保证菜单高亮*/
+  const selectedKey = menuDataInstance.get_match_menu_path(location.pathname);
 
   const onClickItem = useCallback(
     async (item: MenuItemType & FairysMenuItemType) => {
       // 打开浏览器新窗口
       if (item.isOpenNewWindow) {
-        window.open(item.path, '_blank');
+        window.open(item.path, '_blank', 'noopener,noreferrer');
         return;
       }
       if (typeof item.onBeforeNavigate === 'function') {
@@ -53,12 +55,12 @@ export const Menu = memo((props: MenuProps) => {
       className="fairys_admin_menu"
       maxWidth={220}
       {...props}
-      items={layoutMode === 'left' || layoutMode === 'mobile' ? _menuItems : menuItems}
+      items={layoutMode === 'left' || layoutMode === 'left_header' || layoutMode === 'mobile' ? _menuItems : menuItems}
       activeMotionPrefixCls="fairys-menu-item-active"
       collapsed={sideMenuMode === 'close' && layoutMode !== 'mobile' ? true : undefined}
       firstLevelSize={sideMenuMode === 'close' && layoutMode !== 'mobile' ? 'large' : 'default'}
       isOnlyParentOpenKeys
-      selectedKey={location.pathname}
+      selectedKey={selectedKey}
       onClickItem={onClickItem}
     />
   );

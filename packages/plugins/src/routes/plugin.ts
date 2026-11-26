@@ -61,6 +61,7 @@ export class ReactRoutesPlugin {
     this.treeRoutes.keepAliveBasePath = this.config.keepAliveBasePath;
     this.treeRoutes.loadType = this.config.loadType;
     this.treeRoutes.hydrateFallback = this.config.hydrateFallback;
+    this.treeRoutes.errorElement = this.config.errorElement;
     this.treeRoutes.isTs = this.#isTsConfigFile();
   }
 
@@ -75,9 +76,9 @@ export class ReactRoutesPlugin {
      * 1. page.{js,tsx,jsx}
      * 2. layout.{js,tsx,jsx}
      * 3. [x].page.{js,tsx,jsx}
-     * 4. 特殊页面 404/403/500/*.{js,tsx,jsx}
+     * 4. 特殊页面 404 / 403 / 500 / 通配（catch-all 或 *）
      */
-    return /^(?:(?:.+\/)?(?:page|layout)\.(?:js|tsx|jsx)|(?:.+\/)?\[[^\]]*\]\.page\.(?:js|tsx|jsx)|(?:.+\/)?(404|403|500|\*)\.(?:js|tsx|jsx))$/.test(
+    return /^(?:(?:.+\/)?(?:page|layout)\.(?:js|tsx|jsx)|(?:.+\/)?\[[^\]]*\]\.page\.(?:js|tsx|jsx)|(?:.+\/)?(404|403|500|\*|catch-all)\.(?:js|tsx|jsx))$/.test(
       f,
     );
   }
@@ -128,6 +129,9 @@ export class ReactRoutesPlugin {
     if (this.config.keepAliveBasePath) {
       importString += `import KeepAliveBaseHOC from '${this.config.keepAliveBasePath}';\n`;
     }
+    if (this.config.errorElement) {
+      importString += `import FairysErrorElement from '${this.config.errorElement}';\n`;
+    }
     for (const groupItem of list) {
       const pages = groupItem.pages;
       const layout = groupItem.layout;
@@ -175,10 +179,13 @@ export class ReactRoutesPlugin {
     } else {
       importString += '\n' + HydrateFallbackCode;
     }
+    const routesBody = this.config.errorElement
+      ? `{ ErrorBoundary: FairysErrorElement, children: [\n${routes}] },\n`
+      : routes;
     if (isTs) {
-      return `${importString}\nconst routes: RouteObject[] = [\n${routes}];\nexport default routes;`;
+      return `${importString}\nconst routes: RouteObject[] = [\n${routesBody}];\nexport default routes;`;
     }
-    return `${importString}\nconst routes = [\n${routes}];\nexport default routes;`;
+    return `${importString}\nconst routes = [\n${routesBody}];\nexport default routes;`;
   };
 
   /**创建路由文件*/
@@ -224,7 +231,12 @@ export class ReactRoutesPlugin {
       .replace(/\.page\.(tsx|jsx|js)$/, '')
       .replace(/\.(tsx|jsx|js)$/, '');
 
-    const _routePath = routePath.replace(/^\//, '').replace(/^\//, '').replace(/\[/g, ':').replace(/\]/g, '');
+    const _routePath = routePath
+      .replace(/^\//, '')
+      .replace(/^\//, '')
+      .replace(/\[/g, ':')
+      .replace(/\]/g, '')
+      .replace(/catch-all$/, '*');
 
     // 组件地址
     const componentPath = link

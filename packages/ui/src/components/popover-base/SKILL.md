@@ -29,7 +29,7 @@ PopoverBase 组件是弹出框的基础组件，用于创建弹出式内容，�
 
 ### 基本用法
 ```tsx
-import { FairysPopoverBase } from '@fairys-admin/ui';
+import { FairysPopoverBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -50,7 +50,7 @@ const App = () => {
 
 ### 悬停触发
 ```tsx
-import { FairysPopoverBase } from '@fairys-admin/ui';
+import { FairysPopoverBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -70,7 +70,7 @@ const App = () => {
 
 ### 右键菜单
 ```tsx
-import { FairysPopoverBase } from '@fairys-admin/ui';
+import { FairysPopoverBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -92,7 +92,7 @@ const App = () => {
 
 ### 自定义位置
 ```tsx
-import { FairysPopoverBase } from '@fairys-admin/ui';
+import { FairysPopoverBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -113,7 +113,7 @@ const App = () => {
 
 ### 禁用状态
 ```tsx
-import { FairysPopoverBase } from '@fairys-admin/ui';
+import { FairysPopoverBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -134,7 +134,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysPopoverBase } from '@fairys-admin/ui';
+import { FairysPopoverBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

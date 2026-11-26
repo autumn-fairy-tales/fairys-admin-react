@@ -1,4 +1,4 @@
-import { forwardRef, Ref, useMemo, Fragment } from 'react';
+import { forwardRef, Ref, Fragment, useId, useLayoutEffect, useMemo } from 'react';
 import {
   FairysTabsInstanceContext,
   useFairysTabsInstance,
@@ -13,6 +13,8 @@ export * from './context';
 export interface FairysTabsItemProps {
   /**选项卡项*/
   item: FairysTabsItemType;
+  /**同一组 Tabs 的动画分组 id*/
+  layoutGroupId?: string;
 }
 
 export interface FairysTabsProps {
@@ -25,7 +27,7 @@ export interface FairysTabsProps {
 }
 
 export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<HTMLDivElement>) => {
-  const { item } = props;
+  const { item, layoutGroupId = 'fairys-tabs' } = props;
   const disabled = item.disabled;
   const [state, instance] = useFairysTabsInstanceContext();
   const selected = state.activeKey === item.key;
@@ -42,12 +44,22 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
     <motion.div
       ref={ref}
       className={clsName}
+      role="tab"
+      aria-selected={selected}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : 0}
       onClick={(event) => {
         event.preventDefault();
         if (disabled) {
           return;
         }
         instance.onSelected(item);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          event.currentTarget.click();
+        }
       }}
     >
       {selected ? (
@@ -60,7 +72,7 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
             top: 0,
             left: 0,
           }}
-          layoutId="selected"
+          layoutId={`${layoutGroupId}-selected`}
           initial={{ backgroundColor: 'var(--fairys-theme-color)' }}
           animate={{ backgroundColor: 'var(--fairys-theme-color)' }}
           transition={{ duration: 0.3 }}
@@ -85,15 +97,16 @@ export const FairysTabsItem = forwardRef((props: FairysTabsItemProps, ref: Ref<H
 export const FairysTabs = forwardRef((props: FairysTabsProps, ref: Ref<HTMLDivElement>) => {
   const { items, activeKey, onChange } = props;
   const instance = useFairysTabsInstance();
+  const layoutGroupId = useId().replace(/:/g, '');
   instance.onChange = onChange;
 
-  useMemo(() => {
+  useLayoutEffect(() => {
     instance.state.activeKey = activeKey || '';
-  }, [activeKey]);
+  }, [activeKey, instance]);
 
   const itemRender = useMemo(() => {
     return items.map((item) => {
-      return <FairysTabsItem key={item.key} item={item} />;
+      return <FairysTabsItem key={item.key} item={item} layoutGroupId={layoutGroupId} />;
     });
   }, [items]);
 
@@ -103,7 +116,7 @@ export const FairysTabs = forwardRef((props: FairysTabsProps, ref: Ref<HTMLDivEl
 
   return (
     <FairysTabsInstanceContext.Provider value={instance}>
-      <div ref={ref} className={clsName}>
+      <div ref={ref} className={clsName} role="tablist">
         {itemRender}
       </div>
     </FairysTabsInstanceContext.Provider>

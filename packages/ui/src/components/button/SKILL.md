@@ -22,7 +22,7 @@ Button 组件是一个通用的按钮组件，用于触发用户交互操作，�
 
 ## 使用示例
 ```tsx
-import { FairysButtonBase } from '@fairys-admin/ui';
+import { FairysButtonBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const handleClick = () => {

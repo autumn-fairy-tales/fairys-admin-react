@@ -4,7 +4,7 @@ import { Fragment } from 'react/jsx-runtime';
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useMenuDataInstance, MenuItemType, menuDataInstance } from 'context/menu-data';
 import { FairysBreadcrumbBase } from 'components/breadcrumb';
-import { useNavigate } from 'react-router';
+import { routerDataInstance } from 'context/router-data';
 import hotkeys from 'hotkeys-js';
 import { FairysIcon, FairysIconPropsType } from 'components/icon';
 import { UtilsColor } from 'utils/utils.color';
@@ -16,14 +16,13 @@ interface SearchItemProps {
 
 const SearchItem = (props: SearchItemProps) => {
   const { rowItemData, onClose } = props;
-  const navigate = useNavigate();
   const iconProps = rowItemData.iconProps as FairysIconPropsType;
 
   const onClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
     onClose(e);
-    navigate(rowItemData.path);
+    routerDataInstance.navigate(rowItemData.path);
   };
 
   const parentItemsRender = useMemo(() => {
@@ -100,15 +99,17 @@ const ModalBody = (props: { onClose: (e: React.MouseEvent) => void }) => {
 export const MenuSearch = () => {
   const [open, setOpen] = useState(false);
   useEffect(() => {
-    if (open) {
-      hotkeys('esc', (e) => {
-        e.preventDefault();
-        setOpen(false);
-      });
+    if (!open) {
+      return;
     }
-    return () => {
-      hotkeys.unbind('esc');
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setOpen(false);
+      }
     };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, [open]);
 
   useEffect(() => {
@@ -119,7 +120,7 @@ export const MenuSearch = () => {
     return () => {
       hotkeys.unbind('command+k, ctrl+k');
     };
-  }, [open]);
+  }, []);
 
   return (
     <Fragment>

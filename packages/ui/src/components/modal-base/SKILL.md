@@ -32,7 +32,7 @@ ModalBase 组件是模态框的基础组件，用于创建弹出式对话框和�
 ### 基本模态框
 ```tsx
 import { useState } from 'react';
-import { FairysModalBase } from '@fairys-admin/ui';
+import { FairysModalBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -61,7 +61,7 @@ const App = () => {
 ### 抽屉模式
 ```tsx
 import { useState } from 'react';
-import { FairysModalBase } from '@fairys-admin/ui';
+import { FairysModalBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -87,7 +87,7 @@ const App = () => {
 ### 全屏模态框
 ```tsx
 import { useState } from 'react';
-import { FairysModalBase } from '@fairys-admin/ui';
+import { FairysModalBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -111,7 +111,7 @@ const App = () => {
 ### 自定义样式
 ```tsx
 import { useState } from 'react';
-import { FairysModalBase } from '@fairys-admin/ui';
+import { FairysModalBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);

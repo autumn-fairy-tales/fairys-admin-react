@@ -26,6 +26,18 @@ export function FairysSwitchBase(props: FairysSwitchBaseProps) {
       animate={value ? 'on' : 'off'}
       initial={false}
       onTapStart={() => onChange(!value)}
+      role="switch"
+      aria-checked={!!value}
+      aria-disabled={disabled}
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          if (!disabled) {
+            onChange(!value);
+          }
+        }
+      }}
     >
       <motion.div
         style={{

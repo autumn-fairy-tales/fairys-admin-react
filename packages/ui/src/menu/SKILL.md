@@ -20,7 +20,7 @@ Menu 组件用于创建导航菜单，从 context 中获取菜单数据，适用
 
 ### 基本用法
 ```tsx
-import { Menu } from '@fairys-admin/ui';
+import { Menu } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -31,7 +31,7 @@ const App = () => {
 
 ### 自定义点击回调
 ```tsx
-import { Menu } from '@fairys-admin/ui';
+import { Menu } from '@fairys/admin-tools-react';
 
 const App = () => {
   const handleClickItem = (item) => {
@@ -46,7 +46,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { Menu } from '@fairys-admin/ui';
+import { Menu } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

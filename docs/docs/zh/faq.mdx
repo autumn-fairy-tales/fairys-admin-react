@@ -6,26 +6,21 @@
 
 ### Q: 安装 Fairys Admin React 后，组件样式不生效怎么办？
 
-**A:** 确保您已经正确配置了 Tailwind CSS：
+**A:** 组件库基于 **Tailwind CSS v4**，无需 `tailwind.config.js`。请检查：
 
-1. 检查 `tailwind.config.js` 文件，确保内容路径配置正确：
-
-```js
-content: [
-  "./index.html",
-  "./src/**/*.{js,ts,jsx,tsx}",
-]
-```
-
-2. 检查 `src/index.css` 文件，确保添加了 Tailwind 指令：
+1. `src/index.css` 是否正确引入组件库样式与 Tailwind：
 
 ```css
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import '@fairys/admin-tools-react/lib/styles/index.css';
+@import 'tailwindcss';
+@plugin "@iconify/tailwind4";
+
+@custom-variant dark (&:where(.dark, .dark *));
 ```
 
-3. 确保您的项目使用了正确的构建工具配置，例如 `rsbuild.config.ts` 中添加了 Tailwind CSS 插件。
+2. 是否安装了 `tailwindcss`、`@tailwindcss/postcss`、`@iconify/json`、`@iconify/tailwind4`。
+
+3. `rsbuild.config.ts` 是否通过 `tools.postcss` 注册了 `@tailwindcss/postcss`（见快速开始）。
 
 ### Q: 如何配置路由生成插件？
 

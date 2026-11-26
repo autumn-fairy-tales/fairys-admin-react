@@ -101,6 +101,10 @@ export interface ReactRoutesPluginOptions {
    * @description 自定义 HydrateFallback 组件
    */
   hydrateFallback?: string;
+  /**
+   * @description 路由级错误边界组件模块路径（需默认导出组件）
+   */
+  errorElement?: string;
 }
 
 export interface WatchDirsItem {
@@ -117,6 +121,33 @@ export interface WatchDirsItem {
 }
 
 ```
+
+:::tip 通配路由
+
+特殊页面支持 `404` / `403` / `500` / `catch-all`（生成 `/*`）。旧文件名 `*` 仍兼容，但 Windows 不允许 `*` 作为文件名，建议使用 `catch-all.tsx`。
+
+:::
+
+:::tip 路由级错误兜底
+
+配置 `errorElement` 后，生成的路由会额外包一层 pathless 路由：
+
+```tsx
+{
+  ErrorBoundary: FairysErrorElement,
+  children: [ /* 生成的页面路由 */ ],
+}
+```
+
+页面组件渲染异常、懒加载失败时展示 500 页，而不是 React Router 的默认错误界面。示例：
+
+```ts
+RsbuildReactRoutesPlugin({
+  errorElement: '@fairys/admin-tools-react/esm/components/error-page/error-element',
+})
+```
+
+:::
 
 :::tip 默认 HydrateFallback 组件代码
 

@@ -1,6 +1,5 @@
 import clsx from 'clsx';
 import { Fragment, useEffect, useMemo, useRef } from 'react';
-import hotkeys from 'hotkeys-js';
 
 interface FairysFullScreenProps extends React.DetailedHTMLProps<React.HTMLAttributes<HTMLDivElement>, HTMLDivElement> {
   /**是否全屏*/
@@ -16,16 +15,19 @@ class FairysFullScreenInstance {
   onClose?: () => void;
 
   /**退出全屏*/
-  onEsc = () => {
-    if (this.open) {
-      const _this = this;
-      hotkeys('esc', (e) => {
-        e.preventDefault();
-        _this.onClose?.();
-      });
+  onEsc = (): (() => void) => {
+    if (!this.open) {
+      return () => void 0;
     }
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        this.onClose?.();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
     return () => {
-      hotkeys.unbind('esc');
+      document.removeEventListener('keydown', onKeyDown);
     };
   };
 }

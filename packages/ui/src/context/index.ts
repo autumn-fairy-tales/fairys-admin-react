@@ -7,6 +7,7 @@ export * from './app-plugins-data';
 export * from './motion-animation';
 export * from './account-data';
 export * from './alive-controller';
+export * from './alive-route';
 export * from './notification-data';
 export * from './app-data';
 export * from './dark-mode';

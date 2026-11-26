@@ -15,7 +15,7 @@
  * 13. 自动滚动到选中菜单(单选菜单)
  * 14. 支持多选菜单
  */
-import { forwardRef, useEffect, useMemo } from 'react';
+import { forwardRef, useEffect, useLayoutEffect, useMemo } from 'react';
 import { FairysMenuProps } from './interface';
 import { useFairysMenuInstance, FairysMenuInstanceContext } from './instance';
 import { renderItems } from './utils';
@@ -77,40 +77,50 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
     );
   }, [mode, collapsed, size, className, !!width]);
 
-  useMemo(() => instance.processMenuItems(items), [items]);
-  useMemo(() => instance.setActiveMotionPrefixCls(activeMotionPrefixCls), [activeMotionPrefixCls]);
-  useMemo(() => (instance.state.mode = mode), [mode]);
-  useMemo(() => (instance.state.firstGroupMode = firstGroupMode), [firstGroupMode]);
-  useMemo(() => (instance.state.collapsed = collapsed), [collapsed]);
-  useMemo(() => (instance.state.maxWidth = maxWidth), [maxWidth]);
-  useMemo(() => (instance.state.size = size), [size]);
-  useMemo(() => (instance.state.firstLevelSize = firstLevelSize), [firstLevelSize]);
-  useMemo(() => (instance.state.collapsedMode = collapsedMode), [collapsedMode]);
-  // 当 selectedKey 传递时，根据 selectedKey 更新 selectedKey
   useMemo(() => {
+    instance.pathMap.clear();
+    instance.parentPathMap.clear();
+    instance.processMenuItems(items || []);
+  }, [items]);
+  useLayoutEffect(() => {
+    instance.setActiveMotionPrefixCls(activeMotionPrefixCls);
+  }, [activeMotionPrefixCls, instance]);
+
+  useLayoutEffect(() => {
+    instance.state.mode = mode;
+    instance.state.firstGroupMode = firstGroupMode;
+    instance.state.collapsed = collapsed;
+    instance.state.maxWidth = maxWidth;
+    instance.state.size = size;
+    instance.state.firstLevelSize = firstLevelSize;
+    instance.state.collapsedMode = collapsedMode;
+  }, [mode, firstGroupMode, collapsed, maxWidth, size, firstLevelSize, collapsedMode, instance]);
+
+  // 当 selectedKey 传递时，根据 selectedKey 更新 selectedKey
+  useLayoutEffect(() => {
     if (isSelectedKeyField) {
       instance.state.selectedKey = selectedKey;
     }
-  }, [selectedKey, isSelectedKeyField]);
+  }, [selectedKey, isSelectedKeyField, instance]);
 
   // 当 openKeys 传递时，根据 openKeys 更新 selectedKey
-  useMemo(() => {
+  useLayoutEffect(() => {
     if (isOpenKeysField) {
       instance.state.openKeys = openKeys;
     }
-  }, [openKeys, isOpenKeysField]);
+  }, [openKeys, isOpenKeysField, instance]);
 
   /**
    * 当 openKeys 未传递时，根据 selectedKey 更新 openKeys
    */
-  useMemo(() => {
+  useLayoutEffect(() => {
     if (!isOpenKeysField) {
       instance.updatedOpenKeys(selectedKey);
     }
-  }, [selectedKey, isOpenKeysField, items, collapsedMode]);
+  }, [selectedKey, isOpenKeysField, items, collapsedMode, instance]);
 
   const render = useMemo(() => {
-    return renderItems(items, { level: -1 });
+    return renderItems(items || [], { level: -1 });
   }, [items]);
 
   useEffect(() => {
@@ -123,7 +133,13 @@ export const FairysMenu = forwardRef((props: FairysMenuProps, ref: React.LegacyR
   return (
     <FairysPopoverBaseFloatingTreeParent>
       <FairysMenuInstanceContext.Provider value={instance}>
-        <motion.div ref={mergeRef} className={_class} style={{ maxWidth, width, ...style }}>
+        <motion.div
+          ref={mergeRef}
+          className={_class}
+          style={{ maxWidth, width, ...style }}
+          role="menu"
+          aria-orientation={mode}
+        >
           {render}
         </motion.div>
       </FairysMenuInstanceContext.Provider>

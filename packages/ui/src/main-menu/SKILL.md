@@ -20,7 +20,7 @@ MainMenu 组件用于创建应用的主菜单，分为左侧主菜单和顶部�
 
 ### 垂直布局（左侧主菜单）
 ```tsx
-import { MainMenu } from '@fairys-admin/ui';
+import { MainMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -31,7 +31,7 @@ const App = () => {
 
 ### 水平布局（顶部主菜单）
 ```tsx
-import { MainMenu } from '@fairys-admin/ui';
+import { MainMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -42,7 +42,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { MainMenu } from '@fairys-admin/ui';
+import { MainMenu } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

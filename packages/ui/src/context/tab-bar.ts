@@ -42,13 +42,16 @@ export class TabBarDataInstance {
   add = (path: string) => {
     /**查询是否已经存在*/
     const finx = this.state.tabBarItems.find((item) => item.path === path);
-    if (!finx) {
-      /**菜单中查找到数据进行存储*/
-      const fix = menuDataInstance.get_path_menuItem(path);
-      if (fix) {
-        this.state.tabBarItems = ref([...this.state.tabBarItems, fix]);
-      }
+    if (finx) {
+      return;
     }
+    /**菜单中查找到数据进行存储，动态路由使用具体 path 作为标签路径*/
+    const menuItem = menuDataInstance.get_path_menuItem(path);
+    if (!menuItem) {
+      return;
+    }
+    const tabItem = menuItem.path === path ? menuItem : { ...menuItem, path };
+    this.state.tabBarItems = ref([...this.state.tabBarItems, tabItem]);
   };
 
   /**删除tab项*/
@@ -188,8 +191,12 @@ export class TabInstance {
   updateDropDownTabBarItems = () => {
     clearTimeout(this.timer);
     this.timer = setTimeout(() => {
+      const container = this.dom.current;
+      if (!container) {
+        return;
+      }
       const tabBarItems = this.tabBarItems || [];
-      const containerRect = this.dom.current?.getBoundingClientRect();
+      const containerRect = container.getBoundingClientRect();
       const dropDownTabBarItems = [];
       for (let index = 0; index < tabBarItems.length; index++) {
         const item = tabBarItems[index];
@@ -258,6 +265,7 @@ export class TabInstance {
       this.dom.current.addEventListener('scrollend', this.updateDropDownTabBarItems);
     }
     return () => {
+      clearTimeout(this.timer);
       if (this.dom.current) this.dom.current.removeEventListener('scrollend', this.updateDropDownTabBarItems);
       unMount_mutationObserver();
       unMount_resizeObserver();

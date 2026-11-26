@@ -160,6 +160,9 @@ export class FairysMenuInstance {
       }
     } else {
       const parentItems = this.parentPathMap.get(selectedKey);
+      if (!parentItems) {
+        return;
+      }
       this.state.expandItems = [...this.state.expandItems, ...parentItems];
       this.state.openKeys = Array.from(new Set(this.state.expandItems.map((it) => it.path)));
     }

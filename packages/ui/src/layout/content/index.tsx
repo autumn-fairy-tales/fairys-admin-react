@@ -11,6 +11,7 @@ import { AliveControllerDataInstance } from 'context/alive-controller';
 
 import { FairysMotionAnimation } from 'components/motion-animation';
 import { authDataInstance } from 'context/auth-data';
+import { menuDataInstance } from 'context/menu-data';
 import { ErrorPage403 } from 'components/error-page/403';
 
 export interface AuthWarpProps {
@@ -20,7 +21,10 @@ export interface AuthWarpProps {
 export const AuthWarp = (props: AuthWarpProps) => {
   const { children } = props;
   const location = useLocation();
-  const isAuth = useMemo(() => authDataInstance.isMenuAuth(location.pathname), [location.pathname]);
+  const isAuth = useMemo(() => {
+    const menuPath = menuDataInstance.get_match_menu_path(location.pathname);
+    return authDataInstance.isMenuAuth(location.pathname) || authDataInstance.isMenuAuth(menuPath);
+  }, [location.pathname]);
   if (!isAuth) return <ErrorPage403 />;
   return children;
 };
@@ -63,7 +67,7 @@ const OutletContentContext = () => {
   const render = useMemo(() => {
     if (fairysRootClass.keepAlive && fairysRootClass.isOutletKeepAlive) return <KeepAliveContent />;
     return <KeepAliveContent2 />;
-  }, [fairysRootClass.keepAlive]);
+  }, [fairysRootClass.keepAlive, fairysRootClass.isOutletKeepAlive]);
 
   return (
     <Fragment>

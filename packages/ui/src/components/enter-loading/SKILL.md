@@ -32,7 +32,7 @@ EnterLoading 组件用于页面或组件加载时显示加载动画，提升用�
 
 ### 使用 FairysEnterLoading
 ```tsx
-import { FairysEnterLoading } from '@fairys-admin/ui';
+import { FairysEnterLoading } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -43,7 +43,7 @@ const App = () => {
 
 ### 使用 FairysLoading 包装组件
 ```tsx
-import { FairysLoading } from '@fairys-admin/ui';
+import { FairysLoading } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -57,7 +57,7 @@ const App = () => {
 ### 条件加载
 ```tsx
 import { useState, useEffect } from 'react';
-import { FairysEnterLoading } from '@fairys-admin/ui';
+import { FairysEnterLoading } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [loading, setLoading] = useState(true);
@@ -86,7 +86,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysEnterLoading } from '@fairys-admin/ui';
+import { FairysEnterLoading } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

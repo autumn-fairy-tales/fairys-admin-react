@@ -23,7 +23,7 @@ Root 组件是应用的根组件，用于提供全局上下文和状态管理，
 
 ### 基本用法
 ```tsx
-import { FairysRoot } from '@fairys-admin/ui';
+import { FairysRoot } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -36,7 +36,7 @@ const App = () => {
 
 ### 带路由配置
 ```tsx
-import { FairysRoot } from '@fairys-admin/ui';
+import { FairysRoot } from '@fairys/admin-tools-react';
 import { createBrowserRouter } from 'react-router-dom';
 
 // 创建路由
@@ -62,7 +62,7 @@ const App = () => {
 
 ### 启用缓存
 ```tsx
-import { FairysRoot } from '@fairys-admin/ui';
+import { FairysRoot } from '@fairys/admin-tools-react';
 import { createBrowserRouter } from 'react-router-dom';
 
 // 创建路由
@@ -92,7 +92,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysRoot } from '@fairys-admin/ui';
+import { FairysRoot } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

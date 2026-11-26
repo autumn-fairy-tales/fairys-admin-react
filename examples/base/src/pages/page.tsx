@@ -37,7 +37,7 @@ const MainIndex = () => {
       });
   };
   const [selectedKey, updateSelectedKey] = useState('/');
-  const [openKeys, updateOpenKeys] = useState<string[]>([]);
+  const [, updateOpenKeys] = useState<string[]>([]);
 
   return (
     <FairysMainPage>
@@ -58,7 +58,7 @@ const MainIndex = () => {
             // firstGroupMode="hover"
             firstGroupMode="click"
             // firstGroupMode='hover'
-            onClickItem={(item, event, instance) => {
+            onClickItem={(item) => {
               updateSelectedKey(item.path);
             }}
             onClickSubItem={(item) => {

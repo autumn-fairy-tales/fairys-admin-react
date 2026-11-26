@@ -34,7 +34,7 @@ interface BreadcrumbItem {
 
 ### 基本用法
 ```tsx
-import { FairysBreadcrumbBase } from '@fairys-admin/ui';
+import { FairysBreadcrumbBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -49,7 +49,7 @@ const App = () => {
 
 ### 自定义分隔符
 ```tsx
-import { FairysBreadcrumbBase } from '@fairys-admin/ui';
+import { FairysBreadcrumbBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -64,7 +64,7 @@ const App = () => {
 
 ### 第一个面包屑项无内边距
 ```tsx
-import { FairysBreadcrumbBase } from '@fairys-admin/ui';
+import { FairysBreadcrumbBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -83,7 +83,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysBreadcrumbBase } from '@fairys-admin/ui';
+import { FairysBreadcrumbBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

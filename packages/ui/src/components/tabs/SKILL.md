@@ -37,7 +37,7 @@ interface TabItem {
 ### 基本用法
 ```tsx
 import { useState } from 'react';
-import { FairysTabs } from '@fairys-admin/ui';
+import { FairysTabs } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [activeKey, setActiveKey] = useState('tab1');
@@ -83,7 +83,7 @@ const App = () => {
 ### 带图标
 ```tsx
 import { useState } from 'react';
-import { FairysTabs } from '@fairys-admin/ui';
+import { FairysTabs } from '@fairys/admin-tools-react';
 import { HomeOutlined, SettingOutlined, UserOutlined } from '@ant-design/icons';
 
 const App = () => {
@@ -124,7 +124,7 @@ const App = () => {
 ### 带禁用状态
 ```tsx
 import { useState } from 'react';
-import { FairysTabs } from '@fairys-admin/ui';
+import { FairysTabs } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [activeKey, setActiveKey] = useState('tab1');
@@ -161,7 +161,7 @@ const App = () => {
 
 ### 非受控模式
 ```tsx
-import { FairysTabs } from '@fairys-admin/ui';
+import { FairysTabs } from '@fairys/admin-tools-react';
 
 const App = () => {
   const tabsItems = [

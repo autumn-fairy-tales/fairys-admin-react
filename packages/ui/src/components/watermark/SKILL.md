@@ -32,7 +32,7 @@ Watermark 组件用于在页面上添加水印，防止内容被未授权复制�
 
 ### 基本用法
 ```tsx
-import { FairysWatermarkBase } from '@fairys-admin/ui';
+import { FairysWatermarkBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -57,7 +57,7 @@ const App = () => {
 
 ### 图片水印
 ```tsx
-import { FairysWatermarkBase } from '@fairys-admin/ui';
+import { FairysWatermarkBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -75,7 +75,7 @@ const App = () => {
 
 ### 自定义水印样式
 ```tsx
-import { FairysWatermarkBase } from '@fairys-admin/ui';
+import { FairysWatermarkBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -99,7 +99,7 @@ const App = () => {
 
 ### 调整水印位置
 ```tsx
-import { FairysWatermarkBase } from '@fairys-admin/ui';
+import { FairysWatermarkBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

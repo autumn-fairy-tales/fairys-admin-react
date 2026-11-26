@@ -50,7 +50,7 @@ import {
   FairysMainPageSearch, 
   FairysMainPageBody, 
   FairysMainPageFooter 
-} from '@fairys-admin/ui';
+} from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -79,7 +79,7 @@ import {
   FairysMainPageSearch, 
   FairysMainPageBody, 
   FairysMainPageFooter 
-} from '@fairys-admin/ui';
+} from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -105,7 +105,7 @@ import {
   FairysMainPageSearch, 
   FairysMainPageBody, 
   FairysMainPageFooter 
-} from '@fairys-admin/ui';
+} from '@fairys/admin-tools-react';
 import { Input, Button } from 'antd';
 
 const App = () => {

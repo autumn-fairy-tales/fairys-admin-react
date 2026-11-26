@@ -25,7 +25,7 @@ Disclosure 组件用于创建可展开/折叠的内容区域，通常用于显�
 ### 基本用法
 ```tsx
 import { useState } from 'react';
-import { FairysDisclosureItem } from '@fairys-admin/ui';
+import { FairysDisclosureItem } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -44,7 +44,7 @@ const App = () => {
 ### 初始展开
 ```tsx
 import { useState } from 'react';
-import { FairysDisclosureItem } from '@fairys-admin/ui';
+import { FairysDisclosureItem } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(true);
@@ -63,7 +63,7 @@ const App = () => {
 ### 自定义样式
 ```tsx
 import { useState } from 'react';
-import { FairysDisclosureItem } from '@fairys-admin/ui';
+import { FairysDisclosureItem } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);
@@ -90,7 +90,7 @@ const App = () => {
 ### 自定义动画
 ```tsx
 import { useState } from 'react';
-import { FairysDisclosureItem } from '@fairys-admin/ui';
+import { FairysDisclosureItem } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [open, setOpen] = useState(false);

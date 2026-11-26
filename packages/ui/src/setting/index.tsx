@@ -4,7 +4,6 @@ import { SettingThemeBase } from './base/theme';
 import { SettingLayoutMode } from './base/layout-mode';
 import { SettingPageTransitionMode } from './base/page-transition-mode';
 import { SettingColor } from './base/color';
-import hotkeys from 'hotkeys-js';
 import { memo, useEffect } from 'react';
 import { useAppPluginDataInstance } from 'context/app-plugins-data';
 import { SettingSiderThemeBase } from './base/sider-theme';
@@ -15,15 +14,17 @@ export const SettingDrawer = memo(() => {
   const settingPlugin = snapshot?.['setting'];
 
   useEffect(() => {
-    if (state.open) {
-      hotkeys('esc', (e) => {
-        e.preventDefault();
-        settingDataInstance.onToggleOpen();
-      });
+    if (!state.open) {
+      return;
     }
-    return () => {
-      hotkeys.unbind('esc');
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        settingDataInstance.onToggleOpen();
+      }
     };
+    document.addEventListener('keydown', onKeyDown);
+    return () => document.removeEventListener('keydown', onKeyDown);
   }, [state.open]);
 
   return (

@@ -46,7 +46,7 @@ interface NotificationItem {
 
 ### 基本用法
 ```tsx
-import { FairysNotificationListBase } from '@fairys-admin/ui';
+import { FairysNotificationListBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const notifications = [
@@ -92,7 +92,7 @@ const App = () => {
 
 ### 单独使用通知项
 ```tsx
-import { FairysNotificationBaseItem } from '@fairys-admin/ui';
+import { FairysNotificationBaseItem } from '@fairys/admin-tools-react';
 
 const App = () => {
   const notification = {
@@ -118,7 +118,7 @@ const App = () => {
 
 ### 自定义图标
 ```tsx
-import { FairysNotificationListBase } from '@fairys-admin/ui';
+import { FairysNotificationListBase } from '@fairys/admin-tools-react';
 import { CheckCircleOutlined, ExclamationCircleOutlined, CloseCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 
 const App = () => {
@@ -164,7 +164,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysNotificationListBase } from '@fairys-admin/ui';
+import { FairysNotificationListBase } from '@fairys/admin-tools-react';
 
 const App = () => {
   const notifications = [

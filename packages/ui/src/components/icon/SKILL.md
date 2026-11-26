@@ -22,7 +22,7 @@ Icon 组件用于显示各种图标，支持自定义图标和图标库，适用
 
 ### 基本用法
 ```tsx
-import { FairysIcon } from '@fairys-admin/ui';
+import { FairysIcon } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -37,7 +37,7 @@ const App = () => {
 
 ### 自定义图标属性
 ```tsx
-import { FairysIcon } from '@fairys-admin/ui';
+import { FairysIcon } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -63,7 +63,7 @@ const App = () => {
 
 ### 使用 className 方式显示图标
 ```tsx
-import { FairysIcon } from '@fairys-admin/ui';
+import { FairysIcon } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -83,7 +83,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysIcon } from '@fairys-admin/ui';
+import { FairysIcon } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -105,7 +105,7 @@ const App = () => {
 
 ### 使用自定义图标
 ```tsx
-import { FairysIcon } from '@fairys-admin/ui';
+import { FairysIcon } from '@fairys/admin-tools-react';
 
 const CustomIcon = () => (
   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">

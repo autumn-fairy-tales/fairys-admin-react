@@ -23,7 +23,7 @@ ErrorPage 组件用于显示各种错误状态页面，如 403、404、500 等�
 
 ### 使用 404 错误页面
 ```tsx
-import { ErrorPage404 } from '@fairys-admin/ui';
+import { ErrorPage404 } from '@fairys/admin-tools-react';
 
 const App = () => {
   const handleBackHome = () => {
@@ -42,7 +42,7 @@ const App = () => {
 
 ### 使用 403 错误页面
 ```tsx
-import { ErrorPage403 } from '@fairys-admin/ui';
+import { ErrorPage403 } from '@fairys/admin-tools-react';
 
 const App = () => {
   return <ErrorPage403 />;
@@ -51,7 +51,7 @@ const App = () => {
 
 ### 使用 500 错误页面
 ```tsx
-import { ErrorPage500 } from '@fairys-admin/ui';
+import { ErrorPage500 } from '@fairys/admin-tools-react';
 
 const App = () => {
   return <ErrorPage500 />;
@@ -60,7 +60,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { ErrorPage404 } from '@fairys-admin/ui';
+import { ErrorPage404 } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

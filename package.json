@@ -15,7 +15,9 @@
     "watch:plugin": "npm run-script watch --workspace @fairys/admin-tools-react-plugins",
     "build:all": "npm run build && npm run build:plugin",
     "version": "lerna version --force-publish=* --no-changelog --no-git-tag-version --no-push",
-    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\""
+    "prettier": "prettier --write \"**/*.{js,jsx,tsx,ts,less,md,json}\"",
+    "typecheck": "npm run typecheck --workspace @fairys/admin-tools-react && npm run typecheck --workspace @fairys/admin-tools-react-plugins && npm run typecheck --workspace example && npm run typecheck --workspace template",
+    "test": "npm run test --workspace @fairys/admin-tools-react-plugins && npm run test --workspace @fairys/admin-tools-react"
   },
   "dependencies": {
     "@rsbuild/plugin-svgr": "^1.3.0",

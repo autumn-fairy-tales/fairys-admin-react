@@ -20,6 +20,7 @@ export interface AuthDataInstanceState {
   ignorePermissions: string[];
   /**默认引用值*/
   __defaultValue?: string;
+  [key: string]: any;
 }
 
 export class AuthDataInstance {
@@ -73,7 +74,6 @@ export class AuthDataInstance {
     if (isBrowser) {
       this._browserConstructor();
     }
-    appDataInstance.authDataInstance = this;
   }
 
   /**初始化*/
@@ -91,7 +91,7 @@ export class AuthDataInstance {
   };
 
   /**退出登录(需要外部赋值)*/
-  public onLogout: (status?: number) => Promise<void> = () => void 0;
+  public onLogout: (status?: number) => void | Promise<void> = () => void 0;
 
   /**内部退出登录*/
   public _onLogout: (status?: number) => void = async (status) => {

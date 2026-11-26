@@ -82,6 +82,8 @@ export interface SettingDataInstanceState {
   isMobile?: boolean;
   /**只是默认值，不使用*/
   __defaultValue?: string;
+  /**动态 key 读取/持久化*/
+  [key: string]: any;
 }
 
 export class SettingDataInstance {
@@ -138,17 +140,17 @@ export class SettingDataInstance {
 
   /**浏览器端初始化*/
   _browserConstructor = () => {
-    const state = localStorage.getItem(SettingDataInstance.localStorageKey);
-    if (state) {
-      try {
+    try {
+      const state = localStorage.getItem(SettingDataInstance.localStorageKey);
+      if (state) {
         const newState = JSON.parse(state);
         for (const key in newState) {
           const element = newState[key];
           this.state[key] = element;
         }
-      } catch (error) {
-        console.log(error);
       }
+    } catch (error) {
+      console.log('获取配置本地存储', error);
     }
     /**兼容历史数据：mobile 不应从本地存储恢复*/
     if (!SettingDataInstance.isPersistableLayoutMode(this.state.layoutMode)) {
@@ -199,12 +201,8 @@ export class SettingDataInstance {
       logo: state.logo,
     });
     if (this.state.themeColor) {
-      if (document.documentElement) {
-        document.documentElement.setAttribute('style', `--fairys-theme-color:${this.state.themeColor}`);
-      }
-      if (document.body) {
-        document.body.setAttribute('style', `--fairys-theme-color:${this.state.themeColor}`);
-      }
+      document.documentElement?.style.setProperty('--fairys-theme-color', this.state.themeColor);
+      document.body?.style.setProperty('--fairys-theme-color', this.state.themeColor);
     }
     this.autoListenSystemTheme();
   };
@@ -274,11 +272,14 @@ export class SettingDataInstance {
   /**更新主题颜色*/
   updatedThemeColor = (themeColor: string) => {
     this.updated({ themeColor });
-    if (themeColor) {
-      document.body.setAttribute('style', `--fairys-theme-color:${themeColor}`);
-    } else {
-      document.body.removeAttribute('style');
-    }
+    const targets = [document.documentElement, document.body].filter(Boolean) as HTMLElement[];
+    targets.forEach((target) => {
+      if (themeColor) {
+        target.style.setProperty('--fairys-theme-color', themeColor);
+      } else {
+        target.style.removeProperty('--fairys-theme-color');
+      }
+    });
   };
   // ================================================================================================
 
@@ -324,7 +325,11 @@ export class SettingDataInstance {
         this.setDocumentAndBodyTheme();
       }
     }
-    localStorage.setItem(SettingDataInstance.localStorageKey, JSON.stringify(_state));
+    try {
+      localStorage.setItem(SettingDataInstance.localStorageKey, JSON.stringify(_state));
+    } catch (error) {
+      console.log('保存配置本地存储', error);
+    }
   };
 
   /**切换打开偏好设置*/
@@ -389,8 +394,11 @@ export class SettingDataInstance {
     };
   };
 
-  /**清空*/
-  clear = () => {};
+  /**清空运行时状态，保留用户偏好*/
+  clear = () => {
+    this.state.open = false;
+    this.state.isFullScreen = false;
+  };
 }
 
 export const settingDataInstance = new SettingDataInstance();

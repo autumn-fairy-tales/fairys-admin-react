@@ -104,7 +104,15 @@ export const FairysPopoverBaseComponent = forwardRef(
         flip(),
         shift(),
         size({
-          apply({ availableWidth, availableHeight, elements }) {
+          apply({
+            availableWidth,
+            availableHeight,
+            elements,
+          }: {
+            availableWidth: number;
+            availableHeight: number;
+            elements: { floating: HTMLElement };
+          }) {
             Object.assign(elements.floating.style, {
               overflow: 'auto',
               maxWidth: `${availableWidth}px`,

@@ -19,7 +19,7 @@ Avatar 组件用于显示用户头像，支持多种尺寸和样式，适用于�
 
 ## 使用示例
 ```tsx
-import { Avatar } from '@fairys-admin/ui';
+import { Avatar } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

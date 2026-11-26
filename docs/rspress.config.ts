@@ -7,6 +7,8 @@ export default defineConfig({
     cleanUrls: true,
   },
   ssg: false,
+  /**关闭 SSG-MD：组件库依赖浏览器环境，无法在 SSR 中渲染 */
+  llms: false,
   locales: [
     {
       lang: 'zh',

@@ -1,134 +1,71 @@
 # KeepAlive 组件
 
 ## 功能说明
-KeepAlive 组件是一个高阶组件 (HOC)，用于保持组件的状态，避免组件在切换时重新渲染，提升性能，适用于需要保持状态的组件场景。
+
+`KeepAliveBaseHOC` 是基于 `react-activation` 的路由级缓存高阶组件，用于在路由切换时保留页面状态，供约定式路由插件（`keepAliveBasePath`）自动包裹页面组件。
 
 ## 组件结构
-- `index.tsx` - 组件主要实现
+
+- `index.tsx` — 高阶组件实现（同时提供命名导出与默认导出）
 
 ## API
 
-### KeepAliveBaseHOC 函数
+### KeepAliveBaseHOC(Component, id)
 
 | 参数 | 类型 | 说明 |
 | --- | --- | --- |
-| `Component` | `React.ComponentType` | 需要保持状态的组件 |
-| `id` | `string` | 缓存键，用于标识组件缓存 |
-| `options` | `object` | 可选配置项 |
+| `Component` | `React.ComponentType` | 需要缓存的页面组件 |
+| `id` | `string` | 缓存键，同一页面必须唯一；约定式路由插件会传入 `fairys_admin_keep_alive_${path}` |
 
-### options 配置项
-
-| 属性 | 类型 | 默认值 | 说明 |
-| --- | --- | --- | --- |
-| `isMotion` | `boolean` | `true` | 是否启用动画效果 |
-| `motionProps` | `object` | - | 动画配置属性 |
+返回一个新的组件，内部使用 `<KeepAlive name={id} id={id} cacheKey={id}>` 包裹页面，并叠加 `FairysMotionAnimation`。页面切换动画由 `settingDataInstance.pageTransitionMode` 控制，**没有第三个 options 参数**。
 
 ## 使用示例
 
-### 基本用法
+### 手动包裹页面
+
 ```tsx
-import { KeepAliveBaseHOC } from '@fairys-admin/ui';
-import { useState } from 'react';
+import KeepAliveBaseHOC from '@fairys/admin-tools-react/esm/components/keep-alive';
 
-// 定义需要保持状态的组件
-const MyComponent = () => {
+const Page = () => {
   const [count, setCount] = useState(0);
-
-  return (
-    <div>
-      <p>计数: {count}</p>
-      <button onClick={() => setCount(count + 1)}>增加</button>
-    </div>
-  );
+  return <button onClick={() => setCount(count + 1)}>{count}</button>;
 };
 
-// 使用 KeepAliveBaseHOC 包装组件
-const MyKeepAliveComponent = KeepAliveBaseHOC(MyComponent, 'my-component');
-
-// 在应用中使用包装后的组件
-const App = () => {
-  return <MyKeepAliveComponent />;
-};
+const KeepAlivePage = KeepAliveBaseHOC(Page, 'fairys_admin_keep_alive_/demo');
 ```
 
-### 带动画效果
-```tsx
-import { KeepAliveBaseHOC } from '@fairys-admin/ui';
-import { useState } from 'react';
+### 通过约定式路由插件自动包裹
 
-const MyComponent = () => {
-  const [count, setCount] = useState(0);
+`RsbuildReactRoutesPlugin` 的 `keepAliveBasePath` 指向本模块即可，插件会为每个页面生成 `KeepAliveBaseHOC(Component, id)`：
 
-  return (
-    <div>
-      <p>计数: {count}</p>
-      <button onClick={() => setCount(count + 1)}>增加</button>
-    </div>
-  );
-};
-
-// 使用 KeepAliveBaseHOC 包装组件，启用动画
-const MyKeepAliveComponent = KeepAliveBaseHOC(MyComponent, 'my-component', {
-  isMotion: true,
-  motionProps: {
-    initial: { opacity: 0, y: 20 },
-    animate: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: -20 },
-    transition: { duration: 0.3 }
-  }
+```ts
+RsbuildReactRoutesPlugin({
+  keepAliveBasePath: '@fairys/admin-tools-react/esm/components/keep-alive',
 });
-
-const App = () => {
-  return <MyKeepAliveComponent />;
-};
 ```
 
-### 在路由中使用
-```tsx
-import { KeepAliveBaseHOC } from '@fairys-admin/ui';
-import { useState } from 'react';
-import { Routes, Route, Link, useLocation } from 'react-router-dom';
+### 清理/刷新缓存
 
-// 定义需要保持状态的组件
-const Home = () => {
-  const [count, setCount] = useState(0);
+```ts
+import { appDataInstance } from '@fairys/admin-tools-react';
 
-  return (
-    <div>
-      <h1>首页</h1>
-      <p>计数: {count}</p>
-      <button onClick={() => setCount(count + 1)}>增加</button>
-      <Link to="/about">去关于页面</Link>
-    </div>
-  );
-};
+// 关闭单个页面缓存
+appDataInstance.aliveController?.drop?.('fairys_admin_keep_alive_/demo');
 
-const About = () => {
-  return (
-    <div>
-      <h1>关于页面</h1>
-      <Link to="/">返回首页</Link>
-    </div>
-  );
-};
-
-// 使用 KeepAliveBaseHOC 包装组件
-const KeepAliveHome = KeepAliveBaseHOC(Home, 'home');
-
-const App = () => {
-  return (
-    <Routes>
-      <Route path="/" element={<KeepAliveHome />} />
-      <Route path="/about" element={<About />} />
-    </Routes>
-  );
-};
+// 刷新单个页面缓存
+appDataInstance.aliveController?.refresh?.('fairys_admin_keep_alive_/demo');
 ```
 
-## 特性
-- 支持组件状态保持
-- 支持缓存管理
-- 集成了动画效果
-- 支持自定义缓存键（id）
-- 支持自定义动画配置
-- 适用于路由切换、标签页切换等场景
+## 缓存作用域
+
+使用 `routerDataInstance.createBrowserRouter` / `createHashRouter` / `createMemoryRouter` 时，路由树最外层会自动注入 `FairysAliveRoute`：
+
+- `AliveScope` 位于 `RouterProvider` 内，缓存页面的 `useLocation` / `useNavigate` / `useParams` 等 router context 可正常使用。
+- 外部自行创建的 router 会退回 `FairysRoot` 外层 `AliveScope`（兼容旧行为），但缓存页的 router context 需自行验证；建议用 `FairysAliveRoute` 手动包裹路由数组。
+- 缓存控制器（`appDataInstance.aliveController`）由 `AliveRoute` 自动挂载。
+
+## 注意事项
+
+- `id` 必须与页面路径一一对应；动态路由会按具体 pathname 缓存（`/detail/1`、`/detail/2` 各自一份）。
+- 只有 `FairysRoot` 的 `keepAlive` 开启时缓存才生效。
+- 若页面内依赖 `react-router` 上下文，需在浏览器回归中验证缓存页的 `useNavigate/useParams` 行为。

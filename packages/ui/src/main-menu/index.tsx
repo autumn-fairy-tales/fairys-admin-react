@@ -28,7 +28,7 @@ const MainMenuItems = (props: MainMenuProps) => {
     async (item: MenuItemType & FairysMenuItemType) => {
       // 打开浏览器新窗口
       if (item.isOpenNewWindow) {
-        window.open(item.path, '_blank');
+        window.open(item.path, '_blank', 'noopener,noreferrer');
         return;
       }
       if (typeof item.onBeforeNavigate === 'function') {

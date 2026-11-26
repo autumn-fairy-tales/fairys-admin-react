@@ -44,7 +44,7 @@ Login 组件用于实现用户登录功能，包含表单验证、错误提示�
 
 ### 基本用法
 ```tsx
-import { FairysLoginPage } from '@fairys-admin/ui';
+import { FairysLoginPage } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [form] = FairysLoginPage.useForm();
@@ -75,7 +75,7 @@ const App = () => {
 
 ### 带验证规则
 ```tsx
-import { FairysLoginPage } from '@fairys-admin/ui';
+import { FairysLoginPage } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [form] = FairysLoginPage.useForm();
@@ -114,7 +114,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { FairysLoginPage } from '@fairys-admin/ui';
+import { FairysLoginPage } from '@fairys/admin-tools-react';
 
 const App = () => {
   const [form] = FairysLoginPage.useForm();

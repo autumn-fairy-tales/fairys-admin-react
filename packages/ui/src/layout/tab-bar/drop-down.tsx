@@ -1,18 +1,18 @@
 import { Fragment, useMemo } from 'react';
 import { useTabBarDataInstance, tabBarDataInstance } from 'context/tab-bar';
-import { useNavigate, matchPath, useLocation } from 'react-router';
+import { matchPath, useLocation } from 'react-router';
+import { routerDataInstance } from 'context/router-data';
 import { FairysPopoverMenu, FairysPopoverMenuItemType } from 'components/popover-menu';
 
 const PopoverButton = () => {
   const [state] = useTabBarDataInstance();
-  const navigate = useNavigate();
   const list = state.dropDownTabBarItems as FairysPopoverMenuItemType[];
   const location = useLocation();
 
   const onNativeClick = (item: FairysPopoverMenuItemType, e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    navigate(item.path);
+    routerDataInstance.navigate(item.path);
   };
 
   const onClose = (item: FairysPopoverMenuItemType, e: React.MouseEvent) => {

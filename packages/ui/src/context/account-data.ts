@@ -18,6 +18,7 @@ export interface AccountDataInstanceState {
   info?: Record<string, any>;
   /**默认引用值*/
   __defaultValue?: string;
+  [key: string]: any;
 }
 
 export class AccountDataInstance {
@@ -29,9 +30,9 @@ export class AccountDataInstance {
 
   /**浏览器端初始化*/
   _browserConstructor = () => {
-    const state = localStorage.getItem(AccountDataInstance.localStorageKey);
-    if (state) {
-      try {
+    try {
+      const state = localStorage.getItem(AccountDataInstance.localStorageKey);
+      if (state) {
         const newState = JSON.parse(state);
         if (newState) {
           for (const key in newState) {
@@ -39,9 +40,9 @@ export class AccountDataInstance {
             this.state[key] = element;
           }
         }
-      } catch (error) {
-        console.log(error);
       }
+    } catch (error) {
+      console.log('获取账号本地存储', error);
     }
   };
 
@@ -63,7 +64,11 @@ export class AccountDataInstance {
       }
     }
     // 保存到本地存储
-    localStorage.setItem(AccountDataInstance.localStorageKey, JSON.stringify(this.state));
+    try {
+      localStorage.setItem(AccountDataInstance.localStorageKey, JSON.stringify(this.state));
+    } catch (error) {
+      console.log('保存账号本地存储', error);
+    }
   };
   /**清空账户数据*/
   clear = () => {

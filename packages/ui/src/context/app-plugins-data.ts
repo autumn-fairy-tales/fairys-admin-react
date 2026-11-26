@@ -44,6 +44,7 @@ export type AppPluginDataInstanceType = {
   };
   /**默认引用值*/
   __defaultValue?: string;
+  [key: string]: any;
 };
 
 export class AppPluginDataInstance {
@@ -63,8 +64,13 @@ export class AppPluginDataInstance {
     delete this.appPlugins[key];
     this.state[key] = undefined;
   };
-  /**清空数据*/
-  clear = () => {};
+  /**清空插件（注销时不调用，插件属于应用级配置）*/
+  clear = () => {
+    this.appPlugins = {};
+    for (const key in this.state) {
+      delete this.state[key];
+    }
+  };
 }
 /**应用插件,用于添加或重写组件渲染*/
 export const appPluginDataInstance = new AppPluginDataInstance();

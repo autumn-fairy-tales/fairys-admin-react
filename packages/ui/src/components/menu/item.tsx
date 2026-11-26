@@ -285,6 +285,16 @@ export const FairysMenuItem = forwardRef((props: FairysMenuItemProps, ref: React
       className="fairys_admin_menu_base-item-warp fairys:shrink-0 fairys:relative fairys:box-border"
       onClick={onClick}
       ref={mergeRef}
+      role="menuitem"
+      aria-disabled={disabled}
+      aria-current={isActive ? 'page' : undefined}
+      tabIndex={disabled ? -1 : 0}
+      onKeyDown={(event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          event.currentTarget.click();
+        }
+      }}
     >
       {!!isActive ? (
         <motion.div

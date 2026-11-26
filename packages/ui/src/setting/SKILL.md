@@ -21,7 +21,7 @@ Setting 组件用于管理应用的设置，包括主题、布局、颜色等，
 
 ### 基本用法
 ```tsx
-import { SettingDrawer } from '@fairys-admin/ui';
+import { SettingDrawer } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -32,7 +32,7 @@ const App = () => {
 
 ### 带关闭回调
 ```tsx
-import { SettingDrawer } from '@fairys-admin/ui';
+import { SettingDrawer } from '@fairys/admin-tools-react';
 
 const App = () => {
   const handleClose = () => {
@@ -47,7 +47,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { SettingDrawer } from '@fairys-admin/ui';
+import { SettingDrawer } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

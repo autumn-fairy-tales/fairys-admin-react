@@ -1,5 +1,5 @@
 import { FloatingPortal } from '@floating-ui/react';
-import { Fragment, useMemo } from 'react';
+import { Fragment, useEffect, useMemo, useRef } from 'react';
 import { useDarkModeInstanceContext } from 'context/dark-mode';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useAnimationStatus } from '../utils';
@@ -64,6 +64,12 @@ export interface FairysModalBaseProps {
   theme?: 'light' | 'dark';
 }
 
+let modalOpenCount = 0;
+let modalPreviousOverflow = '';
+
+const focusableSelector =
+  'a[href],button:not([disabled]),textarea:not([disabled]),input:not([disabled]),select:not([disabled]),[tabindex]:not([tabindex="-1"])';
+
 export const FairysModalBase = (props: FairysModalBaseProps) => {
   const {
     title,
@@ -93,6 +99,71 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
   const [state] = useDarkModeInstanceContext();
   const theme = _parentTheme || state.theme;
   const { show, onAnimationComplete } = useAnimationStatus(open);
+  const modalRef = useRef<HTMLDivElement>(null);
+  const onCloseRef = useRef(onClose);
+  useEffect(() => {
+    onCloseRef.current = onClose;
+  }, [onClose]);
+
+  useEffect(() => {
+    if (!open) {
+      return;
+    }
+    const previousActiveElement = document.activeElement as HTMLElement | null;
+    if (modalOpenCount === 0) {
+      modalPreviousOverflow = document.body.style.overflow;
+    }
+    modalOpenCount += 1;
+    document.body.style.overflow = 'hidden';
+
+    const modal = modalRef.current;
+    const focusFirst = () => {
+      const focusable = modal?.querySelectorAll<HTMLElement>(focusableSelector);
+      if (focusable && focusable.length) {
+        focusable[0].focus();
+      } else {
+        modal?.focus();
+      }
+    };
+    const timer = window.setTimeout(focusFirst, 0);
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        onCloseRef.current?.();
+        return;
+      }
+      if (event.key !== 'Tab' || !modal) {
+        return;
+      }
+      const focusable = Array.from(modal.querySelectorAll<HTMLElement>(focusableSelector));
+      if (!focusable.length) {
+        event.preventDefault();
+        modal.focus();
+        return;
+      }
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
+    };
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      clearTimeout(timer);
+      document.removeEventListener('keydown', onKeyDown);
+      modalOpenCount -= 1;
+      if (modalOpenCount === 0) {
+        document.body.style.overflow = modalPreviousOverflow;
+      }
+      previousActiveElement?.focus?.();
+    };
+  }, [open]);
+
   const _clsxDrawerDirection = useMemo(() => {
     if (mode === 'drawer') {
       return clsx('fairys:flex fairys:flex-row no-scrollbar fairys:overflow-hidden', {
@@ -106,28 +177,18 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
   }, [drawerDirection, mode]);
 
   const _clsxBaseDrawerDirection = useMemo(() => {
-    // 获取屏幕宽度
-    const windowWidth = window.document.documentElement.clientWidth;
-    const windowHeight = window.document.documentElement.clientHeight;
-    // 如果设置 width 小于400 并且 容器也小于400 ，则判断 width 和 windowWidth 大小，取小的值
-    const _width = Math.min(width || 400, windowWidth, 400);
-    const _height = Math.min(height || 400, windowHeight, 400);
     if (mode === 'drawer') {
-      return {
-        style: {},
-        class: clsx({
-          'fairys:min-w-[400px] fairys:min-h-[100vh]':
-            (drawerDirection === 'right' || drawerDirection === 'left') && !width && _width === 400,
-          'fairys:min-h-[400px] fairys:min-w-[100vw]':
-            (drawerDirection === 'bottom' || drawerDirection === 'top') && !height && _height === 400,
-        }),
-      };
+      const isHorizontal = drawerDirection === 'right' || drawerDirection === 'left';
+      const style: React.CSSProperties = isHorizontal
+        ? { width: width === undefined ? 'min(400px, 100vw)' : undefined, height: '100vh' }
+        : { width: '100vw', height: height === undefined ? 'min(400px, 100vh)' : undefined };
+      return { style, class: '' };
     }
     return {
       class: '',
-      style: {},
+      style: {} as React.CSSProperties,
     };
-  }, [drawerDirection, mode]);
+  }, [drawerDirection, mode, width, height]);
 
   if (!show) {
     return <Fragment />;
@@ -159,15 +220,25 @@ export const FairysModalBase = (props: FairysModalBaseProps) => {
             }}
           >
             <motion.div
+              ref={modalRef}
               className={`${baseClassName} ${_clsxBaseDrawerDirection.class}  ${
                 isFullScreen ? fullScreen_base_className : ''
               } ${className}`}
-              style={{ ...style, width, height }}
+              style={{
+                ..._clsxBaseDrawerDirection.style,
+                ...style,
+                width: width ?? style?.width ?? _clsxBaseDrawerDirection.style.width,
+                height: height ?? style?.height ?? _clsxBaseDrawerDirection.style.height,
+              }}
               initial="collapsed"
               animate={open ? 'open' : 'collapsed'}
               variants={mode === 'drawer' ? drawerVariants : baseVariants}
               transition={transitionBase}
               onAnimationComplete={onAnimationComplete}
+              role="dialog"
+              aria-modal="true"
+              aria-label={typeof title === 'string' ? title : undefined}
+              tabIndex={-1}
             >
               {title || extra ? (
                 <div

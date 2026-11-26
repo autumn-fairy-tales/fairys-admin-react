@@ -48,6 +48,8 @@ export type NotificationDataInstanceState = {
   count?: number;
   /**是否显示更多弹窗*/
   visibleMoreModal?: boolean;
+  /**动态 key：dataList_${type}*/
+  [key: string]: any;
 };
 
 export class NotificationDataInstance {
@@ -113,13 +115,19 @@ export class NotificationDataInstance {
     this.onClickMore?.(this.state.activeKey);
   };
 
-  /**清空数据*/
+  /**清空通知数据，保留 tab 配置*/
   clear = () => {
     for (const key in this.state) {
-      if (key !== 'tabItems') {
-        this.state[key] = undefined;
+      if (key.startsWith('dataList_')) {
+        delete this.state[key];
       }
     }
+    this.state.activeKey = undefined;
+    this.state.dataList = ref([]);
+    this.state.title = '通知';
+    this.state.isShowIcon = true;
+    this.state.count = 0;
+    this.state.visibleMoreModal = false;
   };
 }
 

@@ -25,7 +25,7 @@ Layout 组件用于创建应用的整体布局结构，包括头部、侧边栏�
 
 ### 基本用法
 ```tsx
-import { Layout } from '@fairys-admin/ui';
+import { Layout } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -36,7 +36,7 @@ const App = () => {
 
 ### 带自定义内容
 ```tsx
-import { Layout } from '@fairys-admin/ui';
+import { Layout } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (
@@ -50,7 +50,7 @@ const App = () => {
 
 ### 自定义样式
 ```tsx
-import { Layout } from '@fairys-admin/ui';
+import { Layout } from '@fairys/admin-tools-react';
 
 const App = () => {
   return (

@@ -43,6 +43,10 @@ export interface ReactRoutesPluginOptions {
    * @description 自定义 HydrateFallback 组件
    */
   hydrateFallback?: string;
+  /**
+   * @description 路由级错误边界组件模块路径（需默认导出组件）
+   */
+  errorElement?: string;
 }
 export interface RouteItem {
   /**
