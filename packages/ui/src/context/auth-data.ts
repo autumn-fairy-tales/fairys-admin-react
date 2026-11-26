@@ -1,6 +1,7 @@
 import { proxy, ref, useSnapshot } from 'valtio';
 import { appDataInstance } from './index';
 import { loadingFadeOut } from 'utils/loading-fade-out';
+import { isBrowser } from 'utils';
 
 export interface AuthDataInstanceState {
   /**
@@ -37,60 +38,41 @@ export class AuthDataInstance {
 
   /**菜单权限*/
   get menusPermissions() {
-    if ((this.state.menusPermissions || []).length) {
-      return this.state.menusPermissions;
-    }
-    try {
-      const state = localStorage.getItem(AuthDataInstance.localStorageKeyMenu);
-      if (state) {
-        const newState = JSON.parse(state);
-        if (Array.isArray(newState) && newState.length) {
-          this.state.menusPermissions = ref(newState || []);
-        }
-      }
-    } catch (error) {
-      console.log('获取菜单权限本地存储', error);
-    }
-    return [];
+    return this.state.menusPermissions;
   }
   /**按钮权限*/
   get btnsPermissions() {
-    if ((this.state.btnsPermissions || []).length) {
-      return this.state.btnsPermissions;
-    }
-    try {
-      const state = localStorage.getItem(AuthDataInstance.localStorageKeyBtn);
-      if (state) {
-        const newState = JSON.parse(state);
-        if (Array.isArray(newState) && newState.length) {
-          this.state.btnsPermissions = ref(newState || []);
-        }
-      }
-    } catch (error) {
-      console.log('获取按钮权限本地存储', error);
-    }
-    return [];
+    return this.state.btnsPermissions;
   }
   /**忽略权限*/
   get ignorePermissions() {
-    if ((this.state.ignorePermissions || []).length) {
-      return this.state.ignorePermissions;
-    }
-    try {
-      const state = localStorage.getItem(AuthDataInstance.localStorageKeyIgnore);
-      if (state) {
-        const newState = JSON.parse(state);
-        if (Array.isArray(newState) && newState.length) {
-          this.state.ignorePermissions = ref(newState || []);
-        }
-      }
-    } catch (error) {
-      console.log('获取忽略权限本地存储', error);
-    }
-    return [];
+    return this.state.ignorePermissions;
   }
 
+  /**浏览器端初始化：恢复本地权限，避免首帧权限判断为空*/
+  _browserConstructor = () => {
+    const restore = (key: string) => {
+      try {
+        const state = localStorage.getItem(key);
+        if (!state) {
+          return [];
+        }
+        const newState = JSON.parse(state);
+        return Array.isArray(newState) ? newState : [];
+      } catch (error) {
+        console.log('获取权限本地存储', error);
+        return [];
+      }
+    };
+    this.state.menusPermissions = ref(restore(AuthDataInstance.localStorageKeyMenu));
+    this.state.btnsPermissions = ref(restore(AuthDataInstance.localStorageKeyBtn));
+    this.state.ignorePermissions = ref(restore(AuthDataInstance.localStorageKeyIgnore));
+  };
+
   constructor() {
+    if (isBrowser) {
+      this._browserConstructor();
+    }
     appDataInstance.authDataInstance = this;
   }
 

@@ -34,6 +34,7 @@ class AppDataInstance {
     accountDataInstance.clear();
     appPluginDataInstance.clear();
     notificationDataInstance.clear();
+    favoritesDataInstance.clear();
     this.aliveController?.clear?.();
   };
 }

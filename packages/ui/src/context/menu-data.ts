@@ -265,6 +265,9 @@ export class MenuDataInstance {
 
   /**清空*/
   clear = () => {
+    this._menuItems = [];
+    this._flatMenuItems = [];
+    this._parentMenuItemMap = new Map();
     this.state.menuItems = ref([]);
     this.state.mainMenuItems = ref([]);
     this.state.mainMenuItemSelected = '';

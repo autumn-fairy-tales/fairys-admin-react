@@ -1,4 +1,4 @@
-import { proxy, ref, useSnapshot } from 'valtio';
+import { proxy, ref, subscribe, useSnapshot } from 'valtio';
 import { MenuItemType } from './menu-data';
 import { settingDataInstance } from './setting';
 import { isBrowser } from 'utils';
@@ -18,26 +18,42 @@ export class FavoritesDataInstance {
     dataList: ref([]),
   });
 
+  /**当前收藏所属用户*/
+  #userId?: string;
+
   #getLocalStorageKey = () => {
     return `${accountDataInstance.state.userId}-${FavoritesDataInstance.localStorageKey}`;
   };
 
-  get dataList() {
-    if ((this.state.dataList || []).length) {
-      return this.state.dataList;
+  constructor() {
+    if (!isBrowser) {
+      return;
     }
+    this.load();
+    /**账号切换（登录/注销）时重新加载对应账号的收藏*/
+    subscribe(accountDataInstance.state, () => {
+      if (accountDataInstance.state.userId !== this.#userId) {
+        this.load();
+      }
+    });
+  }
+
+  /**从本地存储加载当前用户收藏*/
+  load = () => {
+    const userId = accountDataInstance.state.userId;
+    this.#userId = userId;
     try {
       const state = localStorage.getItem(this.#getLocalStorageKey());
-      if (state) {
-        const newState = JSON.parse(state);
-        if (Array.isArray(newState) && newState.length) {
-          this.state.dataList = ref(newState || []);
-        }
-      }
+      const newState = state ? JSON.parse(state) : [];
+      this.state.dataList = ref(Array.isArray(newState) ? newState : []);
     } catch (error) {
-      console.log(error);
+      console.log('获取收藏本地存储', error);
+      this.state.dataList = ref([]);
     }
-    return [];
+  };
+
+  get dataList() {
+    return this.state.dataList || [];
   }
 
   /**添加*/

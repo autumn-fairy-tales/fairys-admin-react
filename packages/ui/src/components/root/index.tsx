@@ -62,12 +62,12 @@ const FairysRootBody = (props: FairysRootProps) => {
   const childElement = useMemo(() => {
     if (router) {
       return (
-        <Suspense fallback={<FairysEnterLoading />}>
+        <Suspense fallback={<FairysEnterLoading loading />}>
           <RouterProvider router={router} />
         </Suspense>
       );
     }
-    return <Suspense fallback={<FairysEnterLoading />}>{children}</Suspense>;
+    return <Suspense fallback={<FairysEnterLoading loading />}>{children}</Suspense>;
   }, [children, router]);
 
   if (!keepAlive) {

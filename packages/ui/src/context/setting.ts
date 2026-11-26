@@ -87,6 +87,27 @@ export interface SettingDataInstanceState {
 export class SettingDataInstance {
   static localStorageKey = 'fairys_setting_state';
 
+  /**可用于持久化和恢复的布局，mobile 由屏幕宽度自动决定*/
+  static persistableLayoutModes: LayoutMode[] = [
+    'main_sub_left',
+    'main_left',
+    'main_top_header',
+    'main_top_sub_left_header',
+    'left',
+    'left_header',
+  ];
+
+  static defaultLayoutMode: LayoutMode = 'main_top_sub_left_header';
+
+  static isPersistableLayoutMode = (layoutMode?: LayoutMode): layoutMode is Exclude<LayoutMode, 'mobile'> => {
+    return !!layoutMode && SettingDataInstance.persistableLayoutModes.includes(layoutMode);
+  };
+
+  /**获取可回退的布局，避免本地存储里的 mobile 导致布局无法恢复*/
+  static getFallbackLayoutMode = (layoutMode?: LayoutMode) => {
+    return SettingDataInstance.isPersistableLayoutMode(layoutMode) ? layoutMode : SettingDataInstance.defaultLayoutMode;
+  };
+
   state = proxy<SettingDataInstanceState>({
     open: false,
     /**布局模式*/
@@ -129,6 +150,13 @@ export class SettingDataInstance {
         console.log(error);
       }
     }
+    /**兼容历史数据：mobile 不应从本地存储恢复*/
+    if (!SettingDataInstance.isPersistableLayoutMode(this.state.layoutMode)) {
+      this.state.layoutMode = SettingDataInstance.getFallbackLayoutMode(this.state._oldLayoutMode);
+    }
+    if (!SettingDataInstance.isPersistableLayoutMode(this.state._oldLayoutMode)) {
+      this.state._oldLayoutMode = this.state.layoutMode;
+    }
     // 在没设置的时候使用系统主题
     this.autoListenSystemTheme();
   };
@@ -148,14 +176,22 @@ export class SettingDataInstance {
 
   /**初始配置*/
   ctor = (state: SettingDataInstanceState = {}) => {
+    const layoutMode = SettingDataInstance.isPersistableLayoutMode(state.layoutMode)
+      ? state.layoutMode
+      : this.state.layoutMode;
+    const oldLayoutMode = SettingDataInstance.isPersistableLayoutMode(state.layoutMode)
+      ? state.layoutMode
+      : SettingDataInstance.getFallbackLayoutMode(
+          SettingDataInstance.isPersistableLayoutMode(this.state._oldLayoutMode)
+            ? this.state._oldLayoutMode
+            : this.state.layoutMode,
+        );
     const _newState: SettingDataInstanceState = {
-      layoutMode: 'main_top_sub_left_header',
       ...this.state,
       ...state,
+      layoutMode,
+      _oldLayoutMode: oldLayoutMode,
     };
-    if (_newState) {
-      _newState._oldLayoutMode = _newState.layoutMode;
-    }
     this.state = proxy({
       ..._newState,
       /**项目名和logo 始终取设置的值*/
@@ -255,6 +291,14 @@ export class SettingDataInstance {
     } catch (error) {
       console.log(error);
     }
+    /**清理历史数据里被持久化的 mobile，避免每次启动都带着它*/
+    if (!SettingDataInstance.isPersistableLayoutMode(_state.layoutMode)) {
+      _state.layoutMode = SettingDataInstance.getFallbackLayoutMode(_state._oldLayoutMode);
+    }
+    if (!SettingDataInstance.isPersistableLayoutMode(_state._oldLayoutMode)) {
+      _state._oldLayoutMode = SettingDataInstance.getFallbackLayoutMode(_state.layoutMode);
+    }
+    const prevLayoutMode = this.state.layoutMode;
     for (const key in state) {
       const element = state[key];
       this.state[key] = element;
@@ -263,7 +307,18 @@ export class SettingDataInstance {
         _state[key] = element;
       }
       if (key === 'layoutMode') {
-        _state._oldLayoutMode = this.state.layoutMode;
+        if (SettingDataInstance.isPersistableLayoutMode(element)) {
+          _state._oldLayoutMode = element;
+          this.state._oldLayoutMode = element;
+        } else {
+          /**mobile 由屏幕宽度自动决定，不持久化，也不能覆盖可恢复的布局*/
+          const fallback = SettingDataInstance.getFallbackLayoutMode(
+            SettingDataInstance.isPersistableLayoutMode(prevLayoutMode) ? prevLayoutMode : this.state._oldLayoutMode,
+          );
+          _state.layoutMode = fallback;
+          _state._oldLayoutMode = fallback;
+          this.state._oldLayoutMode = fallback;
+        }
       }
       if (key === 'theme') {
         this.setDocumentAndBodyTheme();
@@ -310,7 +365,7 @@ export class SettingDataInstance {
 
   /**监听屏幕变化，用于控制菜单布局*/
   onListenChangeScreen = (e: MediaQueryListEvent) => {
-    this.state.layoutMode = e.matches ? 'mobile' : this.state._oldLayoutMode;
+    this.state.layoutMode = e.matches ? 'mobile' : SettingDataInstance.getFallbackLayoutMode(this.state._oldLayoutMode);
     this.state.isMobile = e.matches;
   };
 
@@ -322,7 +377,9 @@ export class SettingDataInstance {
       } else {
         this.mediaQueryListScreen.removeEventListener('change', this.onListenChangeScreen);
       }
-      this.state.layoutMode = this.mediaQueryListScreen.matches ? 'mobile' : this.state._oldLayoutMode;
+      this.state.layoutMode = this.mediaQueryListScreen.matches
+        ? 'mobile'
+        : SettingDataInstance.getFallbackLayoutMode(this.state._oldLayoutMode);
       this.state.isMobile = this.mediaQueryListScreen.matches;
       this.mediaQueryListScreen.addEventListener('change', this.onListenChangeScreen);
     }
